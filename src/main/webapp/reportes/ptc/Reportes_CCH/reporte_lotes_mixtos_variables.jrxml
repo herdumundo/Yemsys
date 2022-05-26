@@ -1,0 +1,1489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11eff4ca-8d34-45f7-9c86-8df5dbc91b45">
+	<property name="ireport.zoom" value="2.420000000000004"/>
+	<property name="ireport.x" value="711"/>
+	<property name="ireport.y" value="32"/>
+	<style name="Colores">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($F{estado_liberacion}.equals("L") && $F{estado_liberacion}.length() == 1)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#009900"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($F{estado_liberacion}.endsWith("L") && $F{estado_liberacion}.length() > 1)]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#990099"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($F{estado_liberacion}.trim().endsWith("R"))]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#FF0000"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($F{estado_liberacion}.trim().endsWith("R."))]]></conditionExpression>
+			<style mode="Opaque" forecolor="#000000" backcolor="#00CCCC"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="clasificadora" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filtro_carro" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filtro_calendario" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="carro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_hasta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_clasificacion" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["       select stuff(( select '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual,codigo_especial" +
+"     from (" +
+
+" 	select distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque," +
+"     a.cod_lote,isnull(a.cod_cambio,'-') as cod_cambio, a.cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo," +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion," +
+"     replace(a.estado_liberacion,'Z','R.') as estado_liberacion,'' as estado_del_producto,'' as motivo_retencion, " +
+"     '' as Disposicion, a.liberado_por, '' as fecha_alimentacion,a.cod_cambio as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from" +
+"     lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where a.estado_liberacion='l'  " +
+"     and a.tipo_huevo not in ('RP', 'PI', 'R') and  " +
+"     a.fecha  between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"' " +
+"     and a.u_medida='CAJ' and a.estado<>'E'" +
+"     and a.clasificadora_actual='"+$P{clasificadora}+"' and  " +
+" 	left(a.cod_carrito,1)not in ('9','P')" +
+" 	 )t" +
+"     union all" +
+"     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+"     from (" +
+	
+" 	select    distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque, a.cod_lote, a.cod_carrito as cod_cambio,isnull(a.cod_cambio,'-') as cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo, " +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion,replace(a.estado_liberacion,'Z','R.') as estado_liberacion," +
+"     '' as estado_del_producto,'' as motivo_retencion, '' as Disposicion, a.liberado_por, '' as fecha_alimentacion," +
+"     '' as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from   " +
+" 	 lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where" +
+" 	 a.estado_liberacion='l'   " +
+  "   and a.u_medida='CAJ' and a.estado<>'E'" +
+  "   and  (left(a.cod_carrito,1)='9' or left(a.cod_carrito,1)='p')  and  a.tipo_huevo not in ('RP', 'PI', 'R') and" +
+  "   a.fecha    between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'  and a.clasificadora_actual='"+$P{clasificadora}+"'" +
+ 
+" 	 )t" +
+"   union all  " +
+
+
+ "     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+ "    as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+ "    fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+ "    resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+ "    fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+ "    convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' " +
+" then 'CCHB' WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+ "    from ( " +
+ "  select   distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+ "     min(z.fecha) as fecha,  " +
+  "    c.fecha_embarque as fecha_embarque, " +
+ "     a.cod_lote," +
+ "     isnull(a.cod_cambio,'-')as cod_cambio," + 
+ "     a.cod_carrito," +
+ "     isnull(a.codigo_borroso,'-') as codigo_borroso," +
+ "      isnull(a.tipo_maples,'-') as tipo_maples," +
+"     'L' as tipo, convert(varchar," +
+"     a.fecha_puesta,103) as fecha_puesta ," +
+"     a.hora_clasificacion, " +
+"     replace(a.tipo_huevo,'D','4TA') as tipo_huevo," +
+ "    a.empacadora," +
+ "    a.cod_clasificacion as categoria ," +
+ "    a.aviario," +
+ "    a.tipo_almacenamiento," +
+ "    a.resp_clasificacion," +
+ "    replace(a.estado_liberacion,'Z','R.') as  estado_liberacion," +
+  "   r.estado_retencion as estado_del_producto, " +
+ "    r.motivo_retencion, " +
+ "    m.descripcion as Disposicion, " +
+ "    r.liberado_por, " +
+ "    r.fecha_alimentacion ," +
+ "    a.cod_cambio as mesa_mumero, " +
+ "    case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+ "    from  " +
+ "     lotes a   " +
+" 	 left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+ "    inner join lotes_retenidos r on a.cod_lote=r.cod_lote" +
+"     inner join lotes_retenidos z on a.cod_lote = z.cod_lote" +
+"     inner join motivo_retencion m on r.disposicion=m.id  " +
+"      where len(a.estado_liberacion)>1 and right(a.estado_liberacion,1)='l'  " +
+ "     and a.tipo_huevo not in ('RP', 'PI', 'R') " +
+  "    and   a.fecha   between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'   and r.movimiento='A'" +
+  "    and a.u_medida='CAJ'" +
+  "    and a.clasificadora_actual='"+$P{clasificadora}+"' and  left(r.cod_carrito,1)not in ('9','P') " +
+ "     group by  " +
+  "    a.clasificadora_actual,a.tipo_huevo,a.cantidad,c.fecha_embarque , " +
+ "      a.cod_lote,a.cod_cambio,a.cod_carrito,a.codigo_borroso ," +
+  "     a.tipo_maples ,a.fecha_puesta,a.hora_clasificacion,a.tipo_huevo," +
+  "    a.empacadora,a.cod_clasificacion ,a.aviario,a.tipo_almacenamiento," +
+ "     a.resp_clasificacion,a.estado_liberacion,r.estado_retencion ,r.motivo_retencion,m.descripcion , " +
+ "     r.liberado_por,r.fecha_alimentacion ,a.cod_cambio ,a.codigo_especial,c.fecha_embarque" +
+"   )t" +
+ "      order by 4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_puesta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["       select stuff(( select '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual,codigo_especial" +
+"     from (" +
+
+" 	select distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque," +
+"     a.cod_lote,isnull(a.cod_cambio,'-') as cod_cambio, a.cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo," +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion," +
+"     replace(a.estado_liberacion,'Z','R.') as estado_liberacion,'' as estado_del_producto,'' as motivo_retencion, " +
+"     '' as Disposicion, a.liberado_por, '' as fecha_alimentacion,a.cod_cambio as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from" +
+"     lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where a.estado_liberacion='l'  " +
+"     and a.tipo_huevo not in ('RP', 'PI', 'R') and  " +
+"     a.fecha_puesta  between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"' " +
+"     and a.u_medida='CAJ' and a.estado<>'E'" +
+"     and a.clasificadora_actual='"+$P{clasificadora}+"' and  " +
+" 	left(a.cod_carrito,1)not in ('9','P')" +
+" 	 )t" +
+"     union all" +
+"     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+"     from (" +
+	
+" 	select    distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque, a.cod_lote, a.cod_carrito as cod_cambio,isnull(a.cod_cambio,'-') as cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo, " +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion,replace(a.estado_liberacion,'Z','R.') as estado_liberacion," +
+"     '' as estado_del_producto,'' as motivo_retencion, '' as Disposicion, a.liberado_por, '' as fecha_alimentacion," +
+"     '' as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from   " +
+" 	 lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where" +
+" 	 a.estado_liberacion='l'   " +
+  "   and a.u_medida='CAJ' and a.estado<>'E'" +
+  "   and  (left(a.cod_carrito,1)='9' or left(a.cod_carrito,1)='p')  and  a.tipo_huevo not in ('RP', 'PI', 'R') and" +
+"     a.fecha_puesta  between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"' " +
+" and a.clasificadora_actual='"+$P{clasificadora}+"'" +
+ 
+" 	 )t" +
+"   union all  " +
+
+
+ "     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+ "    as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+ "    fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+ "    resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+ "    fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+ "    convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' " +
+" then 'CCHB' WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+ "    from ( " +
+ "  select   distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+ "     min(z.fecha) as fecha,  " +
+  "    c.fecha_embarque as fecha_embarque, " +
+ "     a.cod_lote," +
+ "     isnull(a.cod_cambio,'-')as cod_cambio," + 
+ "     a.cod_carrito," +
+ "     isnull(a.codigo_borroso,'-') as codigo_borroso," +
+ "      isnull(a.tipo_maples,'-') as tipo_maples," +
+"     'L' as tipo, convert(varchar," +
+"     a.fecha_puesta,103) as fecha_puesta ," +
+"     a.hora_clasificacion, " +
+"     replace(a.tipo_huevo,'D','4TA') as tipo_huevo," +
+ "    a.empacadora," +
+ "    a.cod_clasificacion as categoria ," +
+ "    a.aviario," +
+ "    a.tipo_almacenamiento," +
+ "    a.resp_clasificacion," +
+ "    replace(a.estado_liberacion,'Z','R.') as  estado_liberacion," +
+  "   r.estado_retencion as estado_del_producto, " +
+ "    r.motivo_retencion, " +
+ "    m.descripcion as Disposicion, " +
+ "    r.liberado_por, " +
+ "    r.fecha_alimentacion ," +
+ "    a.cod_cambio as mesa_mumero, " +
+ "    case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+ "    from  " +
+ "     lotes a   " +
+" 	 left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+ "    inner join lotes_retenidos r on a.cod_lote=r.cod_lote" +
+"     inner join lotes_retenidos z on a.cod_lote = z.cod_lote" +
+"     inner join motivo_retencion m on r.disposicion=m.id  " +
+"      where len(a.estado_liberacion)>1 and right(a.estado_liberacion,1)='l'  " +
+ "     and a.tipo_huevo not in ('RP', 'PI', 'R') " +
+  "    and   a.fecha_puesta   between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'   and r.movimiento='A'" +
+  "    and a.u_medida='CAJ'" +
+  "    and a.clasificadora_actual='"+$P{clasificadora}+"' and  left(r.cod_carrito,1)not in ('9','P') " +
+ "     group by  " +
+  "    a.clasificadora_actual,a.tipo_huevo,a.cantidad,c.fecha_embarque , " +
+ "      a.cod_lote,a.cod_cambio,a.cod_carrito,a.codigo_borroso ," +
+  "     a.tipo_maples ,a.fecha_puesta,a.hora_clasificacion,a.tipo_huevo," +
+  "    a.empacadora,a.cod_clasificacion ,a.aviario,a.tipo_almacenamiento," +
+ "     a.resp_clasificacion,a.estado_liberacion,r.estado_retencion ,r.motivo_retencion,m.descripcion , " +
+ "     r.liberado_por,r.fecha_alimentacion ,a.cod_cambio ,a.codigo_especial,c.fecha_embarque" +
+"   )t" +
+ "      order by 4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_clasificacion_carro" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["       select stuff(( select '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual,codigo_especial" +
+"     from (" +
+
+" 	select distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque," +
+"     a.cod_lote,isnull(a.cod_cambio,'-') as cod_cambio, a.cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo," +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion," +
+"     replace(a.estado_liberacion,'Z','R.') as estado_liberacion,'' as estado_del_producto,'' as motivo_retencion, " +
+"     '' as Disposicion, a.liberado_por, '' as fecha_alimentacion,a.cod_cambio as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from" +
+"     lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where a.estado_liberacion='l'  " +
+"     and a.tipo_huevo not in ('RP', 'PI', 'R') and  " +
+"     a.fecha  between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"' " +
+"     and a.u_medida='CAJ' and a.estado<>'E'" +
+"     and a.clasificadora_actual='"+$P{clasificadora}+"' and  " +
+" 	left(a.cod_carrito,1)not in ('9','P') and a.cod_carrito='"+$P{carro}+"'" +
+" 	 )t" +
+"     union all" +
+"     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+"     from (" +
+	
+" 	select    distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque, a.cod_lote, a.cod_carrito as cod_cambio,isnull(a.cod_cambio,'-') as cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo, " +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion,replace(a.estado_liberacion,'Z','R.') as estado_liberacion," +
+"     '' as estado_del_producto,'' as motivo_retencion, '' as Disposicion, a.liberado_por, '' as fecha_alimentacion," +
+"     '' as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from   " +
+" 	 lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where" +
+" 	 a.estado_liberacion='l'   " +
+  "   and a.u_medida='CAJ' and a.estado<>'E'" +
+  "   and  (left(a.cod_carrito,1)='9' or left(a.cod_carrito,1)='p')  and  a.tipo_huevo not in ('RP', 'PI', 'R') and" +
+  "   a.fecha   between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'  and a.clasificadora_actual='"+$P{clasificadora}+"' and a.cod_carrito='"+$P{carro}+"'" +
+ 
+" 	 )t" +
+"   union all  " +
+
+
+ "     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+ "    as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+ "    fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+ "    resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+ "    fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+ "    convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' " +
+" then 'CCHB' WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+ "    from ( " +
+ "  select   distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+ "     min(z.fecha) as fecha,  " +
+  "    c.fecha_embarque as fecha_embarque, " +
+ "     a.cod_lote," +
+ "     isnull(a.cod_cambio,'-')as cod_cambio," + 
+ "     a.cod_carrito," +
+ "     isnull(a.codigo_borroso,'-') as codigo_borroso," +
+ "      isnull(a.tipo_maples,'-') as tipo_maples," +
+"     'L' as tipo, convert(varchar," +
+"     a.fecha_puesta,103) as fecha_puesta ," +
+"     a.hora_clasificacion, " +
+"     replace(a.tipo_huevo,'D','4TA') as tipo_huevo," +
+ "    a.empacadora," +
+ "    a.cod_clasificacion as categoria ," +
+ "    a.aviario," +
+ "    a.tipo_almacenamiento," +
+ "    a.resp_clasificacion," +
+ "    replace(a.estado_liberacion,'Z','R.') as  estado_liberacion," +
+  "   r.estado_retencion as estado_del_producto, " +
+ "    r.motivo_retencion, " +
+ "    m.descripcion as Disposicion, " +
+ "    r.liberado_por, " +
+ "    r.fecha_alimentacion ," +
+ "    a.cod_cambio as mesa_mumero, " +
+ "    case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+ "    from  " +
+ "     lotes a   " +
+" 	 left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+ "    inner join lotes_retenidos r on a.cod_lote=r.cod_lote" +
+"     inner join lotes_retenidos z on a.cod_lote = z.cod_lote" +
+"     inner join motivo_retencion m on r.disposicion=m.id  " +
+"      where len(a.estado_liberacion)>1 and right(a.estado_liberacion,1)='l'  " +
+ "     and a.tipo_huevo not in ('RP', 'PI', 'R') " +
+  "    and   a.fecha   between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'   and r.movimiento='A'" +
+  "    and a.u_medida='CAJ'" +
+  "    and a.clasificadora_actual='"+$P{clasificadora}+"' and  left(r.cod_carrito,1)not in ('9','P') and a.cod_carrito='"+$P{carro}+"'"   +
+ "     group by  " +
+  "    a.clasificadora_actual,a.tipo_huevo,a.cantidad,c.fecha_embarque , " +
+ "      a.cod_lote,a.cod_cambio,a.cod_carrito,a.codigo_borroso ," +
+  "     a.tipo_maples ,a.fecha_puesta,a.hora_clasificacion,a.tipo_huevo," +
+  "    a.empacadora,a.cod_clasificacion ,a.aviario,a.tipo_almacenamiento," +
+ "     a.resp_clasificacion,a.estado_liberacion,r.estado_retencion ,r.motivo_retencion,m.descripcion , " +
+ "     r.liberado_por,r.fecha_alimentacion ,a.cod_cambio ,a.codigo_especial,c.fecha_embarque" +
+"   )t" +
+ "      order by 4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_puesta_carro" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["       select stuff(( select '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual,codigo_especial" +
+"     from (" +
+
+" 	select distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque," +
+"     a.cod_lote,isnull(a.cod_cambio,'-') as cod_cambio, a.cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo," +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion," +
+"     replace(a.estado_liberacion,'Z','R.') as estado_liberacion,'' as estado_del_producto,'' as motivo_retencion, " +
+"     '' as Disposicion, a.liberado_por, '' as fecha_alimentacion,a.cod_cambio as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from" +
+"     lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where a.estado_liberacion='l'  " +
+"     and a.tipo_huevo not in ('RP', 'PI', 'R') and  " +
+"     a.fecha_puesta  between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"' " +
+"     and a.u_medida='CAJ' and a.estado<>'E'" +
+"     and a.clasificadora_actual='"+$P{clasificadora}+"' and  " +
+" 	left(a.cod_carrito,1)not in ('9','P') and a.cod_carrito='"+$P{carro}+"'" +
+" 	 )t" +
+"     union all" +
+"     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes  where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+"     as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+"     fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+"     resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+"     fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+"     convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' then 'CCHB' " +
+" 	WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+"     from (" +
+	
+" 	select    distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+"     c.fecha_embarque as fecha_embarque, a.cod_lote, a.cod_carrito as cod_cambio,isnull(a.cod_cambio,'-') as cod_carrito, " +
+"     isnull(a.codigo_borroso,'-') as codigo_borroso,isnull(a.tipo_maples,'-') as tipo_maples, 'L' as tipo, " +
+"     convert(varchar,a.fecha_puesta,103) as fecha_puesta,convert(varchar,a.fecha,103) as fecha," +
+"     a.hora_clasificacion,replace(a.tipo_huevo,'D','4TA') as tipo_huevo,a.empacadora,a.cod_clasificacion as categoria ," +
+"     a.aviario,a.tipo_almacenamiento,a.resp_clasificacion,replace(a.estado_liberacion,'Z','R.') as estado_liberacion," +
+"     '' as estado_del_producto,'' as motivo_retencion, '' as Disposicion, a.liberado_por, '' as fecha_alimentacion," +
+"     '' as mesa_mumero, " +
+"     case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+"     from   " +
+" 	 lotes a   " +
+" 	left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+"     where" +
+" 	 a.estado_liberacion='l'   " +
+  "   and a.u_medida='CAJ' and a.estado<>'E'" +
+  "   and  (left(a.cod_carrito,1)='9' or left(a.cod_carrito,1)='p')  and  a.tipo_huevo not in ('RP', 'PI', 'R') and" +
+  "   a.fecha_puesta    between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'  and a.clasificadora_actual='"+$P{clasificadora}+"' and a.cod_carrito='"+$P{carro}+"'" +
+ 
+" 	 )t" +
+"   union all  " +
+
+
+ "     select stuff(( select   '  '+  convert(varchar,[fecha_involucrada],103)  " +
+"     from correccion_lotes where cod_lote = t.cod_lote for XML path('') ),1,1,'') " +
+ "    as fecha_involucrada,cod_cambio,cod_lote,cod_carrito,codigo_borroso,tipo_maples,fecha_puesta," +
+ "    fecha,hora_clasificacion,cod_carrito,tipo_huevo,empacadora,categoria,aviario,tipo_almacenamiento," +
+ "    resp_clasificacion,estado_liberacion,estado_del_producto,motivo_retencion,Disposicion,liberado_por," +
+ "    fecha_alimentacion,mesa_mumero,fecha_embarque, " +
+ "    convert(int, cantidad) as Cantidad, case  WHEN clasificadora_actual = 'a' then 'CCHA' when clasificadora_actual = 'b' " +
+" then 'CCHB' WHEN clasificadora_actual = 'O' THEN 'LAV' else '' END AS clasificadora_actual ,codigo_especial" +
+ "    from ( " +
+ "  select   distinct (a.cod_lote+''+a.hora_clasificacion) as codigo," +
+ "     min(z.fecha) as fecha,  " +
+  "    c.fecha_embarque as fecha_embarque, " +
+ "     a.cod_lote," +
+ "     isnull(a.cod_cambio,'-')as cod_cambio," + 
+ "     a.cod_carrito," +
+ "     isnull(a.codigo_borroso,'-') as codigo_borroso," +
+ "      isnull(a.tipo_maples,'-') as tipo_maples," +
+"     'L' as tipo, convert(varchar," +
+"     a.fecha_puesta,103) as fecha_puesta ," +
+"     a.hora_clasificacion, " +
+"     replace(a.tipo_huevo,'D','4TA') as tipo_huevo," +
+ "    a.empacadora," +
+ "    a.cod_clasificacion as categoria ," +
+ "    a.aviario," +
+ "    a.tipo_almacenamiento," +
+ "    a.resp_clasificacion," +
+ "    replace(a.estado_liberacion,'Z','R.') as  estado_liberacion," +
+  "   r.estado_retencion as estado_del_producto, " +
+ "    r.motivo_retencion, " +
+ "    m.descripcion as Disposicion, " +
+ "    r.liberado_por, " +
+ "    r.fecha_alimentacion ," +
+ "    a.cod_cambio as mesa_mumero, " +
+ "    case when a.tipo_huevo = 'G' then a.cantidad / 180 else a.cantidad / 360 end as Cantidad, a.clasificadora_actual,a.codigo_especial" +
+ "    from  " +
+ "     lotes a   " +
+" 	 left outer join  embarque_det b on a.cod_lote=b.lote " +
+" 	left outer join embarque_cab c on b.id_cab=c.id" +
+ "    inner join lotes_retenidos r on a.cod_lote=r.cod_lote" +
+"     inner join lotes_retenidos z on a.cod_lote = z.cod_lote" +
+"     inner join motivo_retencion m on r.disposicion=m.id  " +
+"      where len(a.estado_liberacion)>1 and right(a.estado_liberacion,1)='l'  " +
+ "     and a.tipo_huevo not in ('RP', 'PI', 'R') " +
+  "    and   a.fecha_puesta   between '"+$P{fecha}+"' and '"+$P{fecha_hasta}+"'   and r.movimiento='A'" +
+  "    and a.u_medida='CAJ'" +
+  "    and a.clasificadora_actual='"+$P{clasificadora}+"' and  left(r.cod_carrito,1)not in ('9','P') and a.cod_carrito='"+$P{carro}+"'"   +
+ "     group by  " +
+  "    a.clasificadora_actual,a.tipo_huevo,a.cantidad,c.fecha_embarque , " +
+ "      a.cod_lote,a.cod_cambio,a.cod_carrito,a.codigo_borroso ," +
+  "     a.tipo_maples ,a.fecha_puesta,a.hora_clasificacion,a.tipo_huevo," +
+  "    a.empacadora,a.cod_clasificacion ,a.aviario,a.tipo_almacenamiento," +
+ "     a.resp_clasificacion,a.estado_liberacion,r.estado_retencion ,r.motivo_retencion,m.descripcion , " +
+ "     r.liberado_por,r.fecha_alimentacion ,a.cod_cambio ,a.codigo_especial,c.fecha_embarque" +
+"   )t" +
+ "      order by 4"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="control" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[($P{filtro_carro}==0 && $P{filtro_calendario}==1)   ? $P{fecha_clasificacion} : 
+    ($P{filtro_carro}==0 && $P{filtro_calendario}==0)  ? $P{fecha_puesta} : 
+    ($P{filtro_carro}==1 && $P{filtro_calendario}==0)   ? $P{fecha_puesta_carro} :
+    ($P{filtro_carro}==1 && $P{filtro_calendario}==1)   ? $P{fecha_clasificacion_carro} :
+    $P{fecha_puesta}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo_huevo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="filtro_aviario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="aviarios" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estado_liberacion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec [mae_ptc_report_mixtos_variables] @clasificadora=$P{clasificadora} ,@fecha_desde=$P{fecha} ,@fecha_hasta=$P{fecha_hasta}  ,@cod_carrito=$P{carro}  ,@filtro_calendario=$P{filtro_calendario},@tipo_huevo=$P{tipo_huevo},
+@filtro_aviario=$P{filtro_aviario},@aviarios=$P{aviarios},@estado_liberacion=$P{estado_liberacion}]]>
+	</queryString>
+	<field name="fecha_involucrada" class="java.lang.String"/>
+	<field name="cod_cambio" class="java.lang.String"/>
+	<field name="cod_lote" class="java.lang.String"/>
+	<field name="cod_carrito" class="java.lang.String"/>
+	<field name="codigo_borroso" class="java.lang.String"/>
+	<field name="tipo_maples" class="java.lang.String"/>
+	<field name="fecha_puesta" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="hora_clasificacion" class="java.lang.String"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="empacadora" class="java.lang.String"/>
+	<field name="categoria" class="java.lang.String"/>
+	<field name="aviario" class="java.lang.String"/>
+	<field name="tipo_almacenamiento" class="java.lang.String"/>
+	<field name="resp_clasificacion" class="java.lang.String"/>
+	<field name="estado_liberacion" class="java.lang.String"/>
+	<field name="estado_del_producto" class="java.lang.String"/>
+	<field name="motivo_retencion" class="java.lang.String"/>
+	<field name="Disposicion" class="java.lang.String"/>
+	<field name="liberado_por" class="java.lang.String"/>
+	<field name="fecha_alimentacion" class="java.lang.String"/>
+	<field name="mesa_mumero" class="java.lang.String"/>
+	<field name="fecha_embarque" class="java.sql.Timestamp"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="clasificadora_actual" class="java.lang.String"/>
+	<field name="codigo_especial" class="java.lang.String"/>
+	<variable name="Cantidad_SUM" class="java.lang.String"/>
+	<variable name="fecha_puesta_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{fecha_puesta}]]></variableExpression>
+	</variable>
+	<variable name="Cantidad_1" class="java.lang.Integer" resetType="Group" resetGroup="cod_carrito" calculation="Sum">
+		<variableExpression><![CDATA[$F{Cantidad}]]></variableExpression>
+	</variable>
+	<group name="cod_carrito">
+		<groupExpression><![CDATA[$F{cod_carrito}]]></groupExpression>
+		<groupHeader>
+			<band/>
+			<band height="38">
+				<line>
+					<reportElement x="0" y="37" width="803" height="1" uuid="a1fb072a-1839-4f24-8ed1-03cdb2051638"/>
+				</line>
+				<line>
+					<reportElement x="149" y="9" width="1" height="28" uuid="ffc21467-8da6-4fc8-be07-48c41c4edf1d"/>
+				</line>
+				<line>
+					<reportElement x="532" y="9" width="1" height="28" uuid="4b6e9b17-9c23-40c0-b571-301381066c40"/>
+				</line>
+				<line>
+					<reportElement x="68" y="9" width="1" height="28" uuid="b319a855-0b89-44b8-8407-e46207f16e71"/>
+				</line>
+				<line>
+					<reportElement x="117" y="9" width="1" height="28" uuid="1afcf069-2da1-49fd-8e14-4df4c3a347aa"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="9" width="33" height="28" uuid="a96a73aa-046d-40ad-8ccd-08cd8005bebf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="5"/>
+					</textElement>
+					<text><![CDATA[Código de Carro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="296" y="10" width="25" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="4f00698b-fd20-4b28-97ee-5626e1027ee5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Aviario]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="401" y="10" width="44" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="d3c51ee5-9744-417f-8eb8-7cb7660f9939"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Motivo]]></text>
+				</staticText>
+				<line>
+					<reportElement x="445" y="9" width="1" height="28" uuid="74218ce7-d582-4e05-81db-e139c9705871"/>
+				</line>
+				<line>
+					<reportElement x="613" y="10" width="1" height="27" uuid="e362a62e-1e6f-4861-a033-6b15e32f8f6f"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="94" y="9" width="23" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="2fd94971-cb7e-4078-92ea-a34fe0891c80"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Tipo de Huevo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="33" y="10" width="35" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="018909fe-28fd-4651-ab27-de4b03c75ae9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Responsable]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="658" y="10" width="32" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="f70cf3b2-a5d3-4919-a1f8-596bd163e6e6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fecha de alimentación]]></text>
+				</staticText>
+				<line>
+					<reportElement x="496" y="10" width="1" height="28" uuid="abf4a4dd-2daa-43d2-9f37-e067c6b9ee38"/>
+				</line>
+				<line>
+					<reportElement x="656" y="9" width="1" height="28" uuid="abfdd336-d004-49a5-aedf-8be503887e4c"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="691" y="10" width="27" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="dfc2a137-0c0a-4b60-8cf7-94078dd03037"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fecha de Embarque]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="69" y="9" width="24" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="a7ec30d4-fc20-4144-a5e9-2378f2675913"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Cant. (en cajones)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="399" y="9" width="1" height="28" uuid="5dc8eaa1-3fc1-46e4-b0c5-b554cfebc860"/>
+				</line>
+				<line>
+					<reportElement x="295" y="9" width="1" height="28" uuid="75be6c6c-f05d-480f-a2fc-d124fb5e2840"/>
+				</line>
+				<line>
+					<reportElement x="573" y="9" width="1" height="28" uuid="6103fc14-51bb-4eb1-b5c8-fed234e9c203"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="615" y="10" width="41" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="bdde3a90-d73d-4340-8f8a-f747706d0f25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Liberado por]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="446" y="10" width="50" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="391b3b13-90c7-4d9c-b137-9856274906e2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Disposición]]></text>
+				</staticText>
+				<line>
+					<reportElement x="352" y="9" width="1" height="28" uuid="c8453714-288e-4e11-bb96-0d3216b2604e"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="323" y="10" width="27" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="cfb61d5b-9b57-49bc-923c-b9710d036200"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Estado de liberación]]></text>
+				</staticText>
+				<line>
+					<reportElement x="176" y="9" width="1" height="28" uuid="7dc749da-67aa-4515-bf9d-b62de296dc2b"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="118" y="9" width="31" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="2dacbdec-3722-4bd3-a68f-3d86de75c19f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Nº de empacadora]]></text>
+				</staticText>
+				<line>
+					<reportElement x="204" y="9" width="1" height="28" uuid="f2453c3d-b87b-4ad2-910f-7a26faa1b135"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="177" y="10" width="27" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="f7b3ec44-95b1-4c7a-b733-28c3a14e60c8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fecha de Puesta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="205" y="10" width="34" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="71ee05c8-ad49-4fa5-90c7-de1e801103b6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fechas de Puestas Involucradas]]></text>
+				</staticText>
+				<line>
+					<reportElement x="93" y="9" width="1" height="28" uuid="1b628907-3a64-4c7f-873b-eb69d20ae79d"/>
+				</line>
+				<line>
+					<reportElement x="690" y="9" width="1" height="28" uuid="edc87e20-6f01-4c8c-9985-1ad4165c5582"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="497" y="10" width="35" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="e1e15c58-3428-4f48-a0ba-13603a09419f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Código de mesa de traslado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="271" y="10" width="24" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="f9ff4301-704d-4ddd-bcb0-2ec22c2edd2c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Código borroso]]></text>
+				</staticText>
+				<line>
+					<reportElement x="322" y="9" width="1" height="28" uuid="c63da2cf-1688-464c-b20a-f85d51d45100"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="150" y="9" width="26" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="d8489a0d-f2fa-48e5-891d-add26a6f176b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Tipo de maples]]></text>
+				</staticText>
+				<line>
+					<reportElement x="-1" y="0" width="1" height="38" uuid="c050f180-ba91-4813-8650-b1d6724d9762"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="534" y="10" width="39" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="1015a26c-b281-4905-a72c-d7c999fde35c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Lugar de origen del carro]]></text>
+				</staticText>
+				<line>
+					<reportElement x="270" y="9" width="1" height="28" uuid="7d88c669-dc95-4898-8ce6-107609c7455e"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="353" y="9" width="46" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="9fef589a-a08c-4281-bdc4-6166b95c5803"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Estado del producto (NC/pNC)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="34" y="9" width="1" height="28" uuid="0580528d-3c22-478e-879b-3474e31b7764"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="575" y="11" width="37" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="e0b184c6-7928-4576-90fc-9e05974e0233"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fecha de traslado del carro]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="9" width="802" height="1" uuid="74dba72e-6f4f-4454-82d9-e3eddc52dbb2"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="802" height="1" uuid="4dbdeb47-3181-4324-ae71-a9186612ffdb"/>
+				</line>
+				<line>
+					<reportElement x="719" y="10" width="1" height="27" uuid="df36d5a6-bd8b-4c60-abfd-6c553944867e"/>
+				</line>
+				<line>
+					<reportElement x="755" y="10" width="1" height="27" uuid="8a397e32-7f9c-4a94-8f36-abc13a1bf74d"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="719" y="10" width="36" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="a4d9a841-b2dc-4088-9270-4aa9e260f87f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Hora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="756" y="11" width="45" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="7bffced0-c12f-4c8b-8d24-a4a03778d98f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Fecha de clasificación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="12" width="10" height="6" uuid="49626cee-3568-42fc-9013-8a7996ebf54e"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[7]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="435" y="12" width="10" height="6" uuid="1996641d-16db-4e42-8509-053d8fa6b940"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="524" y="11" width="10" height="6" uuid="6311accf-7bee-428a-81ef-11ccf025da7c"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="684" y="11" width="10" height="6" uuid="644cdf37-1be7-4aea-8780-ed52f97babff"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="11" width="10" height="6" uuid="281a6de2-b73a-43fe-b7a0-2af3402a373a"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[5]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="563" y="11" width="10" height="6" uuid="8e196206-b44e-41f9-a228-22e8d8ef9f7c"/>
+					<textElement>
+						<font fontName="Arial" size="4" isBold="true"/>
+					</textElement>
+					<text><![CDATA[6]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="288" y="11" width="7" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="a4f4e386-c833-4b0d-8f9f-0094bbf1207f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[1]]></text>
+				</staticText>
+				<line>
+					<reportElement x="239" y="10" width="1" height="28" uuid="77d108b5-7b56-4144-a76d-5918c2ebea79"/>
+				</line>
+				<staticText>
+					<reportElement mode="Transparent" x="240" y="10" width="30" height="27" forecolor="#000000" backcolor="#FFFFFF" uuid="4e37979b-b42c-4f48-8348-047d5ca992ff"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Especial]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="262" y="11" width="7" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="6ac43c40-4bb6-4cd6-841a-307015b79e35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[1]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="19">
+				<staticText>
+					<reportElement mode="Transparent" x="7" y="2" width="69" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="5303dd96-d64a-4f80-a9a4-dec866d049a8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="116" y="1" width="69" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b0a1c4e1-f08b-4495-a5ce-877e17e6798b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Categoria]]></text>
+				</staticText>
+				<line>
+					<reportElement x="-1" y="0" width="1" height="17" uuid="d95dd03a-19ba-4e7a-a279-02a0dbd5decf"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="803" height="1" uuid="02aab6cc-a0ed-463b-bb81-5f941e420339"/>
+				</line>
+				<line>
+					<reportElement x="0" y="17" width="803" height="1" uuid="886cf690-8821-4226-8322-7fc0cff3e0a5"/>
+				</line>
+				<line>
+					<reportElement x="79" y="0" width="1" height="17" uuid="32524158-9f14-4aaa-80dc-142b6738d3e4"/>
+				</line>
+				<line>
+					<reportElement x="104" y="0" width="1" height="17" uuid="4463ccd2-0e38-4fc0-9831-e9d179d895c9"/>
+				</line>
+				<line>
+					<reportElement x="194" y="1" width="1" height="16" uuid="c2eacd79-78fc-4c94-85d5-98e606e268cb"/>
+				</line>
+				<line>
+					<reportElement x="802" y="1" width="1" height="16" uuid="59ad720c-418c-4a9b-a55e-ce460e0ba664"/>
+				</line>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="80" y="2" width="24" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="26427ac2-26c0-408c-b093-de95cb0902ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="5" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Cantidad_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="576" y="1" width="100" height="15" uuid="d90f9b18-73de-4ed0-8ebd-08806159b2a0"/>
+					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="97" height="30" uuid="31677a70-ce4c-4d74-90f4-957296af4522"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAEHARA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="25" width="152" height="20" uuid="b9ac57e9-d249-44cc-a2b4-b052613f2e5d"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[AGROPECUARIA COMERCIAL E INDUSTRIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="4" width="41" height="26" uuid="a004b09a-2e8c-4cf9-9bcd-d44605f029de"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.A.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="45" width="802" height="1" uuid="2fe70436-c071-4b5a-8a6d-4224c1fdc218"/>
+			</line>
+			<staticText>
+				<reportElement x="162" y="4" width="527" height="15" uuid="1cac5946-e399-415d-b925-aa988f979e5f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="19" width="527" height="15" uuid="e1605db1-9276-4e66-9c1a-7e8dfc0727df"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HUEVOS CLASIFICADOS FRESCOS Y LAVADOS - MIXTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="7" width="107" height="15" uuid="9d7037c3-2262-47b4-9679-8da2850a9e6e"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[M-FOR-CYO-42]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="20" width="46" height="15" uuid="20e488db-64af-45fb-9467-096ccd79270e"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rev. 01]]></text>
+			</staticText>
+			<line>
+				<reportElement x="689" y="0" width="1" height="46" uuid="51edfde5-90d4-4d8d-a51b-3bbdf7d1ad3f"/>
+			</line>
+			<staticText>
+				<reportElement x="-1" y="48" width="159" height="81" uuid="54be6bf0-6fef-457c-8dd1-065774e0b9ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIAS:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="158" y="46" width="1" height="84" uuid="57ace019-0e0d-43c8-94d0-c6a029a3b76c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="129" width="802" height="1" uuid="8d7903f8-d027-4cfe-9fae-e7701d169528"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="-1" width="1" height="152" uuid="e12c211e-0098-47ff-b21c-5fa019a4a652"/>
+			</line>
+			<line>
+				<reportElement x="802" y="-1" width="1" height="152" uuid="b6eb1ffe-4c2f-4aa8-a41f-d45b04750923"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-1" width="802" height="1" uuid="b3009a84-098e-48be-b576-9c27155706f4"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="135" width="39" height="15" uuid="ad7c81e6-1b34-4df8-a673-663c93d1d269"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Área:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="150" width="802" height="1" uuid="e87553a2-d0d4-48d4-804c-724342356833"/>
+			</line>
+			<textField>
+				<reportElement x="33" y="135" width="100" height="16" uuid="0cd6f1b3-2c17-4d00-842b-c6904794e002"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{clasificadora_actual}.equalsIgnoreCase("OVO")  ? "CYO-LAVADO" :
+$F{clasificadora_actual}.equalsIgnoreCase("CCHA")  ? "CYO-CCHA" :
+
+$F{clasificadora_actual}.equalsIgnoreCase("CCHB")  ? "CYO-CCHB" :
+ $F{clasificadora_actual}
+   )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="86" width="10" height="8" uuid="20a3c5d1-1e78-40e6-b3b9-52afc36f148d"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="561" y="49" width="58" height="15" uuid="4ec62ec5-a244-43e7-8f51-f8db32b3cf0c"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Liberado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="765" y="45" width="33" height="19" backcolor="#990099" uuid="1d6a5c73-7d7f-48d0-a415-1265f4eab589"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[R/L]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="74" width="10" height="8" uuid="c39ac741-5ed0-4d83-ac71-60c63906e8c1"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="90" width="431" height="9" uuid="2e41d271-c049-440d-9e6a-e13e65ed96ee"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aplica para carros trasladados. S: Salón, CYO-CCHA: Centro de Clasificación de Huevos A, CYO-CCHB: Centro de Clasificación de HuevosB, CYO-CCHH: Centro de Clasificación de Huevos H.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="74" width="10" height="5" uuid="bf4e7baa-f3fc-4089-a2dd-25efcce5ffee"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="79" width="122" height="8" uuid="c1ae9028-167d-40ee-8bce-afb0e8664f36"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aplica cuando el Estado del producto es PNC/NC]]></text>
+			</staticText>
+			<line>
+				<reportElement x="159" y="73" width="643" height="1" uuid="dcb83caa-df5f-4253-81c5-94b6fa7d6782"/>
+			</line>
+			<staticText>
+				<reportElement x="166" y="66" width="240" height="7" uuid="6fa8e1bb-c71a-4790-a262-4a7f5551953b"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Los colores asignados en las referencias serán utilizados sólo en el campo de Estado de Liberación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="85" width="10" height="8" uuid="98e2a6a7-a0f5-4a8c-af83-13baed8dd9f9"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="539" y="78" width="244" height="8" uuid="052319e9-350f-4306-b0cf-656baf99a40d"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aplica para carros retenidos cuya disposición haya sido reprocesar y fueron trasladados a mesas. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="619" y="45" width="26" height="19" backcolor="#009933" uuid="da066b4d-30e0-43bf-a7e9-24b2dcbe5d59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[L]]></text>
+			</staticText>
+			<line>
+				<reportElement x="159" y="64" width="643" height="1" uuid="e6afab8e-c3be-4cb3-8a25-7c0cc251a28a"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="222" y="45" width="26" height="19" backcolor="#FF0000" uuid="36743d2c-9ede-42d0-b182-c97337648a1f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="536" y="74" width="10" height="8" uuid="f78bf199-979a-4a17-bde4-dd7a7e609fb4"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="106" width="133" height="9" uuid="e4102680-9dd6-4f0a-be48-07dc590cfba0"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NC: No Conforme,  pNC: Potencialmente No Conforme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="49" width="72" height="15" uuid="419eba7b-ecb5-4a42-b860-19ada35388fd"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Retenido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="252" y="49" width="282" height="15" uuid="67677967-38af-4c9e-b8d1-8544f74fadbf"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Retenido por RNC (reporte de no conformidad): ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="649" y="48" width="143" height="15" uuid="47526a4f-8cde-42d5-9fde-5a2be2e98934"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ret. luego liberado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="79" width="139" height="8" uuid="7f3bb9eb-476e-4256-92f1-eb30e97abb4e"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Corresponde a la fecha de alimentación cuando aplique]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="79" width="89" height="8" uuid="0114ff62-d5c4-44c4-8561-31da1d14be3c"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Marcar con un "SI" cuando se aplique]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="74" width="10" height="8" uuid="6e112979-6e00-4896-9610-c0b75bb79387"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="100" width="10" height="8" uuid="633f6840-fb75-40a0-b0ae-9fe735bea490"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[7]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="532" y="45" width="26" height="19" backcolor="#00CCCC" uuid="bfa6e3c6-9c31-4a28-b95b-f6936eea6ca9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[R.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="90" width="111" height="9" uuid="05c6b14a-a560-4f06-b516-f28bcfb98f25"/>
+				<textElement>
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Según M-TAB-CYO-04 Maples por tipo de huevo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="95" y="0" width="22" height="20" uuid="04fc6a42-a727-489b-a244-ae8b0f5381be"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_huevo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="0" width="28" height="20" uuid="3fcaa5ae-55ca-4c1d-9d70-34198c33e387"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empacadora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="0" width="25" height="20" uuid="9af0e9ba-7525-44fb-9db3-654543a5ffbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="0" width="20" height="20" uuid="ca90f44c-b334-4bb2-bfba-e33bc2923ae3"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aviario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Colores" x="323" y="0" width="29" height="22" uuid="f9b6b833-3ceb-49b6-9e9c-3aeeaacb2a2a"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_liberacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="0" width="33" height="20" uuid="b05c97ac-da86-4dac-952f-cd55323bceb5"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resp_clasificacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="354" y="0" width="45" height="20" uuid="016fb676-9f22-432b-abb0-ddd5c8c1d1fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_del_producto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="615" y="0" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ccc9f718-7f1f-4850-89f3-d77fa7dbbd73"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{liberado_por}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="657" y="0" width="32" height="20" uuid="20673929-989d-49b0-a424-7137cf5a2bac"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{fecha_alimentacion}.equalsIgnoreCase("null ")  ? "" :
+$F{fecha_alimentacion}.equalsIgnoreCase(" ")  ? "" :
+
+$F{fecha_alimentacion}.equalsIgnoreCase("null")  ? "" :
+ $F{fecha_alimentacion}
+   )]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="34" y="0" width="1" height="21" uuid="7528efe1-bf39-4404-8b7d-f141749bec5c"/>
+			</line>
+			<line>
+				<reportElement x="68" y="0" width="1" height="21" uuid="5d86c7de-bc1f-4392-a427-0ac1f8519345"/>
+			</line>
+			<line>
+				<reportElement x="117" y="0" width="1" height="21" uuid="6c82d375-61dd-4e02-af67-70f01b377d1e"/>
+			</line>
+			<line>
+				<reportElement x="149" y="0" width="1" height="21" uuid="1441b8f8-7f3b-472f-821a-88626ded459f"/>
+			</line>
+			<line>
+				<reportElement x="204" y="0" width="1" height="21" uuid="4c93f08b-4be9-4976-b837-65b21f2deb90"/>
+			</line>
+			<line>
+				<reportElement x="270" y="0" width="1" height="21" uuid="fb4f6074-ea90-4b72-8d40-b283f2301a92"/>
+			</line>
+			<line>
+				<reportElement x="295" y="0" width="1" height="21" uuid="56fca803-8988-4b51-b133-83ecd74d067b"/>
+			</line>
+			<line>
+				<reportElement x="322" y="0" width="1" height="21" uuid="6e9fc250-9399-4cab-a29a-84c04d6bc9ae"/>
+			</line>
+			<line>
+				<reportElement x="399" y="0" width="1" height="21" uuid="9da65d74-8053-4472-a3ab-c8710bb3cc39"/>
+			</line>
+			<line>
+				<reportElement x="445" y="0" width="1" height="21" uuid="aa816a27-aa79-477f-9655-1169bdba86bb"/>
+			</line>
+			<line>
+				<reportElement x="496" y="0" width="1" height="21" uuid="9b74b2c6-425a-455d-9e05-46bc268c07a0"/>
+			</line>
+			<line>
+				<reportElement x="573" y="0" width="1" height="21" uuid="cd8dd9ce-1123-48d9-bb00-edcf467f09c2"/>
+			</line>
+			<line>
+				<reportElement x="802" y="0" width="1" height="21" uuid="b108d4c5-3a87-49cd-a8ec-35213b271421"/>
+			</line>
+			<line>
+				<reportElement x="802" y="-39" width="1" height="38" uuid="77a3638f-abb5-478d-b2b5-50ccbcf35f05"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="21" uuid="b4ab533b-73e9-4c7e-a5bd-e6c17e8c946b"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="21" width="803" height="1" uuid="a16a3a1a-6757-4122-9bfe-2bd941d63676"/>
+			</line>
+			<line>
+				<reportElement x="532" y="0" width="1" height="21" uuid="4858b234-1508-4f2e-a88b-8c4e5777ed57"/>
+			</line>
+			<textField>
+				<reportElement x="177" y="0" width="28" height="20" uuid="ebccfbd3-7579-44c3-9829-e9ba5b52c908"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_puesta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="25" height="20" uuid="4f0b7182-4f60-4917-b3e7-f75b454b7010"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_maples}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="176" y="0" width="1" height="21" uuid="84780d64-dc76-491a-bfd1-ab01354a957e"/>
+			</line>
+			<textField>
+				<reportElement x="272" y="0" width="22" height="20" uuid="864d59e8-9d31-4d2b-8b3f-b49e45b3c43a"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_borroso}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="352" y="0" width="1" height="21" uuid="d928b214-f149-4f0b-aa41-5d9285165d72"/>
+			</line>
+			<line>
+				<reportElement x="93" y="0" width="1" height="21" uuid="6ea59b46-d017-450c-90d1-78a08690de6d"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="497" y="0" width="35" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1b3aed74-87d8-4221-902a-25c9d36e6688"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mesa_mumero}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="613" y="0" width="1" height="21" uuid="f28998f2-fd7f-4028-b915-756c16a638f7"/>
+			</line>
+			<line>
+				<reportElement x="656" y="0" width="1" height="21" uuid="2daa4c53-5c19-4e78-9121-72fe2d2e4bee"/>
+			</line>
+			<line>
+				<reportElement x="690" y="0" width="1" height="21" uuid="9e5901df-c9f7-4bc8-a7ad-0bd789bf352e"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="33" height="22" uuid="6185e3a9-3640-46b8-8a0d-4d3d2410d579"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_carrito}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="719" y="0" width="1" height="21" uuid="0b6d981d-0749-4d99-8379-0d4ec3227fde"/>
+			</line>
+			<line>
+				<reportElement x="755" y="0" width="1" height="21" uuid="837f2cce-c92d-4299-9187-f45ad68ac418"/>
+			</line>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="756" y="1" width="45" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2dcbf8a3-eb25-4deb-a9db-6ddd7fd600b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="720" y="2" width="35" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="97bf1c48-e431-4392-96f6-56e08a1efa1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora_clasificacion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="239" y="0" width="1" height="21" uuid="be650171-c41c-43c7-808a-078864effa48"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="1" width="30" height="20" uuid="d7326bd3-aa4a-4ee7-a0f9-bcc8034928a0"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_especial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="691" y="1" width="27" height="19" uuid="8b2b408c-2479-4e1e-abfe-6634260f40aa"/>
+				<textElement textAlignment="Center">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_embarque}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="401" y="0" width="44" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="10387a6d-7eb5-4c9c-a795-b3212f06f323"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="3" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_retencion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="446" y="1" width="51" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4d484ddf-cf04-4c2f-9c29-0390fa1e9799"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="3" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Disposicion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="205" y="1" width="34" height="20" uuid="21e8a6fd-1df3-401e-bec1-f0f2e51b90c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_involucrada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>

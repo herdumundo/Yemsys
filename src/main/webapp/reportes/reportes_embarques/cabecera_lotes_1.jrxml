@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eebdf742-893f-4b18-83be-278346d5874a">
+	<property name="ireport.zoom" value="1.6105100000000203"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="maehara"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Embarque\\web\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.id,a.fecha_embarque as docdate ,a.area  as whscode,a.usuario_grupomaehara,b.name   ,c.code + '-' + c.name as camion,usuario_grupomaehara, convert(time,hora_inicio) as hora_inicio , convert(time,hora_fin) as hora_fin
+
+from embarque_cab a 
+inner join maehara.dbo.[@choferes] b on a.id_chofer=b.code 
+inner join maehara.dbo.[@CAMIONES] c on a.id_camion=c.Code
+
+
+where id=$P{numero}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="docdate" class="java.sql.Timestamp"/>
+	<field name="whscode" class="java.lang.String"/>
+	<field name="usuario_grupomaehara" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="camion" class="java.lang.String"/>
+	<field name="hora_inicio" class="java.sql.Time"/>
+	<field name="hora_fin" class="java.sql.Time"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="317" y="11" width="73" height="22" forecolor="#000000" uuid="48ac1c71-c09b-4856-98d6-6ef899501523"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rev.01]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="0" width="82" height="26" forecolor="#000000" uuid="966acc8d-efb8-4d92-a7da-053672bc21e3"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAEHARA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="317" y="2" width="73" height="21" forecolor="#000000" uuid="e98acbd4-d55a-405a-854c-e610295a5e67"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M-FOR-CCH-53]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="3" width="22" height="23" forecolor="#000000" uuid="19d22d5f-b5c9-4bd3-a306-981eba08f632"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="3" width="214" height="20" forecolor="#000000" uuid="fcf12d3e-305c-448b-a2b3-f60bad219367"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="16" width="104" height="16" forecolor="#000000" uuid="a875f53c-bb5c-4a9b-8d9f-81af337bfb47"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGROPECUARIA COMERCIAL E INDUSTRIAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="316" y="-1" width="1" height="37" uuid="c4d9ccdf-155b-4c90-ac09-bbc3eaf34e61"/>
+			</line>
+			<line>
+				<reportElement x="102" y="-1" width="1" height="37" uuid="874da6fe-d0c3-4094-bcfd-8ff180a84b95"/>
+			</line>
+			<staticText>
+				<reportElement x="4" y="81" width="44" height="20" uuid="c0c8a1cd-9fed-4e6c-95a4-967d51cb6c0f"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="61" width="100" height="20" uuid="194fe309-3727-4b29-b2ae-4f2c465109fe"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{whscode}.equalsIgnoreCase("OVO")  ? "CYO-LAVADO" :
+$F{whscode}.equalsIgnoreCase("CCHA")  ? "CYO-CCHA" :
+
+$F{whscode}.equalsIgnoreCase("CCHH")  ? "CYO-CCHH" :
+$F{whscode}.equalsIgnoreCase("CCHB")  ? "CYO-CCHB" :
+
+ $F{whscode}
+   )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="83" width="64" height="20" uuid="57e5e2b2-6140-48ad-b01c-6c827f630d9f"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{camion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="153" y="61" width="30" height="20" uuid="7d504e39-f4e9-4bc4-850a-78893912ee8d"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="27" y="57" width="95" height="20" uuid="b841b373-22ab-4f8b-ae6c-0b9abd460d60"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{docdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="106" width="135" height="20" uuid="817e25c8-ff37-4cf3-9b6c-475ead351071"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:VIMAR & CIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="81" width="109" height="20" uuid="1264fba6-0f1b-4f56-a0e7-78ed2196539b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="57" width="38" height="20" uuid="c890280a-cfb0-495a-a759-ca50f54f6520"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="83" width="65" height="20" uuid="e59065fe-f9ab-41d8-b26b-8106862966ca"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Camion Nro.:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="126" width="803" height="1" uuid="782dca33-96e2-458c-993b-e4791a514e10"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="127" uuid="b5303b94-4904-497d-b263-267ada319eed"/>
+			</line>
+			<line>
+				<reportElement x="803" y="-2" width="1" height="129" uuid="4b36e6d6-0f88-4ed7-9ffb-3ce6961d01b5"/>
+			</line>
+			<textField>
+				<reportElement x="442" y="81" width="109" height="20" uuid="470e27fb-6c3e-4e5a-b85d-2770b3219f69"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="494" y="3" width="22" height="23" forecolor="#000000" uuid="803353e1-eee8-4b23-ba47-123930b81004"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="565" y="61" width="30" height="20" uuid="0d07f0b6-c0e5-40c0-92bd-caa2d430d197"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="106" width="135" height="20" uuid="2567e6b9-b815-49fa-9849-27fae05edbef"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:VIMAR & CIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="81" width="44" height="20" uuid="28c05dda-fe50-4518-8067-cb61b7851eea"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="610" y="83" width="64" height="20" uuid="e5ca76ca-5978-4610-b5a8-8b3bf98df97b"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{camion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="565" y="83" width="65" height="20" uuid="0f2318a7-cbcb-4f33-85cf-6489680ecf92"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Camion Nro.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="585" y="61" width="64" height="20" uuid="b19129fb-165b-46a7-8bd1-829522dc39e8"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{whscode}.equalsIgnoreCase("OVO")  ? "CYO-LAVADO" :
+$F{whscode}.equalsIgnoreCase("CCHA")  ? "CYO-CCHA" :
+
+$F{whscode}.equalsIgnoreCase("CCHA")  ? "CYO-CCHB" :
+ $F{whscode}
+   )]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="413" y="-1" width="1" height="128" uuid="9ee370cf-49cd-4882-8476-c060ccb0f4af"/>
+			</line>
+			<staticText>
+				<reportElement x="515" y="3" width="214" height="23" forecolor="#000000" uuid="f30ddaf5-8125-4882-ba26-ddce7ed4e26d"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="0" width="82" height="26" forecolor="#000000" uuid="65b48cd0-6f15-42e4-8ec9-8d35a184a7a3"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAEHARA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="57" width="38" height="20" uuid="1cfcbb3d-3b18-4b4e-bf41-900cdb9f8486"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="729" y="2" width="73" height="21" forecolor="#000000" uuid="ad0df03e-c91e-43b1-856c-66527681a975"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M-FOR-CCH-53]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="16" width="104" height="16" forecolor="#000000" uuid="2cd9db75-79a2-48fb-8534-acd0bde47b11"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGROPECUARIA COMERCIAL E INDUSTRIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="729" y="11" width="73" height="22" forecolor="#000000" uuid="9dad1b5d-52d7-4bb1-88a7-879f3bab925a"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rev.01]]></text>
+			</staticText>
+			<line>
+				<reportElement x="728" y="-1" width="1" height="37" uuid="ee650f62-b547-4347-a523-848f5f66b96c"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="439" y="57" width="76" height="20" uuid="dd03a51c-f8ba-4f32-b72b-64ba804c7341"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{docdate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="514" y="-1" width="1" height="37" uuid="71ba6df0-ac9a-4286-aa8d-a5bc20b640b1"/>
+			</line>
+			<staticText>
+				<reportElement x="515" y="15" width="214" height="20" forecolor="#000000" uuid="19cd5562-1460-4d54-a6e0-35bacb87a510"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMBARQUE DE HUEVOS CLASIFICADOS-FRESCOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="35" width="803" height="1" uuid="2c93a15d-6695-4fc1-97ac-d7d5cc637da3"/>
+			</line>
+			<line>
+				<reportElement x="401" y="-1" width="1" height="127" uuid="61d31e66-5a3b-4e4d-bf32-868882674f51"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="389" y="-1" width="1" height="127" uuid="8ab532ec-fe51-49de-9146-700526d717d4"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-2" width="804" height="1" uuid="00825dc2-c4c0-459d-b050-77ad6749251d"/>
+			</line>
+			<staticText>
+				<reportElement x="153" y="106" width="113" height="20" uuid="cc02550a-301d-468f-b3da-a5fa4e9a6543"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsable:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="198" y="106" width="147" height="20" uuid="ae5aefa3-68f9-468b-b5d7-a19be412f6ae"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario_grupomaehara}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="564" y="103" width="95" height="20" uuid="35fe7bdf-9685-4330-a61f-60a50db1260e"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsable:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="610" y="103" width="143" height="20" uuid="fb209000-335b-4d32-9f39-07e527c58671"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario_grupomaehara}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="63" width="65" height="20" uuid="3d8606b5-ceb5-4d6a-83ed-440e9c05f871"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Entrada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="83" width="65" height="20" uuid="e68eac9f-ff37-4c79-8d62-25d5a197d23e"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Salida:]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement x="344" y="62" width="36" height="20" uuid="6c75b349-9553-4f9f-a0b1-112c1fb09464"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora_inicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="344" y="81" width="36" height="20" uuid="b3388e34-ef8c-417e-9c17-47815ad43bfe"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="701" y="81" width="65" height="20" uuid="5c526f7b-d01e-4fb5-b2c5-a20359fb012f"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Salida:]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement x="756" y="79" width="36" height="20" uuid="b3e648e6-eed1-4b80-aed4-95c62b787136"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="701" y="61" width="65" height="20" uuid="18b92a07-a9ed-4311-9244-b51a2efa6452"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora de Entrada:]]></text>
+			</staticText>
+			<textField pattern="HH.mm">
+				<reportElement x="756" y="60" width="36" height="20" uuid="2421fa15-5189-4c01-a300-bc9737c5f3ff"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="13" width="212" height="20" uuid="c747c818-dd06-45d2-8e23-551f981653cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{whscode}.equalsIgnoreCase("OVO")  ? "EMBARQUE DE HUEVOS CLASIFICADOS-LAVADOS" :
+$F{whscode}.equalsIgnoreCase("CCHA")  ? "EMBARQUE DE HUEVOS CLASIFICADOS-FRESCOS" :
+
+$F{whscode}.equalsIgnoreCase("CCHB")  ? "EMBARQUE DE HUEVOS CLASIFICADOS-FRESCOS" :
+$F{whscode}.equalsIgnoreCase("CCHH")  ? "EMBARQUE DE HUEVOS CLASIFICADOS-FRESCOS" :
+
+ $F{whscode}
+   )]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<subreport>
+				<reportElement x="-1" y="1" width="803" height="41" isRemoveLineWhenBlank="true" uuid="4ac6bbed-c90c-49b1-bb0d-0edf2cc70f40"/>
+				<subreportParameter name="numero">
+					<subreportParameterExpression><![CDATA[$P{numero}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalle_carros.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="42" splitType="Immediate">
+			<subreport>
+				<reportElement x="-1" y="0" width="803" height="42" uuid="7a5b5647-f32c-4851-b242-3b3e67cfd83f"/>
+				<subreportParameter name="numero"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalle_carros_borroso.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="40">
+			<subreport>
+				<reportElement x="-1" y="0" width="803" height="40" isRemoveLineWhenBlank="true" uuid="7370bb48-e91c-4d59-a2bf-e772d76b4f77"/>
+				<subreportParameter name="numero">
+					<subreportParameterExpression><![CDATA[$P{numero}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalle_mixto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

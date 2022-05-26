@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="410" pageHeight="842" columnWidth="370" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="007ac71d-de07-42e9-b308-c18e1d2f0128">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from v_mae_log_rep where id=$P{id}  and estado_mixto=$P{estado}  ORDER BY 6,10]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha_registro" class="java.lang.String"/>
+	<field name="camion" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="chofer" class="java.lang.String"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="cantidad_det" class="java.lang.Integer"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="carro" class="java.lang.Integer"/>
+	<field name="fecha_puesta" class="java.sql.Timestamp"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="estado_mixto" class="java.lang.Integer"/>
+	<variable name="cantidad_det_1" class="java.lang.Integer" resetType="Group" resetGroup="carro" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad_det}]]></variableExpression>
+	</variable>
+	<group name="carro" keepTogether="true">
+		<groupExpression><![CDATA[$F{carro}]]></groupExpression>
+		<groupHeader>
+			<band height="28">
+				<rectangle>
+					<reportElement x="0" y="8" width="368" height="20" backcolor="#66FF66" uuid="c4d19923-3c23-44fb-96ab-760c140f44d7"/>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="8" width="368" height="20" uuid="e6e1df01-4113-4c9e-9734-5d2eef42fa33"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{clasificadora}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<rectangle>
+					<reportElement x="0" y="0" width="368" height="20" backcolor="#FFFFCC" uuid="411f9ecf-92da-442f-ae9a-33f61af1288b"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="106" y="1" width="100" height="20" uuid="d515b828-e56e-4f21-b835-14181d346329"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="206" y="1" width="100" height="20" uuid="e5484a44-005b-4616-857c-48f0c7aace3b"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cantidad_det_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="AREA">
+		<groupExpression><![CDATA[$F{clasificadora}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="0" y="0" width="368" height="20" backcolor="#CCFFCC" uuid="ae62556a-43bd-4b26-b6d7-67e4cd72904b"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="68" y="22" width="100" height="20" uuid="731c38d7-1383-4749-80c8-bea5e7ba14cd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO DE HUEVOS]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="288" y="0" width="53" height="20" uuid="ffe3f2ce-d0ab-4c66-bcaf-60934df74b94"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{carro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="206" y="22" width="100" height="20" uuid="8790a914-5f36-4308-883e-0901420a7b68"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANTIDAD CAJONES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="242" y="0" width="46" height="20" uuid="611351c3-d0f3-4661-a258-9f5e396a6411"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CARRO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="18" y="0" width="113" height="20" uuid="e35a6514-db57-4c03-90a2-5befbbc348d6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA PUESTA:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="106" y="0" width="100" height="20" uuid="78731c96-f2f9-441e-87b8-cf301c7855f7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_puesta}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="68" y="0" width="100" height="20" uuid="8c52926e-073b-40db-a3ad-8e967187d39b"/>
+				<textFieldExpression><![CDATA[$F{tipo_huevo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="0" width="100" height="20" uuid="a50b9387-713e-47cd-b733-fc5976cbb287"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cantidad_det}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="368" height="1" uuid="9fa4d37d-aebe-4a29-9505-b8f58e284e15"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

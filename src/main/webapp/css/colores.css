@@ -1,0 +1,53 @@
+.text-verde {
+  color:  #009140;
+}
+.text-rojo {
+  color:  #FF0000;
+}
+
+.text-celeste {
+  color:  #0059bc;
+}
+
+.text-amarillo {
+  color:  #f4b30d;
+}
+
+.text-azul {
+  color:  #240054;
+}
+.text-negro {
+  color:  #000;
+ 
+  
+}
+p.thicker {
+  font-weight: 900;
+}
+.scrollme {
+    overflow-x: auto;
+}
+
+
+
+ table tbody > tr:nth-child(odd) > td.single_line{white-space: nowrap; overflow:hidden;}
+table tbody > tr:nth-child(odd) > td.single_line br{display:none;}
+table tbody > tr:nth-child(odd) > td.single_line *{display:inline;white-space:nowrap;}
+
+ 
+ table tbody > tr > td.celda_editable:hover{background:#cccbd5 !important;}
+table tbody > tr > td.celda_editable:focus{background:#020269 !important;}
+table tbody > tr > td.single_line{white-space: nowrap; overflow:hidden;}
+table tbody > tr > td.single_line br{display:none;}
+table tbody > tr > td.single_line *{display:inline;white-space:nowrap;}
+
+
+
+
+
+
+
+
+
+
+ 

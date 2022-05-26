@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cfafee4-c6f3-4b74-b55e-796f84763d49">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\logistica\\web\\reportes\\log_pedidos\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[ select * from v_mae_log_rep where id=$P{id}
+ and estado=$P{estado}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha_registro" class="java.lang.String"/>
+	<field name="camion" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="chofer" class="java.lang.String"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="cantidad_det" class="java.lang.Integer"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="carro" class="java.lang.Integer"/>
+	<field name="fecha_puesta" class="java.sql.Timestamp"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="estado_mixto" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="268" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="100" height="20" uuid="0fc9ca5f-469d-4090-aa92-aae9889c81d9"/>
+				<text><![CDATA[Fecha de registro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="ab57ca05-7158-4d05-b78c-7634c58eba8a"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f0c0da73-bd0b-4859-9b12-47dd268f8efb"/>
+				<text><![CDATA[Nro. pedido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="97" width="100" height="28" uuid="ec7e3f02-75cc-4324-a454-570089d6668b"/>
+				<text><![CDATA[Observacion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="97" width="455" height="28" uuid="15d70e13-cfbd-4188-8160-b23b2c2b1160"/>
+				<textFieldExpression><![CDATA[$F{obs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="47" width="100" height="20" uuid="b8aae6a1-6ae4-41bb-ab0e-dd780df24305"/>
+				<text><![CDATA[Camion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="48" width="100" height="20" uuid="f1b3957f-1295-4a2b-aaf2-da753c80eac7"/>
+				<textFieldExpression><![CDATA[$F{camion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="72" width="100" height="20" uuid="a2ff2317-ffd4-4ed2-898c-a65dca6c0dad"/>
+				<textFieldExpression><![CDATA[$F{chofer}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="22" width="100" height="20" uuid="1490e5f8-1520-4669-9241-16fd68894d3d"/>
+				<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="73" width="100" height="20" uuid="324b2b67-2297-4caf-aabd-7555f991e494"/>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="168" width="528" height="100" uuid="7c77d2a1-3d41-4410-ab16-9992e773a29b"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="estado">
+					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enteros.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="137" width="555" height="31" backcolor="#CCFFCC" uuid="48135fb1-17d4-4d7b-a17a-55da449f6d88"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carros enteros]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="158">
+			<subreport>
+				<reportElement x="75" y="38" width="453" height="100" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="dd8a6f97-d596-44c9-a429-3daf7c06d9d3"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="estado">
+					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "mixtos.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="31" backcolor="#CCFFFF" uuid="7b4d0cae-30ae-45ba-82f0-78fb96846f5c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carros mixtos]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

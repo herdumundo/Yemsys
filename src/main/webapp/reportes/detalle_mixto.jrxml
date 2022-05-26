@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83081415-c8de-4182-96f3-12c49ab50165">
+	<property name="ireport.zoom" value="1.2100000000000128"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="maehara"/>
+	<parameter name="numero" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec [rep_embarque_mixto] @cod_interno=$P{numero}]]>
+	</queryString>
+	<field name="fila" class="java.lang.Integer"/>
+	<field name="indate" class="java.lang.String"/>
+	<field name="cat" class="java.lang.String"/>
+	<field name="carrito" class="java.lang.String"/>
+	<field name="carros" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="27" width="55" height="20" uuid="d3689d7d-c992-4714-8e2c-f8e303b06cb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha puesta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="27" width="51" height="20" uuid="4f8ec095-f486-4726-8436-362d348f8a02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="27" width="42" height="20" uuid="20ee2ea5-a532-436a-8c5a-8aabdf1ab73d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="25" width="200" height="20" uuid="1b5c3d0b-8282-4f32-b25f-0d5404d60103"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAJONES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="-1" width="801" height="1" uuid="fd21d114-5def-452e-ae69-de4b0606d916"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-1" width="1" height="48" uuid="8a0c4eeb-dcf2-454d-b8cd-a186162291b4"/>
+			</line>
+			<line>
+				<reportElement x="802" y="-1" width="1" height="47" uuid="004aef69-970e-46a3-a6b9-38907ebdbd15"/>
+			</line>
+			<line>
+				<reportElement x="1" y="46" width="801" height="1" uuid="d5f72a47-d8ac-4f6a-8c80-4ed3868f78dd"/>
+			</line>
+			<line>
+				<reportElement x="1" y="25" width="802" height="1" uuid="e744f02f-3640-4cca-b78a-31ac3dc77981"/>
+			</line>
+			<line>
+				<reportElement x="58" y="27" width="1" height="20" uuid="eff5cc99-a90d-41e3-981f-9568677b6c39"/>
+			</line>
+			<line>
+				<reportElement x="111" y="26" width="1" height="21" uuid="670a57ec-af76-4a97-909f-80f8a208deb2"/>
+			</line>
+			<line>
+				<reportElement x="157" y="26" width="1" height="21" uuid="339b6300-0f12-4c58-b246-6e966db4d341"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="0" width="355" height="20" uuid="4126d2cf-e27f-4f56-8fd2-2c35f06e3ca2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARROS MIXTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="1" width="358" height="20" uuid="6c5bd478-da00-4638-8b23-4c3f7d210d30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARROS MIXTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="27" width="55" height="20" uuid="0bb3b191-2f1f-4d3a-b1a5-455521ae86e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha puesta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="27" width="47" height="20" uuid="92c0ec09-33b0-47fa-910c-838bdc3e2f0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="25" width="42" height="20" uuid="2f9ad7a7-71ef-4d88-81d9-105560330149"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="476" y="26" width="1" height="20" uuid="b705d9e2-3d9e-404d-9d03-671e883fa5dd"/>
+			</line>
+			<line>
+				<reportElement x="525" y="25" width="1" height="21" uuid="33360e55-c82e-413a-a6e7-6b5f874d70e2"/>
+			</line>
+			<line>
+				<reportElement x="570" y="25" width="1" height="22" uuid="4a068091-98d6-451a-a0ff-39621c936248"/>
+			</line>
+			<staticText>
+				<reportElement x="571" y="25" width="221" height="20" uuid="1d33b9a9-4606-43b7-8d90-6d8cdd20558f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAJONES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="414" y="0" width="1" height="47" uuid="77cc2e00-3062-465e-be95-56eaff45c5ff"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="0" y="0" width="55" height="20" uuid="308328b1-b8bd-47a4-a392-a26e327219ca"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="51" height="20" uuid="5488e005-3fb4-47ad-a473-c56f91107c02"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="0" width="43" height="20" uuid="dbdc56db-728a-4ade-837d-712b8aba484d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrito}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="158" y="0" width="232" height="20" uuid="b4ec6473-b14e-4539-8714-1b48475653a6"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carros}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="803" height="1" uuid="15125dec-5403-4d5f-bdd9-4055973dab88"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="-2" width="1" height="23" uuid="b3228b0b-e5cf-442c-aca4-2d28b7d3f3e7"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="58" y="-2" width="1" height="23" uuid="b21835ac-ddfa-495d-a884-71653ac96f0e"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="111" y="-1" width="1" height="22" uuid="b2bed571-aedb-48a4-92e5-a2fd3c9b7d24"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="157" y="-2" width="1" height="23" uuid="f059c394-e14a-423a-9d3b-2162911283a0"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="802" y="-6" width="1" height="27" uuid="c9e0bde2-b6c3-410d-885c-c4f1da5fbc2d"/>
+			</line>
+			<textField>
+				<reportElement x="528" y="0" width="43" height="20" uuid="cb9fc640-3a71-4018-b6f2-f1667e4602a3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="47" height="20" uuid="e5ff9bfd-0ff4-4d14-882b-9cf063ca58a6"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cat}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="420" y="1" width="55" height="20" uuid="63d640d5-e1bf-47a0-bf59-910d8cddb75b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="476" y="-2" width="1" height="23" uuid="6592801b-4595-4194-9f38-7e03ac045333"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="525" y="-1" width="1" height="22" uuid="ec421245-d227-4b00-baca-dcd8958d52bb"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="570" y="-1" width="1" height="21" uuid="025944d9-509a-451a-89b9-72b0052ed0ff"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="571" y="0" width="232" height="20" uuid="123cafc2-32c0-447e-b9a4-03942e6468e7"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carros}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="401" y="-48" width="1" height="69" uuid="3d935197-b512-4f7a-b449-7a32d3fd7e67"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="390" y="-48" width="1" height="68" uuid="7b1f08e1-7ddd-49db-83c1-77f8a4ee76f7"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="414" y="-1" width="1" height="21" uuid="300cbd3d-af68-48e4-916a-3662e5f66bf8"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

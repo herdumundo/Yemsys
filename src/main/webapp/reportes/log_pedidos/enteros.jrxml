@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="542" pageHeight="600" columnWidth="502" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04e0fbe0-017f-4394-9ad7-341545e7ce4c">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from v_mae_log_rep_enteros where id=$P{id} and estado=$P{estado} order by 7]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha_registro" class="java.lang.String"/>
+	<field name="camion" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="chofer" class="java.lang.String"/>
+	<field name="fecha_puesta" class="java.sql.Timestamp"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="cantidad_det" class="java.lang.Integer"/>
+	<field name="tipo_lote" class="java.lang.String"/>
+	<field name="categoria" class="java.lang.String"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<variable name="cantidad_det_1" class="java.lang.Integer" resetType="Group" resetGroup="area" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad_det}]]></variableExpression>
+	</variable>
+	<group name="area">
+		<groupExpression><![CDATA[$F{clasificadora}]]></groupExpression>
+		<groupHeader>
+			<band height="52">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="11" width="500" height="20" backcolor="#CCFFCC" uuid="d06ea008-af16-4b86-8677-4505d8368519"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{clasificadora}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="31" width="100" height="20" uuid="b50ab8f4-0d4e-4010-96bf-13baa876430b"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo de huevo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="31" width="100" height="20" uuid="10760983-7f1e-419d-b1a1-282537509e12"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo lote]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="200" y="31" width="100" height="20" uuid="3b5d57aa-b063-4bc3-ac1f-07c651e45562"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de puesta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="300" y="31" width="100" height="20" uuid="32e8a178-916a-4a7f-9695-8f1f60998399"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Categoria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="400" y="31" width="100" height="20" uuid="ce57f930-dd81-4340-891a-f726312033c0"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<rectangle>
+					<reportElement x="0" y="0" width="500" height="20" backcolor="#99FF99" uuid="6f5d61c1-e457-4a0f-a83c-e57e8d8f4114"/>
+				</rectangle>
+				<textField>
+					<reportElement x="400" y="0" width="100" height="20" uuid="a1c21cf2-6a17-48ae-8354-07cc0c1d1057"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cantidad_det_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="356" y="0" width="44" height="20" uuid="750f4ef3-d8c4-4f78-baae-a6523764fb54"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="19" width="500" height="1" uuid="e4d15afd-4fa4-46bd-9e66-1f8fe1b3aaf7"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="b1909d50-83fd-4a01-8ce5-b86fe3950a68"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipo_huevo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="fcfe660f-2685-4245-a48b-94d0afe8f8c3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipo_lote}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="200" y="0" width="100" height="20" uuid="c079d7e8-d01a-405b-816e-8f7e98b0a632"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_puesta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="108337ab-6db1-4674-af52-c80a2e83eb9f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="2c26ed8f-3962-4681-9321-4a296c669673"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cantidad_det}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

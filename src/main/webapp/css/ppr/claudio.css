@@ -1,0 +1,92 @@
+#tabla {
+  width: 100px;
+  margin: 0 auto;
+}
+    .divinforme4{
+    position:relative;
+    left: 90px;
+    height: 50%;
+    border-width:5px;
+    width: 95%;
+    float: right;
+
+}
+.cursor-pointer {
+    cursor: pointer !important;
+}
+.table.compact > tbody > tr > th, .table.compact > tbody > tr > td {
+    font-size: 0.9em !important;
+}
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+}
+table {
+    border-collapse: collapse;
+}
+.form-control-placeholder {
+    position: relative; top: 1%;
+    top: 0;
+    -webkit-transition: all 200ms;
+    transition: all 200ms;
+    font-size: 65%;
+    opacity: 0.75;
+}
+.tablagrilla{
+padding: 3px 5px 2px 5px !important;
+font-size: 14px !important;
+}
+ .detalledefilas{
+    position:relative;
+    left:0;
+    height:800px;
+    border-width:5px;
+    display:block;
+    width: 75%;
+    float:left;
+}
+.avi-input {
+    background: #fffeb8 !important;
+}
+.textcolor   {
+    color: #ffffff;
+}
+.textcolor2   {
+    color: #615f5f;
+    width: 35px;
+    background: #fffeb8 !important;
+}
+.btn-excel{
+width:170px;
+font: arial;
+}
+ .prueba{
+  border-width: 1px;
+   border-color:red;
+    border-style:solid;
+    background: #fffeb8;
+ }
+ .grilla{
+     width:800px;
+    margin: 0 auto;
+ }
+ .path{
+    left:0;
+    font-size: 12px;
+ }
+ .btn-volver{
+ padding: 0.35rem 0.4rem 0.25rem 0.4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: 0.2rem;
+    }
+ .text-center{
+  margin: 0rem;
+    }
+    .h_d{
+  width: 640px;
+  margin: 0 auto;
+}
+    .h_d2{
+  width: 1300px;
+  margin: 0 auto;
+}

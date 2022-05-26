@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6784aefd-b27b-445e-889e-f5f203ea20bb">
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="160"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\grupomaehara\\web\\reportes\\log_stock_huevos\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hora" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec  mae_log_stock_carros @hora=$P{hora}]]>
+	</queryString>
+	<field name="fecha_puesta" class="java.sql.Date"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="liberados" class="java.lang.Integer"/>
+	<field name="aceptar_tal" class="java.lang.Integer"/>
+	<field name="fecha_involucrada" class="java.lang.Integer"/>
+	<field name="area" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="148" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="bf1d6660-06b3-49de-9c2c-b7b40f492dd2"/>
+				<staticText>
+					<reportElement x="0" y="0" width="75" height="20" uuid="629d7ac2-1b88-42eb-b11a-aa0f502268c2"/>
+					<text><![CDATA[Hora del cierre:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="75" y="0" width="100" height="20" uuid="176aad39-4a2c-4874-a65c-7eb00e12e4a7"/>
+					<textFieldExpression><![CDATA[$P{hora}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="455" y="0" width="100" height="20" uuid="93a6bb93-068e-460b-b3b2-3751cc1385c2"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="366" y="0" width="89" height="20" uuid="8289d163-95a3-48bc-89c5-e315280bb5e6"/>
+				<text><![CDATA[Fecha del reporte:]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="28" width="555" height="20" backcolor="#CCFFCC" uuid="9d2907b3-dca7-4032-a852-e47d33c4d99f"/>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="232ef7c7-1bb4-4260-9131-bd7c3a6012b6"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LOTES MIXTOS]]></text>
+				</staticText>
+			</frame>
+			<subreport>
+				<reportElement x="0" y="48" width="555" height="90" uuid="1d78a25e-b62b-441c-81b6-fba839999776"/>
+				<subreportParameter name="hora">
+					<subreportParameterExpression><![CDATA[$P{hora}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stock_mixtos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<summary>
+		<band height="133" splitType="Stretch">
+			<crosstab>
+				<reportElement x="20" y="23" width="535" height="109" uuid="43d01105-0323-4777-9a8e-9e9e953c2701"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="36" height="10" uuid="bbba1c14-41dc-4952-9170-10cff6336ec4"/>
+							<textElement>
+								<font size="7"/>
+							</textElement>
+							<text><![CDATA[Puesta]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="fecha_puesta" width="36">
+					<bucket class="java.sql.Date">
+						<bucketExpression><![CDATA[$F{fecha_puesta}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField pattern="dd/MM/yyyy">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="36" height="9" uuid="013d439a-9480-4e71-b50d-50435573cd82"/>
+								<textElement>
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{fecha_puesta}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="tipo_huevo" width="51">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{tipo_huevo}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="51" height="9" uuid="a7f586ea-c9e0-4cf5-b948-ac3c66e4c9f2"/>
+								<textElement>
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{tipo_huevo}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="clasificadora" height="10">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{clasificadora}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="92" height="10" uuid="9318824f-f56a-4341-a694-5bd447a516a4"/>
+								<textElement>
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{clasificadora}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="totalMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{total}]]></measureExpression>
+				</measure>
+				<crosstabCell width="92" height="9">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="92" height="9" uuid="3e5444f0-aeca-4d80-8ac2-fbf9278c9d11"/>
+							<textElement>
+								<font size="5"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="23" backcolor="#CCFFFF" uuid="0864a00f-e26a-4cca-b192-8bf13595f4bb"/>
+				<staticText>
+					<reportElement x="0" y="1" width="126" height="20" uuid="a2e4f000-64a2-4498-a9c9-2a875146db30"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CARROS ENTEROS]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

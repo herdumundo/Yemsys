@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59823d35-8be1-431e-b1a4-218119764396">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="hora" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec  mae_log_stock_carros @hora=$P{hora}]]>
+	</queryString>
+	<field name="fecha_puesta" class="java.sql.Date"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="liberados" class="java.lang.Integer"/>
+	<field name="aceptar_tal" class="java.lang.Integer"/>
+	<field name="fecha_involucrada" class="java.lang.Integer"/>
+	<field name="huevosLDO" class="java.lang.Integer"/>
+	<field name="area" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="201" splitType="Stretch">
+			<elementGroup>
+				<crosstab>
+					<reportElement x="0" y="0" width="555" height="201" uuid="e9b38886-2cda-4543-bec5-2c71e95bde5d"/>
+					<crosstabHeaderCell>
+						<cellContents>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="43" y="0" width="50" height="14" uuid="ef6dde96-a858-41aa-be39-8b85002bd185"/>
+								<textElement verticalAlignment="Bottom">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TIPO HUEVO]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="42" height="14" uuid="6b33800f-2840-4a7c-9629-431d2f625df6"/>
+								<textElement verticalAlignment="Bottom">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PUESTA]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabHeaderCell>
+					<rowGroup name="fecha_puesta" width="42">
+						<bucket class="java.sql.Date">
+							<bucketExpression><![CDATA[$F{fecha_puesta}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField pattern="dd/MM/yyyy">
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="42" height="12" uuid="d47c9965-6d4e-45af-8a96-e395167c0e24"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{fecha_puesta}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="tipo_huevo" width="51">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{tipo_huevo}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField isBlankWhenNull="true">
+									<reportElement style="Crosstab Data Text" x="1" y="0" width="50" height="12" uuid="84771459-178d-4a09-b792-4f7bd5357263"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{tipo_huevo}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+							<cellContents/>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="clasificadora" height="17">
+						<bucket class="java.lang.String">
+							<bucketExpression><![CDATA[$F{clasificadora}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+							<cellContents backcolor="#F0F8FF" mode="Opaque">
+								<box>
+									<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textField>
+									<reportElement style="Crosstab Data Text" x="0" y="0" width="85" height="14" uuid="7cc02af6-371a-4197-8797-9199b8061bfd"/>
+									<textElement>
+										<font size="7" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{clasificadora}]]></textFieldExpression>
+								</textField>
+							</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+							<cellContents/>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<measure name="totalMeasure" class="java.lang.String">
+						<measureExpression><![CDATA[$F{total}]]></measureExpression>
+					</measure>
+					<crosstabCell width="85" height="12">
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="85" height="12" uuid="005b5a17-6c84-4c58-9782-eeeafc4d6806"/>
+								<textElement>
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="fecha_puesta">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="0debd346-ba79-42be-83d4-01bd6dafecda"/>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" columnTotalGroup="clasificadora">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="34e6349b-ec12-44ce-a315-c84a11cafd6e"/>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="fecha_puesta" columnTotalGroup="clasificadora">
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="7b534ded-9eaa-4416-94c3-70b7a463e81a"/>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell height="25" rowTotalGroup="tipo_huevo">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b17779e8-ec85-4f6e-bf44-58c9e6e05a68"/>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell rowTotalGroup="tipo_huevo" columnTotalGroup="clasificadora">
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b877fe72-351f-4ed0-9ad1-a4284e0dc2b6"/>
+								<textFieldExpression><![CDATA[$V{totalMeasure}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabCell>
+				</crosstab>
+			</elementGroup>
+		</band>
+	</summary>
+</jasperReport>

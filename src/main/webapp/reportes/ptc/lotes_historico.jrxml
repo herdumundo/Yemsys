@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a343d70-f553-4a73-81cf-c9aef5da10be">
+	<property name="ireport.zoom" value="1.6105100000000354"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha_puesta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo_huevo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="clasificadora" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[mae_ptc_report_retenidos_historial @fecha_puesta=$P{fecha_puesta},@tipo_huevo=$P{tipo_huevo},@clasificadora=$P{clasificadora}]]>
+	</queryString>
+	<field name="fecha_clasificacion" class="java.sql.Timestamp"/>
+	<field name="fecha_movimiento" class="java.sql.Timestamp"/>
+	<field name="cod_interno" class="java.lang.Integer"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="cod_carrito" class="java.lang.String"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<field name="cod_clasificacion" class="java.lang.String"/>
+	<field name="fecha_puesta" class="java.sql.Timestamp"/>
+	<field name="hora_clasificacion" class="java.lang.String"/>
+	<field name="disposicion" class="java.lang.String"/>
+	<field name="resp_clasificacion" class="java.lang.String"/>
+	<field name="u_medida" class="java.lang.String"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<field name="clasificadora" class="java.lang.String"/>
+	<field name="aviario" class="java.lang.String"/>
+	<field name="movimiento" class="java.lang.String"/>
+	<field name="estado_retencion" class="java.lang.String"/>
+	<field name="motivo_retencion" class="java.lang.String"/>
+	<field name="fecha de creacion" class="java.sql.Timestamp"/>
+	<field name="estado_liberacion" class="java.lang.String"/>
+	<field name="estado_completo" class="java.lang.String"/>
+	<field name="usuario" class="java.lang.String"/>
+	<group name="nro_Carro" keepTogether="true">
+		<groupExpression><![CDATA[$F{cod_carrito}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<staticText>
+					<reportElement x="69" y="2" width="36" height="27" uuid="6bc561b0-cd8e-4fd8-8d43-129722bef6e3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="2" width="35" height="27" uuid="58f6a107-c937-4cb9-9490-754ae1f987e6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nro de registro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="38" y="2" width="29" height="27" uuid="f9771914-94b0-4412-a00a-ff34e76d6060"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo de huevo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="105" y="2" width="45" height="27" uuid="35f03d24-f7a3-47b0-bb29-5ef557ab4669"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de
+puesta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="151" y="4" width="47" height="25" uuid="9cc53b1f-d5ca-4cf4-b0b1-45c31eebf116"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de
+movimiento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="248" y="2" width="113" height="27" uuid="fd66ed4c-dc1e-400c-8449-0a5351981def"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Motivo de retención]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="364" y="2" width="60" height="27" uuid="e675f34c-d01a-447d-ad59-678f7c21d5ad"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado del 
+producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="552" y="2" width="42" height="27" uuid="843929ca-0e45-4128-bec1-0584a657b8f9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado de liberación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="594" y="2" width="55" height="27" uuid="144f31f5-163c-4041-a8d5-4f2a89ba9d70"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado actual]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="650" y="2" width="82" height="27" uuid="bbb578bc-5ba7-4d5a-96c7-b44911ab318f"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Historico del estado de  liberación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="425" y="2" width="126" height="27" uuid="3a8bf588-03ea-4c69-97d7-424864b41564"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Disposición]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="732" y="2" width="69" height="27" uuid="cb6eb340-4c4d-421a-9c20-a57a3513643d"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Responsable del registro]]></text>
+				</staticText>
+				<line>
+					<reportElement x="66" y="2" width="1" height="27" uuid="caac44b4-1a10-458b-9f2b-10f0a766daa3"/>
+				</line>
+				<line>
+					<reportElement x="37" y="2" width="1" height="27" uuid="12f56d52-40ed-4098-a638-480621865f3f"/>
+				</line>
+				<line>
+					<reportElement x="0" y="1" width="1" height="28" uuid="d63f3c78-06e7-41fd-b95b-da49a6084bdf"/>
+				</line>
+				<line>
+					<reportElement x="105" y="2" width="1" height="27" uuid="e5dc466b-6654-44ec-b73e-6d4a9a5bd481"/>
+				</line>
+				<line>
+					<reportElement x="150" y="2" width="1" height="27" uuid="3673f17c-a373-46a5-ad32-161a4085d920"/>
+				</line>
+				<line>
+					<reportElement x="199" y="2" width="1" height="27" uuid="41e395bb-2101-44a4-b4e0-a5d727d7215f"/>
+				</line>
+				<line>
+					<reportElement x="361" y="2" width="1" height="27" uuid="8c173045-ae08-4fc9-9f49-89ecd22ec0f6"/>
+				</line>
+				<line>
+					<reportElement x="424" y="2" width="1" height="27" uuid="3825c54d-ca2d-4fcd-9a86-942a9d417076"/>
+				</line>
+				<line>
+					<reportElement x="593" y="2" width="1" height="27" uuid="89546fef-63e0-4208-ae24-899d0460227b"/>
+				</line>
+				<line>
+					<reportElement x="649" y="2" width="1" height="27" uuid="302a3d44-0d79-4485-b684-76b5280b5257"/>
+				</line>
+				<line>
+					<reportElement x="732" y="2" width="1" height="27" uuid="df068b80-0507-4e51-8089-21bf987bb33b"/>
+				</line>
+				<line>
+					<reportElement x="801" y="2" width="1" height="27" uuid="79f413bb-1bb7-4918-92ce-6cf8e642d511"/>
+				</line>
+				<line>
+					<reportElement x="551" y="2" width="1" height="27" uuid="4cc04a57-1be8-4b11-857b-aba2e9639bca"/>
+				</line>
+				<line>
+					<reportElement x="0" y="1" width="802" height="1" uuid="7b06ae1d-086f-4231-a38e-e53f7732d636"/>
+				</line>
+				<staticText>
+					<reportElement x="363" y="4" width="10" height="8" uuid="97ba836c-f58c-4681-b911-fe95903bf2c8"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="552" y="2" width="10" height="8" uuid="b69bbcd7-7c35-4851-9457-ba37c392cac7"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[2]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="152" y="4" width="11" height="8" uuid="8cdda39d-9b79-43fb-8917-62c4534f8c94"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="4" width="10" height="8" uuid="542b3abf-6f0c-4b89-b4d8-0fbdc2886d2c"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[5]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="200" y="4" width="48" height="25" uuid="b8650b4e-aa09-4750-897d-4e3d7c446b10"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Hora de
+movimiento]]></text>
+				</staticText>
+				<line>
+					<reportElement x="248" y="2" width="1" height="27" uuid="49ec0e4d-f68f-4797-8a85-dd411078ea7a"/>
+				</line>
+				<staticText>
+					<reportElement x="200" y="4" width="10" height="8" uuid="8569cfe6-399c-4578-8824-f0d3e8cd6b05"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[4]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="73">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#C2C7C7" uuid="0f3f9c78-ba2f-40f3-b019-d3744f350a88"/>
+					<box>
+						<pen lineStyle="Dashed"/>
+						<topPen lineStyle="Dashed"/>
+						<leftPen lineStyle="Dashed"/>
+						<bottomPen lineStyle="Dashed"/>
+						<rightPen lineStyle="Dashed"/>
+					</box>
+				</frame>
+				<textField>
+					<reportElement mode="Transparent" x="88" y="0" width="100" height="20" uuid="26c4dda8-4f2c-419c-b359-14a429525486"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cod_carrito}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="2" y="0" width="94" height="20" uuid="b2703c7d-2b48-415f-be84-dc968714b8fb"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Codigo de carro:]]></text>
+				</staticText>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="20" width="802" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#CCFFFF" uuid="89c2a8f8-4de3-4ad1-bf5c-4a5534616d4c"/>
+					<box>
+						<pen lineStyle="Dashed"/>
+						<topPen lineStyle="Dashed"/>
+						<leftPen lineStyle="Dashed"/>
+						<bottomPen lineStyle="Dashed"/>
+						<rightPen lineStyle="Dashed"/>
+					</box>
+					<staticText>
+						<reportElement x="0" y="0" width="10" height="8" uuid="74df55fb-4d33-42df-bdaf-1895737488d4"/>
+						<textElement>
+							<font fontName="Arial" size="6" isBold="true"/>
+						</textElement>
+						<text><![CDATA[6]]></text>
+					</staticText>
+				</frame>
+				<staticText>
+					<reportElement mode="Transparent" x="5" y="20" width="123" height="20" uuid="f23379ac-78f3-4661-aa8b-79f3fd84c9a7"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de clasificacion:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement mode="Transparent" x="119" y="20" width="100" height="20" uuid="dbf664c6-90b0-4f5c-a5af-f5005eff4a8e"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_clasificacion}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="41" width="802" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFCC" uuid="7eca057d-16d1-4c1b-acb2-4431fccd6a24"/>
+					<box>
+						<pen lineStyle="Dashed"/>
+						<topPen lineStyle="Dashed"/>
+						<leftPen lineStyle="Dashed"/>
+						<bottomPen lineStyle="Dashed"/>
+						<rightPen lineStyle="Dashed"/>
+					</box>
+				</frame>
+				<textField pattern="dd/MM/yyyy HH:mm:ss">
+					<reportElement mode="Transparent" x="143" y="40" width="142" height="20" uuid="9e555c7a-1cc9-4c7a-a30e-b7f16fb04c47"/>
+					<textElement>
+						<font isBold="true" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha de creacion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="5" y="40" width="136" height="20" uuid="6be9857d-97b0-431c-902f-917342fca28c"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha y Hora de creacion del lote:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="40" width="10" height="8" uuid="44e36307-8c74-4bb8-bf19-f3a060129b6f"/>
+					<textElement>
+						<font fontName="Arial" size="6" isBold="true"/>
+					</textElement>
+					<text><![CDATA[7]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="139" splitType="Stretch">
+			<line>
+				<reportElement x="136" y="0" width="1" height="136" uuid="d3efde80-793e-459f-8246-6e6f48a3e595"/>
+			</line>
+			<line>
+				<reportElement x="1" y="93" width="802" height="1" uuid="00a9ade9-e878-4577-b2ef-f4d31bddee5b"/>
+			</line>
+			<staticText>
+				<reportElement x="696" y="20" width="46" height="15" uuid="f97230f7-5b58-438d-8654-29d010183c10"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rev. 00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="26" width="553" height="15" uuid="e4d3bb1e-cc75-457a-af91-db3433babea7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE HUEVOS RETENIDOS FRESCOS Y LAVADOS RETENIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="10" width="553" height="15" uuid="b65f7101-e69f-4094-96a3-b605af146576"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULARIO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="-1" width="802" height="1" uuid="6a54c9b6-9519-4b88-bca9-977ad99f7359"/>
+			</line>
+			<staticText>
+				<reportElement x="275" y="46" width="10" height="8" uuid="5f5d7974-849a-460d-97a8-62e533f9ee80"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="46" width="10" height="8" uuid="3765b013-9296-4857-b40b-0e55ee1bba0e"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="49" width="368" height="15" uuid="817d838a-ceb5-4769-aeb8-f80784916628"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R: Retenido, L: Liberado, R.: Retenido con RNC (Reporte de No Conformidad),   R/L: Retenido luego liberado,   R./L: Retenido con RNC luego liberado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="-1" width="1" height="137" uuid="16ec679d-81fa-46ea-9627-351ebf48ff4f"/>
+			</line>
+			<staticText>
+				<reportElement x="95" y="4" width="41" height="26" uuid="62b9bf8e-a9fd-4fff-9f55-caa825e091e3"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="49" width="122" height="15" uuid="07b66672-265a-47a0-b42a-b6e9d6c7ec61"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NC: No Conforme,  PNC: Potencialmente No Conforme ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="97" height="30" uuid="5b4020c2-483d-4f1f-8839-35ed32afdbdb"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAEHARA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="690" y="0" width="1" height="46" uuid="fb983eaf-cf10-493a-9320-c560733a1fa6"/>
+			</line>
+			<line>
+				<reportElement x="803" y="-1" width="1" height="137" uuid="d02cfb61-6f8d-4f3a-9716-9118450a688f"/>
+			</line>
+			<line>
+				<reportElement x="1" y="45" width="802" height="1" uuid="964e0f89-cd73-4f01-835c-bfd11bd933af"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="97" width="134" height="18" uuid="c3b58222-086c-4180-aef4-d6f239c723ff"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="94" width="668" height="18" uuid="71b6c269-9dfd-4481-bed3-94f504609fb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(  $F{clasificadora}.equalsIgnoreCase("O")  ? "CYO-LAVADO" :
+$F{clasificadora}.equalsIgnoreCase("A")  ? "CYO-CCHA" :
+
+$F{clasificadora}.equalsIgnoreCase("B")  ? "CYO-CCHB" :
+$F{clasificadora}.equalsIgnoreCase("H")  ? "CYO-CCHH" :
+ $F{clasificadora}
+   )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="57" width="208" height="8" uuid="b21b69ee-a3da-4120-a71f-a4358efa232c"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha en que se registró el movimiento o cambio del detalle del carro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="60" width="134" height="15" uuid="eae541a9-da8f-47ea-9783-27246f25341b"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="696" y="5" width="107" height="15" uuid="c5f8fabd-e395-4c50-a437-8299817d696d"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[M-FOR-CYO-59]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="25" width="137" height="20" uuid="334873c0-b073-40c5-b32d-b74fa22710ed"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[AGROPECUARIA COMERCIAL E INDUSTRIAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="117" width="802" height="1" uuid="099b3726-c07f-44e1-9bf0-87307569f439"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="118" width="134" height="18" uuid="10af6510-5fde-4c1f-a856-f9dec3c3ae19"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria de huevos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="118" width="667" height="18" uuid="23839f9b-0318-417f-8024-76ec3f9f57ca"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Frescos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="66" width="319" height="5" uuid="140be414-0a12-4d62-b37a-709ca37ad918"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Númeración del movimiento asignado en el sistema, el orden del movimiento se indica de menor a mayor y no necesariamente son números consecutivos.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="54" width="10" height="8" uuid="85a9384a-2612-4333-8b73-b2310b7363e6"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="62" width="10" height="8" uuid="b7063c8d-e963-4f77-8c94-2e786cb87bb3"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="57" width="208" height="8" uuid="218b812c-f1f6-48de-8bcc-8a09e537e3c2"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora en que se regitró el movimiento o cambio del detalle del carro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="54" width="10" height="8" uuid="7488bdbc-1f40-462b-9388-d21fdeb11b2f"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="66" width="293" height="14" uuid="38a79171-6de0-4ba2-99e9-2ccfe59c5108"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de clasificación original del carro, debe coincidir con el  M-FOR-CYO-41/42 Huevos clasificados frescos y lavados/ Mixtos.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="62" width="10" height="8" uuid="dff40855-5f37-4eb5-bb4f-7b6ff0656d54"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="75" width="349" height="5" uuid="1c7b7ec3-35f8-4e5d-9e3e-5fc05aa129d2"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Indica que el registro se creó en SAP como "Liberado" si el primer campo del "Estado de liberación" figura como retenido y en el "Histórico estado de liberación" aparece L/R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="71" width="10" height="8" uuid="004bf3c8-17e6-476e-8d7b-cc1b5a4a5db1"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[7]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="88" width="422" height="5" uuid="825eae8c-8ab7-42ae-8077-e7a71467e02c"/>
+				<textElement>
+					<font fontName="Arial" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Obs.: El presente reporte solo aplica para carros que inicialmente fueron registrados como "Retenidos" o que en un inicio fueron registrados como "Liberados y posteriormente fueron retenidos.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="136" width="802" height="1" uuid="6eec1cb7-99aa-41b7-8670-8c5b7130a924"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="105" y="1" width="45" height="20" uuid="c97dbf47-2332-46c9-b3fc-c74425af05c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_puesta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="36" height="20" uuid="db7de42b-bd66-4dff-8e0a-95cd2a5cd8fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_interno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="1" width="26" height="20" uuid="f711f864-e4aa-47d3-be98-40e76041fe61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_huevo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="1" width="36" height="20" uuid="f5843e6f-503b-4868-8b06-7855fb654822"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="151" y="1" width="47" height="20" uuid="3e720c47-f160-40c7-bc24-4759e932c38e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="248" y="1" width="113" height="20" uuid="8c861963-b913-4f55-a6f3-f9c9d9ca6142"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_retencion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="1" width="63" height="20" uuid="6843d5da-d8e8-4966-a92f-4be47331f995"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_retencion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="1" width="126" height="20" uuid="b2cbea93-c816-4a27-b2d5-e6a4e7fb47fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disposicion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="594" y="2" width="55" height="20" uuid="7484d4d4-a3a5-436d-abbe-2e696ad4a1ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="650" y="1" width="83" height="20" uuid="0cdd9bb1-1c59-448f-8554-53eda5f19d02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_completo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="732" y="1" width="69" height="20" uuid="c92be840-4ffa-49bd-b1fe-f8b57c8fa7c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="199" y="1" width="1" height="21" uuid="56c71113-64f3-44eb-8d3e-f7081c221228"/>
+			</line>
+			<line>
+				<reportElement x="361" y="1" width="1" height="21" uuid="7af43561-b108-4ae8-b22a-58d821c603bd"/>
+			</line>
+			<line>
+				<reportElement x="424" y="1" width="1" height="21" uuid="70f24ed4-a6df-45e6-ac2e-06413adb4fe7"/>
+			</line>
+			<line>
+				<reportElement x="551" y="1" width="1" height="21" uuid="f937f4cb-7c30-4be1-93fe-d3fc4f19929d"/>
+			</line>
+			<line>
+				<reportElement x="593" y="1" width="1" height="21" uuid="42e48397-3b55-45e9-9f94-64f569a5a36d"/>
+			</line>
+			<line>
+				<reportElement x="732" y="1" width="1" height="21" uuid="e8f700de-1af1-4620-878c-c70e486e68a3"/>
+			</line>
+			<line>
+				<reportElement x="801" y="1" width="1" height="21" uuid="5f901c89-0814-42c7-96bb-40fbabdc878f"/>
+			</line>
+			<line>
+				<reportElement x="150" y="1" width="1" height="21" uuid="59b514b0-3c4e-49f6-bcfc-e6f0ad6a5217"/>
+			</line>
+			<line>
+				<reportElement x="105" y="1" width="1" height="21" uuid="3c96fe4f-1010-4979-8645-f76bd0b80967"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="22" uuid="427f01dd-c39a-466c-9bd0-b2009cacdfda"/>
+			</line>
+			<line>
+				<reportElement x="37" y="1" width="1" height="21" uuid="aaedd7b6-3f30-49c8-a5cb-b117907c66fe"/>
+			</line>
+			<line>
+				<reportElement x="66" y="1" width="1" height="21" uuid="bbe26265-ba14-4323-8bf1-878beb76643c"/>
+			</line>
+			<line>
+				<reportElement x="649" y="1" width="1" height="21" uuid="31295c6f-db8b-4a19-ba26-351937e4d4a7"/>
+			</line>
+			<line>
+				<reportElement x="1" y="21" width="800" height="1" uuid="7b8f1691-4114-43b7-bac4-094216ddcd75"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="801" height="1" uuid="274a398e-14d2-48cd-ba11-81ada08847d6"/>
+			</line>
+			<textField>
+				<reportElement x="552" y="0" width="42" height="20" uuid="b8998abe-cb57-4d5a-ae14-530a47ee4819"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_liberacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss">
+				<reportElement x="200" y="2" width="48" height="20" uuid="de85dd16-55bb-4c43-9a57-c2473c7d7fca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_movimiento}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="248" y="1" width="1" height="21" uuid="73cfe623-b7ba-4aaa-9ff8-c44139bbe5ac"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

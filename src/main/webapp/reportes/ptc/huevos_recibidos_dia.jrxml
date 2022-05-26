@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c8f185-7cf3-467a-b28b-3bd650e69bf9">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha_puesta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select case clasificadora_origen when 'A' then 'CCHA' WHEN 'B' THEN 'CCHB' WHEN 'H' THEN 'CCHH' WHEN 'SUBPRODUCTOS'  
+THEN 'SUBPRODUCTOS' WHEN 'LAVADOS'  THEN 'LAVADOS' ELSE clasificadora_origen END AS CLASIFICADORA, 
+* from v_mae_ptc_huevos_recibidos_dia where fecha_puesta= $P{fecha_puesta}  and clasificadora_origen not in ('O')  order by 1]]>
+	</queryString>
+	<field name="CLASIFICADORA" class="java.lang.String"/>
+	<field name="fecha_puesta" class="java.sql.Timestamp"/>
+	<field name="clasificadora_origen" class="java.lang.String"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<variable name="cantidad_1" class="java.math.BigDecimal" resetType="Group" resetGroup="area" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<variable name="cantidad_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<group name="area">
+		<groupExpression><![CDATA[$F{CLASIFICADORA}]]></groupExpression>
+		<groupHeader>
+			<band height="46">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="25" backcolor="#FFFF66" uuid="48a34044-bb28-4c87-95b6-f7a53f486f48"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CLASIFICADORA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="25" width="184" height="20" uuid="d14784bc-6369-48c6-a8ea-6dc7d0cdade3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="184" y="25" width="100" height="20" uuid="f91086f1-cb34-4f32-bb51-221374440f9d"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CANTIDAD]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="1" width="555" height="20" backcolor="#CCCCCC" uuid="6f416a99-0ac2-409f-bbaf-090948a8e1f8"/>
+				</frame>
+				<staticText>
+					<reportElement x="0" y="0" width="153" height="20" uuid="1e698dc2-afb6-408c-9372-1863dd13b6b8"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="184" y="0" width="100" height="20" uuid="59110320-04a1-4e29-9076-43cd5c80adaa"/>
+					<textElement textAlignment="Right">
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cantidad_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="16" width="555" height="44" uuid="9a4ab515-2337-4673-8fdc-a48033f1b75c"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME DE HUEVOS RECIBIDOS POR FECHA DE PUESTA]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm">
+				<reportElement x="455" y="0" width="100" height="20" uuid="1efb308f-433d-4b33-ba9b-445a3c4056ec"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="0" y="20" width="555" height="26" backcolor="#CCCCCC" uuid="33e6299c-0c56-4459-a165-bf1a8cd889b5"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_puesta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#CCCCCC" uuid="7d32854b-da4a-4d42-9f0b-8c363a600763"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE PUESTA]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="184" height="20" uuid="4f505cf7-eb1b-4842-9e94-cc5a2000fe01"/>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="184" y="0" width="100" height="20" uuid="e1e79568-29df-466c-933a-3272b834086a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="19" width="284" height="1" uuid="273022f1-153f-48c1-93f2-327f63e7ffb1"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="21" width="555" height="20" forecolor="#FFFFFF" backcolor="#FFFFCC" uuid="d5f9f274-a30b-43ed-91fc-a646517e6008"/>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="21" width="100" height="20" forecolor="#000000" uuid="1bb988c1-4fc2-4ba9-832b-d32063a538c4"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GENERAL]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="184" y="21" width="100" height="20" forecolor="#000000" uuid="273fb55c-3905-40a6-bcae-9dc5c0088186"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cantidad_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
