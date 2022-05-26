@@ -9,7 +9,7 @@
   <%
     clases.controles.connectarBD();
     Statement stmt=clases.controles.connect.createStatement();
- 
+ //SE TIENE QUE PASAR A SP
     String usu = request.getParameter("usuario");
     String cla = request.getParameter("pass");
     ResultSet rs = stmt.executeQuery("select * from usuarios where usuario = '" + usu + "' and password = '" + cla + "' and clasificadora <>'u'");
