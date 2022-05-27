@@ -26,9 +26,9 @@
         call.setString(2, aviario);
         call.setString(3, lote);
         call.setString(4, "0");
-        call.setString(5, dl_edad);
+        call.setString(5, "0");
         call.setString(6, saldoant);
-        call.setString(7, edad_dias);
+        call.setString(7, "0");
         call.registerOutParameter(8, java.sql.Types.VARCHAR);
         call.registerOutParameter(9, java.sql.Types.VARCHAR);
         call.registerOutParameter(10, java.sql.Types.INTEGER);
