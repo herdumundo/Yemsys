@@ -10,7 +10,28 @@
         fuente.setConexion(cn);           //CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
         ResultSet rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
        while(rs.next()){          
- %>    
+   String version=clases.versiones.contenedores_subproducto_tradicional;
+        String version_desc=clases.versiones.desc_contenedores_subproducto_tradicional;
+    %> 
+<head>   
+<label  ><b></b></label> 
+<div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
+     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')">
+    <label > <%=version%></label>  
+</div>
+</head>
+<div class="container-fluid">
+<div class="col-lg-20 ">
+<div class="position-relative p-3 bg-navy"  >
+<div class="ribbon-wrapper">
+<div class="ribbon bg-warning">
+SUB
+</div>
+</div>
+    <center><b>REGISTRO TRADICIONAL SUBPRODUCTOS</b></center>
+</div>
+   </div>  <br>   
+   
      
  <form method="post"   id="formulario">
      
