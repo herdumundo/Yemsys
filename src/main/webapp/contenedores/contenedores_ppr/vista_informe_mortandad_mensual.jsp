@@ -47,7 +47,7 @@
 
         </script>
         <% 
-     String version=clases.versiones.contenedores_ppr_vista_informe_mortandad_mensual;
+     String version=clases.versiones.contenedores_mortandad_mensual;
  
       %> 
      <head>   

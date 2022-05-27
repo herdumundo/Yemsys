@@ -17,7 +17,79 @@ function ir_alimentacion_hp(tipo)
     });
 
 }
+function ir_informe_hp()
+{
+    window.location.hash = "IHP";
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_hp + "contenedor_informe_hp.jsp",
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#contenedor_principal").html("");
+            $("#contenedor_principal").html(data);
+            cargar_estilo_calendario_insert("dd/mm/yyyy");
+            cerrar_load();
+        }
+    });
 
+}
+
+
+function consulta_grilla_hp_alimentacion(fecha_alimentacion) {
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_hp + 'consulta_lotes_grilla_hp.jsp',
+        data: ({fecha_alimentacion: fecha_alimentacion}),
+        beforeSend: function () {
+            $('#div_cargar').show();
+        },
+        success: function (data)
+        {
+           
+            $('#div_grilla').html(data);
+            $('#tb_alimentacion').DataTable({
+                            scrollY: "500px",
+                            scrollX: !0,
+                            dom: "Bfrtip",
+                            pageLength: 100,
+                            language: {
+                                sSearch: "Buscar:",
+                                sLengthMenu: "Mostrar _MENU_ registros",
+                                sZeroRecords: "No se encontraron resultados",
+                                sEmptyTable: "Ningún dato disponible en esta tabla",
+                                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                sInfoThousands: ",",
+                                sLoadingRecords: "Cargando...",
+                                oPaginate: {sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior"},
+                                buttons: {copyTitle: "DATOS COPIADOS", copySuccess: {_: "%d FILAS COPIADAS"}},
+                            },
+                            buttons: [
+                                {extend: "copyHtml5", text: "COPIAR GRILLA", exportOptions: {columns: [0, ":visible"]}},
+                                {extend: "excelHtml5", title:"REPORTE ALIMENTADOS FECHA "+fecha_alimentacion, text: "EXCEL", exportOptions: {columns: ":visible"}},
+                                {
+                                    extend: "pdfHtml5",
+                                    text: "PDF",
+                                    title:  "REPORTE ALIMENTADOS FECHA "+fecha_alimentacion,
+                                    orientation: "landscape",
+                                    pageSize: "LEGAL",
+                                    
+                                    exportOptions: {columns: ":visible"},
+                                },
+                                "colvis",
+                            ],
+                            keys: {clipboard: !1},
+                        });
+            
+         }
+    });
+
+}
 
 
 function cargar_datos_key_hp_alimentacion() {

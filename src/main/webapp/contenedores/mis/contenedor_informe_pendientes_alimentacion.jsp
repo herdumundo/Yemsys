@@ -2,13 +2,14 @@
 
      <% 
      String version=clases.versiones.contenedores_mis_contenedor_informe_pendientes_alimentacion;
-   
+        String version_desc=clases.versiones.desc_contenedores_mis_contenedor_informe_pendientes_alimentacion;
+
    %> 
 
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>')">
+     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')">
     <label ><%=version%></label> 
 </div>
 </head>

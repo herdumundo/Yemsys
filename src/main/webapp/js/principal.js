@@ -644,5 +644,8 @@ function cargar_datos_modal_version(ribbon, titulo, descripcion)
     $("#ribbon_version").html(ribbon);
     $("#ribbon_titulo").html(titulo);
     $("#ribbon_descripcion").html("");
-    $("#ribbon_descripcion").html(descripcion);
+    $("#ribbon_descripcion").html(descripcion.replaceAll("&", "<br>"));
+    
+    
+    
 }   
