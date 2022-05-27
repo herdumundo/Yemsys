@@ -47,7 +47,7 @@
 
         </script>
         <% 
-     String version=clases.versiones.contenedores_ppr_vista_registro_necropsias;
+     String version=clases.versiones.contenedores_registro_necropsia;
  
       %> 
      <head>   

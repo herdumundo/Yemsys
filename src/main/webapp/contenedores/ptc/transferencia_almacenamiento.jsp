@@ -18,13 +18,14 @@
 
 <% 
      String version=clases.versiones.contenedores_ptc_transferencia_almacenamiento;
+     String version_desc=clases.versiones.desc_contenedores_ptc_transferencia_almacenamiento;
 
        %>
   <head>  
       <label  ><b></b></label>
 <div class="float-right d-none d-sm-inline-block" href="#" id="contenido_version"
      data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>')" >
+     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')" >
     <label neme="label_contenido" id="label_contenido" ><%=version%></label>  
 </div>
 </head>

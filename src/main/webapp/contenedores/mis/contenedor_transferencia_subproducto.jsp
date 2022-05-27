@@ -12,6 +12,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
      String area =(String) sesionOk.getAttribute("clasificadora");
+     String version=clases.versiones.contenedores_mis_contenedor_transferencia_subproducto;
+     String version_desc=clases.versiones.desc_contenedores_mis_contenedor_transferencia_subproducto;
   %>
      <div class="form-group">
     <script>
@@ -20,8 +22,8 @@
     <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('0023-REP-01032022-A','VERSION: 0023-REP-01032022-A')">
-    <label ></label>0023-PAN-01032022-A  
+     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')">
+    <label ><%=version%></label>
 </div>
 </head>
     <div class="col-lg-20 ">
