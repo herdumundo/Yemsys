@@ -21,7 +21,7 @@
 <%
     String ave_nro = request.getParameter("ave");
     String necrop_nro = request.getParameter("nro_necrop");
-    int id_ultimo = 3000;
+    int id_ultimo = 1550;
     int number = Integer.parseInt(necrop_nro);
     String nro = "";
     String ave = "";
