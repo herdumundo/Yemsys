@@ -4,9 +4,11 @@
    Author     : hvelazquez
 --%>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+
 <%    String titulo = request.getParameter("titulo");
-   String version=clases.versiones.contenedores_alimentacion_hp;
-        String version_desc=clases.versiones.desc_contenedores_alimentacion_hp;
+        String version=contenedores_alimentacion_hp;
+        String version_desc=desc_contenedores_alimentacion_hp;
      %> 
 
 <head>   

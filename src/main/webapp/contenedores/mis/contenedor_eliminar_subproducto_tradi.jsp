@@ -2,9 +2,11 @@
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+
     <% 
-     String version=clases.versiones.contenedores_eliminar_subproducto_tradicional;
-        String version_desc=clases.versiones.desc_contenedores_eliminar_subproducto_tradicional;
+     String version= contenedores_eliminar_subproducto_tradicional;
+        String version_desc= desc_contenedores_eliminar_subproducto_tradicional;
     %> 
 <head>   
 <label  ><b></b></label> 

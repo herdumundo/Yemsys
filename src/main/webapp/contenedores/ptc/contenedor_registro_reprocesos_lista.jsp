@@ -5,7 +5,8 @@
     Created on : 15-dic-2021, 9:51:44
     Author     : hvelazquez
 --%>
- <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
 <%
      String titulo_reproceso    = (String) sesionOk.getAttribute("titulo_reproceso");
     String clasificadora = (String) sesionOk.getAttribute("clasificadora");
@@ -18,8 +19,8 @@
 %> 
       
      <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_registro_reprocesos_lista;
-     String version_desc=clases.versiones.desc_contenedores_ptc_contenedor_registro_reprocesos_lista;
+     String version= contenedores_ptc_contenedor_registro_reprocesos_lista;
+     String version_desc= desc_contenedores_ptc_contenedor_registro_reprocesos_lista;
 
        %>
     <head>  

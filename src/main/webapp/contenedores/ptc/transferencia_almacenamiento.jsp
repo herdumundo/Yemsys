@@ -8,17 +8,17 @@
 <%@page import="java.sql.Connection"%>
 <jsp:useBean id="fuente2" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <% 
     String area = (String) sesionOk.getAttribute("clasificadora");
     clases.controles.VerificarConexion();
     fuente2.setConexion(clases.controles.connectSesion);
     ResultSet rs_chofer, rs_camion;
-%>
-
-<% 
-     String version=clases.versiones.contenedores_ptc_transferencia_almacenamiento;
-     String version_desc=clases.versiones.desc_contenedores_ptc_transferencia_almacenamiento;
+ 
+     String version=contenedores_ptc_transferencia_almacenamiento;
+     String version_desc=desc_contenedores_ptc_transferencia_almacenamiento;
 
        %>
   <head>  

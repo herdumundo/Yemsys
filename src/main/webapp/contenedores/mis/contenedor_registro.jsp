@@ -1,12 +1,12 @@
-  <%@page import="clases.controles"%>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
+  <%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="clases.controles"%>
   <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
+<%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
       <%
        try {
-               
-         
-          String area_registro = (String) sesionOk.getAttribute("clasificadora"); 
+    String area_registro = (String) sesionOk.getAttribute("clasificadora"); 
         String area_format=    (String) sesionOk.getAttribute("area_fallas");
         
         controles.VerificarConexion();
@@ -22,8 +22,8 @@
         indate=rs.getString(2);
         }
  
-     String version=clases.versiones.contenedores_mis_contenedor_registro;
-        String version_desc=clases.versiones.desc_contenedores_mis_contenedor_registro;
+     String version= contenedores_mis_contenedor_registro;
+        String version_desc= desc_contenedores_mis_contenedor_registro;
      %> 
  <head>   
 <label  ><b></b></label> 
