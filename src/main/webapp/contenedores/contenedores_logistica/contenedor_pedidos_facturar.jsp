@@ -4,10 +4,11 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
+<%@include  file="../../versiones.jsp" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 <%
-    String version = clases.versiones.contenedores_logistica_contenedor_pedidos_facturar;
-    String version_desc = clases.versiones.desc_contenedores_logistica_contenedor_pedidos_facturar;
+    String version = contenedores_logistica_contenedor_pedidos_facturar;
+    String version_desc = desc_contenedores_logistica_contenedor_pedidos_facturar;
 %>
 <head>   
 <label  ><b></b></label> 

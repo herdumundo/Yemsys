@@ -3,11 +3,12 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
+<%@include  file="../../versiones.jsp" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 
 <%
-    String version = clases.versiones.contenedores_ptc_stock_cyo;
-    String version_desc = clases.versiones.desc_contenedores_ptc_stock_cyo;
+    String version =  contenedores_ptc_stock_cyo;
+    String version_desc =  desc_contenedores_ptc_stock_cyo;
 
 %>
 <label  ><b></b></label>

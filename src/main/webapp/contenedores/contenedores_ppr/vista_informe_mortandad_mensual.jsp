@@ -46,8 +46,9 @@
             setInputDate("#fecha");
 
         </script>
-        <% 
-     String version=clases.versiones.contenedores_mortandad_mensual;
+ <%@include  file="../../versiones.jsp" %>
+       <% 
+     String version=contenedores_mortandad_mensual;
  
       %> 
      <head>   

@@ -8,6 +8,7 @@
 <%@page import="java.sql.Connection"%>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
 <jsp:useBean id="fuente2" class="clases.fuentedato" scope="page"/>   
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,8 +17,8 @@
   %>
   
   <% 
-     String version=clases.versiones.contenedores_ptc_transferencia_procesar;
-     String version_desc=clases.versiones.desc_contenedores_ptc_transferencia_procesar;
+     String version= contenedores_ptc_transferencia_procesar;
+     String version_desc= desc_contenedores_ptc_transferencia_procesar;
 
        %>
     <head>  

@@ -24,7 +24,7 @@ MIS
     </div>  <br><!-- comment -->
      
     <form id="formulario_reporte_reproceso" name="formulario_reporte_reproceso" action="cruds/mis/control_reporte_reproceso_tradicional.jsp" target="_blank">
-         <input type="hidden" id="tipo" name="tipo" value="PI">
+         <input type="hidden" id="tipo" name="tipo" value="RP">
 
      <div class="input-append">  
         <a>FECHA DE RECEPCIÓN</a>
