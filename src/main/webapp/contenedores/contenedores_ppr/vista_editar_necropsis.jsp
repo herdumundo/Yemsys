@@ -6,13 +6,7 @@
 --%>
 
 
-
-
-        <% 
-     String version=clases.versiones.contenedores_ppr_vista_registro_necropsias;
  
-      %> 
-      
 
   <div style="width: 100%;  text-align: left" >
       <div class="box-body" id="datos">       

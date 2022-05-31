@@ -36,8 +36,8 @@ String user_name = (String) sesionOk.getAttribute("nombre_usuario");
               </thead>
               <tbody id="grilla_eliminar">
                   <%
-                      controles.VerificarConexion();
-                      Connection cn = controles.connectSesion;
+                      controles.connectarBD();
+                      Connection cn = controles.connect;
                     // Asignar conexion al objeto manejador de datos
                     fuente.setConexion(cn);
                     ResultSet rs = fuente.obtenerDato("select  *,convert(varchar,fecha_puesta,103) as Fecha_eliminar "
@@ -107,5 +107,5 @@ tipohuevo=rs.getString("tipo_huevo");
           </table>
        </form>
           
-          <% clases.controles.DesconnectarBDsession();
+          <% clases.controles.DesconnectarBD();
 %>

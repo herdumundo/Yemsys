@@ -13,7 +13,8 @@
     clases.controles.connectarBD();
     String mensaje = null;
     Integer tipo_respuesta = null;
-    try {
+    try 
+    {
 
         String fecha_puesta = request.getParameter("fecha_puesta");
         String clasificadora = (String) sesionOk.getAttribute("clasificadora");
@@ -69,8 +70,8 @@
 
         ob.put("mensaje", mensaje);
         ob.put("tipo_respuesta", tipo_respuesta);
-    } catch (Exception e) {
-
+     } catch (Exception e) {
+ 
         ob.put("mensaje", e.getMessage());
         ob.put("tipo_respuesta", "0");
     }

@@ -9,6 +9,8 @@
 <%@page import="java.sql.Connection"%>
 <jsp:useBean id="fuente2" class="clases.fuentedato" scope="page"/>   
  <%@include  file="../../chequearsesion.jsp" %>
+ <%@include  file="../../versiones.jsp" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
      String area =(String) sesionOk.getAttribute("clasificadora");
@@ -19,8 +21,8 @@
     </script>
     
      <% 
-String version=clases.versiones.contenedores_mis_contenedor_registro_transferencias_reprocesos;
-     String version_desc=clases.versiones.desc_contenedores_mis_contenedor_registro_transferencias_reprocesos;
+String version= contenedores_mis_contenedor_registro_transferencias_reprocesos;
+     String version_desc= desc_contenedores_mis_contenedor_registro_transferencias_reprocesos;
 
      %>
   <head>   
