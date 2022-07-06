@@ -1,12 +1,15 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.controles"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
+
 <%@include  file="../../versiones.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
-<%
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
+ <%
     String version = contenedores_logistica_contenedor_pedidos_facturar;
     String version_desc = desc_contenedores_logistica_contenedor_pedidos_facturar;
 %>
@@ -28,17 +31,19 @@
     </div>
 </div>  <br>      
 <%
-    clases.controles.connectarBD();
-    try {
+     try {
 
-        fuente.setConexion(clases.controles.connect);
-        ResultSet rs, rs2;
-        rs = fuente.obtenerDato(" select "
+         ResultSet rs, rs2;
+        PreparedStatement  pst,pst2;
+         
+        pst = connection.prepareStatement(" select "
                 + "    a.id,FORMAT (a.fecha_registro, 'dd/MM/yyyy hh:mm') as fecha_registro,"
                 + "    concat(b.code,'-',b.name) as camion ,a.cantidad,c.name as chofer"
                 + "                from mae_log_ptc_cab_pedidos a "
                 + "                inner join maehara.dbo.[@CAMIONES] b    on a.id_camion=b.Code collate database_default and a.estado IN (1) "
-                + "                inner join maehara.dbo.[@CHOFERES] c on a.id_chofer=c.Code  collate database_default"); %>
+                + "                inner join maehara.dbo.[@CHOFERES] c on a.id_chofer=c.Code  collate database_default"); 
+        rs = pst.executeQuery();
+%>
  <div id="accordion" >
     <%
         int i = 0;
@@ -97,8 +102,10 @@
                             <tbody>
                                 <%
                                     
-                                    rs2 = fuente.obtenerDato(" exec [mae_log_pendientes_facturar] @id=" + id + " ");
+                                    pst2 = connection.prepareStatement(" exec [mae_log_pendientes_facturar] @id=" + id + " ");
                                     int total=0;
+                                            rs2 = pst2.executeQuery();
+
                                     while (rs2.next()) {%>             
                                 <tr> 
                                     <td><%=rs2.getString("tipo_huevo")%></td>
@@ -132,6 +139,6 @@
 <%  } catch (Exception e) {
         String as = e.getMessage();
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %>

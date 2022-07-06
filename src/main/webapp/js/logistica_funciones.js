@@ -210,7 +210,7 @@
                 $("#huevos_cargados").val(res.huevos_cargados);
                 $("#contenido_grilla_tipos").html(res.grilla_tipos);
                  
-                $("#tb_preembarque").DataTable(
+              /*   $("#tb_preembarque").DataTable(
                 {
                         responsive: true,
                         scrollY: "547px",
@@ -220,7 +220,7 @@
                         {
                             "sUrl": "js/Spanish.txt"
                         }
-                });            
+                });       GENERA ERROR EN LAVADOS    */
                      grilla_funciones_cyo();
             },
             error: function (error) 

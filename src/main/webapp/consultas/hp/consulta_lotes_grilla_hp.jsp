@@ -39,7 +39,8 @@
                 + "</tr>"
                 + " </thead> "
                 + " <tbody >";
-        while (rs_GM.next()) {
+        while (rs_GM.next()) 
+        {
             grilla_html = grilla_html
                     + "<tr> "
                     + "<td>   " + rs_GM.getString("fecha_alimentacion") + "</td>"
@@ -58,7 +59,7 @@
         String a = e.toString();
     } finally {
         controles.DesconnectarBD();
-        out.print(cabecera + grilla_html + "</tbody></table>");
+        out.print(cabecera + grilla_html + "</tbody></table>"); 
     }
 
 

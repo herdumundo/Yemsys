@@ -4,8 +4,10 @@
 	border: 1px solid #000;
 }
 </style>
+<%@include  file="../../versiones.jsp" %>
+
  <% 
-     String version=clases.versiones.contenedores_ppr_vista_informe_aviarios;
+     String version= contenedores_ppr_vista_informe_aviarios ;
  
  %> 
 <head>   

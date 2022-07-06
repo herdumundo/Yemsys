@@ -4,9 +4,9 @@
 <%@page import="java.sql.*"%>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
+<%@include  file="../../cruds/conexion.jsp" %>
     <% 
-    clases.controles.connectarBD();
-    String cbox_chofer= request.getParameter("cbox_chofer") ;
+     String cbox_chofer= request.getParameter("cbox_chofer") ;
     String cbox_camion= request.getParameter("cbox_camion") ;
     String filas_grilla= request.getParameter("resultado") ;
     String fecha_embarque= request.getParameter("calendario") ;
@@ -19,10 +19,9 @@
     ob=new JSONObject();
     int tipo_respuesta=0;
     try { 
-          //  clases.controles.connect.setAutoCommit(false);
-       
+        
             CallableStatement  callableStatement=null;   
-            callableStatement = clases.controles.connect.prepareCall("{call mae_cch_pa_embarque( ?, ?, ?, ?, ? ,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall("{call mae_cch_pa_embarque( ?, ?, ?, ?, ? ,?,?,?,?,?)}");
             callableStatement .setString(1,filas_grilla);
             callableStatement .setInt(2,Integer.parseInt(cbox_chofer) );
             callableStatement .setInt(3, Integer.parseInt(cbox_camion));
@@ -56,7 +55,7 @@
     finally{
             ob.put("mensaje", mensaje);
             ob.put("tipo_respuesta", tipo_respuesta);
-            clases.controles.DesconnectarBD();
+            connection.close();
             out.print(ob); 
 
     }

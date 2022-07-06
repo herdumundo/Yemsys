@@ -13,8 +13,10 @@
 <!DOCTYPE html>
 
 <html>
+    <%@include  file="../../versiones.jsp" %>
+
      <% 
-     String version=clases.versiones.contenedores_ppr_vista_registrar_roles;
+     String version= contenedores_ppr_vista_registrar_roles;
  
     %> 
        <head>

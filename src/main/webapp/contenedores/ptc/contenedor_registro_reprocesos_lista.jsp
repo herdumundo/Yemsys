@@ -7,18 +7,16 @@
 --%>
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%
      String titulo_reproceso    = (String) sesionOk.getAttribute("titulo_reproceso");
     String clasificadora = (String) sesionOk.getAttribute("clasificadora");
-    clases.controles.VerificarConexion();
-        Statement stmt = clases.controles.connectSesion.createStatement();
+         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(" select id, fecha_registro,estado, nombre, mae_ptc_alimentacion.clasificadora   "
                 + " from mae_ptc_alimentacion inner join usuarios on mae_ptc_alimentacion.usuario=usuarios.usuario "
-                + " where mae_ptc_alimentacion.clasificadora='"+clasificadora+"' and estado<>'C' ");
+                + " where mae_ptc_alimentacion.clasificadora='"+clasificadora+"' and estado<>'C' order by 1 desc ");
        
-%> 
-      
-     <% 
+ 
      String version= contenedores_ptc_contenedor_registro_reprocesos_lista;
      String version_desc= desc_contenedores_ptc_contenedor_registro_reprocesos_lista;
 
@@ -78,7 +76,7 @@ PTC
     </div>
    
     <%
-        clases.controles.DesconnectarBDsession();
+       connection.close();
 %>
                 
 

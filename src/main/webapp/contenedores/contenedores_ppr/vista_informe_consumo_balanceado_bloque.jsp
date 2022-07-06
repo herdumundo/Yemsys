@@ -46,8 +46,10 @@
             setInputDate("#fecha");
 
         </script>
+        <%@include  file="../../versiones.jsp" %>
+
         <% 
-     String version=clases.versiones.contenedores_ppr_vista_informe_consumo_balanceado_bloque;
+     String version= contenedores_ppr_vista_informe_consumo_balanceado_bloque;
  
       %> 
      <head>   

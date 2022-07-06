@@ -15,7 +15,7 @@ var cantidad_total_cchb = 0;
 var cantidad_total_cchh = 0;
 var cantidad_total_ovo = 0;
 var cantidad_total_cyo = 0;
-var cantidad_total = 0;
+ var cantidad_total = 0;
 var elem = document.documentElement;
 var pantalla = "SI";
 var variable_cambio = ""; //se usa como un websocket
@@ -209,7 +209,11 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
                         $("#tb_preembarque > tbody > tr > td:nth-child(" + i + "), #tb_preembarque > thead > tr > th:nth-child(" + i + ")").hide();
                         $("#tb_preembarque > tbody > tr > td:nth-child(" + ing + "), #tb_preembarque > thead > tr > th:nth-child(" + ing + ")").hide();
                         $("#tb_preembarque > tbody > tr > td:nth-child(" + ing2 + "), #tb_preembarque > thead > tr > th:nth-child(" + ing2 + ")").hide();
-
+                        
+                        /*  $("#tb_preembarque > tbody > tr > td:nth-child(" + i + "), #tb_preembarque > thead > tr > td:nth-child(" + i + ")").addClass("eliminar");
+                        $("#tb_preembarque > tbody > tr > td:nth-child(" + ing + "), #tb_preembarque > thead > tr > td:nth-child(" + ing + ")").addClass("eliminar");
+                        $("#tb_preembarque > tbody > tr > td:nth-child(" + ing2 + "), #tb_preembarque > thead > tr > td:nth-child(" + ing2 + ")").addClass("eliminar");
+                        */
                         if (i >= 3 && i < 18) {
                             ccha = ccha + 3;
                         }
@@ -260,19 +264,38 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
             }
 
 
+           // $(".eliminar").remove();
+            
+
+
              $("#tb_preembarque").DataTable(
                     {
-                        paging: false,
+                       paging: false,
                         responsive: true,
                          "autoWidth": false,
                         scrollCollapse: true,
                          "scrollX": true,
-                         "ordering": false,
-                        "language":
+                         "ordering": false, 
+                             dom: "Bfrtip",
+                         "language":
                         {
                             "sUrl": "js/Spanish.txt"
                         },
- 
+                        buttons: [
+                                {extend: "copyHtml5", text: "COPIAR GRILLA", exportOptions: {columns: [0, ":visible"]}},
+                                {extend: "excelHtml5", title:"REPORTE ALIMENTADOS FECHA", text: "EXCEL", exportOptions: {columns: ":visible"}},
+                                {
+                                    extend: "pdfHtml5",
+                                    text: "PDF",
+                                    title:  "REPORTE ALIMENTADOS FECHA ",
+                                    orientation: "landscape",
+                                    pageSize: "LEGAL",
+                                    
+                                    exportOptions: {columns: ":visible"},
+                                },
+                                "colvis",
+                            ],
+                            keys: {clipboard: !1},
                    "initComplete": function () {
                         var api = this.api();
                         api.search( tipo_huevo_filtro ).draw();
@@ -283,7 +306,8 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
                          var data = $('div.dataTables_filter input').val();
                          $('#filtro_tipo').val(data);
                         
-                    }
+                    },
+                    
                     });
              
             if (tipo == 2) {
@@ -790,6 +814,7 @@ function grilla_funciones_cyo() //TIPO PEDIDO ES CREAR O MODIFICAR
     $('#txt_restantes').val((parseInt(cantidad_total) + parseInt(cantidad_total_mixtos)) - parseInt($('#txt_disponibilidad').val()));
     $('#txt_cargados').val(parseInt(cantidad_total) + parseInt(cantidad_total_mixtos));
     
+    
     cerrar_load();
 }
 
@@ -1076,7 +1101,7 @@ function insert_reservas(id_camion, cantidad, fp, tipo, tipo_huevo, area, catego
             }
             if (res.tipo_respuesta == 0)
             {
-                $("#" + cod_carrito).removeClass('btn-primary btn-dark bg1 ').addClass('btn bg-navy ')
+                $("#" + cod_carrito).removeClass('btn-primary btn-dark bg1 ').addClass('btn bg-navy ');
                 $("#" + res.carro_reserva).html(res.mensaje);
                 $("#" + res.carro_reserva).removeAttr("mixto");
                 $("#" + res.carro_reserva).Attr("reservado", true);
@@ -1402,6 +1427,7 @@ function reset_cero_variables_log()
     cantidad_total_cchb = 0;
     cantidad_total_cchh = 0;
     cantidad_total_ovo = 0;
+    cantidad_total_cyo=0;
     cantidad_total = 0;
 }
 

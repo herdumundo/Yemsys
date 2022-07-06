@@ -1,9 +1,7 @@
-
-
 <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@include file="../../cruds/conexion.jsp" %>
 
 <html>
 
@@ -20,11 +18,10 @@
 
 <%   try {
 
-        clases.controles.connectarBD();
-        PreparedStatement ps = clases.controles.connect.prepareStatement("	  select a.id as id_rol,a.descripcion ,a.id_estado,b.descripcion as desc_estado from mae_yemsys_roles a  inner join tab_mae_ppr_estados b on a.id_estado=b.id ");
+         PreparedStatement ps = connection.prepareStatement("	  select a.id as id_rol,a.descripcion ,a.id_estado,b.descripcion as desc_estado from mae_yemsys_roles a  inner join tab_mae_ppr_estados b on a.id_estado=b.id ");
         ResultSet rs = ps.executeQuery();
 
-        PreparedStatement ps2 = clases.controles.connect.prepareStatement("select * from tab_mae_ppr_estados where id in (1,2)");
+        PreparedStatement ps2 = connection.prepareStatement("select * from tab_mae_ppr_estados where id in (1,2)");
         ResultSet rs2 = ps2.executeQuery();
 
 
@@ -116,6 +113,6 @@
 <%
     } catch (Exception e) {
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %>

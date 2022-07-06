@@ -42,10 +42,6 @@
         <input type="button" value="BUSCAR" onclick="consulta_grilla_hp_alimentacion($('#txt_fecha').val());" class="form-control btn btn-dark"/>
     </div>
 </div>
-
-
-
-
 <div id="div_grilla">
 
 

@@ -1,7 +1,7 @@
 <%-- 
     Document   : consulta_registro_aviarios_mecanizados_resumen
     Created on : 24/02/2022, 15:19:45
-    Author     : csanchez
+    Author     : aespinola
 --%>
 
 <%@page import="java.sql.PreparedStatement"%>
@@ -14,8 +14,10 @@
 <%@page contentType="application/json; charset=utf-8"%>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
-<%@page import="clases.controles"%>
-<%
+<%@include  file="../../cruds/conexion.jsp" %>
+
+
+ <%
 
     DecimalFormat df = new DecimalFormat("0.00");
     DecimalFormat formatea = new DecimalFormat("###,###.##");
@@ -60,13 +62,15 @@
     String id_datos = "";
     String fecha_anterior = "";
 
-    controles.connectarBD();
-    JSONObject obje, obje2 = new JSONObject();
+     JSONObject obje, obje2 = new JSONObject();
     obje = new JSONObject();
 
-    PreparedStatement pt2 = clases.controles.connect.prepareStatement("execute stp_mae_ppr_select_datos_diarios_resumen  @fecha_desde='" + fecha + "',@aviario='" + aviario + "'");
+    try {
+            
+    
+    PreparedStatement pt2 = connection.prepareStatement("execute stp_mae_ppr_select_datos_diarios_resumen  '" + fecha + "',@aviario='" + aviario + "'");
     ResultSet rs2 = pt2.executeQuery();
-    PreparedStatement pt3 = clases.controles.connect.prepareStatement("select dl_fecha  from ppr_datolotes where dl_fecha = dateadd(DAY,-1,convert(date,'" + fecha + "' )) and dl_aviario='" + aviario + "'");
+    PreparedStatement pt3 = connection.prepareStatement("select dl_fecha  from ppr_datolotes where dl_fecha = dateadd(DAY,-1,convert(date,'" + fecha + "' )) and dl_aviario='" + aviario + "'");
     ResultSet rs3 = pt3.executeQuery();
     while (rs2.next()) {
 
@@ -112,8 +116,7 @@
 
     }
 
-    clases.controles.DesconnectarBD();
-    obje.put("lote", lote);
+     obje.put("lote", lote);
     obje.put("dias", dias);
     obje.put("sems", sems);
     obje.put("saldoini2", saldoini);
@@ -149,5 +152,15 @@
     obje.put("fecha_anterior", fecha_anterior);
     obje.put("ml_ave", ml_ave);
     obje.put("id_datos", id_datos);
+    
+    
+    
+        } catch (Exception e) {
+            String eerr=e.getMessage();
+        }
+    
+    finally{
+        connection.close(); 
     out.print(obje);
+    }
 %>

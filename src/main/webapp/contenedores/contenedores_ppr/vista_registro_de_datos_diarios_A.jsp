@@ -3,7 +3,23 @@
     Created on : 21/02/2022, 13:51:26
     Author     : csanchez
 --%>
-
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+ <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/> 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+ <%  
+   PreparedStatement ps;
+   ResultSet rs;
+   
+   try {
+           
+   ps=connection .prepareStatement("select lote_id,lote_name from ppr_lotes where lote_aviario is null and lote_id > 297");
+   rs=ps.executeQuery();
+  
+   %>
 <style>
 
     .textcolor   {
@@ -61,6 +77,7 @@
             setInputDate("#fecha_desac");
             setInputDate("#fecha_actic");
 </script>
+
 <div class="col-lg-20 ">
 <div class="position-relative p-3 bg-navy"  >
 <div class="ribbon-wrapper">
@@ -92,6 +109,8 @@ PPR
             <div id="tabla_datos_diarios_descarte" class=" tablagrilla input-group-append ocultar"></div>
             <div id="tabla_datos_diarios_h" class=" tablagrilla input-group-append ocultar"></div>
             <div id="tabla_datos_diarios_pre_descarte" class=" tablagrilla input-group-append ocultar"></div>
+            <div id="div_total_pre_descarte" class=" tablagrilla input-group-append ocultar"></div>
+          
         </div>
         </center>
     </section>
@@ -102,7 +121,7 @@ PPR
                 <div class="modal-header bg-navy">
                     <h class="modal-title">Desactivar lote/aviario</h>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">Ã—</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -141,9 +160,9 @@ PPR
         <div class="modal-content">
             <form id="ppr-necro-form" name="ppr-necro-form" autocomplete="off" class="form form-horizontal">
                 <div class="modal-header bg-navy">
-                    <center><h class="modal-title  ">AVIARIO<input readonly class="text-white bg-navy" id="aviario_lote"></center>
+                    <center><h class="modal-title  "> ACTIVAR AVIARIO<input readonly class="text-white bg-navy" id="aviario_lote"></center>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">×</span>  
+                        <span aria-hidden="true">Ã—</span>  
                     </button>
                 </div>
                 <div class="modal-body">
@@ -155,20 +174,29 @@ PPR
                                             <input  type="date" id="fecha_actic" step="1 name="fecha_actic" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-5">
+                                        <div class="col-12 col-md-5">
                                         <div class="form-group">
-                                            <H6><label class="form-control-placeholder">LOTE</label></H6>
-                                            <input   type="text" id="lote" step="1 name="lote" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
-                                            <input  hidden="true" id="lote_desac"  name="lote_desac"  type="text"/>
-                                            <input  hidden="true" id="aviario_desac" name="aviario_desac"   type="text"/>
+                                            <H6><label class="form-control-placeholder">LOTE DISPONIBLE</label></H6>
+                                            <select class="form-control" id="lote" name="lote" >
+                                            <%while(rs.next()){%>
+                                        <option value="<%=rs.getString("lote_id")%>"><%=rs.getString("lote_name")%></option>
+                                        <%} %>
+                                         </select>
+                                            <input  hidden="true" id="aviario_sac" name="aviario_desac"   type="text"/>
                                         </div>
                                     </div> 
+                                 <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6><label class="form-control-placeholder">SALDO INICIAL AVES</label></H6>
+                                            <input   type="text" id="saldo_inicial" step="1 name="saldo_inicial" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
+                                        </div>
+                                </div> 
                             </div> 
                         </div>
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="" class="bg-navy">Registrar</button>
+                    <button type="button" onclick="activar_lote_ppr()" class="bg-navy">Registrar</button>
                     <button type="button" class="bg-navy" data-dismiss="modal">Cancelar</button>
                 </div>
             </form>
@@ -176,3 +204,11 @@ PPR
     </div>
 </div>
 </div>
+<%
+    
+       } catch (Exception e) {
+       }
+       finally{
+         connection.close();
+}
+%>

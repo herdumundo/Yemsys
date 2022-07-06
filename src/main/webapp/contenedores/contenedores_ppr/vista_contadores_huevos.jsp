@@ -6,9 +6,11 @@
  <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
+<%@include  file="../../versiones.jsp" %>
+
 <jsp:useBean id="conexion" class="clases.ConnectionSqlServer" scope="page" />
  <% 
-     String version=clases.versiones.contenedores_ppr_vista_contadores_huevos;
+     String version= contenedores_ppr_vista_contadores_huevos;
 
  %> 
 <head>   

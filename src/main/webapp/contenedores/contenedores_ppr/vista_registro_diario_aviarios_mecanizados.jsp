@@ -1,11 +1,27 @@
 <%-- 
     Document   : grilla_registro_diario_aviarios_mecanizados
     Created on : 27/01/2022, 10:15:33
-    Author     : csanchez
+    Author     : aespinola
 --%>
-
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+ <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@include  file="../../versiones.jsp" %>
+ <%  
+   PreparedStatement ps;
+   ResultSet rs;
+    clases.controles.connectarBD();
+  
+   try {
+           
+   ps=clases.controles.connect .prepareStatement("select avi.avilot_aviario,avilot_lote,lo.lote_name from ppr_avilote avi left join ppr_lotes lo on avi.avilot_lote=lo.lote_id "
+                                                 + "where avilot_ffin is null and lo.lote_activo=1 and avi.avilot_aviario not like 'C1%'");
+   rs=ps.executeQuery();
+  
+   %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -82,30 +98,9 @@
                         <th class="tablagrilla">
                         <center>
                             <select onchange="contador_mortandad_ppr()" style="width:117px;" id="avis" name="avi" class=" tablagrilla form-control cargar2">
-                                <option data-lote="287" value="A2">A2 - 721+722</option>
-                                <option data-lote="291" value="A3">A3 - 729+730</option>
-                                <option data-lote="294" value="A4">A4 - 689+690</option>
-                                <option data-lote="292" value="A5">A5 - 731+732</option>
-                                <option data-lote="280" value="A6">A6 - 707+708</option>
-                                <option data-lote="274" value="A7">A7 - 695+696</option>
-                                <option data-lote="279" value="A8">A8 - 705+706</option>
-                                <option data-lote="273" value="A9">A9 - 693+694</option>
-                                <option data-lote="289" value="A10">A10 - 725+726</option>
-                                <option data-lote="284" value="A11">A11 - 715+716</option>
-                                <option data-lote="290" value="A12">A12 - 727+728</option>
-                                <option data-lote="288" value="B2">B2 - 723+724</option>
-                                <option data-lote="285" value="B3">B3 - 717+718</option>
-                                <option data-lote="283" value="B4">B4 - 713+714</option>
-                                <option data-lote="278" value="B5">B5 - 703+704</option>
-                                <option data-lote="281" value="B6">B6 - 709+710</option>
-                                <option data-lote="272" value="B7">B7 - 691+692</option>
-                                <option data-lote="275" value="B8">B8 - 697+698</option>
-                                <option data-lote="282" value="B10">B10 - 711+712</option>
-                                <option data-lote="286" value="B11">B11 - 719+720</option>
-                                <option data-lote="273" value="H3">H3 - 687+688</option>
-                                <option data-lote="274" value="H3B">H3B - 691+692</option>
-                                <option data-lote="277" value="H1">H1 - 701+702</option>
-                                <option data-lote="276" value="H2">H2 - 699+700</option>
+                                <%while(rs.next()){%>
+                                <option data-lote="<%=rs.getString("avilot_lote")%>" value="<%=rs.getString("avilot_aviario")%>"><%=rs.getString("avilot_aviario")%> - <%=rs.getString("lote_name")%></option>
+                                 <%} %>
                             </select>
                         </center></th>
                         <th class="tablagrilla">
@@ -153,7 +148,7 @@
                                         <tr class="tablagrilla">
                                             <td class="tablagrilla text-center cursor-pointer btn-link">116</td>
                                             <td contenteditable="true"   id="116" class="tablagrilla text-right textcolor2 cerom" ></td>
-                                            <td contenteditable="true"   id="116" class="tablagrilla text-right textcolor2 cerom" ></td> 
+                                            <td contenteditable="true"   id="126" class="tablagrilla text-right textcolor2 cerom" ></td> 
                                             <td class="tablagrilla text-center cursor-pointer btn-link">126</td>
 
                                             <td class="tablagrilla text-center cursor-pointer btn-link">216</td>
@@ -312,6 +307,7 @@
                                         <div class="form-group">
                                             <label class="form-control-placeholder">Saldo ant.</label>
                                             <input   campo="saldoant" type="text" id="dl_saldoant" class="form-control form-control-sm text-center" readonly="">
+
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-3">
@@ -503,7 +499,7 @@
                                     <div class="col-12 col-md-8">
                                         <div class="form-group">
                                             <label class="form-control-placeholder">Cant. Huevos</label>
-                                            <input data="true" type="number" id="dl_huevos" name="dl_huevos" class="form-control form-control-sm text-center avi-input">
+                                            <input disabled="true" data="true" type="number" id="dl_huevos" name="dl_huevos" class="form-control form-control-sm text-center avi-input">
                                         </div>
                                     </div>                    
                                 </div>
@@ -570,3 +566,11 @@
     
 </body>
 </html>
+<%
+    
+       } catch (Exception e) {
+       }
+       finally{
+        clases.controles.DesconnectarBD();
+}
+%>

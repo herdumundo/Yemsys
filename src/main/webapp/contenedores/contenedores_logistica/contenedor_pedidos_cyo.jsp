@@ -1,15 +1,16 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
- <%     
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>   <%     
     ResultSet rs;
-    rs = fuente.obtenerDato("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
-    
+    PreparedStatement  pst,pst2;
+    pst = connection.prepareStatement("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
+    rs = pst.executeQuery();
+
  try {
          
     %>
@@ -37,6 +38,6 @@
      } catch (Exception e) {
      }
     finally{
-    clases.controles.DesconnectarBD();
+    connection.close();
 }
     %>

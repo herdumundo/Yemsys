@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from v_mae_log_rep_enteros where id=$P{id} and estado=$P{estado} order by 7]]>
+		<![CDATA[select * from v_mae_log_rep_enteros where id=$P{id}   order by 7]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha_registro" class="java.lang.String"/>

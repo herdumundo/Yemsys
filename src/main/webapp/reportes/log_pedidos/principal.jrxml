@@ -10,11 +10,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\logistica\\web\\reportes\\log_pedidos\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[ select * from v_mae_log_rep where id=$P{id}
- and estado=$P{estado}]]>
+		<![CDATA[select * from v_mae_log_rep_logistica_entero where id=$P{id}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha_registro" class="java.lang.String"/>
@@ -22,13 +21,9 @@
 	<field name="cantidad" class="java.lang.Integer"/>
 	<field name="chofer" class="java.lang.String"/>
 	<field name="clasificadora" class="java.lang.String"/>
-	<field name="cantidad_det" class="java.lang.Integer"/>
 	<field name="obs" class="java.lang.String"/>
-	<field name="tipo_huevo" class="java.lang.String"/>
-	<field name="carro" class="java.lang.Integer"/>
 	<field name="fecha_puesta" class="java.sql.Timestamp"/>
 	<field name="estado" class="java.lang.Integer"/>
-	<field name="estado_mixto" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -74,17 +69,6 @@
 				<reportElement x="0" y="73" width="100" height="20" uuid="324b2b67-2297-4caf-aabd-7555f991e494"/>
 				<text><![CDATA[Chofer:]]></text>
 			</staticText>
-			<subreport>
-				<reportElement x="0" y="168" width="528" height="100" uuid="7c77d2a1-3d41-4410-ab16-9992e773a29b"/>
-				<subreportParameter name="id">
-					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="estado">
-					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enteros.jasper"]]></subreportExpression>
-			</subreport>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="137" width="555" height="31" backcolor="#CCFFCC" uuid="48135fb1-17d4-4d7b-a17a-55da449f6d88"/>
 				<textElement textAlignment="Center">
@@ -92,12 +76,8 @@
 				</textElement>
 				<text><![CDATA[Carros enteros]]></text>
 			</staticText>
-		</band>
-	</title>
-	<summary>
-		<band height="158">
 			<subreport>
-				<reportElement x="75" y="38" width="453" height="100" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="dd8a6f97-d596-44c9-a429-3daf7c06d9d3"/>
+				<reportElement x="0" y="168" width="483" height="100" uuid="951fce6f-ceef-4594-85d1-842979d80ae3"/>
 				<subreportParameter name="id">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -105,8 +85,12 @@
 					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "mixtos.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enteros.jasper"]]></subreportExpression>
 			</subreport>
+		</band>
+	</title>
+	<summary>
+		<band height="158">
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="31" backcolor="#CCFFFF" uuid="7b4d0cae-30ae-45ba-82f0-78fb96846f5c"/>
 				<textElement textAlignment="Center">
@@ -114,6 +98,17 @@
 				</textElement>
 				<text><![CDATA[Carros mixtos]]></text>
 			</staticText>
+			<subreport>
+				<reportElement x="0" y="31" width="483" height="100" uuid="b51b1595-1757-4809-a87f-732ad7c2b411"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="estado">
+					<subreportParameterExpression><![CDATA[$P{estado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "mixtos.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>
