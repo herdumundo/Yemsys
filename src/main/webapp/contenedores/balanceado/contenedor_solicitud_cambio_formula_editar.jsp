@@ -17,23 +17,31 @@
     PreparedStatement ps, ps2, ps3;
     ResultSet rs, rs2,rs3;
     String id =  request.getParameter("id");
+    String estado =  request.getParameter("estado");
     String desc_mtp="";
     String name_formula="";
     String cod_formula="";    
     DecimalFormat formatea = new DecimalFormat("###,###.##");
     DecimalFormat formatea2 = new DecimalFormat("###.###");
     try {
-        ps = connection.prepareStatement("select * from mae_bal_mtp_cab_solicitud where id="+id+"");
+        ps = connection.prepareStatement("select *,"
+                + " CASE WHEN CONVERT(VARCHAR,fecha_modificacion,103)='01/01/1900' THEN  null ELSE (CONVERT(VARCHAR,fecha_modificacion,103)) END AS fecha_modificacion_form  "
+                + " from mae_bal_mtp_cab_solicitud where id="+id+"");
         rs = ps.executeQuery();
-       
+       String fecha="";
         while (rs.next()) 
         {
             
             cod_formula=rs.getString("cod_formula");
             name_formula=rs.getString("formula");
+            fecha=rs.getString("fecha_modificacion_form");
         }
         rs.close();
- 
+         
+        if(fecha==null){
+            fecha="";
+        }
+        
       ps2 = connection.prepareStatement(" "
                 + "    select    "
                 + "        A.Code,B.ItemName,CONVERT(varchar, convert(money, B.AvgPrice), 1)   as AvgPrice ,   B.ItmsGrpCod   "
@@ -169,7 +177,14 @@ String grilla= cabecera + grilla_html + "</tbody></table>";
 <form   method="post"  id="formulario" >
 
     <input type="hidden" id="id_pedido" name="id_pedido" value="<%=id%>">
+    <input type="hidden" id="estado" name="estado" value="<%=estado%>">
 
+    
+ <label>Cambio realizable a partir de la fecha</label>
+ <input type="text" required="required" id="fecha_solicitud" class="form-control datepicker" value="<%=fecha%>" placeholder="Ingrese fecha"> 
+
+    
+    
     <table class="table">
         <tbody>
                 <td width="30%"><label>FORMULA</label>

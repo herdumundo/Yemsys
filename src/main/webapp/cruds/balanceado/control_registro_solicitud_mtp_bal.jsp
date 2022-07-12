@@ -23,6 +23,7 @@
     String indicadores = request.getParameter("indicadores");
     String urgente = request.getParameter("urgente");
     String usuario = (String) sesionOk.getAttribute("nombre_usuario");
+    String area = (String) sesionOk.getAttribute("area_gm");
  
     int tipo_respuesta = 0;
     String mensaje = "";
@@ -58,7 +59,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setString(2,  fecha_solicitud);
         callableStatement.setString(3,  recomendado);
@@ -72,6 +73,7 @@
         callableStatement.setString(11, plazo_evaluacion); 
         callableStatement.setString(12, indicadores); 
         callableStatement.setString(13, urgente); 
+        callableStatement.setString(14, area); 
 
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);

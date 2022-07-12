@@ -43,7 +43,7 @@
 
         <tbody>
             <tr>
-                <td width="10%"><label>Fecha de modificación</label><input type="text" required="required" id="fecha_solicitud" class="form-control datepicker" placeholder="Ingrese fecha"></td>
+                <td width="10%"><label>Cambio realizable a partir de la fecha</label><input type="text" required="required" id="fecha_solicitud" class="form-control datepicker" placeholder="Ingrese fecha"></td>
                 <td width="10%">
                    
                         <label>Toneladas</label>

@@ -12,8 +12,12 @@
 <%    
     String grilla = request.getParameter("json_string");
     String id = request.getParameter("id");
+    String estado = request.getParameter("estado");
+    String fecha_modificacion = request.getParameter("fecha_modificacion");
     String usuario = (String) sesionOk.getAttribute("nombre_usuario");
  
+     
+    
     int tipo_respuesta = 0;
     String mensaje = "";
     JSONObject ob = new JSONObject();
@@ -48,11 +52,12 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_editar_solicitud_mtp(?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_editar_solicitud_mtp(?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setInt(2,  Integer.parseInt(id));
         callableStatement.setString(3,  usuario);
-         
+        callableStatement.setString(4,  "1");
+        callableStatement.setString(5,  fecha_modificacion);
 
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);

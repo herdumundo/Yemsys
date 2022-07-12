@@ -1,12 +1,12 @@
  
-function editar_solicitud_bal(id)
+function editar_solicitud_bal(id,estado)
 {
 
     $.ajax({
         type: "POST",
         url: ruta_contenedores_bal + 'contenedor_solicitud_cambio_formula_editar.jsp',
         data: ({
-            id: id }),
+            id: id,estado:estado }),
         beforeSend: function ()
         { 
             cargar_load("Cargando...");
@@ -15,6 +15,8 @@ function editar_solicitud_bal(id)
         { 
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
+            cargar_estilo_calendario_global("dd/mm/yyyy",false);
+
              $("#tb_formulacion").DataTable({
                 paging: false,
                 ordering:false,
@@ -75,6 +77,8 @@ function editar_solicitud_bal(id)
 function validar_datos_mtp_edit_sol(){
     var cantidad_validada=$("#total_insumos").html();
     var id=$("#id_pedido").val();
+    var fecha_modificacion=$("#fecha_solicitud").val();
+    var estado=$("#estado").val();
        
     if(cantidad_validada=="1000.000")
     {
@@ -112,7 +116,7 @@ function validar_datos_mtp_edit_sol(){
                                   type: "POST",
                                   url: ruta_cruds_bal + 'control_modificacion_solicitud_mtp_bal.jsp',
                                   data: ({
-                                      json_string: json_string,id:id}),
+                                      json_string: json_string,id:id,estado:estado,fecha_modificacion:fecha_modificacion}),
                                   beforeSend: function ()
                                   {
                                       Swal.fire({
@@ -284,3 +288,4 @@ function add_filas_sol_edit_bal() {
     }
     
 }
+ 

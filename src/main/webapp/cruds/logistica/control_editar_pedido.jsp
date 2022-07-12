@@ -9,11 +9,11 @@
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
 <%@include  file="../../chequearsesion.jsp" %>
- <%@page contentType="application/json; charset=utf-8" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+<%@page contentType="application/json; charset=utf-8" %>
 
 <%    
-    clases.controles.connectarBD();
-    JSONObject ob = new JSONObject();
+     JSONObject ob = new JSONObject();
     ob=new JSONObject();
     String id_usuario       = (String) sesionOk.getAttribute("id_usuario");
     String id_camion        = request.getParameter("id_camion");
@@ -27,9 +27,9 @@
     int tipo_respuesta=0;    
     try 
     {
-        clases.controles.connect.setAutoCommit(false);
+        connection.setAutoCommit(false);
         CallableStatement  callableStatement=null;   
-        callableStatement = clases.controles.connect.prepareCall("{call [mae_log_ptc_pedidos_editar_2](?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_editar_2](?,?,?,?,?,?,?,?,?)}");
         callableStatement .setInt(      1,      Integer.parseInt(cantidad_total) );
         callableStatement .setString(   2,      id_camion  );
         callableStatement .setInt(      3,      Integer.parseInt(id_usuario) );
@@ -48,14 +48,13 @@
 
         if (tipo_respuesta==0)
         {
-            clases.controles.connect.rollback(); 
+            connection.rollback(); 
         }   
         else  
         {
-            clases.controles.connect.commit();
+            connection.commit();
         }
-            clases.controles.DesconnectarBD();
-            ob.put("mensaje", mensaje);
+             ob.put("mensaje", mensaje);
             ob.put("tipo_respuesta", tipo_respuesta);
             ob.put("carros_excedentes", carros_excedentes);
     } 
@@ -65,4 +64,8 @@
         ob.put("tipo_respuesta", "0");
           ob.put("carros_excedentes", carros_excedentes);
     }
-    out.print(ob); %>
+    finally{
+        connection.close();
+          out.print(ob);
+    }
+ %>

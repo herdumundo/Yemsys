@@ -59,7 +59,7 @@
                     +"<td>"+rs.getString("revision")+"</td>" 
                     +"<td> <td>"
                     + "<form action=\"cruds/balanceado/control_reporte_pedidos_bal.jsp\" target=\"blank\"><input type=\"submit\" value=\"Reporte\" class=\"bg-warning\"> <input type=\"hidden\" id=\"id\" name=\"id\" value=\""+rs.getString("id")+"\"></form> "               
-                     + "<input type=\"button\" value=\"Detalle\" class=\"bg-navy\" onclick=\"ir_pendientes_solicitud_ingredientes_bal(34,'BAL-00010')\">"
+                     + "<input type=\"button\" value=\"Detalle\" class=\"bg-navy\" onclick=\"ir_pendientes_solicitud_ingredientes_bal("+rs.getString("id")+",'"+rs.getString("cod_formula")+"')\">"
                     + "</td></tr>";
                     
                     

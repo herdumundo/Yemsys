@@ -16,9 +16,9 @@
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
-        ps = connection.prepareStatement("  select *,b.descripcion as desc_estado,"
-                + " case when  toneladas_proyectada='' then 'INDEFINIDO' ELSE   toneladas_proyectada end as toneladas_desc"
-                + " from mae_bal_mtp_cab_solicitud a inner join mae_bal_estados b on a.estado=b.id and a.estado IN (1,5)");
+        ps = connection.prepareStatement(" select a.id,a.fecha_registro,a.fecha_modificacion,a.formula,a.recomendado,a.motivo,a.usuario, "
+                + "b.descripcion as desc_estado,  a.cod_formula , case when  toneladas_proyectada='' then 'INDEFINIDO' ELSE   toneladas_proyectada end as toneladas_desc,"
+                + "isnull(a.revision,'') as revision     from mae_bal_mtp_cab_solicitud a inner join mae_bal_estados b on a.estado=b.id and a.estado IN (1,5)");
         rs = ps.executeQuery();
         int verifi=0;
 %>
@@ -47,7 +47,7 @@
  
 
  
-        <table class="table-bordered">
+        <table  class=' table-bordered compact' style='width:100%'>
             <thead>
             <th>Nro.</th>
             <th>Fecha de registro</th>
@@ -76,9 +76,9 @@
                     <td><%=rs.getString("revision")%></td>
                     <td><input type="button" value="Detalle" class="bg-navy" onclick="ir_pendientes_solicitud_ingredientes_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>')"> </td>
                     <td><form action="cruds/balanceado/control_reporte_pedidos_bal.jsp" target="blank"><input type="submit" value="Reporte" class="bg-warning"> <input type="hidden" id="id" name="id" value="<%=rs.getString("id")%>"></form> </td>
-                    <td><input type="button" value="Editar"    class="bg-black" onclick="editar_solicitud_bal(<%=rs.getString("id")%>)"> </td>
+                    <td><input type="button" value="Editar"    class="bg-black" onclick="editar_solicitud_bal(<%=rs.getString("id")%>,2)"> </td><!-- 1= ESTADO PARA QUE VUELVA A ESTADO PENDIENTE DE APROBACION GERENCIA -->
                     <td><input type="button" value="Aprobar"    class="bg-success" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,1)"> </td>
-                    <td><input type="button" value="Cancelar"   class="bg-danger" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,2)"> </td>
+                    <td><input type="button" value="Cancelar"   class="bg-danger" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,4)"> </td>
                 </tr>
                   <%verifi++; } %>
             </tbody>

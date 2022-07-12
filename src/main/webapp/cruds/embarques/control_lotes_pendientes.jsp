@@ -4,11 +4,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.*"%>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+
 <%@ page contentType="application/json; charset=utf-8" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
-        <% 
-        clases.controles.VerificarConexion();
-         String  numero_factura      = request.getParameter("numero_factura") ;
+
+         <% 
+          String  numero_factura      = request.getParameter("numero_factura") ;
         String  area                =(String)sesionOk.getAttribute("area_gm");
  	String  tipo_huevo          = request.getParameter("tipo_huevo") ;
 	int     cantidad            = Integer.parseInt(request.getParameter("cantidad")) ;
@@ -23,7 +24,7 @@
              try { 
          //   clases.controles.connectSesion.setAutoCommit(false);
             CallableStatement  callableStatement=null;   
-            callableStatement = clases.controles.connectSesion.prepareCall( "{call pa_embarque_pendientes( ?, ?, ?, ?, ? ,?,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall( "{call pa_embarque_pendientes( ?, ?, ?, ?, ? ,?,?,?,?,?,?)}");
             callableStatement .setString(   1,  area );
             callableStatement .setString(   2,  tipo_huevo);
             callableStatement .setInt(      3,  cantidad);
@@ -40,7 +41,7 @@
          //   clases.controles.connectSesion.commit();
            } catch (Exception e) 
             {
-                clases.controles.connectSesion.rollback();
+                connection.rollback();
                 String error=e.toString();
             }
              
@@ -48,7 +49,7 @@
             JSONObject ob = new JSONObject();
             ob=new JSONObject();
             out.print(ob); 
-            clases.controles.DesconnectarBDsession();
+            connection.close();
              }
             
         %>  

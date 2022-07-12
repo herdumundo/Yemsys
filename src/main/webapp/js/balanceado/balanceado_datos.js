@@ -510,7 +510,7 @@ function acepCance_solicitud_bal(id,tipo_operacion)
 {
     Swal.fire({
             title: 'FORMULA ',
-            text: "DESEA REALIZAR LA APROBACION DE LA SOLICITUD?",
+            text: "DESEA REALIZAR LA OPERACION?",
             type: 'warning',
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
