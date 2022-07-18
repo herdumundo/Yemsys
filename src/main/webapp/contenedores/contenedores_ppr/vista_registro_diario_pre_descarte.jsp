@@ -1,3 +1,23 @@
+
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+ <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/> 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include  file="../../versiones.jsp" %>
+ <%  
+   PreparedStatement ps;
+   ResultSet rs;
+    clases.controles.connectarBD();
+  
+   try {
+           
+   ps=clases.controles.connect .prepareStatement("select lote_id from ppr_lotes where   lote_id > 298 and lote_activo=1");
+   rs=ps.executeQuery();
+  
+   %>
+
+
 <style>
 
     .textcolor   {
@@ -88,7 +108,106 @@ PPR
             <br>   
             <div id="tabla_datos_diarios_pre_descarte_mecanizados" class="tablagrilla input-group-append ocultar"></div>
         </div>
-        </center>
+   
     </section>
+    
+       <div class="modal fade" id="desactivar_lote_aviario" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="ppr-necro-form" name="ppr-necro-form" autocomplete="off" class="form form-horizontal">
+                <div class="modal-header bg-navy">
+                    <h class="modal-title">Desactivar lote/aviario</h>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                           <div class="row mt-3">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6> <label class="form-control-placeholder">Fecha</label></H6>
+                                            <input  type="date" id="fecha_desac" step="1 name="fecha_desac" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6><label class="form-control-placeholder">Fecha ultimo registro</label></H6>
+                                            <input  disabled="true" type="date" id="fecha_ultimo" step="1 name="fecha_ultimo" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
+                                            <input  hidden="true" id="lote_desac"  name="lote_desac"  type="text"/>
+                                            <input  hidden="true" id="aviario_desac" name="aviario_desac"   type="text"/>
+                                        </div>
+                                    </div> 
+                            </div> 
+                       
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="desactivar_lote_ppr()" class="bg-navy">Desactivar</button>
+                    <button type="button" class="bg-navy" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <!-- /.content -->
+     <div class="modal fade" id="agregar_lote_aviario" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="ppr-necro-form" name="ppr-necro-form" autocomplete="off" class="form form-horizontal">
+                <div class="modal-header bg-navy">
+                    <center><h class="modal-title  "> ACTIVAR AVIARIO<input readonly class="text-white bg-navy" id="aviario_lote"></center>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">×</span>  
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                          <div class="row mt-3">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6> <label class="form-control-placeholder">FECHA</label></H6>
+                                            <input  type="date" id="fecha_actic" step="1 name="fecha_actic" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
+                                        </div>
+                                    </div>
+                                        <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6><label class="form-control-placeholder">LOTE DISPONIBLE</label></H6>
+                                            <select class="form-control" id="lote" name="lote" >
+                                            <%while(rs.next()){%>
+                                        <option value="<%=rs.getString("lote_id")%>"><%=rs.getString("lote_id")%></option>
+                                        <%} %>
+                                         </select>
+                                            <input  hidden="true" id="aviario_sac" name="aviario_desac"   type="text"/>
+                                        </div>
+                                    </div> 
+                                 <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <H6><label class="form-control-placeholder">SALDO INICIAL AVES</label></H6>
+                                            <input   type="text" id="saldo_inicial" step="1 name="saldo_inicial" min="2014-10-01" class="tablagrilla form-control text-center cargar_u_r_datosdiariosA" required="">
+                                        </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="activar_lote_ppr()" class="bg-navy">Registrar</button>
+                    <button type="button" class="bg-navy" data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+   
     <!-- /.content -->
 </div>
+<%
+    
+       } catch (Exception e) {
+       }
+       finally{
+        clases.controles.DesconnectarBD();
+}
+%>

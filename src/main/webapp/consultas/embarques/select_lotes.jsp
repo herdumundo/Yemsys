@@ -1,16 +1,15 @@
-<%@page import="clases.controles"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="java.sql.Connection"%>
-<%@ page contentType="application/json; charset=utf-8" %>
+ <%@ page contentType="application/json; charset=utf-8" %>
 <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+
 <%  try 
     {
-        clases.controles.connectarBD();
-        String area = (String) sesionOk.getAttribute("area");
+         String area = (String) sesionOk.getAttribute("area");
         String clasificadora = (String) sesionOk.getAttribute("clasificadora");
         String carro = request.getParameter("id");
         String factura = request.getParameter("factura");
@@ -20,7 +19,7 @@
         JSONObject ob = new JSONObject();
         JSONArray jarray = new JSONArray();
         
-       Statement   stmt1 = clases.controles.connect.createStatement();
+       Statement   stmt1 = connection.createStatement();
         ResultSet rs_lote = stmt1.executeQuery(" exec [mae_cch_select_lotes_disponibles_embarque_test]  @area_cch='" + area + "',"
                 + "@cod_carrito='" + carro + "',@nro_factura='" + factura + "'");
 
@@ -40,7 +39,7 @@
             ob.put("tipo_mensaje", "1");
 
             CallableStatement callableStatement = null;
-            callableStatement = clases.controles.connect.prepareCall("{call pa_embarque_pendientes( ?, ?, ?, ?, ? ,?,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall("{call pa_embarque_pendientes( ?, ?, ?, ?, ? ,?,?,?,?,?,?)}");
             callableStatement.setString(1, clasificadora);
             callableStatement.setString(2, rs_lote.getString("nombre_tipo"));
             callableStatement.setInt(3, rs_lote.getInt("cantidad"));
@@ -93,6 +92,6 @@
         ob.put("tipo_mensaje", "0");
         out.print(jarray);
     } finally {
-        controles.DesconnectarBD();
+        connection.close();
     }
 %>

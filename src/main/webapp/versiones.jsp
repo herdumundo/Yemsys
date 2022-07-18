@@ -4,9 +4,16 @@
     Author     : hvelazquez
 --%>
 <%
-    String contenedores_embarque_informe_factura = "0001-REP-15032022-A";
-    String desc_contenedores_embarque_informe_factura = "0001-REP-15032022-A";
+    String contenedores_embarque_informe_factura = "0094-PAN-27062022-A";
+    String desc_contenedores_embarque_informe_factura = "0094-PAN-27062022-A";
 
+    String contenedores_logistica_pedidos_pendientes = "0001-REP-15032022-A";
+    String desc_contenedores_logistica_pedidos_pendientes = "0001-REP-15032022-A";
+
+   
+    
+    
+    
     String contenedores_embarque_contenedor_reporte_embarque = "0002-REP-15032022-A";
     String desc_contenedores_embarque_contenedor_reporte_embarque = "0002-REP-15032022-A";
 
@@ -18,10 +25,14 @@
     String contenedores_logistica_contenedor_pedidos_generados_menu = "0074-PAN-08042022-A";
     String desc_contenedores_logistica_contenedor_pedidos_generados_menu = " &0071-PAN-09042022-A: EN MODIFICACION SE AGREGO COLUMNA PARA RESERVAS.&0074-PAN-08042022-A: SE AGREGÓ LA OPCIÓN DE MODIFICAR EL CAMION DEL PEDIDO.";
 
-    String contenedores_logistica_contenedor_pedidos_facturar = "0075-PAN-08042022-A";
-    String desc_contenedores_logistica_contenedor_pedidos_facturar = "&0075-PAN-08042022-A: SE AGREGO LA ASIGNACION DE NRO DE FACTURA AUTOMATICA AL PEDIDO, AL GENERAR LA FACTURA EN SAP";
+    String contenedores_logistica_contenedor_pedidos_facturar = "0100-PAN-15072022-A";
+    String desc_contenedores_logistica_contenedor_pedidos_facturar = "&0075-PAN-08042022-A: SE AGREGO LA ASIGNACION DE NRO DE FACTURA AUTOMATICA AL PEDIDO, AL GENERAR LA FACTURA EN SAP"+
+                                                                     "&0100-PAN-15072022-A: SE AGREGO EL BOTÓN DE COPIAR GRILLA, PARA LA SIMPLIFICACION Y AGILIZACION DEL PEGADO AL SISTEMA SAP  ";
 
-    String contenedores_logistica_contenedor_pedidos_generados_cyo = "0007-REP-15032022-A";
+    String contenedores_logistica_contenedor_pedidos_generados_cyo =        "0093-PAN-23062022-A";
+    String desc_contenedores_logistica_contenedor_pedidos_generados_cyo =   "0093-PAN-23062022-A:SE AGREGÓ LA DESCARGA EN PDF DEL PEDIDO.";
+    
+    
     String contenedores_logistica_contenedor_reporte = "0008-REP-15032022-A";
 
     String contenedores_ppr_vista_informe_aviarios_dinamico = "0009-REP-15032022-A";
@@ -44,8 +55,9 @@
     String contenedores_mis_contenedor_registro_transferencias_reprocesos = "0088-PAN-10052022-A";
     String desc_contenedores_mis_contenedor_registro_transferencias_reprocesos = "&0088-PAN-10052022-A: SE AGREGO LA OPCION (HUEVO EN POLVO) COMO DESTINO.";
 
-    String contenedores_mis_contenedor_transferencia_subproducto = "0087-PAN-10052022-A";
-    String desc_contenedores_mis_contenedor_transferencia_subproducto = "&0087-PAN-10052022-A: SE AGREGO LA OPCION (HUEVO EN POLVO ) COMO DESTINO.";
+    String contenedores_mis_contenedor_transferencia_subproducto = "0091-PAN-07062022-A";
+    String desc_contenedores_mis_contenedor_transferencia_subproducto = "&0087-PAN-10052022-A: SE AGREGO LA OPCION (HUEVO EN POLVO ) COMO DESTINO.&"+
+                                                                        "&0091-PAN-07062022-A: SE AGREGÓ TRANSFERENCIAS DE HUEVOS ROTOS";
 
     String contenedores_mis_contenedor_informe_pendientes_alimentacion = "0089-PAN-15042022-A";
     String desc_contenedores_mis_contenedor_informe_pendientes_alimentacion = "&0089-PAN-15042022-A: SE AGREGO TOTAL DE HUEVOS PENDIENTES A ALIMENTAR";
@@ -136,5 +148,24 @@
     String contenedores_registro_necropsia = "0086-PAN-03042022-A";
     String desc_contenedores_registro_necropsia = " ";
 
+    String contenedores_bal_solicitudad_cambio_formula = "0092-PAN-09062022-A";
+    String desc_contenedores_bal_solicitudad_cambio_formula = " ";
 
+
+    String contenedores_bal_pendiente_aprobacion = "0095-PAN-29062022-A";
+    String desc_contenedores_bal_pendiente_aprobacion = " ";
+
+String contenedores_bal_pendiente_aprobacion_gerencia = "0096-PAN-09062022-A";
+    String desc_contenedores_bal_pendiente_aprobacion_gerencia = " ";
+
+    String contenedores_bal_formula_procesar = "0097-PAN-09062022-A";
+    String desc_contenedores_bal_formula_procesar = " ";
+
+
+    String contenedores_bal_informe = "0098-PAN-30062022-A";
+    String desc_contenedores_bal_informe = " ";
+
+
+    String contenedores_bal_pendientes_creados_usuario = "0099-PAN-30062022-A";
+    String desc_contenedores_bal_pendientes_creados_usuario = " ";
 %>

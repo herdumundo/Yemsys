@@ -261,14 +261,14 @@ function ir_informe_pendientes_alimentacion_mis()
 function llenar_grilla_pendientes_alimentacion_mis()
 {
     $('#example').dataTable({
-        "ajax": ruta_consultas_mis + 'consulta_gen_grilla_pendientes_alimentacion.jsp',
+        "ajax": ruta_consultas_mis + 'consulta_gen_grilla_pendientes_alimentacion.jsp' ,
         drawCallback: function () //SIRVE PARA QUE AL TIPEAR EL FILTRO SE EJECUTE
         {
             var sum = $('#example').DataTable().column(2, {filter: 'applied'}).data().sum();
             
             $('#total').html((sum).toLocaleString().replace(/,/g, ".", ));
         }, "language": {
-            "sUrl": "plugins/Spanish.txt"}, "pageLength": 100,
+            "sUrl": "plugins/Spanish.txt"}, "pageLength": 100, 
     });
 }
 

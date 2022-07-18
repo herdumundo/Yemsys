@@ -1,23 +1,26 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.controles"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
-<%
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %><% 
     ResultSet rs, rs2;
-    rs = fuente.obtenerDato("   select "
+   PreparedStatement  pst,pst2;
+    pst = connection.prepareStatement("   select "
             + "                     a.id,FORMAT (a.fecha_registro, 'dd/MM/yyyy hh:mm') as fecha_registro,concat(b.code,'-',b.name) as camion,"
             + "                     b.code as cod_camion,id_chofer,c.Name as nombre_chofer,b.U_capacidad  "
             + "                 from "
             + "                     mae_log_ptc_cab_pedidos a  "
             + "                     inner join maehara.dbo.[@CAMIONES] b    on a.id_camion=b.Code collate database_default and estado   in (1,2)   "
             + "                     inner join maehara.dbo.[@CHOFERES] C 	on a.id_chofer collate database_default=c.Code order by 1 asc ");
-    String version = clases.versiones.contenedores_logistica_contenedor_pedidos_generados_menu;
-    String version_desc = clases.versiones.desc_contenedores_logistica_contenedor_pedidos_generados_menu;
+        rs = pst.executeQuery();
+
+    String version = contenedores_logistica_contenedor_pedidos_generados_menu;
+    String version_desc = desc_contenedores_logistica_contenedor_pedidos_generados_menu;
 
     try {
 
@@ -103,7 +106,7 @@
 <%
     } catch (Exception e) {
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
 
     }
 %>

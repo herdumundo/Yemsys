@@ -10,6 +10,12 @@ var ruta_grillas_hp = "./grillas/hp/";
 var ruta_consultas_hp = "./consultas/hp/";
 
 
+var ruta_contenedores_bal = "./contenedores/balanceado/";
+var ruta_cruds_bal = "./cruds/balanceado/";
+var ruta_grillas_bal = "./grillas/balanceado/";
+var ruta_consultas_bal = "./consultas/balanceado/";
+
+
 $(document).ready(function () 
 {
     gen_menu();
@@ -607,6 +613,32 @@ function cargar_estilo_calendario_insert(format)
     });
 
 }
+
+
+
+function cargar_estilo_calendario_global(format,max) 
+{
+
+    $('.datepicker').pickadate({
+        // Escape any “rule” characters with an exclamation mark (!).
+        format: format,
+        formatSubmit: format,
+        hiddenPrefix: 'prefix__',
+        hiddenSuffix: '__suffix',
+        cancel: 'Cancelar',
+        clear: 'Limpiar',
+        done: 'Ok',
+        today: 'Hoy',
+        close: 'Cerrar',
+        max: max,
+        monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+        weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        weekdaysShort: ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'],
+    });
+
+}
+
 
 function elminar_fila() 
 {

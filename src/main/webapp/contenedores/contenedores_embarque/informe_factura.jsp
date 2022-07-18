@@ -39,7 +39,7 @@
                     + " inner join " + clases.variables.BD2 + ".dbo.[@CHOFERES] c with(nolock) on a.U_Cod_Chofer=c.Code   "
                     + " and a.isIns='Y' and a.InvntSttus='o'  and b.InvntSttus='o'"
                     + " where a.NumAtCard collate database_default not in (select nro_factura from " + clases.variables.BD + ".dbo.embarque_cab with(nolock) "
-                    + "  where   estado_sincro in('N','P' ) and area='" + area + "' "
+                    + "  where   estado_sincro in('N','P','F' ) and area='" + area + "' "
                     + ")"
                     + " order by a.numatcard ");
             String num_fact = "";

@@ -3,8 +3,10 @@
     Created on : 31-dic-2021, 17:40:59
     Author     : aespinola
 --%>
+<%@include  file="../../versiones.jsp" %>
+
 <% 
-     String version=clases.versiones.contenedores_ppr_vista_informe_aviarios_dinamico;
+     String version= contenedores_ppr_vista_informe_aviarios_dinamico;
  
  %> 
 <head>   

@@ -181,7 +181,6 @@ function carga_aviario_fecha_ppr(avia, id_datos) {
         data: {
             idfechad: $('#idfechad').val(),
             avia: avia
-                    //agregar aca avia y fecha
 
         },
 
@@ -202,8 +201,6 @@ function carga_aviario_fecha_ppr(avia, id_datos) {
             });
             onSelect_mortandad_grilla_ppr();
             $(".ocultar").hide();
-
-
         }
     });
 
@@ -239,17 +236,17 @@ function carga_aviario_fecha_B_ppr(avia) {
     });
 
 }
-function carga_grilla_registro_datos_diarios_A_ppr(avia) {
+function carga_grilla_registro_datos_diarios_A_ppr() {
 
     $.ajax({
         type: "POST",
-        url: ruta_consultas_ppr + '/consulta_registro_datos_diario.jsp',
+        url: ruta_consultas_ppr + 'consulta_registro_datos_diario.jsp',
         beforeSend: function (xhr) {
             cargar_load("Consultando...");
         },
         data: {
             idfechad: $('#idfechad').val(),
-            avia: $('#avis2').val()
+
 
         },
 
@@ -267,22 +264,9 @@ function carga_grilla_registro_datos_diarios_A_ppr(avia) {
             $('#avi').html(data.grilla_datos_diarios_descarte);
             $('#avi').html(data.grilla_datos_diarios_pre_descarte);
             $('#idfecham').val(data.fecha1);
-            $('#avis').val(data.avia);
             $('#contenido_row').html("");
+             $('#div_total_pre_descarte').html(data.div_total_predescarte);
             cerrar_load();
-            //  if (!Object.keys(data.aviario).length) {
-            //      $(".ocultar").hide();
-            //      Swal.fire({
-            //          title: 'ATENCION!',
-            //          text: 'No Existen Registros',
-            //          type: 'warning',
-            //          showCancelButton: false,
-            //          confirmButtonColor: '#001F3F',
-            //          confirmButtonText: 'Aceptar',
-            //          timer: 6000});
-            //  } else {
-            //      $(".ocultar").show();
-            //  }
 
         }
     });
@@ -839,7 +823,8 @@ function contador_mortandad_ppr(avi) {
         url: ruta_consultas_ppr + '/consulta_datos_mortandad.jsp',
         data: {
             fecha: $('#idfecham').val(),
-            aviario: $('#avis').val()
+            aviario: $('#avis').val(),
+            lote:lote
         },
         beforeSend: function (xhr) {
             limpiarm_ppr(), cargar_load("Consultando...");
@@ -869,16 +854,18 @@ function contador_mortandad_ppr(avi) {
 
             cerrar_load();
 
-            if (!Object.keys(data.fecha_anterior).length) {
-                $(".ocultar").hide();
-                Swal.fire({
-                    title: 'ATENCION!',
-                    text: "No existen registros en el dia anterior, por favor registre",
-                    type: 'warning',
-                    showCancelButton: false,
-                    confirmButtonColor: '#001F3F',
-                    confirmButtonText: 'Aceptar',
-                    timer: 4000});
+        //if (!Object.keys(data.fecha_anterior).length) 
+        if (data.fecha_anterior == ""||data.fecha_anterior == "null"||data.fecha_anterior == "0")
+        {
+            $(".ocultar").hide();
+            Swal.fire({
+                title: 'ATENCION!',
+                text: "No existen registros en el dia anterior, por favor registre",
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#001F3F',
+                confirmButtonText: 'Aceptar',
+                timer: 4000});
             } else {
 
                 $(".ocultar").show();
@@ -889,7 +876,7 @@ function contador_mortandad_ppr(avi) {
                 registro_diario_mecanizado_resumen_ppr(data.id_datos);
                 onchange_datos_diarios_ppr();
 
-            }
+          }
 
 
         }
@@ -968,7 +955,7 @@ function contador_mortandad_ppr2(avi) {
 
 function crud_insert_datos_diarios_ppr(fecha, aviario, lote) {
       dl_edad = $('#dl_edad').val();
-      saldoant = $('#dl_saldoant').val();
+      saldoant = $('#dl_saldo').val();
       edad_dias = $('#edad_dias').val();
     $.ajax({
 
@@ -984,17 +971,13 @@ function crud_insert_datos_diarios_ppr(fecha, aviario, lote) {
         },
         success: function (data) {
             $('#id_datos').val(data.id_datos);
+            $('#dl_saldoant').val(data.saldo_anterior);
+            $('#dl_saldo').val(data.saldo_anterior);
+            contador_mortandad_ppr();
             onchange_datos_diarios_ppr();
 
-
-
-        }});
+            }});
 }
-
-
-
-
-
 
 
 function registro_diario_mecanizado_resumen_ppr(id_datos) {
@@ -1023,7 +1006,7 @@ function registro_diario_mecanizado_resumen_ppr(id_datos) {
                 $('#dl_mortpor').val(data.mor);
                 $('#dl_saldo').val(data.saldoini2);
                 if (data.saldoini2 === "" || data.saldoini2 === "0") {
-                    $('#dl_saldo').val(data.saldoant);
+                $('#dl_saldo').val(data.saldoant);
                 }
                 $('#prodpor').val(data.prodpor);
                 $('#kg_bal').val(data.kg);
@@ -1068,73 +1051,6 @@ function registro_diario_mecanizado_resumen_ppr(id_datos) {
     });
 }
 
-function modal_agregar_lote_ppr(aviario) {
-
-    $('#aviario_lote').val(aviario);
-    $("#agregar_lote_aviario").modal("show");
-}
-
-function modal_desactivar_lote_ppr(aviario, lote, ultimo_registro) {
-
-    $('#fecha_ultimo').val(ultimo_registro);
-    $('#lote_desac').val(lote);
-    $('#aviario_desac').val(aviario);
-    $("#desactivar_lote_aviario").modal("show");
-}
-
-function desactivar_lote_ppr() {
-    Swal.fire({
-        title: 'Comfimacion',
-        text: "Enviar Peticion?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Desactivar lote!',
-        cancelButtonText: 'No, cancelar!'}).then((result) =>
-    {
-        if (result.value)
-        {
-            var fecha = $('#fecha_desac').val();
-            ;
-            var lote = $('#lote_desac').val();
-            ;
-            var aviario = $('#aviario_desac').val();
-            ;
-
-            $.ajax({
-
-                type: "post",
-                url: ruta_cruds_ppr + "crud_desactivar_aviario_lote.jsp",
-                data: {
-                    fecha: fecha,
-                    lote: lote,
-                    aviario: aviario
-
-                },
-                success: function (res) {
-
-                    if (res.tipo_respuesta == "2") {
-                        swal.fire({
-                            type: 'success',
-                            text: res.mensaje,
-                            confirmButtonText: "CERRAR",
-
-                        });
-
-                    } else
-                    {
-                        swal.fire({
-                            type: 'error',
-                            text: res.mensaje,
-                            confirmButtonText: "CERRAR"
-                        });
-                    }
-                    $('#desactivar_lote_aviario').modal('hide');
-                }});
-        }
-    });
-}
 
 
 
@@ -1200,13 +1116,14 @@ function onSelect_mortandad_grilla_ppr() {
                 var fecha = $("#idfecham").val();
                 var aviario = $("#avis").val();
                 var saldo = $("#dl_saldoant").val();
+                
 
                 {
                     this.setAttribute("valor", this.innerHTML);
                     var valor = this.getAttribute("valor");
                     var regex = /<br\s*[\/]?>/gi;
                     valor = valor.replace(regex, "");
-
+                    campo="dl_muertos";
                     var lote = $("#lote_registro").val();
                     var fila = this.getAttribute("id");
                     var suma_nueva = parseInt(valor) + parseInt(total_mor);
@@ -1221,8 +1138,10 @@ function onSelect_mortandad_grilla_ppr() {
                     $('#total-morfilas2').val(sum);
                     nuevo_saldo = parseInt(saldo) - parseInt(sum);
                     $("#dl_saldo").val(nuevo_saldo);
+                    $('#total-muertos').val(sum);
 
                     crud_insert_mortandad_ppr(fecha, lote, fila, valor, aviario, id_datos, sum);
+                    //crud_update_datos_diarios (id_datos,campo,sum);
                 }
             }
 
@@ -1354,10 +1273,8 @@ function crud_insert_mortandad_ppr(fecha, lote, fila, cantidad, aviario, id_dato
             sum: sum
         },
         success: function (data) {
-
-
-        }});
-}
+       }});
+       }
 
 
 
@@ -1374,37 +1291,82 @@ function onselect_datos_diarios_predescarte_ppr() {
         };
 
         editables[i].onblur = function () {
-            var id_datos = this.getAttribute("id_datos");
-            var campo = this.getAttribute("id");
+            
+            var campo = this.getAttribute("muer");
             var lote = this.getAttribute("lote");
             var aviario = this.getAttribute("avi");
-            var saldo_ant = this.getAttribute("saldo");
-            //var verificador = this.getAttribute("verific");
-            var fecha = $("#idfecham").val();
             this.setAttribute("verific", true);
+            var fecha = $("#idfecham").val();
+            var id = document.getElementById(aviario)
+            var id_datos = id.getAttribute("id_datos")
+            var saldo_ant = id.getAttribute("saldo");
+            
             {
                 if (this.innerHTML == this.getAttribute("valor"))
                 {
 
                 } else
                 {
-
+                    this.setAttribute("valor", this.innerHTML);
+                    var valor = this.getAttribute("valor");
                     if (id_datos == "0") {
-                        var valor = this.getAttribute("valor");
-                        this.setAttribute("valor", this.innerHTML);
-                        
-                        crud_insert_datos_diarios_predescarte_ppr(fecha, aviario, lote, saldo_ant, id_datos, campo, valor)
+                       crud_insert_datos_diarios_predescarte_ppr(fecha, aviario, lote, saldo_ant, campo, valor)
                     } else
-                    {
-                        crud_update_datos_diarios(id_datos, campo, valor);
+                    { 
+                      this.setAttribute("valor", this.innerHTML);
+                      var valor = this.getAttribute("valor");
+                    
+                      crud_update_datos_diarios(id_datos, campo, valor);
+                    if (campo == "dl_balkg") {
+                     var id_balkg = this.getAttribute("idcalculo");
+               
+                    bal_total = ((parseInt(valor) / parseInt(saldo_ant)) * 1000).toFixed(1);
+                    $('#a'+(id_balkg)).html(bal_total+'%');
+
                     }
-                }
+                        
+                        
+                        if (campo == "dl_hcarton1"||campo == "dl_hcarton2"||campo == "dl_huevos") {
+                            var dl_hcarton1 = this.getAttribute("idcalculo");
+                            id_c1 = 'c1' + dl_hcarton1;
+                            id_c2 = 'c2' + dl_hcarton1;
+                            id_uni = 'u' + dl_hcarton1;
+                            var carton1   = document.getElementById(id_c1).innerHTML;
+                            var carton2   = document.getElementById(id_c2).innerHTML;
+                            var uni_huevo = document.getElementById(id_uni).innerHTML;
+                            total_uni = ((parseInt(carton1)) * 30)+((parseInt(carton2)) * 30) + (parseInt(uni_huevo));
+                            $('#t' + (dl_hcarton1)).html(total_uni);
+                            total_porc = (((parseInt(total_uni)) / parseInt(saldo_ant)) * 100).toFixed(1);
+                            $('#p' + (dl_hcarton1)).html(total_porc+'%');
+                        }
+                        
+                         if (campo == "dl_muertos"||campo == "dl_transferin"||campo == "dl_transferout"||campo == "dl_elim"||campo == "dl_venta"||campo == "dl_ajuste") {
+                            var idcalculo = this.getAttribute("idcalculo");
+                            id_r = 're' + idcalculo;
+                            id_s = 'su' + idcalculo;
+                            id_r2= 'r2' + idcalculo;
+                            id_r3= 'r3' + idcalculo;
+                            id_r4= 'r4' + idcalculo;
+                            id_r5= 'r5' + idcalculo;
+                            var dl_muertos    = document.getElementById(id_r).innerHTML;
+                            var dl_transferin = document.getElementById(id_s).innerHTML;
+                            var dl_transferout= document.getElementById(id_r2).innerHTML;
+                            var dl_elim       = document.getElementById(id_r3).innerHTML;
+                            var dl_venta      = document.getElementById(id_r4).innerHTML;
+                            var dl_ajuste     = document.getElementById(id_r5).innerHTML;
+                            total_saldo = ((parseInt(saldo_ant))+(parseInt(dl_transferin)))-((parseInt(dl_muertos))+(parseInt(dl_transferout)) + (parseInt(dl_elim))+(parseInt(dl_venta))+(parseInt(dl_ajuste)));
+                            $('#total' + (idcalculo)).html(total_saldo);
+                            
+                        }
+                         
+                    }
+                }   
             }
             ;
         };
     }
 }
-function crud_insert_datos_diarios_predescarte_ppr(fecha, aviario, lote,saldoant, campo, valor) {
+function crud_insert_datos_diarios_predescarte_ppr(fecha, aviario, lote, saldoant, campo, valor) {
 
     $.ajax({
 
@@ -1414,18 +1376,17 @@ function crud_insert_datos_diarios_predescarte_ppr(fecha, aviario, lote,saldoant
             fecha: fecha,
             lote: lote,
             aviario: aviario,
-            saldoant: saldoant
-
+            saldoant: saldoant,
+            valor: valor
         },
         success: function (data) {
-              var verdadero = $('#true').val();
-             valor = nodo.getAttribute("verific");
+                  
             
-            $('#id_datos').attr("id_datos",data.id_datos);
-            onselect_datos_diarios_predescarte_ppr();
-            crud_update_datos_diarios(data.id_datos, campo, valor);
-
-
-
-        }});
-}
+        var nodo = document.getElementById(aviario);
+        nodo.setAttribute("id_datos",data.id_datos);
+        
+        onselect_datos_diarios_predescarte_ppr();
+        crud_update_datos_diarios(data.id_datos, campo, valor);
+   
+          }});
+         }

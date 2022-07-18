@@ -11,7 +11,8 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 
-<%    clases.controles.connectarBD();
+<%    
+    clases.controles.connectarBD();
     JSONObject ob = new JSONObject();
     ob = new JSONObject();
     String usuario = (String) sesionOk.getAttribute("usuario");

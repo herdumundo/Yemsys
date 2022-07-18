@@ -1,7 +1,7 @@
 <%-- 
     Document   : consulta_registro_datos_diario
     Created on : 21/02/2022, 08:48:31
-    Author     : csanchez
+    Author     : aespinola
 --%>
 
 <%@page import="java.text.DecimalFormat"%>
@@ -18,7 +18,6 @@
 <%@page import="java.util.*" %>
   <% 
         String fecha1= request.getParameter("idfechad") ;
-        String avia= request.getParameter("avia") ;
         String grilla_html="";
         String modal_dasactivar_lote="";
         String grilla_htmlb="";
@@ -110,6 +109,9 @@
         Integer saldo_totalh3=0;
         Integer unidad_totalh3=0;
         Integer kg_totalh3=0;
+        Integer total_predescarte=0;
+        Integer total_muertos_predescarte=0;
+        String div_total_predescarte="";
         Integer calcico_totalh3=0;
         
         String cabecera_pre_descarte = "  "
@@ -312,21 +314,14 @@
                 + "                    <tbody>";
 
     clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
     JSONObject obje = new JSONObject();
-    obje = new JSONObject();
-    //PreparedStatement pt=con.prepareStatement("select case  when  fila % 2 =0 then 'green' else 'red' end as color, fila, sum(cant) as cant from ppr_contador where fecha BETWEEN '"+fecha1+"'and '"+fecha2+"'and aviario='"+aviario+"'group by fila");
-     //PreparedStatement pt=con.prepareStatement("select idusuario,nombreusuario from tab_mae_ppr_log");
-    //PreparedStatement pt=con.prepareStatement("select '#ff0000' as min1, '#e10000' as min2,'#e10000' as min3, '#007d3c' as prom, '#007d50' as prom1 , '#007d97' as prom2, '#007dff' as prom3, fila, sum(cant) as cant from ppr_contador where fecha BETWEEN '"+fecha1+"'and '"+fecha2+"'and aviario='"+aviario+"'group by fila");
-   DecimalFormat formatea = new DecimalFormat("###,###.##");
+
+ DecimalFormat formatea = new DecimalFormat("###,###.##");
     try {
-            
+
     PreparedStatement pt=clases.controles.connect.prepareStatement("execute stp_mae_ppr_select_datos_diarios_descarte_h  @fecha_desde='"+fecha1+"'");
     ResultSet rs=pt.executeQuery();
     ArrayList Fila = new ArrayList();
-    
-    //ArrayList fe1 = new ArrayList();
-   // ArrayList fe2 = new ArrayList();
    
     
     
@@ -562,16 +557,15 @@
               }
             
 
-            
-            PreparedStatement pt3=clases.controles.connect.prepareStatement("execute stp_mae_ppr_select_datos_diarios_pre_descarte @fecha_desde='"+fecha1+"'");
-    ResultSet rs3=pt3.executeQuery();
+        PreparedStatement pt4=clases.controles.connect.prepareStatement("execute [stp_mae_ppr_select_datos_diarios_pre_descarte] @fecha_desde='"+fecha1+"'");
+    ResultSet rs4=pt4.executeQuery();
 
-            while(rs3.next()) {
+            while(rs4.next()) {
                 
                 grilla_html_pre_descarte = grilla_html_pre_descarte + "<table class=' table-bordered tablagrilla compact-cs'>"
                + "             <thead>"
                 + "<tr>"
-                + "        <th class='bg-warning' colspan='14'>Lote: " + rs3.getString("lote_name") + "</th>"
+                + "        <th class='bg-warning' colspan='14'>Lote: " + rs4.getString("lote_name") + "</th>"
                 + "    </tr>"
                + "                 <tr>    "
                + "                     <th class='text-center bg-navy tablagrilla'width='92' height='10'>Edad (d)</th>"
@@ -594,44 +588,43 @@
                         + "                <br>     "
                + "                <tbody>     "
                         + "<tr onclick='dd_mec2_pre_des_convencionales_ppr(\"" + fecha1 + "\" )' class='tablagrilla'>"
-                        + "<td  class='tablagrilla' style= 'text-align:center;'>" + rs3.getString("edaddias") + " </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("edadsems") + "  </td>"
-                        + "<td class='tablagrilla cero tdc' style= 'text-align:center';> " + rs3.getString("saldoant") +"</td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("muertos") + "  </td>"
-                        + "<td class='tablagrilla cero si' style= 'text-align:center';>  " + rs3.getString("transferin") + " </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("transferout") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("cant") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("ventas") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("ajuste") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("saldoaves") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("kg") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("gramo_ave") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("cant") + "  </td>"
-                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs3.getString("pro") + "  </td>"
+                        + "<td  class='tablagrilla' style= 'text-align:center;'>" + rs4.getString("edaddias") + " </td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("edadsems")+ "  </td>"
+                        + "<td class='tablagrilla cero tdc' style= 'text-align:center';>"+ rs4.getString("saldoant")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("muertos")+"</td>"
+                        + "<td class='tablagrilla cero si' style= 'text-align:center';>" + rs4.getString("transferin")+" </td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("transferout")+"  </td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("cant")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("ventas")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("ajuste")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("saldoaves")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("kg")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("gramo_ave")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("cant")+"</td>"
+                        + "<td class='tablagrilla cero ' style= 'text-align:center';>  " + rs4.getString("pro")+"</td>"
                         + "</tr>";
   
 
                 
                 
-        dias = rs3.getString("edaddias");
-        sems = rs3.getString("edadsems");
-        saldoant = rs3.getString("saldoant");
-        muer = rs3.getString("muertos");
-        transferin = rs3.getString("transferin");
-        transferout= rs3.getString("transferout");
-        ventas = rs3.getString("ventas");
-        ajuste = rs3.getString("ajuste");
-        saldoini = rs3.getString("saldoaves");
-        lotename = rs3.getString("lote_name");
-        kg = rs3.getString("kg");
-        gramo_ave = rs3.getString("gramo_ave");
-        pro = rs3.getString("pro");
-        
-              }
-         
-                    
-         
-           // clases.controles.connect.close();
+        dias       = rs4.getString("edaddias");
+        sems       = rs4.getString("edadsems");
+        saldoant   = rs4.getString("saldoant");
+        muer       = rs4.getString("muertos");
+        transferin = rs4.getString("transferin");
+        transferout= rs4.getString("transferout");
+        ventas     = rs4.getString("ventas");
+        ajuste     = rs4.getString("ajuste");
+        saldoini   = rs4.getString("saldoaves");
+        lotename   = rs4.getString("lote_name");
+        kg         = rs4.getString("kg");
+        gramo_ave  = rs4.getString("gramo_ave");
+        pro        = rs4.getString("pro");
+        total_predescarte=(total_predescarte)+Integer.parseInt(rs4.getString("saldoaves"));
+        total_muertos_predescarte=(total_muertos_predescarte)+Integer.parseInt(rs4.getString("muertos"));
+        div_total_predescarte="<div  class='box-footer'><br><br><h4>Saldo total de aves Pre-Descarte: "+total_predescarte+"</h4><h5>Total muertos: "+total_muertos_predescarte+"</h5></div>";
+              }      
+
     obje.put("grilla_datos_diarios",cabecera + grilla_html + "</tbody><tfoot class='total'>"
                            + "<tr>"
                           +"  <td class='text-left bg-gray' colspan='5'>TOTAL</td>"
@@ -697,7 +690,7 @@
                            +" <td class='text-center bg-gray'></td>"
                        +" </tr>"
                     +"</tfoot></body></div>" );
-    obje.put("grilla_datos_diarios_descarte",cabecera_descarte + grilla_html_descarte + "</tbody><tfoot class='total'><tr>"
+    obje.put("grilla_datos_diarios_descarte",cabecera_descarte + grilla_html_descarte +"</tbody><tfoot class='total'><tr>"
                           +"  <td class='text-left bg-gray' colspan='5'>TOTAL</td>"
                            +" <td class='text-center bg-gray'>"+formatea.format(saldo_ant_totalh3)+"</td>"
                            +" <td class='text-center bg-gray'>"+formatea.format(muer_totalh3)+"</td>"
@@ -722,7 +715,7 @@
     obje.put("tmin",tmin );
     obje.put("aviario",aviario );
     obje.put("fecha1",fecha1 );
-    obje.put("avia",avia );
+    obje.put("div_total_predescarte",div_total_predescarte );
     
         } catch (Exception e) {
         }

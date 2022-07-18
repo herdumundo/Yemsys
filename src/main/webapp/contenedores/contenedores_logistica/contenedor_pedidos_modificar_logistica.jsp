@@ -1,18 +1,21 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
- <%     
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>  <%     
     ResultSet rs,rs2;
-    rs = fuente.obtenerDato("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
-    rs2 = fuente.obtenerDato("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
+    PreparedStatement  pst,pst2;
 
+    pst = connection.prepareStatement("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
+    pst2 = connection.prepareStatement("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
+    rs = pst.executeQuery();
+    rs2 = pst2.executeQuery();
   
-     String version=clases.versiones.contenedores_logistica_contenedor_pedidos;
+     String version= contenedores_logistica_contenedor_pedidos;
  try {
          
       %>
@@ -116,6 +119,6 @@ LOG
     }
     finally
     {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %>

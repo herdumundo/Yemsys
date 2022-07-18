@@ -34,7 +34,7 @@
                 MIS
             </div>
         </div>
-        <center><b>REGISTRO DE TRANSFERENCIAS DE SUBPRODUCTOS</b></center>
+        <center><b>REGISTRO DE TRANSFERENCIAS DE SUBPRODUCTOS Y ROTOS</b></center>
     </div>
 </div>  <br><!-- comment -->
 <br> 

@@ -18,8 +18,7 @@
 }
 .text-negro {
   color:  #000;
- 
-  
+   
 }
 p.thicker {
   font-weight: 900;
@@ -28,7 +27,35 @@ p.thicker {
     overflow-x: auto;
 }
 
+.text-rojo_bal {
+    color:  #ffffff;
+    background:  #ff1432;
+    text-align: right;
+}
 
+
+.text-down_bal {
+    color:  #ffffff;
+    background:  #0059b6;
+    text-align: right;
+}
+
+
+.text-amarillo_bal {
+    color:  #ffffff;
+    background:  #070000;
+    text-align: right;
+}
+
+
+
+
+
+.text-amarilloOscuro_bal {
+    color:  #000000;
+    background:  #cccccc;
+    text-align: right;
+}
 
  table tbody > tr:nth-child(odd) > td.single_line{white-space: nowrap; overflow:hidden;}
 table tbody > tr:nth-child(odd) > td.single_line br{display:none;}
@@ -37,9 +64,17 @@ table tbody > tr:nth-child(odd) > td.single_line *{display:inline;white-space:no
  
  table tbody > tr > td.celda_editable:hover{background:#cccbd5 !important;}
 table tbody > tr > td.celda_editable:focus{background:#020269 !important;}
+
+table tbody > tr > td.celda_editable2:hover{background:#ccffcc !important;}
+ table tbody > tr > td.celda_editable2:focus{background:#6699ff !important;}
+
+
 table tbody > tr > td.single_line{white-space: nowrap; overflow:hidden;}
 table tbody > tr > td.single_line br{display:none;}
 table tbody > tr > td.single_line *{display:inline;white-space:nowrap;}
+
+
+table tbody > tr > td.single_line2 br{display:none;}
 
 
 

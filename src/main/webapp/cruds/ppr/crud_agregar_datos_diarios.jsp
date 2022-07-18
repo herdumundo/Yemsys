@@ -1,7 +1,11 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.controles"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.CallableStatement"%>
 <%@page contentType="application/json; charset=utf-8"%>
+<%@include  file="../../cruds/conexion.jsp" %>
+
 <%
     String fecha = request.getParameter("fecha");
     String lote = request.getParameter("lote");
@@ -13,14 +17,14 @@
 
     String mensaje = "";
     String tipo_registro = "";
+    String saldo_anterior = "";
     
     try {
-        controles.connectarBD();
-        clases.controles.connect.setAutoCommit(false);
-
+ 
         CallableStatement call;
 
-        call = clases.controles.connect.prepareCall("{call stp_mae_ppr_insert_datos_diarios (?,?,?,?,?,?,?,?,?,?)}");
+        call = connection.prepareCall("{call stp_mae_ppr_insert_datos_diarios (?,?,?,?,?,?,?,?,?,?)}");
+        
 
         call.setString(1, fecha);
         call.setString(2, aviario);
@@ -40,23 +44,23 @@
         tipo_registro = call.getString(8);
         mensaje = call.getString(9);
 
-        if (tipo_registro == "1") {
-            clases.controles.connect.rollback();
+         
+        PreparedStatement pt3 = connection.prepareStatement("select dl_saldoaves from ppr_datolotes where dl_id='" + id_datos + "'");
+        ResultSet rs3 = pt3.executeQuery();
+        while (rs3.next()) {
+        saldo_anterior = rs3.getString("dl_saldoaves");
 
-        } else {
-            //clases.controles.connect.rollback(); 
-            clases.controles.connect.commit();
-
-        }
+             }
     } catch (Exception ex) {
 
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
         JSONObject objet = new JSONObject();
         objet = new JSONObject();
 
         objet.put("mensaje", mensaje);
         objet.put("tipo_registro", tipo_registro);
+        objet.put("saldo_anterior", saldo_anterior);
         objet.put("id_datos", id_datos);
         out.print(objet);
 

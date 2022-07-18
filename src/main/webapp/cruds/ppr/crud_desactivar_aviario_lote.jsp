@@ -1,7 +1,7 @@
 <%-- 
     Document   : consulta_max
     Created on : 26/01/2022, 16:40:32
-    Author     : csanchez
+    Author     : aespinola
 --%>
 
 <%@page import="java.sql.PreparedStatement"%>

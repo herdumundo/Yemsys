@@ -1,25 +1,29 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
- <%     
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>  
+<%     
+    PreparedStatement  pst,pst2;
     ResultSet rs,rs2;
-    rs = fuente.obtenerDato("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
-    rs2 = fuente.obtenerDato("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
+    
+    pst  = connection.prepareStatement ("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
+    rs = pst.executeQuery();
+    pst2 = connection.prepareStatement("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
+    rs2 = pst2.executeQuery();
 
-  
-     String version=clases.versiones.contenedores_logistica_contenedor_pedidos;
- try {
+    String version= contenedores_logistica_contenedor_pedidos;
+ try 
+ {
          
       %>
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','DESCRIPCION:<%=clases.versiones.desc_contenedores_logistica_contenedor_pedidos%>')">
+     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','DESCRIPCION:<%=desc_contenedores_logistica_contenedor_pedidos%>')">
     <label ><%=version%> </label>  
 </div>
 </head>
@@ -134,6 +138,6 @@ LOG
     }
     finally
     {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %>

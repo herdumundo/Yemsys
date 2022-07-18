@@ -4,12 +4,9 @@
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
 <%@include  file="../../versiones.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
-
 <%
     String version =  contenedores_ptc_stock_cyo;
     String version_desc =  desc_contenedores_ptc_stock_cyo;
-
 %>
 <label  ><b></b></label>
 <div class="float-right d-none d-sm-inline-block" href="#" id="contenido_version"

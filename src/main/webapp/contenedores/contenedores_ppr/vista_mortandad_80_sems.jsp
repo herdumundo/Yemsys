@@ -47,8 +47,10 @@
     setInputDate("#idfechahasta");
 
 </script>
+<%@include  file="../../versiones.jsp" %>
+
  <% 
-     String version=clases.versiones.contenedores_ppr_vista_vista_mortandad_80_sems;
+     String version= contenedores_ppr_vista_vista_mortandad_80_sems;
  
  %> 
    <head>   

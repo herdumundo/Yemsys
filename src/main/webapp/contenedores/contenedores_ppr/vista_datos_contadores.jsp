@@ -45,8 +45,10 @@
 
     setInputDate("#idfechadesde");
     setInputDate("#idfechahasta");
+    <%@include  file="../../versiones.jsp" %>
+
   <% 
-     String version=clases.versiones.contenedores_ppr_vista_datos_contadores;
+     String version= contenedores_ppr_vista_datos_contadores;
  %> 
 </script>
 <head>   

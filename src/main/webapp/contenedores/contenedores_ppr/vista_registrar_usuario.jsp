@@ -9,6 +9,8 @@
 <%@page import="java.sql.PreparedStatement"%>
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include  file="../../versiones.jsp" %>
+
 <!DOCTYPE html>
  <%   //conexion
     //listar datos de tabla rol para registro de usuario
@@ -22,7 +24,8 @@
    rs=ps.executeQuery();
    ps2=clases.controles.connectSesion .prepareStatement("select * from mae_yemsys_areas");
    rs2=ps2.executeQuery();
-     String version=clases.versiones.contenedores_ppr_vista_registrar_usuario;
+   
+     String version= contenedores_ppr_vista_registrar_usuario;
   
    %>
 <html>

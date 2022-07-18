@@ -1,18 +1,22 @@
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
- 
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>  
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
  <% 
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
     ResultSet rs;
+    PreparedStatement ps, ps2;
+ 
     String fecha_actual = "";
     try 
     {
-        rs = fuente.obtenerDato(" select   GETDATE()  as hora ");
+        ps= connection.prepareStatement (" select   GETDATE()  as hora ");
+        rs = ps.executeQuery();
+
         while(rs.next())
         {    
             fecha_actual = rs.getString("hora");
@@ -24,14 +28,14 @@
     }
     finally
     {
-       clases.controles.DesconnectarBD();
+       connection.close();
     }
        
 %> 
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=clases.versiones.contenedores_stok_vimar_directorio %>','VERSION: <%=clases.versiones.contenedores_stok_vimar_directorio %>','<%=clases.versiones.desc_contenedores_stok_vimar_directorio %>'  )">
-    <label ><%=clases.versiones.contenedores_stok_vimar_directorio%></label> 
+     onclick="cargar_datos_modal_version('<%=contenedores_stok_vimar_directorio %>','VERSION: <%=contenedores_stok_vimar_directorio %>','<%=desc_contenedores_stok_vimar_directorio %>'  )">
+    <label ><%=contenedores_stok_vimar_directorio%></label> 
 </div>
 </head>    
 <div class="col-lg-20 " onclick="ir_stock_directorio_cyo()">
@@ -45,8 +49,6 @@ DIR
      <center><b>STOCK CYO MAEHARA</b></center>
 </div>
    </div> 
-
-<!-- comment -->
 
  
 

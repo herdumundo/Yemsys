@@ -3,10 +3,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.*"%>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%@ page contentType="application/json; charset=utf-8" %>
 <%        
-    clases.controles.connectarBD();
-    String numero_factura = request.getParameter("nro_factura");
+     String numero_factura = request.getParameter("nro_factura");
     String area = (String) sesionOk.getAttribute("area_gm");
     String area_cch = (String) sesionOk.getAttribute("area");
     int mensaje = 0;
@@ -21,7 +21,7 @@
         ResultSet rs, res_fac_cant, rs2;
         Statement stmt1, stmt2, stmt3;
         //CAMBIAR BASE DE DATOS                 
-        stmt1 = clases.controles.connect.createStatement();
+        stmt1 = connection.createStatement();
         rs2 = stmt1.executeQuery("select sum(cantidad) as cantidad from ( "
                 + "select  case itemcode when 1 then sum(convert(int,(b.Quantity)*12)/180) "
                 + "else sum(convert(int,(b.Quantity)*12)/360) end as 'cantidad', ItemCode  "
@@ -37,7 +37,7 @@
         {
             total_carros =  rs2.getInt("cantidad");
         }
-        stmt2 = clases.controles.connect.createStatement();
+        stmt2 = connection.createStatement();
         res_fac_cant = stmt2.executeQuery(" select CONCAT('A_',sum(A),',B_',sum(B),',C_',sum(C),',D_',sum(D),',S_',sum(S),',J_',sum(J),',G_',sum(G)) AS total_restante  from ( "
                 + "select  case itemcode when 1 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'G', "
                 + "case itemcode when 2 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'j',           "
@@ -54,7 +54,7 @@
         {
             total_restante = res_fac_cant.getString("total_restante");
         }
-        stmt3 = clases.controles.connect.createStatement();
+        stmt3 = connection.createStatement();
         rs = stmt3.executeQuery("exec [select_embarque_lotes_pendientes] @area='" + area + "',@nro_factura=" + ultimo + "");
         while (rs.next()) 
         {
@@ -72,7 +72,7 @@
             i++;
         }
         CallableStatement callableStatement = null;
-        callableStatement = clases.controles.connect.prepareCall("{call [mae_cch_embarque_insertar_lotes_disponibles](?,?,?)}");
+        callableStatement = connection.prepareCall("{call [mae_cch_embarque_insertar_lotes_disponibles](?,?,?)}");
         callableStatement.setString(1, area_cch);
         callableStatement.setString(2, area);
 
@@ -94,7 +94,7 @@
                 + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'>  <span aria-hidden='true'>&times;</span>  </button>  </div>");
         ob.put("codigo", total_restante);
         ob.put("total", total_carros / 12);
-        clases.controles.DesconnectarBD();
+        connection.close();
         out.print(ob);
     }
 %>  

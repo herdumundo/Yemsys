@@ -14,10 +14,10 @@
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 <%    
-    clases.controles.connectarBD();
-    JSONObject ob = new JSONObject();
+     JSONObject ob = new JSONObject();
     ob = new JSONObject();
     String id_camion = request.getParameter("id_camion");
     String fecha_puesta = request.getParameter("fecha_puesta");
@@ -39,9 +39,8 @@
     String mensaje = "";
     int tipo_respuesta = 0;
     try {
-        clases.controles.connect.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = clases.controles.connect.prepareCall("{call [mae_log_insert_reserva](?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call [mae_log_insert_reserva](?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
         callableStatement.setInt(1, Integer.parseInt(id_camion));
         callableStatement.setString(2, fecha_puesta);
@@ -60,20 +59,20 @@
         callableStatement.execute();
         tipo_respuesta = callableStatement.getInt("estado_registro");
         mensaje = callableStatement.getString("mensaje");
-        if (tipo_respuesta == 0) {
-            clases.controles.connect.rollback();
+      /*  if (tipo_respuesta == 0) {
+         //   clases.controles.connect.rollback();
         } else {
             //  clases.controles.connect.rollback(); 
 
             clases.controles.connect.commit();
-        }
+        }*/
     } catch (Exception e) {
         mensaje = e.toString();
         tipo_respuesta = 0;
         carros_excedentes = "";
 
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
         ob.put("mensaje", mensaje);
         ob.put("carro_reserva", cod_carrito);
         ob.put("tipo_respuesta", tipo_respuesta);

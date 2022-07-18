@@ -9,13 +9,14 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="application/json; charset=utf-8" %>
 <%@include  file="../chequearsesion.jsp" %>
-<%    try {
+<%@include file="../cruds/conexion.jsp" %>
 
-        clases.controles.connectarBD();
+<%  try 
+    {
         String html = "";
         ResultSet rs2, rs3;
-        Statement stmt1 = clases.controles.connect.createStatement();
-        Statement stmt2 = clases.controles.connect.createStatement();
+        Statement stmt1 = connection.createStatement();
+        Statement stmt2 = connection.createStatement();
 
         rs2 = stmt1.executeQuery("select * from mae_yemsys_modulos where id_estado=1 ");// 1 ES IGUAL A ACTIVO.
 
@@ -44,6 +45,6 @@
 
     } catch (Exception e) {
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %> 
