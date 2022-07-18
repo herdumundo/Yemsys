@@ -19,7 +19,7 @@ public class solicitud_mtp {
  public String codigo_mtp;  
  public String descripcion;  
  public String cantidad_nueva;
- public String cantidad_actual;
+ public float cantidad_actual;
  public String costo;
  public String grupo;        
     

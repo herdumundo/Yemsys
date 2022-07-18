@@ -25,8 +25,9 @@
     String contenedores_logistica_contenedor_pedidos_generados_menu = "0074-PAN-08042022-A";
     String desc_contenedores_logistica_contenedor_pedidos_generados_menu = " &0071-PAN-09042022-A: EN MODIFICACION SE AGREGO COLUMNA PARA RESERVAS.&0074-PAN-08042022-A: SE AGREGÓ LA OPCIÓN DE MODIFICAR EL CAMION DEL PEDIDO.";
 
-    String contenedores_logistica_contenedor_pedidos_facturar = "0075-PAN-08042022-A";
-    String desc_contenedores_logistica_contenedor_pedidos_facturar = "&0075-PAN-08042022-A: SE AGREGO LA ASIGNACION DE NRO DE FACTURA AUTOMATICA AL PEDIDO, AL GENERAR LA FACTURA EN SAP";
+    String contenedores_logistica_contenedor_pedidos_facturar = "0100-PAN-15072022-A";
+    String desc_contenedores_logistica_contenedor_pedidos_facturar = "&0075-PAN-08042022-A: SE AGREGO LA ASIGNACION DE NRO DE FACTURA AUTOMATICA AL PEDIDO, AL GENERAR LA FACTURA EN SAP"+
+                                                                     "&0100-PAN-15072022-A: SE AGREGO EL BOTÓN DE COPIAR GRILLA, PARA LA SIMPLIFICACION Y AGILIZACION DEL PEGADO AL SISTEMA SAP  ";
 
     String contenedores_logistica_contenedor_pedidos_generados_cyo =        "0093-PAN-23062022-A";
     String desc_contenedores_logistica_contenedor_pedidos_generados_cyo =   "0093-PAN-23062022-A:SE AGREGÓ LA DESCARGA EN PDF DEL PEDIDO.";

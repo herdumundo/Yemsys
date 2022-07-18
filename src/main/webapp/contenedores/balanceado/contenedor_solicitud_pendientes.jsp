@@ -74,12 +74,12 @@
                     <td><%=rs.getString("toneladas_desc")%></td>
                     <td><%=rs.getString("desc_estado")%></td>
                     <td><%=rs.getString("revision")%></td>
-                    <td><input type="button" value="Detalle" class="bg-navy" onclick="ir_pendientes_solicitud_ingredientes_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>')"> </td>
+                    <td><input type="button" value="Detalle" class="bg-navy" onclick="modal_detalle_formulacion_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>','<%=rs.getString("formula")%>')"> </td>
                     <td><form action="cruds/balanceado/control_reporte_pedidos_bal.jsp" target="blank"><input type="submit" value="Reporte" class="bg-warning"> <input type="hidden" id="id" name="id" value="<%=rs.getString("id")%>"></form> </td>
                     <td><input type="button" value="Editar"    class="bg-black" onclick="editar_solicitud_bal(<%=rs.getString("id")%>,2)"> </td><!-- 1= ESTADO PARA QUE VUELVA A ESTADO PENDIENTE DE APROBACION GERENCIA -->
                     <td><input type="button" value="Aprobar"    class="bg-success" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,1)"> </td>
                     <td><input type="button" value="Cancelar"   class="bg-danger" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,4)"> </td>
-                </tr>
+                 </tr>
                   <%verifi++; } %>
             </tbody>
         </table>

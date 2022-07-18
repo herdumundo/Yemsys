@@ -17,13 +17,17 @@
     DecimalFormat formatea = new DecimalFormat("###,###.##");
 
     try {
-        String id = request.getParameter("id");
+        
+        String id = request.getParameter("id_pedido");
+        String ids = request.getParameter("ids");
+        String cod_formulas = request.getParameter("cod_formulas");
         String cod_formula = request.getParameter("cod_formula");
+        
         ResultSet rs_GM;
         Statement st = connection.createStatement();
         int cantidad_nueva = 0;
         int cantidad_actual = 0;
-        rs_GM = st.executeQuery("  exec  [mae_bal_pry] @id=" + id + ", @formula='" + cod_formula + "' ");
+        rs_GM = st.executeQuery("  exec  [mae_bal_pry2] @id_array='" + ids + "', @id='" + id + "', @formula_array='" + cod_formulas + "' , @formula='" + cod_formula + "' ");
 
         cabecera = " <table id='tb_formulacion'  class=' table-bordered compact' style='width:100%' >"
                 + "<thead>"

@@ -18,7 +18,7 @@
     try {
         ps = connection.prepareStatement("  select *,b.descripcion as desc_estado,"
                 + " case when  toneladas_proyectada='' then 'INDEFINIDO' ELSE   toneladas_proyectada end as toneladas_desc"
-                + " from mae_bal_mtp_cab_solicitud a inner join mae_bal_estados b on a.estado=b.id and a.estado=3");
+                + " from mae_bal_mtp_cab_solicitud a inner join mae_bal_estados b on a.estado=b.id and a.estado=3");// 3
         rs = ps.executeQuery();
         int verifi=0;
 %>
@@ -47,7 +47,7 @@
  
 
  
-        <table class="table">
+        <table class="table-bordered compact">
             <thead>
             <th>Nro.</th>
             <th>Fecha de registro</th>
@@ -72,7 +72,7 @@
                     <td><%=rs.getString("usuario")%></td>
                     <td><%=rs.getString("toneladas_desc")%></td>
                     <td><%=rs.getString("desc_estado")%></td>
-                    <td><input type="button" value="Detalle" class="bg-navy" onclick="ir_pendientes_solicitud_ingredientes_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>')"> </td>
+                    <td><input type="button" value="Detalle" class="bg-navy" onclick="modal_detalle_formulacion_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>','<%=rs.getString("formula")%>')"> </td>
                     <td><form action="cruds/balanceado/control_reporte_pedidos_bal.jsp" target="blank"><input type="submit" value="Reporte" class="bg-warning"> <input type="hidden" id="id" name="id" value="<%=rs.getString("id")%>"></form> </td>
                     <td><input type="button" value="Procesar SAP"    class="bg-success" onclick="procesar_sap_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>')"> </td>
                     <td><input type="button" value="Cancelar"   class="bg-danger" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,2)"> </td>

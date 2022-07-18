@@ -5,7 +5,6 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
-
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %> 
@@ -68,7 +67,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body" style="display: block;">
+                    <div class="card-body " style="display: block;">
 
                         <table class="table border">
                             <thead>
@@ -90,7 +89,7 @@
                         </table>
 
 
-                        <table class="table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>  
                                     <th  class="bg-navy" >Número de artículo</th>  

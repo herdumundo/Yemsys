@@ -440,13 +440,13 @@ function ir_pendientes_formulas_procesar_bal()
     });
 
 }
-function ir_pendientes_solicitud_ingredientes_bal(id,cod_formula)
+function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod_formula)
 {
-    window.location.hash = "SPENBAL";
+     window.location.hash = "SPENBAL";
     $.ajax({
         type: "POST",
         url: ruta_consultas_bal + "consulta_gen_grilla_solicitud_mtp.jsp",
-            data: ({id:id,cod_formula:cod_formula
+            data: ({ids:ids,cod_formulas:cod_formulas,id_pedido:id_pedido,cod_formula:cod_formula
                         }),
                  
          beforeSend: function (xhr) {
@@ -456,54 +456,10 @@ function ir_pendientes_solicitud_ingredientes_bal(id,cod_formula)
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
-     //       $("#div_grilla2").html(data.grilla_total);
-         /* $("#tb_formulacion").DataTable({
-                       paging: false,
-                        responsive: true,
-                         "autoWidth": false,
-                        scrollCollapse: true,
-                         "scrollX": true,
-                         "ordering": false, 
-                             dom: "Bfrtip",
-                         "language":
-                        {
-                            "sUrl": "js/Spanish.txt"
-                        },
-                        buttons: [
-                                {extend: "copyHtml5", text: "COPIAR GRILLA", exportOptions: {columns: [0, ":visible"]}},
-                                {extend: "excelHtml5", title:"REPORTE ALIMENTADOS FECHA", text: "EXCEL", exportOptions: {columns: ":visible"}},
-                                {
-                                    extend: "pdfHtml5",
-                                    text: "PDF",
-                                    title:  "REPORTE ALIMENTADOS FECHA ",
-                                    orientation: "landscape",
-                                    pageSize: "LEGAL",
-                                    
-                                    exportOptions: {columns: ":visible"},
-                                },
-                                "colvis",
-                            ],
-                            keys: {clipboard: !1},
-                   "initComplete": function () {
-                        var api = this.api();
-                        api.search( tipo_huevo_filtro ).draw();
-                        
-                    },
-                    drawCallback: function () //SIRVE PARA QUE AL TIPEAR EL FILTRO SE EJECUTE
-                    {
-                         var data = $('div.dataTables_filter input').val();
-                         $('#filtro_tipo').val(data);
-                        
-                    },
-                    });*/
-            
             cerrar_load();
-            
         }
     });
-
 }
-
 
 
 function acepCance_solicitud_bal(id,tipo_operacion)
@@ -648,8 +604,8 @@ function ir_informes_formulas_procesar_bal2 (desde,hasta){
         },
         success: function (data)
         {
-            $("#div_grilla").html("");
-            $("#div_grilla").html(data.grilla);
+            $("#div_grilla2").html("");
+            $("#div_grilla2").html(data.grilla);
              cerrar_load();
             
         }
@@ -702,8 +658,6 @@ function procesar_sap_bal(id,cod_formula)
 }
 
 
-
-
 function ir_pendientes_generados_area() 
 {window.location.hash = "IPGA";
     $.ajax({
@@ -717,9 +671,7 @@ function ir_pendientes_generados_area()
         {
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
-            
             cerrar_load();
-            
         }
     });
 }

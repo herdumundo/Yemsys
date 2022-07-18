@@ -48,11 +48,11 @@
 
 
 
-<div id="div_grilla">
+<div id="div_grilla2">
     
     
 </div>
 
- <div id="div_grilla2" class="bg-navy">
+ <div id="div_grilla"  >
                 
             </div>

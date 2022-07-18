@@ -289,3 +289,77 @@ function add_filas_sol_edit_bal() {
     
 }
  
+ 
+ 
+ 
+ function modal_detalle_formulacion_bal(id_seleccionado,formula_seleccionada,desc_formula)
+ {
+        var n  ="<form id=\"form_verificar\"><br>\n\
+        <div class='ribbonvert'> <span class='ribbon2'><b>Nro. <br>"+id_seleccionado+"</b></span>  \n\
+        <br> <center><b>"+desc_formula+"</b></center>  </div>\n\
+\n\
+\n\        <div class='bg-black'><label> Formulas pendientes que desea incluir (Opcional)</label></div> \n\ \n\
+        <div id=\"div_grilla_form_pen\"> </div> <br>         \n\
+         <input type=\"button\" class=\" btn bg-black\" value=\"Visualizar detalle\" onclick=\"visualizar_detalle_formulacion_bal()\" > \n\
+         </form>";
+            Swal.fire({ type: "warning",   customClass: 'swal-wide',html: n, showCancelButton: false, showConfirmButton: false});
+            
+     cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula);
+ }
+ 
+ function cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula)
+ {
+   
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_bal+'consulta_gen_select_formulas_pendientes.jsp',
+        data: ({ id_seleccionado:id_seleccionado,formula_seleccionada:formula_seleccionada,desc_formula:desc_formula}),
+        success: function (data)
+        {
+            $("#div_grilla_form_pen").html(data.grilla);
+        }
+        });
+ }
+ 
+ 
+function seleccionar_row_formulacion_pendiente_bal(id)
+{
+    var valor=$("#"+id).attr("data-boleano");   
+    if(valor=="false")
+    {
+        $("#"+id).val("Quitar");
+        $("#"+id).attr("data-boleano",true);
+        $("#" + id).removeClass('bg-success').addClass('bg-danger');
+    }
+    else 
+    {
+        $("#"+id).val("Seleccionar");
+        $("#"+id).attr("data-boleano",false);
+        $("#" + id).removeClass('bg-danger').addClass('bg-success');
+    }
+}
+
+function visualizar_detalle_formulacion_bal(){
+        var ids="";
+        var cod_formulas="";
+        var cod_formula=$("#formula_seleccionada").attr("data-formula");
+        var id_pedido   =$("#formula_seleccionada").attr("data-id_pedido");
+        var editables = document.querySelectorAll("[data-boleano=true]");
+        for (var i = 0, len = editables.length; i < len; i++)
+        {
+            if(i==0)
+            {
+                ids= editables[i].getAttribute("id"); 
+                cod_formulas= editables[i].getAttribute("data-formula"); 
+            }
+            else
+            {
+                ids= ids+","+editables[i].getAttribute("id"); 
+                cod_formulas=cod_formulas+","+ editables[i].getAttribute("data-formula"); 
+            }
+        }
+        ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod_formula);
+ }
+ 
+ 
+ 

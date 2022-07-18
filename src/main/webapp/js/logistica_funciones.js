@@ -14,6 +14,25 @@
 
                             cerrar_load()
                             cargar_estilo_calendario_insert("dd/mm/yyyy");
+                            $('.datatable').DataTable(
+                            {
+                                paging: false,
+                                responsive: true,
+                                "autoWidth": false,
+                                scrollCollapse: true,
+                                "scrollX": true,
+                                "ordering": false, 
+                                bFilter: false,
+                                dom: "Bfrtip",
+                                "language":
+                                {
+                                    "sUrl": "js/Spanish.txt"
+                                },
+                                buttons: 
+                                [
+                                    {extend: "copyHtml5", text: "COPIAR GRILLA", header: false,footer:false,title: ''} 
+                                ]
+                            });
                             cerrar_load();
                          },
                         error: function (error) 

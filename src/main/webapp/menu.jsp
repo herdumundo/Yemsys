@@ -192,7 +192,10 @@
 
                         </div>
 
-
+                                    
+    
+    
+ 
 
                         <div class="modal fade bd-example-modal-xl" id="modal_reporte_varios" tabindex="-1" role="dialog"   aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
 

@@ -40,7 +40,7 @@
         sourceDataTable.addColumnMetadata("codigo_mtp", java.sql.Types.VARCHAR);
         sourceDataTable.addColumnMetadata("descripcion", java.sql.Types.VARCHAR);
         sourceDataTable.addColumnMetadata("cantidad_nueva", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("cantidad_actual", java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("cantidad_actual", java.sql.Types.FLOAT);
         sourceDataTable.addColumnMetadata("costo", java.sql.Types.VARCHAR);
         sourceDataTable.addColumnMetadata("grupo", java.sql.Types.VARCHAR);
 
@@ -51,7 +51,7 @@
                     mtp.codigo_mtp,
                     mtp.descripcion,
                     mtp.cantidad_nueva.trim() ,
-                    mtp.cantidad_actual.trim(),
+                    mtp.cantidad_actual,
                     mtp.costo.trim() ,
                     mtp.grupo
             );
@@ -59,7 +59,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setString(2,  fecha_solicitud);
         callableStatement.setString(3,  recomendado);
@@ -83,26 +83,25 @@
 
         ob.put("mensaje", mensaje);
         ob.put("tipo_respuesta", tipo_respuesta);
-        if (tipo_respuesta == 0) {
+        if (tipo_respuesta == 0) 
+        {
             connection.rollback();
-        } else {
-            connection.commit();
+        } 
+        else
+        {
+          //  connection.commit();
+            connection.rollback();
         }
-    } catch (Exception e) {
+    } 
+    catch (Exception e) 
+    {
         ob.put("mensaje", e.getMessage());
         ob.put("tipo_respuesta", 0);
         connection.rollback();
-    } finally {
-
+    } 
+    finally 
+    {
         connection.close();
         out.print(ob);
     }
-%>
-
-
-
-
-
-
-
-
+%> 
