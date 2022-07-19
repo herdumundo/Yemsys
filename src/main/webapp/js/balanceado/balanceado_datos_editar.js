@@ -300,7 +300,7 @@ function add_filas_sol_edit_bal() {
 \n\
 \n\        <div class='bg-black'><label> Formulas pendientes que desea incluir (Opcional)</label></div> \n\ \n\
         <div id=\"div_grilla_form_pen\"> </div> <br>         \n\
-         <input type=\"button\" class=\" btn bg-black\" value=\"Visualizar detalle\" onclick=\"visualizar_detalle_formulacion_bal()\" > \n\
+ <button type='button' onclick=\"visualizar_detalle_formulacion_bal()\" class='btn bg-black btn-block'><i class='fa fa-eye '></i> Visualizar detalle</button> \n\
          </form>";
             Swal.fire({ type: "warning",   customClass: 'swal-wide',html: n, showCancelButton: false, showConfirmButton: false});
             
@@ -329,13 +329,13 @@ function seleccionar_row_formulacion_pendiente_bal(id)
     {
         $("#"+id).val("Quitar");
         $("#"+id).attr("data-boleano",true);
-        $("#" + id).removeClass('bg-success').addClass('bg-danger');
+        $("#" + id).removeClass('bg-navy').addClass('bg-danger');
     }
     else 
     {
         $("#"+id).val("Seleccionar");
         $("#"+id).attr("data-boleano",false);
-        $("#" + id).removeClass('bg-danger').addClass('bg-success');
+        $("#" + id).removeClass('bg-danger').addClass('bg-navy');
     }
 }
 

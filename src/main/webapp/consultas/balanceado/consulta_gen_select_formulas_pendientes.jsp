@@ -43,7 +43,7 @@
                         + "<td >   "  +   rs_GM.getString("formula") + "</td>"
                         + "<td >   "  +   rs_GM.getString("usuario") + "</td>"
                         + "<td >   "  +   rs_GM.getString("descripcion") + "</td>"
-                        + "<td ><input data-boleano=\"false\" data-formula=\""+rs_GM.getString("cod_formula")+"\" id=\""+rs_GM.getString("id")+"\" onclick='seleccionar_row_formulacion_pendiente_bal("+rs_GM.getString("id")+");' type=\"button\" class=\"form-control  bg-success\" value=\"Seleccionar\"></td>"
+                        + "<td ><input data-boleano=\"false\" data-formula=\""+rs_GM.getString("cod_formula")+"\" id=\""+rs_GM.getString("id")+"\" onclick='seleccionar_row_formulacion_pendiente_bal("+rs_GM.getString("id")+");' type=\"button\" class=\"form-control  bg-navy\" value=\"Seleccionar\"></td>"
                          + "</tr>";
             }
             ob.put("grilla",cabecera +tr+ grilla_html + "</tbody></table>" );
