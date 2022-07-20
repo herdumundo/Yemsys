@@ -373,22 +373,22 @@
             <script src="plugins/dataTables.checkboxes.min.js" type="text/javascript"></script>
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
-            <script src="js/principal.js?v=2.3" type="text/javascript"></script>
-            <script src="js/embarque.js?v=2.3" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=2.3" type="text/javascript"></script>
-            <script src="js/logistica.js?v=2.3" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_aldo.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=2.3" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=2.3" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=2.3" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=2.3" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=2.3" type="text/javascript"></script>
+            <script src="js/principal.js?v=2.4" type="text/javascript"></script>
+            <script src="js/embarque.js?v=2.4" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=2.4" type="text/javascript"></script>
+            <script src="js/logistica.js?v=2.4" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_aldo.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=2.4" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=2.4" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=2.4" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=2.4" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=2.4" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
