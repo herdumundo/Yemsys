@@ -59,7 +59,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setString(2,  fecha_solicitud);
         callableStatement.setString(3,  recomendado);
@@ -89,8 +89,8 @@
         } 
         else
         {
-          //  connection.commit();
-            connection.rollback();
+         connection.commit();
+            //   connection.rollback();
         }
     } 
     catch (Exception e) 
