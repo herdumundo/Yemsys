@@ -15,7 +15,6 @@
     String estado = request.getParameter("estado");
     String fecha_modificacion = request.getParameter("fecha_modificacion");
     String usuario = (String) sesionOk.getAttribute("nombre_usuario");
- 
      
     
     int tipo_respuesta = 0;

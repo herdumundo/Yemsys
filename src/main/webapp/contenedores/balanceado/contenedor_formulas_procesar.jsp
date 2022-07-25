@@ -3,9 +3,6 @@
    Created on : 15-dic-2021, 9:51:44
    Author     : hvelazquez
 --%>
-<%@page import="clases.controles"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %> 

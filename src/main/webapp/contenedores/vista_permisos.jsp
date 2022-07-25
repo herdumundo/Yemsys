@@ -3,12 +3,14 @@
     Created on : 28/12/2021, 09:34:53
     Author     : csanchez
 --%>
-
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
+<%@page language="java" import="java.sql.*" errorPage="error.jsp" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include  file="../versiones.jsp" %>
+<%@include  file="../chequearsesion.jsp" %>
+<%@include  file="../cruds/conexion.jsp" %> 
 <%
-    String version = clases.versiones.contenedores_vista_permisos;
+    String version =  contenedores_vista_permisos;
 
 %>
 <head>
@@ -23,9 +25,7 @@
     ResultSet rs, rs2;
     try 
     {
-
-        clases.controles.connectarBD();
-        ps = clases.controles.connect.prepareStatement("select * from mae_yemsys_roles ");
+        ps = connection.prepareStatement("select * from mae_yemsys_roles ");
         rs = ps.executeQuery();
         
 %>
@@ -64,7 +64,8 @@
 
 <%
     } catch (Exception e) {
+        out.print(e.getMessage());
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %>
