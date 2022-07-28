@@ -1,10 +1,7 @@
- <%@include  file="../../chequearsesion.jsp" %>
-
-<%    String area = (String) sesionOk .getAttribute("clasificadora");
- 
-%>
-<% 
-     String version=clases.versiones.contenedores_ptc_contenedor_reporte_mixtos_variable;
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%      String area = (String) sesionOk .getAttribute("clasificadora");
+        String version= contenedores_ptc_contenedor_reporte_mixtos_variable;
 
        %>
    <head>  

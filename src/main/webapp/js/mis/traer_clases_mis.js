@@ -9,12 +9,14 @@ function traer_eliminar_mis()
     $.get(ruta_contenedores_mis + 'contenedor_eliminar.jsp', function (res) {
         $("#contenedor_principal").html('');
         $("#contenedor_principal").html(res);
-
         cargar_estilo_calendario_insert("dd/mm/yyyy");
         elminar_fila();
         
 
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        } ); 
 }
 
 function traer_eliminar__subproducto_tradi_mis()
@@ -27,7 +29,10 @@ function traer_eliminar__subproducto_tradi_mis()
         elminar_fila();
         
 
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 
 
@@ -37,9 +42,10 @@ function traer_detalle_eliminar_mis(fecha) {
         $("#div_eliminar").html('');
         $("#div_eliminar").html(res);
         $("#grilla_eliminar").DataTable();
-
-
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
   
   
@@ -51,7 +57,10 @@ function traer_detalle_eliminar_tradicional_mis(fecha) {
         $("#grilla_eliminar").DataTable();
 
 
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 function ir_registro_tipo_reproceso_mis() {
     window.location.hash = "panelRegistroReproceso";
@@ -61,49 +70,70 @@ function ir_registro_tipo_reproceso_mis() {
         $("#contenedor_principal").html(data);
 
         llenar_grilla_tipo_reproceso_mis();
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 
 function traer_grilla_carromesa(fecha_carromesa) {
     $.get(ruta_grillas_mis + 'grilla_carros_mesas.jsp', {fecha_carromesa: fecha_carromesa}, function (res) {
         $("#div_grilla_carromesa").html(res);
         $('#tabla_carromesa').DataTable();
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 
-
+ 
 function traer_registro_mis()
 {
     window.location.hash = "misRegistro";
-    $("#contenido_2").html("");
-    $.get(ruta_contenedores_mis + 'contenedor_registro.jsp', function (res) {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-        inicializar_unidad_medida_mis();
-        $('.checkbox').bootstrapToggle();
-        cargar_estilo_calendario_insert('dd/mm/yyyy');
-        $("#tipo_huevo").prop('required', true);
-
-        $('#chkToggle_aviario').change(function ()
+     
+      $.ajax({
+        type: "POST",
+        url: ruta_contenedores_mis + 'contenedor_registro.jsp',
+        beforeSend: function() 
         {
-            $('#fecha_puesta').val("");
-            if ($(this).prop("checked") == true)
-            {
-                $('#cbox_aviarios').removeAttr('required');
-            } else
-            {
-                $("#cbox_aviarios").prop('required', 'required');
-            }
-        });
-        $('#form-reprocesos').on('submit', function (event)
+            cargar_load();
+            $("#contenedor_principal").html("");
+        },           
+        success: function (res) 
         {
-            event.preventDefault();
-            procesar_lotes_rp();
-            event.stopPropagation();
-        });
+            $("#contenedor_principal").html(res);
+            inicializar_unidad_medida_mis();
+            $('.checkbox').bootstrapToggle();
+            cargar_estilo_calendario_insert('dd/mm/yyyy');
+            $("#tipo_huevo").prop('required', true);
 
-    });
+            $('#chkToggle_aviario').change(function ()
+            {
+                $('#fecha_puesta').val("");
+                if ($(this).prop("checked") == true)
+                {
+                    $('#cbox_aviarios').removeAttr('required');
+                } else
+                {
+                    $("#cbox_aviarios").prop('required', 'required');
+                }
+            });
+            $('#form-reprocesos').on('submit', function (event)
+            {
+                event.preventDefault();
+                procesar_lotes_rp();
+                event.stopPropagation();
+            });
+ 
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });
+         
 }
 
 function validar_fechaInicial_fechaFinal_mis()
@@ -154,7 +184,10 @@ function ir_registro_reproceso_tradicional_mis() {
 
         cargar_estilo_calendario_insert("dd/mm/yyyy");
         inicializar_unidad_medida_mis();
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 
 
@@ -165,18 +198,15 @@ function ir_registro_sp_tradicional() {
         $("#contenedor_principal").html(res);
         cargar_estilo_calendario_insert("yyyy/mm/dd")
         inicializar_unidad_medida_mis();
-    });
+    }).fail(function() 
+        {
+            recargar_pagina();
+        });
 }
 
 
 function traer_informe_mis() {
-    window.location.hash = "misInforme";
-    $.get(ruta_contenedores_mis + 'contenedor_informe.jsp', function (res) {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-        cargar_estilo_calendario_insert("dd/mm/yyyy");
-    });
+    ir_pagina_generico(ruta_contenedores_mis, "contenedor_informe.jsp","misInforme","dd/mm/yyyy","FALSE");
 }
 
 
@@ -200,62 +230,46 @@ function traer_reporte_lotes_mis() {
     });
 
 }
-
-function ir_carro_a_mesa() {
-    window.location.hash = "misCarroMesa";
-    $.get(ruta_contenedores_mis + 'contenedor_carro_mesa.jsp', function (res) {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-      //  $("#calendario_mesa").datepicker();
-        
-        cargar_estilo_calendario_insert("dd/mm/yyyy");
-    });
+function ir_carro_a_mesa() 
+{
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_carro_mesa.jsp',"misCarroMesa","dd/mm/yyyy","FALSE");
 }
 
 function ir_reporte_rotos_mis()
 {
-    window.location.hash = "ptcReporteRotos";
-    $.get(ruta_contenedores_mis + 'contenedor_reporte_rotos.jsp', function (res) {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-        cargar_estilo_calendario_insert("dd/mm/yyyy")
-     });
-
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_reporte_rotos.jsp',"ptcReporteRotos","dd/mm/yyyy","FALSE");
 }
 
 function ir_transferencias_reprocesos_mis()
 {
-    window.location.hash = "misTransfeReprocesos";
-    $.get(ruta_contenedores_mis + 'contenedor_registro_transferencias_reprocesos.jsp', function (res)
-    {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-    });
-
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_registro_transferencias_reprocesos.jsp',"misTransfeReprocesos","FALSE","FALSE");
 }
 function ir_transferencias_subproductos_mis()
 {
-     window.location.hash = "misTransfeSuproductos";
-    $.get(ruta_contenedores_mis + 'contenedor_transferencia_subproducto.jsp', function (res)
-    {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-    });
-
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_transferencia_subproducto.jsp',"misTransfeSuproductos","FALSE","FALSE");
 }
 function ir_informe_pendientes_alimentacion_mis()
 {
-    window.location.hash = "misPendientesAlimen";
-    $.get(ruta_contenedores_mis + 'contenedor_informe_pendientes_alimentacion.jsp', function (res)
-    {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-        llenar_grilla_pendientes_alimentacion_mis();
-    });
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_mis+"contenedor_informe_pendientes_alimentacion.jsp",
+        beforeSend: function() 
+        {
+            cargar_load();
+            $("#contenedor_principal").html("");
+        },           
+        success: function (res) 
+        {
+            $("#contenedor_principal").html(res);
+            llenar_grilla_pendientes_alimentacion_mis();
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                }); 
 }
 
 function llenar_grilla_pendientes_alimentacion_mis()
@@ -274,13 +288,7 @@ function llenar_grilla_pendientes_alimentacion_mis()
 
 function traer_contendor_pdf_reproceso_mis(pagina)
 {
-    $.get(ruta_contenedores_mis + pagina + '.jsp', function (res) {
-        $("#contenedor_principal").html('');
-        $("#contenedor_principal").html(res);
-
-        cargar_estilo_calendario_insert('dd/mm/yyyy');
-    });
-
+    ir_pagina_generico(ruta_contenedores_mis,pagina+'.jsp',"mispdfRep","dd/mm/yyyy","FALSE");
 }
 
 function cuadro_registro_mis(id_carrito, nro_carro) {
@@ -309,8 +317,6 @@ function llenar_grilla_tipo_reproceso_mis() {
         $("#div_grilla_registro").html('');
         $("#div_grilla_registro").html(data);
         $('#tabla_reproceso').DataTable();
-
-
     });
 }
 
@@ -355,7 +361,12 @@ function editar_reproceso(id, clasificadora, descripcion, tipo_reproceso) {
 
                     aviso_editado_tipo_reproceso(data.mensaje_impresion, data.mensaje, data.tipo_mensaje, clasificadora, descripcion, id, tipo_reproceso);
 
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
         }
     });
@@ -493,7 +504,12 @@ function enviar_datos_lotes_tradicionales(total) {
                             {
                                 Swal.fire(data.mensaje, '', 'error');
                             }
-                        }
+                        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });
         }
     });
@@ -517,12 +533,11 @@ function enviar_datos_lotes_tradicionales(total) {
                             cargar_estilo_calendario_insert("dd/mm/yyyy");
                             cerrar_load();
                          },
-                        error: function (error) 
-                        {
-                         cerrar_load()
-                        // alert("HA OCURRIDO UN ERROR, INTENTE DE NUEVO.")
-                        aviso_generico(2,'HA OCURRIDO UN ERROR, INTENTE DE NUEVO.');
-                        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });  
     }
     
@@ -565,7 +580,12 @@ function enviar_datos_lotes(total) {
                     } else {
                         Swal.fire(data.mensaje, '', 'error');
                     }
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
 
         }
@@ -706,7 +726,12 @@ function enviar_datos_carromesa(id_carrito, codigo_mesa) {
                 type: 'success',
                 title: "REGISTRADO CON EXITO.",
                 confirmButtonText: "CERRAR"});
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
 
     });
 
@@ -751,7 +776,12 @@ function  registrar_tipo_reproceso(area, desc, tipo_rep) {
                     $('#modal_agregar').attr("style", "display:none");
                     $('.modal-backdrop').hide();
                     ir_registro_tipo_reproceso_mis();
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
 
             });
         }
@@ -785,7 +815,12 @@ function ir_grilla_transferencia_reporte(fecha, tipo) {
             $('#div_grilla_tipo_transferencia').html("");
             $('#div_grilla_tipo_transferencia').html(data);
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 

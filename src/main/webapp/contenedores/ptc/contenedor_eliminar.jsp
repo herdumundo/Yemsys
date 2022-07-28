@@ -1,5 +1,6 @@
- <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%    
     String usuario = (String) sesionOk.getAttribute("usuario");
     String clasificadora = (String) sesionOk.getAttribute("clasificadora");
@@ -9,7 +10,7 @@
 <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
        <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_eliminar;
+     String version= contenedores_ptc_contenedor_eliminar;
 
        %> 
     <head>  

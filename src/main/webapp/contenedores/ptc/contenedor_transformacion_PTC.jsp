@@ -1,8 +1,8 @@
- 
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
 <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_transformacion_PTC;
-
-       %>
+    String version= contenedores_ptc_contenedor_transformacion_PTC;
+%>
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"

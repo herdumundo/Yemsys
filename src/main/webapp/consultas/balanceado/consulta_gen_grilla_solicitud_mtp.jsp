@@ -94,7 +94,9 @@
         int costo_actual = cantidad_actual / 1000;
         int costo_nuevo = cantidad_nueva / 1000;
         int diferencia = costo_actual - costo_nuevo;
-
+        if(diferencia<0){
+            diferencia=diferencia*-1;
+        }
         String td_actual = "<i class='nav-icon fas fa-arrow-circle-up text-red' aria-hidden='true'></i> Total costo actual(Gs/Kg)  : " + formatea.format(cantidad_actual / 1000);
         String td_nuevo = "<i class='nav-icon fas fa-arrow-circle-down text-blue' aria-hidden='true'></i> Total costo nuevo(Gs/Kg)  :" + formatea.format(cantidad_nueva / 1000);
         String td_diferencia = "Disminución " + puntualOmensual + " : " + formatea.format((diferencia * tonelada)*1000) + "<i class='nav-icon fas fa-arrow-circle-down text-blue' aria-hidden='true'></i>";

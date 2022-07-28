@@ -1,7 +1,7 @@
-
-
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
 <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_cambio_nro_ptc;
+     String version= contenedores_ptc_contenedor_cambio_nro_ptc;
 
  %> 
 

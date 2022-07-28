@@ -66,6 +66,11 @@ function editar_solicitud_bal(id,estado)
             });
               
             cerrar_load();
+         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
          }
     });
 
@@ -150,9 +155,6 @@ function validar_datos_mtp_edit_sol(){
     
 }
 
-
-
-
 function colorear_celdas_cantidad_sol_edit_bal(id)
 {
     
@@ -218,9 +220,9 @@ function calculo_grilla_edit_solicitud_bal(id)
 function eliminar_fila_mtp_edit_sol(id_tr)
 {
     var table = $('#tb_formulacion').DataTable();//OBTENGO EL ID DE MI TABLA.
-  //  var id_tr = table.cell($(this).closest('tr'), 7).data();// OBTENGO EL VALOR DE LA POSICION 8 DE LA FILA SELECCIONADA PARA ELIMINAR, EN ESTE CASO SELECCIONO EL ID DEL LOTE.
-   table.row($('#row' + id_tr)).remove().draw();
-   sumar_cantidad_mtp_bal();
+    //  var id_tr = table.cell($(this).closest('tr'), 7).data();// OBTENGO EL VALOR DE LA POSICION 8 DE LA FILA SELECCIONADA PARA ELIMINAR, EN ESTE CASO SELECCIONO EL ID DEL LOTE.
+    table.row($('#row' + id_tr)).remove().draw();
+    sumar_cantidad_mtp_bal();
 }
 
 
@@ -289,10 +291,7 @@ function add_filas_sol_edit_bal() {
     
 }
  
- 
- 
- 
- function modal_detalle_formulacion_bal(id_seleccionado,formula_seleccionada,desc_formula)
+function modal_detalle_formulacion_bal(id_seleccionado,formula_seleccionada,desc_formula)
  {
         var n  ="<form id=\"form_verificar\"><br>\n\
         <div class='ribbonvert'> <span class='ribbon2'><b>Nro. <br>"+id_seleccionado+"</b></span>  \n\
@@ -317,7 +316,12 @@ function add_filas_sol_edit_bal() {
         success: function (data)
         {
             $("#div_grilla_form_pen").html(data.grilla);
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
  }
  
@@ -363,3 +367,64 @@ function visualizar_detalle_formulacion_bal(){
  
  
  
+ 
+function baja_pedido_bal(id) {
+    var n  ="<form id='form_baja'><br><br>\n\
+         \n\
+        <label>Ingrese Motivo</label>\n\
+        <textarea rows='4' cols='50'  class='form-control ' id='verificar' name='verificar' placeholder='Motivo' required='true' >   </textarea> \n    \n\
+        <input type='hidden' name='id_pedido' id='id_pedido' value='"+id+"'>            \n\
+ <input type='submit'  value='DAR DE BAJA' class='form-control bg-success btn color_letra'>\n                \n\
+        </form>";
+            Swal.fire({title: "Baja del pedido" , type: "warning", html: n, showCancelButton: false, showConfirmButton: false});
+            
+            control_baja_bal();
+  }
+  
+  
+  
+function control_baja_bal() {
+    $("#form_baja").submit(function (e) {
+        e.preventDefault();
+        var ver=$("#verificar").val().trim();
+        if(ver.length==0){
+            
+            alert("DEBE INGRESAR EL MOTIVO");
+        }
+        else{
+            
+                $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_bal + "control_baja_bal.jsp",
+                    data: $("#form_baja").serialize(),
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: "PROCESANDO!",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+               
+                        });
+                    },
+                    success: function (data) { 
+                             
+                         aviso_generico(data.tipo_respuesta, data.mensaje)
+                        if(data.tipo_respuesta==1)
+                        {
+                            $("#contenedor_principal").html("");
+                        }       
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+                });        
+            }
+            e.stoppropagation();
+    });
+}

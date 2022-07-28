@@ -22,11 +22,7 @@
         rs = ps.executeQuery();
         int verifi=0;
 %>
-<style>
  
-
-    tr:hover {color:#ffffff ; background-color: #001940;}
-</style>
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
@@ -35,7 +31,7 @@
 </div>
 </head><!-- comment -->
 <div class="col-lg-20 ">
-    <div class="position-relative p-3 bg-navy"  >
+    <div class="position-relative p-3 bg-navy "  >
         <div class="ribbon-wrapper">
             <div class="ribbon bg-warning">
                 BAL
@@ -45,9 +41,8 @@
     </div>
 </div> 
  
-
  
-        <table class="table-bordered compact">
+        <table id="example" class="table-bordered compact display">
             <thead>
             <th>Nro.</th>
             <th>Fecha de registro</th>
@@ -58,6 +53,10 @@
             <th>Usuario</th>
             <th>Toneladas</th>
             <th>Estado</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
              
             </thead>
             <tbody>
@@ -75,10 +74,10 @@
                     <td><input type="button" value="Detalle" class="bg-navy" onclick="modal_detalle_formulacion_bal(<%=rs.getString("id")%>,'<%=rs.getString("cod_formula")%>','<%=rs.getString("formula")%>')"> </td>
                     <td><form action="cruds/balanceado/control_reporte_pedidos_bal.jsp" target="blank"><input type="submit" value="Reporte" class="bg-warning"> <input type="hidden" id="id" name="id" value="<%=rs.getString("id")%>"></form> </td>
                     <td><input type="button" value="Aprobar"    class="bg-success" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,3)"> </td>
-                    
+                    <td>
                     <% if(rs.getString("desc_estado").equals("PENDIENTE DE APROBACION GERENTE INDUSTRIAL")){%>
-                    <td><input type="button" value="Verificar"   class="bg-danger" onclick="verificador_gerencia(<%=rs.getString("id")%>)"> </td>
-                     <% }%>
+                    <input type="button" value="Verificar"   class="bg-danger" onclick="verificador_gerencia(<%=rs.getString("id")%>)"> 
+                     <% }%></td>
                 </tr>
                   <%verifi++; } %>
             </tbody>

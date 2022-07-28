@@ -1,15 +1,6 @@
-<%-- 
-    Document   : transferencia_lotes
-    Created on : 26/05/2020, 07:55:33 AM
-    Author     : hvelazquez
---%>
-<%@page import="clases.controles"%>
-<%@page import="clases.fuentedato"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<jsp:useBean id="fuente2" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../versiones.jsp" %>
+<%@include  file="../../consultas/consulta_gen_options.jsp" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%    String area = (String) sesionOk.getAttribute("clasificadora");
@@ -54,34 +45,13 @@
 
 <select style=" font-weight: bold" class="form-control" name="cbox_chofer" id="cbox_chofer" required> 
     <option    value=""       disabled="disabled"    selected="selected">CHOFER </option>
-    <%
-        controles.VerificarConexion();
-        Connection cn2 = controles.connectSesion;
-        fuente2.setConexion(cn2);
-        ResultSet rs_chofer, rs_camion;
-
-        rs_chofer = fuente2.obtenerDato(" select code,name from maehara.dbo.[@CHOFERES] with(nolock) order by 2 ");
-        while (rs_chofer.next()) {
-
-    %>
-    <OPTION VALUE="<%=rs_chofer.getString("code")%>_<%=rs_chofer.getString("name")%>"> <%=rs_chofer.getString("name")%> </OPTION><%
-                    }
-                    rs_chofer.close();%>
+    <%=option_choferes%>
 </select>  
 <span class="input-group-addon">Camión</span>
 <select class="form-control" name="cbox_camion" id="cbox_camion" required>
     <option    value=""       disabled="disabled"    selected="selected">CAMION </option>
-    <%
+         <%=option_camiones%>
 
-        rs_camion = fuente2.obtenerDato("select code,name from maehara.dbo.[@CAMIONES] ");
-        while (rs_camion.next()) {
-
-            String camion_1 = rs_camion.getString("code");
-            String camion_2 = rs_camion.getString("name");
-    %><OPTION VALUE="<%=camion_1%>_<%=camion_2%>"><%=camion_1%>- <%=camion_2%> </OPTION><%
-   }
-
-        %>
 
 </select>
 <br>
@@ -126,9 +96,4 @@
         </div> 
     </div> 
 </div> 
-
-
-<% cn2.close();
-    clases.controles.DesconnectarBDsession();
-%>
-
+ 

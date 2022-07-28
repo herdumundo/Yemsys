@@ -1,21 +1,9 @@
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
- <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../consultas/consulta_gen_options.jsp" %> 
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
       <%
-        String fecha_clasificacion="";
-        
-        clases.controles.connectarBD();  
-        Connection cn = clases.controles.connect;
-    
-        fuente.setConexion(cn);           //CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-        ResultSet rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
-        while(rs.next()){          
-            fecha_clasificacion=rs.getString(1);
-        }
-        clases.controles.DesconnectarBD();
-      %>   
-       <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_reemplazo_motivos;
+     
+     String version= contenedores_ptc_contenedor_reemplazo_motivos;
 
        %>
  <head>   
@@ -42,7 +30,7 @@ PTC
             <div class="input-group">
                 <div class="form-groupss " >
                     <label class="form-control-placeholder"><b>Fecha de clasificación inicial</b></label>
-                    <input style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker" required   value="<%=fecha_clasificacion%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"/>
+                    <input style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker" required   value="<%=fecha_hora%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"/>
                 </div>
                 <input type="checkbox"  class="checkbox"  data-toggle="toggle" data-on="BORROSO SI"     data-off="BORROSO NO"   id="chkToggle2"             data-onstyle="success" data-offstyle="warning">
                 <input type="checkbox"  class="checkbox"  data-toggle="toggle" data-on="ESPECIAL SI"    data-off="ESPECIAL NO"  id="chkToggle_especial"     data-onstyle="primary" data-offstyle="danger">
@@ -89,7 +77,7 @@ PTC
                 <div class="input-append">  
                     <div class="form-groupss ">
                         <label class="form-control-placeholder"><b>Fecha de puesta</b></label>
-                        <input style="font-weight: bold;" id="fecha_puesta" name="fecha_puesta" class="datepicker"   width="276" value="<%=fecha_clasificacion%>" placeholder="Fecha puesta"  required="true"/>
+                        <input style="font-weight: bold;" id="fecha_puesta" name="fecha_puesta" class="datepicker"   width="276" value="<%=fecha_hora%>" placeholder="Fecha puesta"  required="true"/>
                     </div>
                 </div>
             </div> 
@@ -144,7 +132,7 @@ PTC
             <br>
              <div class="input-group">
                 <label class="form-control-placeholder"><b>   Fecha final de clasificacion</b></label>
-                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_clasificacion%>" onchange="validar_fechaInicial_fechaFinal()" required >
+                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_hora%>" onchange="validar_fechaInicial_fechaFinal()" required >
             </div>
             <br>
             <div class="input-group">

@@ -328,10 +328,11 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
                 registrar_pedido_log();
             }
         },
-        error: function (error)
-        {
-            generar_grilla_pedido_log(tipo, codigo);
-        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
 
     });
  }
@@ -614,16 +615,12 @@ function registrar_pedido_log()
                     success: function (res)
                     {
                         aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
-                    }
-                    ,
-                    error: function (error)
-                    {
-                        swal.fire({
-                            type: 'error',
-                            html: 'Ha ocurrido un error, intente de nuevo.',
-                            confirmButtonText: "CERRAR"
-                        });
-                    }
+                    } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
                 });
             }
         });  
@@ -694,16 +691,12 @@ function registrar_pedido_mod_log()
                     success: function (res)
                     {
                         aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
-                    }
-                    ,
-                    error: function (error)
-                    {
-                        swal.fire({
-                            type: 'error',
-                            html: 'Ha ocurrido un error, intente de nuevo.',
-                            confirmButtonText: "CERRAR"
-                        });
-                    }
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
                 });
 
 
@@ -913,16 +906,12 @@ function registrar_pedido_mod_cyo()
                     success: function (res)
                     {
                         aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
-                    }
-                    ,
-                    error: function (error)
-                    {
-                        swal.fire({
-                            type: 'error',
-                            html: 'Ha ocurrido un error, intente de nuevo.',
-                            confirmButtonText: "CERRAR"
-                        });
-                    }
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
                 });
             }
         });
@@ -949,12 +938,12 @@ function cerar_pedido_log() //TIPO PEDIDO ES CREAR O MODIFICAR
         success: function (res)
         {
             generar_grilla_pedido_log(6), $('#contenido_grillas').show();
-        }
-        ,
-        error: function (error)
-        {
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 }
 
@@ -1005,12 +994,12 @@ function insert_reservas_mixtos_log(id_camion, cantidad, fp, tipo, tipo_huevo, a
 
 
             sumar_mixtos_seleccionados_log();
-        }
-        ,
-        error: function (error)
-        {
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 
 }
@@ -1106,12 +1095,12 @@ function insert_reservas(id_camion, cantidad, fp, tipo, tipo_huevo, area, catego
                 $("#" + res.carro_reserva).removeAttr("mixto");
                 $("#" + res.carro_reserva).Attr("reservado", true);
             }
-        }
-        ,
-        error: function (error)
-        {
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 
 }
@@ -1154,12 +1143,12 @@ function insert_cabecera_totales_log(id, tipo_registro) { // tipo_registro: 1= C
                 if (res.tipo_respuesta == 1) {
                     $("#" + id).attr("cantidad", $("#" + id).val());
                 }
-            }
-            ,
-            error: function (error)
-            {
-
-            }
+            },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
         });
     }
 }
@@ -1181,12 +1170,12 @@ function insert_totales_carga_pedido_log(id) { // tipo_registro: 1= CREAR PEDIDO
                 if (res.tipo_respuesta == 1) {
                     $("#" + id).attr("cantidad", $("#" + id).val());
                 }
-            }
-            ,
-            error: function (error)
-            {
-
-            }
+            },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
         });
     }
 }
@@ -1207,12 +1196,12 @@ function traer_totales_carros_tipos_log(){
                     $("#" + res.totales[c].identificador).attr("cantidad",res.totales[c].cantidad);
                     c++;
                 });
-            }
-            ,
-            error: function (error)
-            {
-
-            }
+            },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
         });
 }
 
@@ -1367,7 +1356,12 @@ function registrar_pedido_cyo(contenido, area)
                 success: function (res)
                 {
                     aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         } 
             });
 
 
@@ -1408,7 +1402,12 @@ function anular_pedido(id)
                 {
                     aviso_generico_log(res.tipo_respuesta, res.mensaje, 'ANULAR')
 
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
             });
 
 
@@ -1477,7 +1476,12 @@ function registrar_factura(id)
                 success: function (res)
                 {
                     aviso_generico_log(res.tipo_respuesta, res.mensaje, 'FACTURA');
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
             });
             e.stopPropagation();
         });
@@ -1514,7 +1518,12 @@ function cargar_cantidades() {
             $('#txt_tipo_sc').val(res.SC);
             $('#txt_tipo_jc').val(res.JC);
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 }
 
@@ -1546,7 +1555,12 @@ function consultar_cantidades() {
                 console.log('changed');
             });
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 }
 
@@ -1629,10 +1643,11 @@ function buscar_reporte_pedidos_log() {
             $('#div_grilla').html(res.grilla);
             cerrar_load();
         },
-        error: function (error)
-        {
-            cerrar_load();
-        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 
 }
@@ -1678,7 +1693,12 @@ function cambiar_camion_log(id_camion, id_pedido, capacidad)
             $("#select_camion").html(res.select);
             $("#select_camion").val(id_camion);
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
     });
 }
 
@@ -1716,11 +1736,14 @@ function crud_cambiar_camion(id_camion, id_pedido, id_camion_nuevo)
                     $('#modal_cambio_camion').modal('toggle');
                     $('.modal-backdrop').remove();
                     ir_pagina('contenedor_pedidos_generados_menu.jsp');
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
             });
         }
     });
-
-
-
 }
+

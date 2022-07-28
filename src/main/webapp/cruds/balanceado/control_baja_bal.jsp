@@ -18,7 +18,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_verificar_cambioFormula_mtp(?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_baja_cambioFormula_mtp(?,?,?,?,?)}");
         callableStatement.setInt(1, Integer.parseInt(id_pedido));
         callableStatement.setString(2, verificar);
         callableStatement.setString(3, usuario);
@@ -37,7 +37,8 @@
         } 
         else 
         {
-            connection.commit();
+          connection.commit();
+            //  connection.rollback();
         }
     } catch (Exception e) 
     {
@@ -49,12 +50,4 @@
         connection.close();
         out.print(ob);
     }}
-%>
-
-
-
-
-
-
-
-
+%> 

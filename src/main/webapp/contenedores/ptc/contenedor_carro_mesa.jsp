@@ -1,30 +1,8 @@
-
-
-
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
- <%@include  file="../../chequearsesion.jsp" %>
-      <%
-          String area_registro = (String) sesionOk.getAttribute("clasificadora"); 
-          
-          String area_format="";
-          
-          if (area_registro.equals("A")||area_registro.equals("B")) {
-              area_format="cch";
-          }
-          
-          if (area_registro.equals("O")) {
-              area_format="ovo";
-          }
-                  
-            clases.controles.connectarBD();   
-            Connection cn = clases.controles.connect;
-	 
-	fuente.setConexion(cn);           //CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-        ResultSet rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),103) as fecha,REPLACE(CONVERT(VARCHAR(10), GETDATE(), 5),'-','') ");
-       while(rs.next()){          
- %>    
-
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+<%@include  file="../../consultas/consulta_gen_options.jsp" %>
+ 
 <div class="col-lg-20 ">
 <div class="position-relative p-3 bg-navy"  >
 <div class="ribbon-wrapper">
@@ -38,13 +16,9 @@ PTC
      <br> <br>
             <div class="input-append">  
             <span class="input-group-addon">Fecha de clasificación</span>
-            <input id="calendario_mesa" name="calendario_mesa" data-format="dd/mm/yyyy"  width="276"  value="<%=rs.getString(1)%>"   />
+            <input id="calendario_mesa" name="calendario_mesa" data-format="dd/mm/yyyy"  width="276"  value="<%=fecha_hora%>"   />
            
-          
-            <%}
-
-                clases.controles.DesconnectarBD();
-            %>  <br>
+           <br>
             </div> 
             
             <input type="button" class="form-control"  value="Buscar" onclick="traer_grilla_carromesa($('#calendario_mesa').val())" >
@@ -100,6 +74,6 @@ PTC
     
 </form>
    <%
-        clases.controles.DesconnectarBD();
+        
 %>
       

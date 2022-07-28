@@ -6,6 +6,9 @@
 <%@page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../cruds/conexion.jsp" %>
     <% 
+        
+                if (sesion == true) {
+
      String cbox_chofer= request.getParameter("cbox_chofer") ;
     String cbox_camion= request.getParameter("cbox_camion") ;
     String filas_grilla= request.getParameter("resultado") ;
@@ -58,5 +61,5 @@
             connection.close();
             out.print(ob); 
 
-    }
+    }}
         %>  

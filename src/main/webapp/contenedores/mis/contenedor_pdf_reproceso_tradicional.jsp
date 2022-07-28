@@ -1,6 +1,7 @@
+<%@include  file="../../versiones.jsp" %>
         
       <% 
-     String version=clases.versiones.contenedores_mis_contenedor_pdf_reproceso_tradicional;
+     String version=contenedores_mis_contenedor_pdf_reproceso_tradicional;
       
       %> 
 

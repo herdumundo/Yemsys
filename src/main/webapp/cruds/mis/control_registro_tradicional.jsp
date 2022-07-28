@@ -9,6 +9,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%    
+          if (sesion == true) {
+
     JSONObject ob = new JSONObject();
     clases.controles.connectarBD();
     String mensaje = null;
@@ -78,4 +80,5 @@
 
     clases.controles.DesconnectarBD();
     out.print(ob);
+          }
 %> 

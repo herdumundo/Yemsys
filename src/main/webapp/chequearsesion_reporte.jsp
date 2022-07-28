@@ -18,7 +18,7 @@
         clases.controles.connect.close();
         }
       sesion=false;   
-      response.sendRedirect("login_sesion.jsp");
+      response.sendRedirect("../../login_sesion.jsp");
  
     }
 

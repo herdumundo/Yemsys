@@ -1,7 +1,8 @@
 <%@include  file="../../chequearsesion.jsp" %>
-
-   <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_reporte_carros;
+<%@include  file="../../versiones.jsp" %>
+<%    
+    String area = (String) sesionOk.getAttribute("clasificadora"); 
+    String version= contenedores_ptc_contenedor_reporte_carros;
 
        %>
      <head>  
@@ -24,7 +25,6 @@ PTC
    </div>  <br>           
 
 
-<%    String area = (String) sesionOk.getAttribute("clasificadora");%>
 <form  action="cruds/ptc/control_reporte_carros.jsp"  target="_blank">
      <div class="input-append">  
         <input type="checkbox"  class="checkbox"  data-toggle="toggle" data-on="INVOLUCRADA"     data-off="PUESTA"   id="check_tipo_calendario"             data-onstyle="warning" data-offstyle="success">

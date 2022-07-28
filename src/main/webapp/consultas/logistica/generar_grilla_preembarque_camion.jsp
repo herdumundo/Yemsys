@@ -4,25 +4,26 @@
     Author     : hvelazquez
 --%>
 <%@page import="org.json.JSONArray"%>
-<%@page import="clases.controles"%>
-<%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<%@page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 <%@page contentType="application/json; charset=utf-8" %>
-<%
-    String id_camion = request.getParameter("id_camion");
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
-    try {
+<%@include  file="../../cruds/conexion.jsp" %> 
+<%@include  file="../../chequearsesion.jsp" %> 
 
+<%
+    try {
+        String id_camion = request.getParameter("id_camion");
         ResultSet rs, rs2, rs3, rs5, rs_c ;
+        Statement st,  st2,st3,st4,st_c  ;
+        st=connection.createStatement();
+        st2=connection.createStatement();
+        st3=connection.createStatement();
+        st4=connection.createStatement();
+        st_c=connection.createStatement();
+        
         String grilla_html = "";
 
         String cabecera = "   "
-                + "<table id='tb_preembarque'  class='display compact'   >"
+                + "<table id='tb_preembarque'  class=' compact'   >"
                 + "<thead>"
                 + " <tr >"
                 + " <th rowspan='1'     style='color: #fff; background:     black;' ><b> </b></th>  "
@@ -62,13 +63,13 @@
                 + " <th  style='color: #fff; background: black;'>Pal    </th>      <th  style='color: #fff; background: black;'>Cant</th>   <th  style='color: #fff; background: black;'>Res</th>"
                 + "</tr>"
                 + "</thead> <tbody >";
-        rs = fuente.obtenerDato("exec mae_log_select_reserva_camion @id_camion=" + id_camion + "  ");
+        rs = st.executeQuery("exec mae_log_select_reserva_camion @id_camion=" + id_camion + "  ");
 
         while (rs.next()) {
             grilla_html = grilla_html + rs.getString("tr");
         }
 
-        rs2 = fuente.obtenerDato("      select id_camion from mae_log_preembarque_reserva where estado=1  group by id_camion ");
+        rs2 = st2.executeQuery("      select id_camion from mae_log_preembarque_reserva where estado=1  group by id_camion ");
 
         JSONArray ob3 = new JSONArray();
         ob3 = new JSONArray();
@@ -76,7 +77,7 @@
             ob3.put(rs2.getString("id_camion"));
         }
 
-        rs3 = fuente.obtenerDato("   select case tipo_huevo when 'A' THEN 1 when 'B' THEN 2 when 'C' THEN 3 when 'D' THEN 4 when 'S' THEN 5 when 'J' THEN 6 when 'M' then 7 END AS tipo_id,cantidad "
+        rs3 = st3.executeQuery("   select case tipo_huevo when 'A' THEN 1 when 'B' THEN 2 when 'C' THEN 3 when 'D' THEN 4 when 'S' THEN 5 when 'J' THEN 6 when 'M' then 7 END AS tipo_id,cantidad "
                 + "  from mae_log_cabecera_totales where id_camion=" + id_camion + " and id_estado=1");
         JSONObject ob4 = new JSONObject();
         JSONArray ob5 = new JSONArray();
@@ -88,7 +89,7 @@
             ob5.put(ob4);
         }
 
-        rs5 = fuente.obtenerDato("      select cod_carrito from mae_log_preembarque_reserva where estado=1 and cod_carrito<>0 and id_camion=" + id_camion + "");
+        rs5 = st4.executeQuery("      select cod_carrito from mae_log_preembarque_reserva where estado=1 and cod_carrito<>0 and id_camion=" + id_camion + "");
 
         JSONArray ob_mixtos = new JSONArray();
         ob_mixtos = new JSONArray();
@@ -97,7 +98,7 @@
         }
         
         
-          rs_c = fuente.obtenerDato("select CASE cantidad  WHEN 0 THEN count(*)  ELSE  sum(cantidad) end as cantidad, case tipo_huevo when '-' then 'M' else tipo_huevo end as tipo_huevo"
+          rs_c = st_c.executeQuery("select CASE cantidad  WHEN 0 THEN count(*)  ELSE  sum(cantidad) end as cantidad, case tipo_huevo when '-' then 'M' else tipo_huevo end as tipo_huevo"
                   + " from mae_log_preembarque_reserva where estado in (1)   group by tipo_huevo,cantidad");
         JSONObject ob_carros_total_camion = new JSONObject();
         JSONArray ob_carros_total_camion_Arr = new JSONArray();
@@ -122,6 +123,6 @@
         out.print(ob);
     } catch (Exception e) {
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
     }
 %> 

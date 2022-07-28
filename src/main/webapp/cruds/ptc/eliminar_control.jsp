@@ -11,6 +11,8 @@
 <%@include  file="../../chequearsesion.jsp" %>
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
         <%
+                       if (sesion == true) {
+
     int res_out=1;
    controles.VerificarConexion();
     Connection cn = clases.controles.connectSesion;
@@ -31,6 +33,6 @@
     res_out = callableStatement.getInt("mensaje");
         
     cn.close();
-    controles .DesconnectarBD();       
+    controles .DesconnectarBD();   }    
         %>
   

@@ -1,18 +1,12 @@
-<%@page import="java.sql.Statement"%>
-<%@page import="clases.controles"%>
-<%@page import="clases.fuentedato"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<%@ page session="true" %>
+ <%@page import="org.json.JSONObject"%> 
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
-
- <%          String version =  contenedores_logistica_contenedor_pedidos_generados_cyo;
  
+ <%  
+    String area =  (String) sesionOk.getAttribute("area_gm");
+     String version =  contenedores_logistica_contenedor_pedidos_generados_cyo;
      String version_desc = desc_contenedores_logistica_contenedor_pedidos_generados_cyo;
-
 %>
 <head>   
 <label  ><b></b></label> 
@@ -33,12 +27,11 @@
 </div>  <br>    
 
 <%
-     ResultSet rs, rs2, rs3, rs4;
-    String area = (String) sesionOk.getAttribute("area_gm");
-     Statement st = connection.createStatement();
-     Statement st2 = connection.createStatement();
-     Statement st3 = connection.createStatement();
-     Statement st4 = connection.createStatement();
+    ResultSet rs, rs2, rs3, rs4;
+    Statement st = connection.createStatement();
+    Statement st2 = connection.createStatement();
+    Statement st3 = connection.createStatement();
+    Statement st4 = connection.createStatement();
 
     if (area.equals("A")) {
         area = "CCHA";

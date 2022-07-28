@@ -5,6 +5,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%
+    
+            if (sesion == true) {
+
     controles.VerificarConexion();
     Connection cn = controles.connectSesion;
     // Asignar conexion al objeto manejador de datos
@@ -17,3 +20,4 @@
             clases.controles.DesconnectarBDsession();
 %> CAMBIOS REALIZADOS.
 <br><br><br> <h1><a href="../menu.jsp">VOLVER AL MENU PRINCIPAL</a></h1>  
+<%}%>

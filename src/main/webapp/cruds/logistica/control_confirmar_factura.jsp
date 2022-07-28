@@ -12,6 +12,9 @@
 <%@page contentType="application/json; charset=utf-8" %>
 
 <%    
+           if (sesion == true) {
+
+    
     clases.controles.connectarBD();
     JSONObject ob = new JSONObject();
     ob = new JSONObject();
@@ -46,4 +49,7 @@
         ob.put("mensaje", e.toString());
         ob.put("tipo_respuesta", "0");
     }
-    out.print(ob);%>
+    out.print(ob);
+           }
+
+%>

@@ -3,16 +3,14 @@
     Created on : 05/03/2020, 11:04:47 AM
     Author     : hvelazquez
 --%>
-<%@page import="clases.controles"%>
-<%@page import="clases.embarque"%>
-<%@page import="java.sql.*"%>
+ <%@page import="java.sql.*"%>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+ <%@page contentType="text/html" pageEncoding="UTF-8"%>
   <% 
-     String version=clases.versiones.contenedores_embarque_informe_factura;
-     //<%=version%>
- %>  
+     String version=  contenedores_embarque_informe_factura;
+  %>  
 <!DOCTYPE html>
 <head>   
 <label  ><b></b></label> 
@@ -23,15 +21,13 @@
 </head>
 <body>
     <%        try {
-        
-        
-            controles.connectarBD();
-            fuente.setConexion(clases.controles.connect);
             ResultSet rs, rs2;
             String area = (String) sesionOk.getAttribute("area");
             String chofer = "";
             String camion = "";
-            rs = fuente.obtenerDato(""
+            PreparedStatement ps, ps2,ps3;
+            
+            ps = connection.prepareStatement (""
                     + " select distinct a.numatcard,a.DocEntry , convert(varchar,a.docdate,103) as fecha ,a.u_cod_camion,c.Name,c.code  "
                     + "from "
                     + "" + clases.variables.BD2 + ".dbo.oinv a with(nolock) "
@@ -42,6 +38,8 @@
                     + "  where   estado_sincro in('N','P','F' ) and area='" + area + "' "
                     + ")"
                     + " order by a.numatcard ");
+             rs = ps.executeQuery();         
+            
             String num_fact = "";
             String docentry = "";
             String tipo = "";
@@ -78,11 +76,13 @@
                 chofer = rs.getString("Name");
                 cod_chofer = rs.getString("code");
                 camion = rs.getString("u_cod_camion");
-                rs2 = fuente.obtenerDato("  "
+                
+                 ps2 = connection.prepareStatement("  "
                         + " select itemcode,InvntSttus,Dscription,"
                         + "(convert(int,(Quantity - isnull(delivrdqty,0))*12)) as cantidad,WhsCode "
                         + " from  " + clases.variables.BD2 + ".dbo.inv1 with(nolock)  where docentry='" + docentry + "' and whsCode='" + area + "' and InvntSttus='o'");
-                factura_formato = num_fact.substring(8);
+                rs2 = ps2.executeQuery();         
+                 factura_formato = num_fact.substring(8);
         %>
         <div class="row">
             <div class="col-12">
@@ -193,8 +193,7 @@
             out.print(e.toString());
         }
     finally{
-        clases.controles.DesconnectarBD();
-        clases.controles.VerificarConexion();
+        connection.close();
 }   
     %>
 

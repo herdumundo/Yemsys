@@ -176,7 +176,12 @@ function enviar_datos_reproceso()
         success: function (data)
         {
             aviso_registrado_dispo(data.tipo_mensaje, data.mensaje);
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 ;
@@ -431,7 +436,12 @@ function agregar_motivo_retencion() {
             resultado_motivo_retencion(res.tipo_respuesta, res.mensaje);
             $('#btn_cancelar').show();
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -453,7 +463,12 @@ function reemplazar_motivo_retencion() {
             resultado_motivos_panel(res.tipo_respuesta, res.mensaje);
             $('#btn_cancelar').show();
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -476,7 +491,12 @@ function reemplazar_estado_producto() {
             resultado_motivos_panel(res.tipo_respuesta, res.mensaje);
             $('#btn_cancelar').show();
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -498,8 +518,12 @@ function reemplazar_disposicion() {
 
             resultado_motivos_panel(res.tipo_respuesta, res.mensaje);
             $('#btn_cancelar_disposicion').show();
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -523,8 +547,12 @@ function agregar_estado_producto() {
 
             resultado_motivo_retencion(res.tipo_respuesta, res.mensaje);
             $('#btn_cancelar').show();
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -1236,7 +1264,15 @@ function validacion_eliminacion_ptc(clasificadora, cod_interno, cantidad, itemco
                         }
 
 
-                    }});
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+                
+                
+                });
 
             }
         });
@@ -1334,7 +1370,12 @@ function confirmar_registro_ptc_alimentacion(pagina) {
                 success: function (data)
                 {
                     aviso_registro_general(data.tipo_respuesta, data.mensaje, "ptc_alimentacion")
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
         }
     });

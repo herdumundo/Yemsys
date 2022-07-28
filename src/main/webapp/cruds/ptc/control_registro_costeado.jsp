@@ -12,6 +12,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%  
+               if (sesion == true) {
+
     clases.controles.VerificarConexion();
     Connection cn = clases.controles.connectSesion;
     fuente.setConexion(cn);
@@ -226,4 +228,4 @@
             ob.put("cajones_cargados", table_cuerpo);
          }
             cn.close();
-             out.print(ob); %>
+             out.print(ob); }%>

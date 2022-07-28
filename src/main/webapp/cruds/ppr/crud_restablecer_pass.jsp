@@ -3,42 +3,44 @@
     Created on : 8-ene-2022, 9:39:38
     Author     : aespinola
 --%>
-<%@page import="java.sql.CallableStatement"%>
+<%@page import="java.security.MessageDigest"%>
+<%@page import="java.math.BigInteger"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
 <%@ page session="true" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 <%@page contentType="application/json; charset=utf-8" %>
-
 <%    
-    clases.controles.VerificarConexion();
-    fuente.setConexion(clases.controles.connectSesion);
     JSONObject ob = new JSONObject();
     ob=new JSONObject();
-
     String id_usuario       = request.getParameter("txt_id_reset");
-
     String mensaje="";
-       try 
-    {
+       MessageDigest m = MessageDigest.getInstance("MD5");
+    m.reset();
+    m.update( "123".getBytes());
+    byte[] digest = m.digest();
+    BigInteger bigInt = new BigInteger(1, digest);
+    String clavenuevo = bigInt.toString(16);
 
-                CallableStatement  call;   
-                call = clases.controles.connectSesion.prepareCall("{call  stp_mae_ppr_restablecer_pass (?,?,? )}");
-                call .setInt(1,  Integer.parseInt(id_usuario) );
-                call.setString(2, "123");
-                call.registerOutParameter(3, java.sql.Types.VARCHAR);
-                call.execute(); 
-              
-                mensaje= call.getString(3);
-            
-         } catch (Exception ex) {
     
-           }
-           finally {  
-            clases.controles.DesconnectarBDsession();
-           ob.put("mensaje", mensaje);
-                       out.print(ob);
-                   }
+    try 
+    {
+        CallableStatement  call;   
+        call = connection.prepareCall("{call  stp_mae_ppr_restablecer_pass (?,?,? )}");
+        call .setInt(1,  Integer.parseInt(id_usuario) );
+        call.setString(2,clavenuevo);
+        call.registerOutParameter(3, java.sql.Types.VARCHAR);
+        call.execute(); 
+        mensaje= call.getString(3);
+    } 
+    catch (Exception ex) 
+    {
+    
+    }
+    finally 
+    {  
+        connection.close(); 
+        ob.put("mensaje", mensaje);
+        out.print(ob);
+    }
             %>

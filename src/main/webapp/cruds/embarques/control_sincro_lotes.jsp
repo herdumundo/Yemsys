@@ -5,7 +5,10 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@ page contentType="application/json; charset=utf-8" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
-    <% 
+   
+<%
+            if (sesion == true) {
+
     response.setHeader("Access-Control-Allow-Origin", "*"); 
     clases.controles.connectarBD();
     fuente. setConexion(clases.controles.connect);  
@@ -42,7 +45,7 @@
             ob.put("mensaje", mensaje);
             out.print(ob); 
             clases.controles.DesconnectarBD();
-        }
+        }}
 
          %>  
    

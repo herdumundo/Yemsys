@@ -3,30 +3,34 @@
     Created on : 03/03/2020, 07:43:47 AM
     Author     : hvelazquez
 --%>
-
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
-
+ 
+ <%@include  file="../../versiones.jsp" %>
+ <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <%
-    clases.controles.connectarBD();
-
-    ResultSet rs, rs_chofer, rs_camion;
+     PreparedStatement ps, ps2,ps3;
+     ResultSet rs, rs_chofer, rs_camion;
     String fecha_actual = "";
     String hora_inicio = "";
     try {
-        fuente.setConexion(clases.controles.connect);
-        rs = fuente.obtenerDato(" select convert(varchar,getdate(),103) as fecha , GETDATE()  as hora ");
+        ps = connection.prepareStatement ( " select convert(varchar,getdate(),103) as fecha , GETDATE()  as hora ");
+        rs = ps.executeQuery();
+
+        ps2 = connection.prepareStatement ("  select code,name from " + clases.variables.BD2 + ".dbo.[@CHOFERES] with(nolock) order by 2 ");
+        rs_chofer= ps2.executeQuery();
+        
+         ps3 = connection.prepareStatement ("select code,name from " + clases.variables.BD2 + ".dbo.[@CAMIONES] ");
+         rs_camion= ps3.executeQuery();
+        
         while (rs.next()) {
             fecha_actual = rs.getString("fecha");
             hora_inicio = rs.getString("hora");
         }
         rs.close();
 
-        String version = clases.versiones.contenedores_embarque_contenedor_reporte_embarque;
+        String version =  contenedores_embarque_contenedor_reporte_embarque;
 %>
 <head>   
 <label  ><b></b></label> 
@@ -53,7 +57,6 @@
                 <option style=" font-weight: bold" value="-" selected="selected" >  CHOFER </option>
                 <%
 
-                    rs_chofer = fuente.obtenerDato("  select code,name from " + clases.variables.BD2 + ".dbo.[@CHOFERES] with(nolock) order by 2 ");
                     while (rs_chofer.next()) {
 
                 %>
@@ -66,7 +69,6 @@
                 <option style=" font-weight: bold" selected="selected"  value="-" >  CAMION </option>
                 <%
 
-                    rs_camion = fuente.obtenerDato("select code,name from " + clases.variables.BD2 + ".dbo.[@CAMIONES] ");
                     while (rs_camion.next()) {
 
                 %><OPTION VALUE="<%=rs_camion.getString("code")%>"><%=rs_camion.getString("code")%>- <%=rs_camion.getString("name")%> </OPTION><%

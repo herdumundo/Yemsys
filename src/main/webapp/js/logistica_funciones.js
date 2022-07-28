@@ -35,12 +35,11 @@
                             });
                             cerrar_load();
                          },
-                        error: function (error) 
-                        {
-                         cerrar_load()
-                        // alert("HA OCURRIDO UN ERROR, INTENTE DE NUEVO.")
-                        aviso_generico_log(2,'HA OCURRIDO UN ERROR, INTENTE DE NUEVO.');
-                        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
                 });  
     }
       
@@ -107,17 +106,11 @@
               generar_grilla_pedido_log(tipo,codigo);
                 
             },
-            error: function (error) 
-            {
-                if(tipo==1)
-               {
-                    ir_pedido(1);
-               }
-               else 
-               {
-                   
-               }
-            }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
             
                 });  
     }
@@ -144,17 +137,17 @@
               generar_grilla_pedido_log(2,codigo,codigo_camion,id_chofer);
                 
             },
-            error: function (error) 
-            {
-                if(tipo==1)
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+             else{
+                 if(tipo==1)
                {
                     ir_pedido(1);
                }
-               else 
-               {
-                   
-               }
-            }
+             }
+         } 
             
                 });  
     } 
@@ -181,10 +174,11 @@
                 $("#id_pedido").val(id);
                 generar_grilla_cyo_log(id,id_camion);
             },
-            error: function (error) 
-            {
-                    
-            }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });  
     }
     

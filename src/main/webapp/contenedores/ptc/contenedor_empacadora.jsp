@@ -1,9 +1,8 @@
-  <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
- <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
  
    <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_empacadora;
+     String version= contenedores_ptc_contenedor_empacadora;
 
        %> 
   <head>  

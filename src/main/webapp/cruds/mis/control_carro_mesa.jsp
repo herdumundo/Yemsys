@@ -5,7 +5,10 @@
 <%@page import="java.sql.Connection"%>
     <%@include  file="../../chequearsesion.jsp" %>
 
-<%     controles.VerificarConexion();
+<%          if (sesion == true) {
+ 
+    
+    controles.VerificarConexion();
     Connection cn = controles.connectSesion;
      // Asignar conexion al objeto manejador de datos
      fuente.setConexion(cn);   
@@ -14,4 +17,5 @@
         PreparedStatement pss = cn.prepareStatement("update lotes set cod_cambio ='"+codigo_mesa+"' where cod_interno='"+id_lote+"' ");
         pss.executeUpdate();
             clases.controles.DesconnectarBDsession();
+}
 %>  

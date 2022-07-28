@@ -69,7 +69,12 @@
                              {
                                   Swal.fire(data.mensaje, '', 'error');
                              }
-                         }
+                         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });       
          
                 }

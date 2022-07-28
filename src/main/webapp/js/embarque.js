@@ -7,20 +7,31 @@ var counter = 0;//VARIABLE PARA COLOCAR PREPEND EL ULTIMO CARRO INGRESADO ARRIBA
  
 
 function ir_informe_embarque() {
+    
    window.location.hash = "embarque";
-    cargar_load();
-     $.get(ruta_contenedores_emb + 'contenedor_reporte_embarque.jsp', function (res) {
-       
-        $("#contenedor_principal").html("");
-        $("#contenedor_principal").html(res);
-        cargar_estilo_calendario_insert("dd/mm/yyyy");
-        cerrar_load();
-
-        // $('#grilla_principal_sub').bootstrapTable();
-
-    });
-
-}
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_emb + 'contenedor_reporte_embarque.jsp',
+        beforeSend: function ()
+        {
+            cargar_load();
+        },
+        success: function (res)
+        {         
+            $("#contenedor_principal").html("");
+            $("#contenedor_principal").html(res);
+            cargar_estilo_calendario_insert("dd/mm/yyyy");
+            cerrar_load();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+            {
+                location.reload();
+            }
+        }
+    }) ;
+    }
 
  
 
@@ -48,20 +59,40 @@ function traer_embarque(id_camion, nro_factura, cod_chofer, fecha )
             factura_togle();
             cargar_estilo_calendario_insert("dd/mm/yyyy");
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
 function traer_informe_factura() {
     window.location.hash = "traer_informe_factura";
-    cargar_load();
-    $.get(ruta_contenedores_emb + 'informe_factura.jsp', function (res) {
+     $.ajax({
+        type: "POST",
+        url: ruta_contenedores_emb + 'informe_factura.jsp',
+         beforeSend: function ()
+        {
+            cargar_load();
+        },
+        success: function (res)
+        {         
+            $("#contenedor_principal").html("");
+            $("#contenedor_principal").html(res);
+            cerrar_load();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+            {
+                location.reload();
+            }
+        }
+    }) ;
 
-        $("#contenedor_principal").html("");
-        $("#contenedor_principal").html(res);
 
-        cerrar_load();
-    });
 
 }
 
@@ -145,18 +176,12 @@ function llenar_grilla_pendientes(nro_factura) {
             
             cerrar_load();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-             cerrar_load();
-             traer_informe_factura();
-              swal.fire({
-                type: 'error',
-                title: "HA OCURRIDO UN ERROR CON LA RED, VUELVA A INGRESAR.",
-                confirmButtonText: "CERRAR"
-                });
-          //  llenar_grilla_pendientes(nro_factura);
-        }
-    })
-    ;
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    }) ;
    
 }
 

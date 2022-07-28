@@ -9,7 +9,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
+<%
+        if (sesion == true) {
+    
     String grilla = request.getParameter("json_string");
     String fecha_solicitud = request.getParameter("fecha_solicitud");
     String recomendado = request.getParameter("recomendado");
@@ -103,5 +105,5 @@
     {
         connection.close();
         out.print(ob);
-    }
+    }}
 %> 

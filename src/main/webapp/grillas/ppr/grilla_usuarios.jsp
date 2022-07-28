@@ -11,6 +11,8 @@
     String area = (String) sesionOk.getAttribute("clasificadora");
     String version = grilla_ppr_grilla_usuarios;
     String version_desc = "" ;
+    Statement st1,st2,st3,st4;
+    ResultSet rs,rs2,rs3,rs4;
   %> 
 <html>
     <head>
@@ -31,18 +33,15 @@
         if (id_rol.equals("16")) {
             query = "select * from v_mae_yemsys_usuarios";
         }
-        PreparedStatement ps = connection.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-
-        PreparedStatement ps2 = connection.prepareStatement("select * from mae_yemsys_roles");
-        ResultSet rs2 = ps2.executeQuery();
-
-        PreparedStatement ps3 = connection.prepareStatement("select * from mae_yemsys_areas");
-        ResultSet rs3 = ps3.executeQuery();
-
-        PreparedStatement ps4 = connection.prepareStatement("select * from tab_mae_ppr_estados where id in (1,2)");
-        ResultSet rs4 = ps4.executeQuery();
-%>
+        st1=connection.createStatement();
+        st2=connection.createStatement();
+        st3=connection.createStatement();
+        st4=connection.createStatement();
+        rs = st1.executeQuery(query);
+        rs2 = st2.executeQuery("select * from mae_yemsys_roles");
+        rs3 = st3.executeQuery("select * from mae_yemsys_areas");
+        rs4 = st4.executeQuery("select * from tab_mae_ppr_estados where id in (1,2)");
+ %>
 <body>
     <div    class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">

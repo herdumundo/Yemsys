@@ -47,10 +47,7 @@ p.thicker {
     text-align: right;
 }
 
-
-
-
-
+ 
 .text-amarilloOscuro_bal {
     color:  #000000;
     background:  #cccccc;
@@ -74,9 +71,7 @@ table tbody > tr > td.single_line br{display:none;}
 table tbody > tr > td.single_line *{display:inline;white-space:nowrap;}
 
 
-table tbody > tr > td.single_line2 br{display:none;}
-
-
+table tbody > tr > td.single_line2 br{display:none;} 
 
 
 

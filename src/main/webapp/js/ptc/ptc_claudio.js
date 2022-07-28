@@ -22,7 +22,12 @@ function grafico_clasificadora_dinamico_vista_ptc()
             $('#idresumen_huevos').html(data);
             grafico_clasificadora_dinamico_ptc();
             cerrar_load();
-        }});
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }});
 }
 function grafico_clasificadora_dinamico_ptc() {
     //window.location.hash = "ptcGraficoClasificadoraDinamico";
@@ -46,7 +51,12 @@ function grafico_clasificadora_dinamico_ptc() {
 
             });
             cerrar_load();
-        }});
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }});
 
 }
 function consulta_clasificadora_dinamico_ptc(serial2)
@@ -105,13 +115,16 @@ function consulta_clasificadora_dinamico_ptc(serial2)
                 
             });
             cerrar_load();
-  
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
 function consulta_clasificadora_dinamico_ptc2(serial2)
-
 {
     $.ajax({
         url: ruta_consultas_ptc + "consulta_reporte_clasificadora_dinamico_cuadros.jsp",
@@ -149,7 +162,12 @@ function consulta_clasificadora_dinamico_ptc2(serial2)
                 c++;
             });
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }

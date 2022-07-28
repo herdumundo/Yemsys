@@ -1,10 +1,8 @@
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
-<%@include  file="../../chequearsesion.jsp" %>
-
-
-
-     <% 
-     String version=clases.versiones.contenedores_mis_contenedor_registro_tipo_reproceso;
+ <%@include  file="../../chequearsesion.jsp" %>
+ <%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+ <%  
+     String version=contenedores_mis_contenedor_registro_tipo_reproceso;
 
      %> 
    <head>   

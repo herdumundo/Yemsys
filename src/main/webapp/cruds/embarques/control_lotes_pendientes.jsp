@@ -9,6 +9,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 
          <% 
+                     if (sesion == true) {
+
           String  numero_factura      = request.getParameter("numero_factura") ;
         String  area                =(String)sesionOk.getAttribute("area_gm");
  	String  tipo_huevo          = request.getParameter("tipo_huevo") ;
@@ -51,7 +53,7 @@
             out.print(ob); 
             connection.close();
              }
-            
+                     } 
         %>  
    
  

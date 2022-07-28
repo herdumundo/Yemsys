@@ -11,7 +11,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
+<% 
+            if (sesion == true) {
+
      JSONObject ob = new JSONObject();
     ob = new JSONObject();
     String id_camion = request.getParameter("id_camion");
@@ -60,5 +62,5 @@
         ob.put("tipo_respuesta", tipo_respuesta);
         out.print(ob);
         connection.close();
-    }
+    }}
 %>

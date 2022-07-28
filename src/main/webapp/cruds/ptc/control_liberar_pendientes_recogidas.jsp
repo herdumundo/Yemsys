@@ -10,6 +10,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 
 <%
+            if (sesion == true) {
+
     clases.controles.connectarBD();  
     Connection cn = clases.controles.connect;
     fuente.setConexion(cn);
@@ -33,4 +35,4 @@
         }
         cn.close();
         controles.DesconnectarBD();
-        out.print(ob);   %>       
+        out.print(ob);  } %>       

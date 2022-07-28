@@ -11,7 +11,9 @@
   <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
  <%@ page contentType="application/json; charset=utf-8" %>
     <%@include  file="../../chequearsesion.jsp" %>
-<%    
+<% 
+            if (sesion == true) {
+
     JSONObject ob = new JSONObject();
     
     
@@ -138,4 +140,5 @@
             ob.put("tipo_respuesta", tipo_respuesta);
             
             out.print(ob);
+            }
  %> 

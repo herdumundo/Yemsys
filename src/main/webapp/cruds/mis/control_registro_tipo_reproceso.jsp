@@ -10,6 +10,8 @@
 
 
  <%
+            if (sesion == true) {
+
      controles.VerificarConexion();
      Connection cn = controles.connectSesion;
      // Asignar conexion al objeto manejador de datos
@@ -49,5 +51,5 @@
         ob.put("mensaje", mensaje);
         ob.put("tipo_mensaje",tipo_mensaje);
         ob.put("mensaje_impresion",mensaje_impresion);
-        out.print(ob); 
+        out.print(ob); }
 %>     

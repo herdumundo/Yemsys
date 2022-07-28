@@ -8,7 +8,9 @@
 <%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
     <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%   
+<%
+            if (sesion == true) {
+
     String grilla         = request.getParameter("valor");
     String usuario        = (String) sesionOk.getAttribute("nombre_usuario");
     String arr_chofer     = request.getParameter("chofer");
@@ -85,5 +87,5 @@
         cn.rollback(); 
     }
         clases.controles.DesconnectarBDsession();
-        out.print(ob);
+        out.print(ob);}
  %>

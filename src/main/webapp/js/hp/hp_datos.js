@@ -13,7 +13,12 @@ function ir_alimentacion_hp(tipo)
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -32,7 +37,12 @@ function ir_informe_hp()
             $("#contenedor_principal").html(data);
             cargar_estilo_calendario_insert("dd/mm/yyyy");
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -86,6 +96,11 @@ function consulta_grilla_hp_alimentacion(fecha_alimentacion) {
                             keys: {clipboard: !1},
                         });
             
+         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
          }
     });
 
@@ -121,7 +136,12 @@ function consulta_lotes_hp_alimentacion(carro) {
             });
             $('#txt_lote').val('');
             sumar_grilla_reprocesos();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -213,7 +233,12 @@ function enviar_datos_alimentacion_hp()
                         {
                             $("#contenedor_principal").html("");
                         }
-                    }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                        location.reload();
+                        }
+         }
                 });
 
             }

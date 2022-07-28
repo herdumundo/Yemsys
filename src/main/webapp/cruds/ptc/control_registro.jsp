@@ -1,25 +1,19 @@
-<%@page import="clases.controles"%>
-<%@page import="clases.variables"%>
+ <%@page import="clases.variables"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.CallableStatement"%>
-<%@page import="javax.swing.JOptionPane"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
+<%@include file="../../cruds/conexion.jsp" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@ page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../chequearsesion.jsp" %>
-<%  
-    clases.controles.connectarBD();  
-    Connection cn = clases.controles.connect;
-    fuente.setConexion(cn);
+<% 
+    
+        if (sesion == true) {
+    
     JSONObject ob = new JSONObject();
     ob=new JSONObject();
     String fecha_puesta         =   request.getParameter("fecha_puesta");
     String codigo_cepillado     =   request.getParameter("codigo_cepillado");
-  //  String usuario              =   (String) sesionOk.getAttribute("usuario");
     String clasificadora        =   (String) sesionOk.getAttribute("clasificadora");
     String nrocarro             =   request.getParameter("cod_carrito");
     String codigo_borroso       =   request.getParameter("codigo_borroso");
@@ -166,9 +160,9 @@
              }
         else 
             {  */
-                cn.setAutoCommit(false);
+                connection.setAutoCommit(false);
                 CallableStatement  callableStatement=null;   
-                callableStatement = cn.prepareCall("{call mae_ptc_insert_liberado(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{call mae_ptc_insert_liberado(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
                 callableStatement .setString(1,  fecha_puesta );
                 callableStatement .setString(2,  fecha );
                 callableStatement .setString(3, clasificadora);
@@ -207,12 +201,12 @@
                 mensaje= callableStatement.getString("mensaje");
                 if (tipo_respuesta==0)
                 {
-                    cn.rollback(); 
+                    connection.rollback(); 
                 }   
                 else  
                 {
-                    //  cn.rollback(); 
-                    cn.commit();
+                      connection.rollback(); 
+                   // connection.commit();
                 }
                 if(mensaje.equals("DUPLICADO")){
                         tipo_respuesta=2;
@@ -244,6 +238,8 @@
             ob.put("tipo_respuesta", "0");
             ob.put("cajones_cargados", table_cuerpo);
          }
-            cn.close();
-            controles .DesconnectarBD();
-            out.print(ob); %>
+          finally{
+          connection.close();
+          out.print(ob); 
+      }
+        }     %>

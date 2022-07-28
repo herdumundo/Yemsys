@@ -12,7 +12,9 @@
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 
-<%    
+<% 
+            if (sesion == true) {
+
      JSONObject ob = new JSONObject();
     ob=new JSONObject();
     String id_usuario       = (String) sesionOk.getAttribute("id_usuario");
@@ -67,5 +69,5 @@
     finally{
         connection.close();
           out.print(ob);
-    }
+    }}
  %>

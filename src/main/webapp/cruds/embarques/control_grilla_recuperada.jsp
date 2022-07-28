@@ -5,7 +5,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@ page contentType="application/json; charset=utf-8" %>
-<%        
+<%   
+            if (sesion == true) {
+
      String numero_factura = request.getParameter("nro_factura");
     String area = (String) sesionOk.getAttribute("area_gm");
     String area_cch = (String) sesionOk.getAttribute("area");
@@ -96,5 +98,5 @@
         ob.put("total", total_carros / 12);
         connection.close();
         out.print(ob);
-    }
+    }}
 %>  

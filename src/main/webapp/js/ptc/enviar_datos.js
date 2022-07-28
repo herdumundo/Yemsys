@@ -36,7 +36,12 @@ function enviar_datos_lotes_ptc(tipo_registro)
             {
                 resultado_aviso_registro(data.tipo_respuesta, data.mensaje, 'RETENIDO_COSTEADO', data.cajones_cargados);
             }
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -49,7 +54,12 @@ function enviar_datos_carromesa() {
         url: ruta_controles_ptc + "control_carro_mesa.jsp",
         data: $("#formulario_carro_mesa").serialize(),
         success: function (data) {
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -63,7 +73,12 @@ function enviar_datos_carromesa() {
         data: $("#formulario_carro_mesa").serialize(),
         success: function (data) {
             //   $('#contenido_reporte').html(data);
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -77,7 +92,12 @@ function enviar_datos_correccion() {
         data: $("#formulario_correccion").serialize(),
         success: function (data) {
             $('#mensaje_correccion').html(data);
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -116,15 +136,15 @@ function buscar_lotes_visualizacion()
         timeout: 100000,
         success: function (data)
         {
-            console.info("Success");
-            $("#cabecera_informe").html(data.table);
+             $("#cabecera_informe").html(data.table);
             $('#grilla_lotes').DataTable({"scrollX": true});
             ObtenerDatosGrillaVisualizar();
         },
-        error: function (e)
-        {
-            console.info("Error");
-        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         },
         done: function (e)
         {
             $("#cabecera_informe").html(data.table);

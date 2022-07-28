@@ -1,5 +1,7 @@
-         <% 
-     String version=clases.versiones.contenedores_mis_contenedor_pdf_reproceso;
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+    <% 
+     String version= contenedores_mis_contenedor_pdf_reproceso;
      
    %> 
       <head>  

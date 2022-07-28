@@ -8,6 +8,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <% 
+               if (sesion == true) {
+
     int res_out=1;
     int res_out2=0;
     int identity=0;
@@ -164,7 +166,7 @@
           ob.put("mensaje", mensaje);
           
       
-   out.print(ob); 
+   out.print(ob); }
       %>  
    
  
