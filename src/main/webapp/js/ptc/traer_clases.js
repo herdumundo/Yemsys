@@ -16,6 +16,11 @@ function ir_transferencia_menu() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_transferencia(e) {
@@ -35,6 +40,11 @@ function ir_transferencia(e) {
                     cerrar_load(),
                     cargar_estilo_calendario_insert("dd/mm/yyyy");
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_agregar_motivo_retencion() {
@@ -57,6 +67,11 @@ function ir_agregar_motivo_retencion() {
                     $("#grilla_lotes_liberacion").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_modificacion_lotes_ptc() {
@@ -71,6 +86,11 @@ function ir_modificacion_lotes_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), ir_grilla_retenidos_panel(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_reporte_historico_lotes_ptc() {
@@ -84,6 +104,11 @@ function ir_reporte_historico_lotes_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_configuracion_empacadora() {
@@ -97,6 +122,11 @@ function ir_configuracion_empacadora() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), ir_grilla_empacadoras(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_cambio_fp_ptc() {
@@ -110,6 +140,11 @@ function ir_cambio_fp_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_cambio_nro_ptc() {
@@ -123,6 +158,11 @@ function ir_cambio_nro_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_transformacion_ptc() {
@@ -136,6 +176,11 @@ function ir_transformacion_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_transformacion_pallet_carro() {
@@ -149,6 +194,11 @@ function ir_transformacion_pallet_carro() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_grilla_retenidos_panel() {
@@ -161,6 +211,11 @@ function ir_grilla_retenidos_panel() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#div_grilla").html(e), $("#grilla_lotes_motivos").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_reportes_varios() {
@@ -173,6 +228,11 @@ function ir_reportes_varios() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenido").html(e), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_liberados_viejo() {
@@ -201,6 +261,11 @@ function ir_liberados_viejo() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_registro_carros_alimentados() {
@@ -233,6 +298,11 @@ function ir_registro_carros_alimentados() {
                 e.preventDefault(), $(this).closest("tr").remove();
             });
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_registro_reprocesos_lista_ptc() {
@@ -251,6 +321,11 @@ function ir_registro_reprocesos_lista_ptc() {
                 cerrar_load();
                 //generar_boton_reproceso_ptc();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -272,6 +347,11 @@ function ir_registro_reprocesos_ptc(id) {
             cerrar_load();
             generar_boton_reproceso_ptc(id);
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -284,6 +364,11 @@ function generar_boton_reproceso_ptc(id) {
         success: function (e) {
             $("#contenedor_boton").html(e.boton);
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function registrar_reproceso_ptc(e) {
@@ -335,6 +420,11 @@ function registrar_reproceso_ptc(e) {
                                 ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_registro_reprocesos_lista_ptc())
                                 : swal.fire({type: "error", title: e.mensaje, confirmButtonText: "CERRAR"});
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     })
             : swal.fire({type: "error", title: "ERROR, NO SE INGRESARON DATOS.", confirmButtonText: "CERRAR"});
@@ -386,6 +476,11 @@ function traer_registro_lib() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_registro_retenido() {
@@ -413,6 +508,11 @@ function traer_registro_retenido() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_registro_SC() {
@@ -444,6 +544,11 @@ function traer_registro_SC() {
                     }),
                             cerrar_load();
                 },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
 }
 function traer_registro_retenido_costeado() {
@@ -469,6 +574,11 @@ function traer_registro_retenido_costeado() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
  function validar_fechaInicial_fechaFinal ()
@@ -531,6 +641,11 @@ function ir_movimiento() {
                     $("#tabla_lotes").dataTable({scrollX: !0}),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_retenido_fecha_puesta() {
@@ -543,6 +658,11 @@ function traer_retenido_fecha_puesta() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), filtrar_grilla_retenido(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_fecha_involucrada() {
@@ -573,6 +693,11 @@ function traer_eliminar() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), elminar_fila(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_informe() {
@@ -586,6 +711,11 @@ function traer_informe() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_insert() {
@@ -612,6 +742,11 @@ function traer_contendor_cambiar_pass_jsp() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_contendor_pdf_jsp() {
@@ -624,6 +759,11 @@ function traer_contendor_pdf_jsp() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario").datepicker(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_carro_mesa() {
@@ -637,6 +777,11 @@ function traer_carro_mesa() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario_mesa").datepicker(), filtrar_grilla_carromesa(), elminar_fila(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_contendor_pdf_reproceso() {
@@ -649,6 +794,11 @@ function traer_contendor_pdf_reproceso() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario_reporte_reproceso").datepicker(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_grilla_retenido() {
@@ -662,6 +812,11 @@ function traer_grilla_retenido() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_reporte_lotes() {
@@ -688,6 +843,11 @@ function traer_reporte_lotes() {
             }),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_reporte_mixtos_historial() {
@@ -715,6 +875,11 @@ function traer_reporte_mixtos_historial() {
             }),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_reporte_ptc_excel() {
@@ -728,6 +893,11 @@ function traer_reporte_ptc_excel() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), ir_reporte_excel_ptc(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_grilla_transferencia(e, t) {
@@ -741,6 +911,11 @@ function ir_grilla_transferencia(e, t) {
         success: function (e) {
             $("#div_grilla_tipo_transferencia").html(e), $("#div_cargar").hide(), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_pendiente_liberacion_ptc() {
@@ -758,6 +933,11 @@ function traer_pendiente_liberacion_ptc() {
                     $("#grilla_lotes_liberacion").DataTable({scrollX: !0, paging: !1, ordering: !1, info: !0, language: {sUrl: "js/Spanish.txt"}}),
                     cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function buscar_aviarios_disponibles() {
@@ -819,6 +999,11 @@ function ir_grilla_transformacion_pallet_carro() {
         success: function (e) {
             $("#contenido_grilla_transformacion_pallet_carro").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_grilla_transformacion_carro() {
@@ -832,6 +1017,11 @@ function ir_grilla_transformacion_carro() {
         success: function (e) {
             $("#contenido_grilla_transformacion_carro").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_grilla_cambio_fp_ptc() {
@@ -845,6 +1035,11 @@ function ir_grilla_cambio_fp_ptc() {
         success: function (e) {
             $("#contenido_grilla_cambio_fp").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function ir_grilla_cambio_nro_ptc() {
@@ -858,6 +1053,11 @@ function ir_grilla_cambio_nro_ptc() {
         success: function (e) {
             $("#contenido_grilla_cambio_fp").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function registro_transformacion_pallet_carro(e, t, o) {
@@ -897,6 +1097,11 @@ function registro_transformacion_pallet_carro(e, t, o) {
                         success: function (e) {
                             aviso_transformacion(e.tipo, e.mensaje);
                         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });
         }
     });
@@ -961,6 +1166,11 @@ function control_retenidos_pendientes(e, t, o, r, a) {
                                 : swal.fire({type: "error", title: e.mensaje, confirmButtonText: "CERRAR"}),
                                 notificacion();
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 }),
                 e.stoppropagation();
     });
@@ -1005,6 +1215,11 @@ function registro_transformacion_ptc(e, t, o, r, a, n, i) {
                     success: function (e) {
                         aviso_transformacion(e.tipo, e.mensaje);
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     });
 }
@@ -1045,6 +1260,11 @@ function registro_cambio_fp_ptc(e, t) {
                         success: function (e) {
                             aviso_transformacion(e.tipo, e.mensaje);
                         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });
         }
     }),
@@ -1087,6 +1307,11 @@ function registro_cambio_nro_ptc(e, t) {
                         success: function (e) {
                             aviso_transformacion_PTC(e.tipo, e.mensaje);
                         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });
         }
     });
@@ -1127,6 +1352,11 @@ function cuadro_empacadoras() {
                     success: function (e) {
                         Swal.close(), 0 == e.tipo_respuesta ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_grilla_empacadoras()) : swal.fire({type: "error", html: e.mensaje, confirmButtonText: "CERRAR"});
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     });
 }
@@ -1140,6 +1370,11 @@ function ir_grilla_empacadoras() {
         success: function (e) {
             $("#div_tabla").html(e), cerrar_load();
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function consulta_empacadora() {
@@ -1151,6 +1386,11 @@ function consulta_empacadora() {
         success: function (e) {
             $("#nro_empacadora").empty(), $("#nro_empacadora").append(e.mensaje);
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function consulta_empacadora_retenido() {
@@ -1162,6 +1402,11 @@ function consulta_empacadora_retenido() {
         success: function (e) {
             $("#nro_empacadora").empty(), $("#nro_empacadora").append(e.mensaje);
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function cerrar_empacadora(e) {
@@ -1177,6 +1422,11 @@ function cerrar_empacadora(e) {
                         Swal.close(),
                                 0 == e.tipo_respuesta ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_grilla_empacadoras()) : swal.fire({type: "error", html: e.mensaje, confirmButtonText: "CERRAR"});
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     }
     );
@@ -1359,6 +1609,11 @@ function get_checkbox_selected_movimientos() {
                         success: function (e) {
                             "1" == e.tipo_mensaje ? (Swal.fire({type: "success", title: "ATENCION!", text: e.mensaje}), $("#contenedor_principal").html("")) : Swal.fire({type: "error", title: "ATENCION!", html: e.mensaje});
                         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                     });
         }),
                 e.stopPropagation();
@@ -1451,6 +1706,11 @@ function registrar_fecha_involucradas() {
         success: function (e) {
             1 == e.tipo_respuesta ? (Swal.fire({type: "success", title: "ATENCION!", text: e.mensaje}), $("#cuadro1").modal("toggle")) : Swal.fire({type: "error", title: "ATENCION!", text: e.mensaje});
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function remover_required_reporte_ptc() {
@@ -1624,9 +1884,11 @@ function consulta_huevos_recibidos(e) {
                             }),
                             huevos_recibidos_grafico(t, o, r, p, m, f, n, O, E, b, h, x, R, P, A, u, a, g, i, c, l, s, _, d, S, C, y, T, v, I);
                 },
-                error: function (e) {
-                    consulta_huevos_recibidos("sad");
-                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
 }
 function ir_reporte_generico(e) {
@@ -1651,6 +1913,11 @@ function ir_reporte_generico(e) {
                         });
                     });
         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function huevos_recibidos_grafico(e, t, o, r, a, n, i, c, l, s, d, _, p, u, f, m, g, h, O, b, E, S, C, y, T, v, I, A, x, P) {
@@ -1852,9 +2119,11 @@ function ir_pendientes_recogidas() {
                 e.preventDefault(), registrar_pendientes_recogidas(), e.stopPropagation();
             });
         },
-        error: function (e) {
-            ir_pendientes_recogidas();
-        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function registrar_pendientes_recogidas() {
@@ -1889,6 +2158,11 @@ function registrar_pendientes_recogidas() {
                     success: function (e) {
                         aviso_registro_general(e.tipo_respuesta, e.mensaje, "registroRecogida");
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     });
 }
@@ -1913,6 +2187,11 @@ function liberar_recogida(e, t, o) {
                     success: function (e) {
                         aviso_registro_general(e.tipo_respuesta, e.mensaje, "registroRecogida");
                     },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
     });
 }
@@ -1934,6 +2213,11 @@ function grilla_recogidas_liberadas() {
             success: function (e) {
                 $("#contenido_grilla_liberadas").html(e.grilla), cerrar_load();
             },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
     });
 }
@@ -2006,9 +2290,11 @@ function huevos_sc_liberar() {
                                 });
                     });
                 },
-                error: function (e) {
-                    cerrar_load(), huevos_sc_liberar();
-                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         },
             });
 }
 function aviso_registro_general(e, t, o) {

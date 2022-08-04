@@ -3,41 +3,30 @@
     Created on : 05/03/2020, 11:04:47 AM
     Author     : hvelazquez
 --%>
-<%@page import="clases.embarque"%>
-<%@page import="java.sql.*"%>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-   <%@include  file="../../chequearsesion.jsp" %>
-
-<!DOCTYPE html>
-
- 
-<body>
-    <%     
-        
-        
-           try {
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+ <%     
+    try {
     String area =(String) sesionOk.getAttribute("area");
     String fecha =request.getParameter("calendario");
-    clases.controles.VerificarConexion();
-   // Connection cn = clases.controles.connectSesion;
-    fuente.setConexion( clases.controles.connectSesion); 
+    PreparedStatement ps, ps2,ps3;
     ResultSet rs;
     String nro_factura = "";
     String chofer = "";
     String camion = "";
     String id = "";
-    String user = "";
-        
-         
-        rs = fuente.obtenerDato (" select a.id, a.area,a.fecha_embarque,a.nro_factura,b.Name as chofer, c.Name as camion, usuario_grupomaehara "
+    ps = connection.prepareStatement (" select a.id, a.area,a.fecha_embarque,a.nro_factura,b.Name as chofer, c.Name as camion, usuario_grupomaehara "
                 + "from "
                 + "embarque_cab   a with(nolock) "
                 + "inner join "+clases.variables.BD2+".dbo.[@CHOFERES]   b with(nolock) on a.id_chofer=b.Code "
                 + "inner join "+clases.variables.BD2+".dbo.[@CAMIONES]  c with(nolock) on a.id_camion=c.Code "
                 + "where "
-                        + "convert(varchar,fecha_embarque,103)='"+fecha+"' and area='"+area+"'");
-            while (rs.next())
+                + "convert(varchar,fecha_embarque,103)='"+fecha+"' and area='"+area+"'");
+                rs = ps.executeQuery();         
+
+        while (rs.next())
             {             
               nro_factura=rs.getString("nro_factura");
               chofer=rs.getString("chofer");
@@ -47,7 +36,7 @@
               
    %>
    
- 
+<body>
    <form  action="cruds/embarques/control_reporte_embarque.jsp" target="_blank" >
             
        <div class="row">
@@ -108,7 +97,7 @@
  String d=e.toString();
 }
        finally{
-             clases.controles.DesconnectarBDsession();
+             connection.close();
 }          
         %>
          

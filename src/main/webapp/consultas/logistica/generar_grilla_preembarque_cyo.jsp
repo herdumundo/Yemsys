@@ -2,24 +2,24 @@
     Document   : generar_grilla_preembarque
     Created on : 16-sep-2021, 8:37:03
     Author     : hvelazquez
---%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="clases.controles"%>
-<%@page import="clases.fuentedato"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
-<%@include  file="../../chequearsesion.jsp" %>
+--%> 
+<%@include  file="../../cruds/conexion.jsp" %> 
+<%@include  file="../../chequearsesion.jsp" %> 
 <%@page contentType="application/json; charset=utf-8" %>
+
 <%     
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
     String area       = (String) sesionOk.getAttribute("area_log");
     String id_camion            = request.getParameter("id_camion");
     String id_pedido            = request.getParameter("id_pedido");
     
+     ResultSet rs, rs2, rs3, rs4, rs_c ;
+        Statement st,  st2,st3,st4,st_c  ;
+        st=connection.createStatement();
+        st2=connection.createStatement();
+        st3=connection.createStatement();
+        st4=connection.createStatement();
+        
+        
     JSONObject ob = new JSONObject();
     String area_form="";
     if(area.equals("A")){
@@ -79,20 +79,19 @@
      }
     try 
     {
-        ResultSet rs,rs2,rs3,rs4;
-        rs4 = fuente.obtenerDato("  exec mae_log_stock_pedidos_maehara_3 @tipo=5 ,@id_pedido=0; ");
+        rs4 = st4.executeQuery("  exec mae_log_stock_pedidos_maehara_3 @tipo=5 ,@id_pedido=0; ");
         if(rs4.next())
         {
             
         }
-        rs = fuente.obtenerDato(" exec mae_log_select_reserva_camion_modificacion_cyo @id_camion="+id_camion+"  , @area='"+area_form+"'");
+        rs = st.executeQuery(" exec mae_log_select_reserva_camion_modificacion_cyo2 @id_camion="+id_camion+"  , @area='"+area_form+"'");
      
         while(rs.next())
         {
             grilla_html=grilla_html+rs.getString("tr");
         }
         
-         rs2 = fuente.obtenerDato("  select tipo_huevo "
+         rs2 = st2.executeQuery("  select tipo_huevo "
                 + "     from mae_log_ptc_det_pedidos2 a "
                 + "     inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id where  b.id_camion="+id_camion+" and a.clasificadora='"+area_form+"' "
                 + "     and b.estado=2 group by tipo_huevo");
@@ -108,7 +107,7 @@
             }
             i++;
         }
-        rs3= fuente.obtenerDato("   select sum(cantidad) as cantidad,tipo_huevo from mae_log_ptc_det_pedidos2 where estado=2 and id_cab="+id_pedido+" and u_medida='ENTERO' group by tipo_huevo");
+        rs3= st3.executeQuery("   select sum(cantidad) as cantidad,tipo_huevo from mae_log_ptc_det_pedidos2 where estado=2 and id_cab="+id_pedido+" and u_medida='ENTERO' group by tipo_huevo");
         String grilla_tipos="";
         int c=0;
         while(rs3.next())
@@ -134,7 +133,7 @@
     }
     finally 
     {
-        clases.controles.DesconnectarBD();
+        connection.close();
         out.print(ob);
     }
 %>

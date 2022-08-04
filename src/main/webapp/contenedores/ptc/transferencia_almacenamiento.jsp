@@ -3,29 +3,20 @@
     Created on : 26/05/2020, 07:55:33 AM
     Author     : hvelazquez
 --%>
- <%@page import="clases.fuentedato"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<jsp:useBean id="fuente2" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../versiones.jsp" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include  file="../../consultas/consulta_gen_options.jsp" %>
+<%    String area = (String) sesionOk.getAttribute("clasificadora");
 
-<% 
-    String area = (String) sesionOk.getAttribute("clasificadora");
-    clases.controles.VerificarConexion();
-    fuente2.setConexion(clases.controles.connectSesion);
-    ResultSet rs_chofer, rs_camion;
- 
-     String version=contenedores_ptc_transferencia_almacenamiento;
-     String version_desc=desc_contenedores_ptc_transferencia_almacenamiento;
+    String version = contenedores_ptc_transferencia_almacenamiento;
+    String version_desc = desc_contenedores_ptc_transferencia_almacenamiento;
 
-       %>
-  <head>  
-      <label  ><b></b></label>
+%>
+<head>  
+<label  ><b></b></label>
 <div class="float-right d-none d-sm-inline-block" href="#" id="contenido_version"
      data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')" >
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')" >
     <label neme="label_contenido" id="label_contenido" ><%=version%></label>  
 </div>
 </head>
@@ -63,30 +54,12 @@
     </div> </div>
 <select style=" font-weight: bold" class="form-control" name="cbox_chofer" id="cbox_chofer">
     <option style=" font-weight: bold" value="-" selected="selected" >  CHOFER </option>
-    <% 
-                     
-              rs_chofer = fuente2.obtenerDato(" select code,name from maehara.dbo.[@CHOFERES] with(nolock) order by 2 ");
-while(rs_chofer.next()){ 
-    %>
-    <OPTION VALUE="<%=rs_chofer.getString("code")%>-<%=rs_chofer.getString("name")%>"> <%=rs_chofer.getString("name")%> </OPTION><%
-     }
-    rs_chofer.close();%>
+    <%=option_choferes2%>
 </select>  
 <span class="input-group-addon">-</span>
 <select class="form-control" name="cbox_camion" id="cbox_camion">
     <option style=" font-weight: bold" selected="selected"  value="-" >  CAMION </option>
-    <%
-                    
-rs_camion = fuente2.obtenerDato("select code,name from maehara.dbo.[@CAMIONES] ");
-while(rs_camion.next()){ 
-      
-String camion_1=rs_camion.getString("code");
-String camion_2=rs_camion.getString("name");
-    %><OPTION VALUE="<%=camion_1%>-<%=camion_2%>"><%=camion_1%>- <%=camion_2%> </OPTION><%
-}
-              
-        %>
-
+    <%=option_camiones2%>
 </select>
 <br>
 <br>
@@ -168,9 +141,3 @@ String camion_2=rs_camion.getString("name");
                 </tbody>
             </table>                      
         </div> </div> </div> 
-   <%
-        clases.controles.DesconnectarBDsession();
-%>
-      
-
-

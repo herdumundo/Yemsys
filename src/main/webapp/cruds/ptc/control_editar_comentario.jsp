@@ -10,6 +10,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
  
     <%
+        
+                if (sesion == true) {
+
         JSONObject ob = new JSONObject();
         ob=new JSONObject();
         clases.controles.VerificarConexion();
@@ -20,6 +23,7 @@
         PreparedStatement ps2 = controles.connectSesion.prepareStatement("update  lotes set comentario='"+comentario+"',liberado_por='"+liberado_por+"' where cod_interno='"+cod_lote+"'");
         ps2.executeUpdate(); 
         ob.put("mensaje", "MODIFICADO CON EXITO.");
-        out.print(ob);
+        out.print(ob);}
+                
          %>
          

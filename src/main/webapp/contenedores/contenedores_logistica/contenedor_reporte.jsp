@@ -1,4 +1,5 @@
 <%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
 
 <%
     String version =  contenedores_logistica_contenedor_reporte;

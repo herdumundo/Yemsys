@@ -34,12 +34,12 @@
                  + "       "
                  + "      B.AvgPrice ,B.ItmsGrpCod "
                  + "    from  "
-                 + "        maehara.dbo.itt1 A  "
-                 + "        INNER JOIN  maehara.dbo.OITM B ON A.CODE=B.ItemCode "
+                 + "        maehara.dbo.itt1 A with (nolock) "
+                 + "        INNER JOIN  maehara.dbo.OITM B with (nolock) ON A.CODE=B.ItemCode "
                  + "    WHERE  "
                  + "        FATHER='"+father+"'  ");
 
-        cabecera = " <table id='tb_formulacion' class=' table-bordered compact' style='width:100%'>"
+        cabecera = " <table id='tb_formulacion' class=' table-bordered compact display' style='width:100%'>"
                 + "<thead>"
 
                 + ""
@@ -60,7 +60,7 @@
                     + "<tr > "
                     + "<td style=\"font-weight:bold\" >   " + rs_GM.getString("Code") + "</td>"
                     + "<td style=\"font-weight:bold\">   " + rs_GM.getString("ItemName") + "</td>"
-                    + "<td  class='single_line2 only'   style=\"font-weight:bold\" id=\""+rs_GM.getString("Code")+"\" "
+                    + "<td  class='single_line2 only '   style=\"font-weight:bold\" id=\""+rs_GM.getString("Code")+"\" "
                     + " contenteditable=\"true\" estado=\"NEUTRO\"  "
                      + "costo=\""+rs_GM.getString("AvgPrice").trim()+"\" "
                     + "grupo=\""+rs_GM.getString("ItmsGrpCod").trim()+"\"    "

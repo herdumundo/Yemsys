@@ -9,7 +9,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
+<%
+        if (sesion == true) {
+    
     String grilla = request.getParameter("json_string");
     String fecha_solicitud = request.getParameter("fecha_solicitud");
     String recomendado = request.getParameter("recomendado");
@@ -29,7 +31,7 @@
     String mensaje = "";
     JSONObject ob = new JSONObject();
     ob = new JSONObject();
-   
+    
         ObjectMapper mapper = new ObjectMapper();
         solicitud_mtp[] pp1 = mapper.readValue(grilla, solicitud_mtp[].class);
 
@@ -51,7 +53,7 @@
                     mtp.codigo_mtp,
                     mtp.descripcion,
                     mtp.cantidad_nueva.trim() ,
-                    mtp.cantidad_actual,
+                    mtp.cantidad_actual.trim(),
                     mtp.costo.trim() ,
                     mtp.grupo
             );
@@ -82,15 +84,15 @@
         mensaje = callableStatement.getString("mensaje");
 
         ob.put("mensaje", mensaje);
-        ob.put("tipo_respuesta", tipo_respuesta);
+        ob.put("tipo_respuesta",tipo_respuesta);
         if (tipo_respuesta == 0) 
         {
             connection.rollback();
         } 
         else
         {
-         connection.commit();
-            //   connection.rollback();
+            connection.commit();
+           //  connection.rollback();
         }
     } 
     catch (Exception e) 
@@ -103,5 +105,5 @@
     {
         connection.close();
         out.print(ob);
-    }
+    }}
 %> 

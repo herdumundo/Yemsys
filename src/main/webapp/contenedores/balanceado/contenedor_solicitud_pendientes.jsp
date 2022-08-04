@@ -22,11 +22,7 @@
         rs = ps.executeQuery();
         int verifi=0;
 %>
-<style>
- 
 
-    tr:hover {color:#ffffff ; background-color: #001940;}
-</style>
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
@@ -47,7 +43,7 @@
  
 
  
-        <table  class=' table-bordered compact' style='width:100%'>
+        <table id="example" class=' table-bordered compact hover' style='width:100%'>
             <thead>
             <th>Nro.</th>
             <th>Fecha de registro</th>
@@ -59,6 +55,12 @@
             <th>Toneladas</th>
             <th>Estado</th>
             <th>Verificación</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
              
             </thead>
             <tbody>
@@ -79,6 +81,7 @@
                     <td><input type="button" value="Editar"    class="bg-black" onclick="editar_solicitud_bal(<%=rs.getString("id")%>,2)"> </td><!-- 1= ESTADO PARA QUE VUELVA A ESTADO PENDIENTE DE APROBACION GERENCIA -->
                     <td><input type="button" value="Aprobar"    class="bg-success" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,1)"> </td>
                     <td><input type="button" value="Cancelar"   class="bg-danger" onclick="acepCance_solicitud_bal(<%=rs.getString("id")%>,4)"> </td>
+                    <td><input type="button" value="Dar baja"   class="bg-primary" onclick="baja_pedido_bal(<%=rs.getString("id")%>)"> </td>
                  </tr>
                   <%verifi++; } %>
             </tbody>
@@ -113,3 +116,13 @@
     } finally {
         connection.close();
     }%>
+    
+    
+    <style>
+ 
+
+table#example. tbody tr:hover {
+  background-color: #ffa;
+}
+ 
+</style>

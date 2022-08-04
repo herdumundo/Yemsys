@@ -1,48 +1,52 @@
-  <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="clases.controles"%>
-  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
-      <%
-       try {
-    String area_registro = (String) sesionOk.getAttribute("clasificadora"); 
-        String area_format=    (String) sesionOk.getAttribute("area_fallas");
-        
-        controles.VerificarConexion();
-        
-        Connection cn = controles.connectSesion;
-        fuente.setConexion(cn);  
-        String fecha="";//CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-        String indate="";//CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-        
-        ResultSet rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
-       while(rs.next()){     
-        fecha=rs.getString(1);
-        indate=rs.getString(2);
+<%@include  file="../../cruds/conexion.jsp" %>
+<%          try {
+        String area_registro = (String) sesionOk.getAttribute("clasificadora");
+        String area_format = (String) sesionOk.getAttribute("area_fallas");
+        Statement stmt, stmt1, stmt2, stmt3;
+        ResultSet rs, rs1, rs2, rs3;
+
+        String fecha = "";//CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
+        String indate = "";//CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
+        stmt = connection.createStatement();
+        rs = stmt.executeQuery("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
+
+        stmt1 = connection.createStatement();
+        rs1 = stmt1.executeQuery("select * from fallas with(nolock) where area in ('ccho','" + area_format + "') and tipo in ('rep') and estado='A'");
+
+        stmt2 = connection.createStatement();
+        rs2 = stmt2.executeQuery("select * from fallas with(nolock) where area in ('ccho','" + area_format + "') and tipo in ('rot', 'ROS') and estado='A'");
+
+        stmt3 = connection.createStatement();
+        rs3 = stmt3.executeQuery("select * from fallas  with(nolock) where area in ('ccho','" + area_format + "') and tipo in ('sub') and estado='A'");
+
+        if (rs.next()) {
+            fecha = rs.getString(1);
+            indate = rs.getString(2);
         }
- 
-     String version= contenedores_mis_contenedor_registro;
-        String version_desc= desc_contenedores_mis_contenedor_registro;
-     %> 
- <head>   
+
+        String version = contenedores_mis_contenedor_registro;
+        String version_desc = desc_contenedores_mis_contenedor_registro;
+%> 
+<head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','<%=version_desc%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
     <label > <%=version%></label>  
 </div>
 </head>
 <div class="col-lg-20 ">
-<div class="position-relative p-3 bg-navy"  >
-<div class="ribbon-wrapper">
-<div class="ribbon bg-warning">
-MIS
-</div>
-</div>
-    <center><b>REGISTRO DE ROTOS, SUBPRODUCTOS Y REPROCESOS</b></center>
-</div>
-   </div>  <br>         
- <form method="post"   id="form-reprocesos">
+    <div class="position-relative p-3 bg-navy"  >
+        <div class="ribbon-wrapper">
+            <div class="ribbon bg-warning">
+                MIS
+            </div>
+        </div>
+        <center><b>REGISTRO DE ROTOS, SUBPRODUCTOS Y REPROCESOS</b></center>
+    </div>
+</div>  <br>         
+<form method="post"   id="form-reprocesos">
     <input id="id_date" name="id_date"  type="hidden"     value="<%=indate%>"   />
     <input id="id_clasificadora" name="id_clasificadora"   type="hidden"   value="<%=area_registro%>"   />
     <div class="input-group">
@@ -67,11 +71,11 @@ MIS
     <div class="form-group">
         <div class="input-group">
             <input name="cod_carrito" id="cod_carrito" type="number"  autocomplete="off"  class="form-control" placeholder="Codigo carrito,Mesa,Pallet" required   >
-        <span class="input-group-addon">-</span>
+            <span class="input-group-addon">-</span>
             <div class="input-append">  
                 <select class="form-control" name="unidad_medida" id="unidad_medida"  onchange="limpiar_cantidad()" > </select>
             </div>
-         </div>
+        </div>
     </div>
     <br>
     <div class="form-group">
@@ -79,20 +83,20 @@ MIS
             <b>   Cantidad</b>
             <input name="txt_cantidad" id="txt_cantidad" style="display: none"  type="text"   class="form-control"   >
         </div>
-       
+
         <div class="input-group" style="display: none" id="div_kgramos">
             <input name="txt_kg" id="txt_kg"  type="number" class="form-control"  placeholder="KILOGRAMOS"  >
             <span class="input-group-addon">-</span>
             <input name="txt_gramos" id="txt_gramos"   type="number" class="form-control"  placeholder="GRAMOS"  >
         </div>
-        
+
         <div class="input-group" id="div_cant_plancha">
             <input name="txt_plancha" id="txt_plancha"  type="number" class="form-control"  placeholder="PLANCHAS" onkeyup="calculo()">
             -<input name="txt_unidad" id="txt_unidad"  type="number" class="form-control"  placeholder="UNIDADES" onkeyup="calculo()">
-          <span class="input-group-addon">-</span>
+            <span class="input-group-addon">-</span>
         </div> 
     </div>
-     
+
     <div class="form-group">
         Hora inicial
         <div class="input-group">
@@ -294,38 +298,38 @@ MIS
     <div class="input-group" id="div_aviarios">
         <input   type="checkbox" class="checkbox"    data-toggle="toggle" data-on="NO APLICA"     data-off="APLICA"   id="chkToggle_aviario"   data-onstyle="success" data-offstyle="warning">
         <select  name="cbox_aviarios"   id="cbox_aviarios" class="form-control"  multiple="multiple"  style="height: 20%"  required>
-                    
+
         </select>
     </div>
     <div class="form-group" id="div_grupo_aviario_almacenamiento" style="display: none">
         <div class="input-group">
             <select class="form-control"   name="tipo_aviario" id="tipo_aviario" required >
-                 <OPTION VALUE="M">M</OPTION>
-             </select>   
+                <OPTION VALUE="M">M</OPTION>
+            </select>   
             <span class="input-group-addon">-</span>
         </div> 
     </div>    
     <div id="div_reproceso_liberado" style="display:none">
         <select class="form-control" name="cbox_reproceso" id="cbox_reproceso">
             <OPTION value="" selected >Tipo de reproceso</OPTION>
-            <%   ResultSet rs1 = fuente.obtenerDato("select * from fallas with(nolock) where area in ('ccho','"+area_format+"') and tipo in ('rep') and estado='A'");
-            while(rs1.next()){  %>
+                <%
+                while (rs1.next()) {%>
             <OPTION VALUE="<%=rs1.getString("codigo")%>"><%=rs1.getString("desfallazona")%></OPTION> <% }%>
         </select>   
     </div>
     <div id="div_sub_liberado" style="display:none">
         <select class="form-control" name="cbox_sub" id="cbox_sub">
             <OPTION value="" selected>Tipo de subproducto</OPTION>
-            <% ResultSet rs3 = fuente.obtenerDato("select * from fallas  with(nolock) where area in ('ccho','"+area_format+"') and tipo in ('sub') and estado='A'");
-            while(rs3.next()){ %>
+                <%
+                while (rs3.next()) {%>
             <OPTION VALUE="<%=rs3.getString("codigo")%>"><%=rs3.getString("desfallazona")%></OPTION> <% }%>
         </select>   
     </div>
     <div id="div_zona_liberado" style="display:none">
         <select class="form-control" name="cbox_zona_liberado" id="cbox_zona_liberado">
             <OPTION value="" selected >Zona</OPTION>
-            <%  ResultSet rs2 = fuente.obtenerDato("select * from fallas with(nolock) where area in ('ccho','"+area_format+"') and tipo in ('rot', 'ROS') and estado='A'");
-                while(rs2.next()){ %>
+                <%
+                while (rs2.next()) {%>
             <OPTION VALUE="<%=rs2.getString("codigo")%>"><%=rs2.getString("desfallazona")%></OPTION> <% }%>
         </select>   
     </div>
@@ -335,16 +339,19 @@ MIS
             <input name="txt_responsable" style="text-transform: uppercase;" autocomplete="off" id="txt_responsable" type="text" class="form-control" placeholder="Responsable">
         </div>  
     </div>   
-        
+
     <input name="txt_obs" style="text-transform: uppercase;" id="txt_obs" type="text" autocomplete="off"    class="form-control" placeholder="Comentario">
     <br><br>
     <input name="text_resultado"    id="text_resultado" type="hidden"   lass="form-control">
     <input type="submit" value="Registrar" id="btn_registrar" name="btn_registrar" class="form-control btn btn-primary "    />
     <br> <br> <br>
 </form> <%
-        clases.controles.DesconnectarBDsession();
- 
-          } catch (Exception e) {
-               String s=e.getMessage();
-           }
-           %>
+       
+
+    } catch (Exception e) {
+        String s = e.getMessage();
+    }
+finally{
+connection.close();
+            }
+%>

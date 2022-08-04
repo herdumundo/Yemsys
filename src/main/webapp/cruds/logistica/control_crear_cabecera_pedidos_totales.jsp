@@ -11,7 +11,11 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 
-<%    clases.controles.connectarBD();
+<% 
+          if (sesion == true) {
+  
+    
+    clases.controles.connectarBD();
     JSONObject ob = new JSONObject();
     ob = new JSONObject();
      String tipo_huevo = request.getParameter("tipo_huevo");
@@ -49,5 +53,5 @@
         ob.put("mensaje", mensaje);
         ob.put("tipo_respuesta", tipo_respuesta);
         out.print(ob);
-    }
+    }}
 %>

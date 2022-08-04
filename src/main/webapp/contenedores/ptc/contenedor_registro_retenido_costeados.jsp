@@ -1,22 +1,9 @@
- <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
-  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
-<!--<link href="estilos/css/styles_loading.css" rel="stylesheet">-->
-      <%   
-          ResultSet rs,rs2,rs3; 
-          String fecha_clasificacion="";
-        clases.controles.connectarBD();  
-        Connection cn = clases.controles.connect;
-    try {
-            
-     
-        fuente.setConexion(cn);           //CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-         rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
-        while(rs.next()){          
-            fecha_clasificacion=rs.getString(1);
-        }   
-     String version=clases.versiones.contenedores_ptc_contenedor_registro_retenido_costeados;
-
-       %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../consultas/ptc/consulta_gen_options_disposicion.jsp" %>      
+<%   
+    String version= contenedores_ptc_contenedor_registro_retenido_costeados;
+%>
     <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
@@ -39,7 +26,7 @@ PTC
             <div class="input-group">
                 <div class="form-groupss " >
                     <b>Fecha de clasificación</b>
-                    <input style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker"    value="<%=fecha_clasificacion%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"  />
+                    <input style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker"    value="<%=fecha_hora%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"  />
                 </div>
                 <input type="checkbox"  data-toggle="toggle"    data-on="BORROSO SI"    data-off="BORROSO NO"   id="chkToggle2"             data-onstyle="success" data-offstyle="warning"  class="checkbox">
                 <input type="checkbox"  data-toggle="toggle"    data-on="ESPECIAL SI"   data-off="ESPECIAL NO"  id="chkToggle_especial"     data-onstyle="primary" data-offstyle="danger"   class="checkbox">
@@ -72,7 +59,7 @@ PTC
                 </select>   
                 <span class="input-group-addon">-</span>
                 <div class="input-append">  
-                    <input style="font-weight: bold;" id="fecha_puesta" class="datepicker" name="fecha_puesta"   width="276" value="<%=fecha_clasificacion%>" placeholder="Fecha puesta" required="" />
+                    <input style="font-weight: bold;" id="fecha_puesta" class="datepicker" name="fecha_puesta"   width="276" value="<%=fecha_hora%>" placeholder="Fecha puesta" required="" />
                 </div>
           
                 <span class="input-group-addon">-</span>
@@ -145,7 +132,7 @@ PTC
             <br>
             <div class="input-group">
                 <b>   Fecha final de clasificacion</b>
-                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_clasificacion%>" onchange="validar_fechaInicial_fechaFinal()" >
+                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_hora%>" onchange="validar_fechaInicial_fechaFinal()" >
             </div>
             <br>
             <div class="input-group">
@@ -193,10 +180,7 @@ PTC
                 <span class="input-group-addon">- </span>
                 Motivo de retencion
                 <select style="font-weight: bold;" class="form-control" name="motivo_retencion"  multiple="multiple"  id="motivo_retencion" required="true" >
-                    <%  
-                    rs2 = fuente.obtenerDato("select * from motivo_retencion where tipo='motivo'");
-                    while(rs2.next()){   %>    
-                    <OPTION style="font-weight: bold;" VALUE="<%=rs2.getString("descripcion")%>"><%=rs2.getString("descripcion")%></OPTION> <% }  %>  
+                    <%=option_motivo_retencion%>  
                 </select>  
             </div> 
         </div>   
@@ -204,9 +188,7 @@ PTC
         <div class="input-append">  
             <select  style="font-weight: bold;" class="form-control" required="true" name="disposicion" id="disposicion"  onchange="ver_div()" >
                 <OPTION style="font-weight: bold;" selected disabled value="">Disposición</OPTION>
-                <%   rs3 = fuente.obtenerDato(" select * from motivo_retencion where tipo='disposicion'");
-                while(rs3.next())   { %>    
-                <OPTION style="font-weight: bold;" VALUE="<%=rs3.getString("id")%>"><%=rs3.getString("descripcion")%></OPTION>  <%}%>  
+                    <%=option_disposicion%>  
             </select>   
         </div> 
         <br>
@@ -222,11 +204,4 @@ PTC
         <input style="font-weight: bold;" type="submit" value="Registrar" id="btn_registrar" name="btn_registrar"  class="form-control btn btn-primary " style="  height:70px"   />
         <br> 
     </form> 
-            
-            <% 
-          } catch (Exception e) {
-        }
-finally{
- clases.controles.DesconnectarBD(); 
-}
-      %>
+          

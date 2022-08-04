@@ -1,7 +1,10 @@
-   <% 
-     String version=clases.versiones.contenedores_embarque_contenedor_reporte_embarque;
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+   
+<% 
+     String version=contenedores_embarque_contenedor_reporte_embarque;
      
- %>  
+%>  
   <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" 

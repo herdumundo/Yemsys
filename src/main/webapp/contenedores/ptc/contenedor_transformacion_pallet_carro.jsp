@@ -1,7 +1,8 @@
-   <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_reporte_mixtos_variable;
-
-       %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<% 
+    String version= contenedores_ptc_contenedor_reporte_mixtos_variable;
+%>
     <head>  
       <label  ><b></b></label>
 <div class="float-right d-none d-sm-inline-block" href="#" id="contenido_version"

@@ -4,7 +4,9 @@
 <%@include file="../../chequearsesion.jsp" %>
 <%@include file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
+<%  
+            if (sesion == true) {
+
     String id_pedido = request.getParameter("id_pedido");
     String verificar = request.getParameter("verificar");
     String usuario = (String) sesionOk.getAttribute("nombre_usuario");
@@ -46,7 +48,7 @@
 
         connection.close();
         out.print(ob);
-    }
+    }}
 %>
 
 

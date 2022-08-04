@@ -11,7 +11,8 @@
 
 <%@include  file="../../chequearsesion.jsp" %>
 <%
-    
+          if (sesion == true) {
+  
     clases.controles.VerificarConexion();
     Connection cn = clases.controles.connectSesion;
     fuente.setConexion(cn);
@@ -75,4 +76,5 @@
               }    
                 cn.close();
                  out.print(ob);
+          }
               %>

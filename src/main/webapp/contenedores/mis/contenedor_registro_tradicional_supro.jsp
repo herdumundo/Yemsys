@@ -1,19 +1,19 @@
-<%@page import="clases.controles"%>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
-<%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 
 <%
     String area_registro = (String) sesionOk.getAttribute("clasificadora");
     String area_format = (String) sesionOk.getAttribute("area_fallas");
-    controles.VerificarConexion();
-    Connection cn = controles.connectSesion;
-    fuente.setConexion(cn);           //CAMBIAR BASE DE DATOS                                                                                                                                                                                                                                                                                                                                                                                                                //CAMBIAR BASE DE DATOS       
-    ResultSet rs = fuente.obtenerDato("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
-    while (rs.next()) {
-        String version = contenedores_subproducto_tradicional;
-        String version_desc = desc_contenedores_subproducto_tradicional;
+    Statement stmt, stmt1, stmt2, stmt3;
+    ResultSet rs, rs1, rs2, rs3;
+
+    stmt = connection.createStatement();
+    rs = stmt.executeQuery("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
+   String version = contenedores_subproducto_tradicional;
+        String version_desc = desc_contenedores_subproducto_tradicional;     
+        while (rs.next()) {
+     
 %> 
 <head>   
 <label  ><b></b></label> 
@@ -103,5 +103,5 @@
 </div>
 
 <%
-    clases.controles.DesconnectarBDsession();
+    connection.close();
 %>

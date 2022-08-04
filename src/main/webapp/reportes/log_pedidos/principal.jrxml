@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cfafee4-c6f3-4b74-b55e-796f84763d49">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.String">
@@ -30,11 +30,14 @@
 	<title>
 		<band height="268" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="22" width="100" height="20" uuid="0fc9ca5f-469d-4090-aa92-aae9889c81d9"/>
+				<reportElement x="0" y="19" width="100" height="20" uuid="0fc9ca5f-469d-4090-aa92-aae9889c81d9"/>
 				<text><![CDATA[Fecha de registro:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="100" y="0" width="100" height="20" uuid="ab57ca05-7158-4d05-b78c-7634c58eba8a"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -45,28 +48,40 @@
 				<reportElement x="0" y="97" width="100" height="28" uuid="ec7e3f02-75cc-4324-a454-570089d6668b"/>
 				<text><![CDATA[Observacion:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="100" y="97" width="455" height="28" uuid="15d70e13-cfbd-4188-8160-b23b2c2b1160"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{obs}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="47" width="100" height="20" uuid="b8aae6a1-6ae4-41bb-ab0e-dd780df24305"/>
+				<reportElement x="0" y="38" width="100" height="20" uuid="b8aae6a1-6ae4-41bb-ab0e-dd780df24305"/>
 				<text><![CDATA[Camion:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="48" width="100" height="20" uuid="f1b3957f-1295-4a2b-aaf2-da753c80eac7"/>
+				<reportElement x="100" y="39" width="100" height="20" uuid="f1b3957f-1295-4a2b-aaf2-da753c80eac7"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{camion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="72" width="100" height="20" uuid="a2ff2317-ffd4-4ed2-898c-a65dca6c0dad"/>
+				<reportElement x="100" y="57" width="100" height="20" uuid="a2ff2317-ffd4-4ed2-898c-a65dca6c0dad"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{chofer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="22" width="100" height="20" uuid="1490e5f8-1520-4669-9241-16fd68894d3d"/>
+				<reportElement x="100" y="19" width="100" height="20" uuid="1490e5f8-1520-4669-9241-16fd68894d3d"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="73" width="100" height="20" uuid="324b2b67-2297-4caf-aabd-7555f991e494"/>
+				<reportElement x="0" y="58" width="100" height="20" uuid="324b2b67-2297-4caf-aabd-7555f991e494"/>
 				<text><![CDATA[Chofer:]]></text>
 			</staticText>
 			<staticText>
@@ -87,6 +102,17 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enteros.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement x="0" y="77" width="100" height="20" uuid="e576755c-2959-4fd3-894a-8913bfafea27"/>
+				<text><![CDATA[Carros cargados:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="78" width="100" height="20" uuid="5ad247fa-c0ea-4bc7-b944-048b02da2f95"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<summary>

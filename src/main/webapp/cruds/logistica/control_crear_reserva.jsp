@@ -12,12 +12,16 @@
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Connection"%>
-<%@ page session="true" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
-     JSONObject ob = new JSONObject();
+<%  
+    
+    
+          if (sesion == true) {
+
+        
+    JSONObject ob = new JSONObject();
     ob = new JSONObject();
     String id_camion = request.getParameter("id_camion");
     String fecha_puesta = request.getParameter("fecha_puesta");
@@ -79,4 +83,6 @@
         ob.put("carros_excedentes", carros_excedentes);
         out.print(ob);
     }
+    
+ }
 %>

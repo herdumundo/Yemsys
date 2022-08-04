@@ -5,17 +5,22 @@
 <%@page import="java.util.*"%>
 <%@page import="net.sf.jasperreports.engine.*"%>
 <%@page import="net.sf.jasperreports.view.JasperViewer"%>
-<%@include  file="../../chequearsesion.jsp" %>
-<%      //String usuario       = (String) sesionOk.getAttribute("usuario");
-        String clasificadora = (String) sesionOk.getAttribute("clasificadora");
+<%@include  file="../../chequearsesion_reporte.jsp" %>
+<%@include file="../../cruds/conexion.jsp" %>
+
+<%     
+    
+try 
+    {
+        if(sesion==true)
+        {        String clasificadora = (String) sesionOk.getAttribute("clasificadora");
         String calendario = request.getParameter("calendario_reporte_clasificados");
-        clases.controles.connectarBD();  
-        Connection con = clases.controles.connect; 
+      
         File reportfile = new File (application.getRealPath("reportes/ptc/Reportes_CCH/HuevosClasificados.jasper"));
         Map<String,Object> parameter = new HashMap<String,Object>();
         parameter.put("Fecha_Clasificacion",new String(calendario));
         parameter.put("Clasificadora",new String(clasificadora));
-        byte [] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, con);
+        byte [] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
         response.setContentType("application/pdf");
         response.setContentLength(bytes.length);
         ServletOutputStream outputstream = response.getOutputStream();
@@ -23,8 +28,16 @@
         
         outputstream.flush();
         outputstream.close();
-        con.close();
-        controles.DesconnectarBD();
-        
+          }
+    
+    } 
+    catch (Exception e) 
+    {
+        String efd=e.toString();
+    } 
+    finally 
+    {
+        connection.close();
+    }    
     %>
          

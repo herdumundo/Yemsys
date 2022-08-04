@@ -7,7 +7,11 @@
 <%@page import="net.sf.jasperreports.engine.*"%>
 <%@page import="net.sf.jasperreports.view.JasperViewer"%>
 <jsp:useBean id="conexion" class="clases.ConnectionSqlServer" scope="page" />
+<%@include  file="../../chequearsesion_reporte.jsp" %>
+
 <%
+    if(sesion==true)
+        {
     try 
     {
         clases.controles.connectarBD();
@@ -35,4 +39,6 @@
     } finally {
         clases.controles.DesconnectarBD();
     }
+    
+}
 %>

@@ -215,8 +215,7 @@ function boton_atras()
                 ir_transferencias_subproductos_mis();
                 li_active_menu("sub_transfe_sub_mis");
                 break;
-
-            case "#misPendientesAlimen":
+             case "#misPendientesAlimen":
                 ir_informe_pendientes_alimentacion_mis();
                 li_active_menu("sub_pendiente_alimentar_mis");
                 break;
@@ -326,11 +325,20 @@ function ir_permisos_roles()
             cargar_permisos_roles();
             cerrar_load();
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
 
+function recargar_pagina(){
+                     location.reload();
+
+}
 function cargar_permisos_roles()
 {
     $.ajax({
@@ -355,7 +363,12 @@ function cargar_permisos_roles()
 
 
 
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
 
     });
 
@@ -381,7 +394,12 @@ function obtener_permisos_habilitados_roles()
              categoryvalue = $(".getCategory option:selected").text();
              alert(categoryvalue);
              });*/
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -432,7 +450,12 @@ function registrar_agregar_permisos()
 
 
                     }
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
 
             });
         }
@@ -681,3 +704,47 @@ function cargar_datos_modal_version(ribbon, titulo, descripcion)
     
     
 }   
+
+function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,datatable){
+     window.location.hash =hash;
+    var cal=calendario_formato;
+    var dat=datatable;
+    $.ajax({
+        type: "POST",
+        url: ruta+pagina,
+        beforeSend: function() 
+        {
+            cargar_load();
+            $("#contenedor_principal").html("");
+        },           
+        success: function (res) 
+        {
+            $("#contenedor_principal").html(res);
+            if(cal!=="FALSE")
+            {
+                cargar_estilo_calendario_global(calendario_formato,max_calendario);
+            }
+            
+            if(dat!=="FALSE")
+            {
+                 $(datatable).DataTable({
+                     paging: false,
+                     "ordering": false,
+                     "language":
+                    {
+                        "sUrl": "js/Spanish.txt"
+                    }
+                 }); 
+            }
+            
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });  
+ }
+ 
+ 

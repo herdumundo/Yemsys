@@ -11,6 +11,9 @@
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
  
         <%
+            
+           if (sesion == true) {
+         
     String usuario                     = (String) sesionOk.getAttribute("user_name");
     controles.VerificarConexion();
     Connection cn = controles.connectSesion;
@@ -25,7 +28,7 @@
             String es=e.toString();
         }
   
-      
+           }
        %>
           
      

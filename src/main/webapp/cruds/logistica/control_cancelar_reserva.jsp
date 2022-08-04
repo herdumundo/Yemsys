@@ -16,7 +16,10 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 
-<%    clases.controles.connectarBD();
+<%   
+            if (sesion == true) {
+
+    clases.controles.connectarBD();
     JSONObject ob = new JSONObject();
     ob = new JSONObject();
     String id_camion = request.getParameter("id_camion");
@@ -40,5 +43,5 @@
         clases.controles.DesconnectarBD();
         ob.put("mensaje", mensaje);
         out.print(ob);
-    }
+    }}
 %>

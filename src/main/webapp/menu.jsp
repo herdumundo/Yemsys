@@ -36,8 +36,8 @@
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
         <link href="plugins/lib/themes/default.css" rel="stylesheet" id="theme_base" />
         <link href="plugins/lib/themes/default.date.css" rel="stylesheet" id="theme_date" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-        <link rel="stylesheet" type="text/css" href="plugins/autoFill.bootstrap4.min.css"/>
+        <link href="plugins/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+         <link rel="stylesheet" type="text/css" href="plugins/autoFill.bootstrap4.min.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/buttons.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/colReorder.bootstrap4.css"/>
         <link href="plugins/dataTables.dateTime.css" rel="stylesheet" type="text/css"/>
@@ -65,7 +65,7 @@
         <link href="plugins/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/parpadeo.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-
+ 
     </head>
     <input type="hidden" id="clasificadora_menu" value="<%=area%>">
 
@@ -373,25 +373,24 @@
             <script src="plugins/dataTables.checkboxes.min.js" type="text/javascript"></script>
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
-            <script src="js/principal.js?v=2.4" type="text/javascript"></script>
-            <script src="js/embarque.js?v=2.4" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=2.4" type="text/javascript"></script>
-            <script src="js/logistica.js?v=2.4" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_aldo.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=2.4" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=2.4" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=2.4" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=2.4" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=2.4" type="text/javascript"></script>
+            <script src="js/principal.js?v=2.7" type="text/javascript"></script>
+            <script src="js/embarque.js?v=2.7" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=2.7" type="text/javascript"></script>
+            <script src="js/logistica.js?v=2.7" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_aldo.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=2.7" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=2.7" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=2.7" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=2.7" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=2.7" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
     </body>
 </html>
-

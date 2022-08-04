@@ -33,7 +33,12 @@ function control_embarque(cbox_chofer, cbox_camion, resultado, calendario, numer
         success: function (data)
         {
             aviso_registro_embarque(data.tipo_respuesta, data.mensaje);
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -69,7 +74,12 @@ function control_sincronizar_lotes() {
         });
         
            
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 function traer_control_embarque(id, calendario)
@@ -102,10 +112,11 @@ function traer_control_embarque(id, calendario)
             });
             $('#txt_lote').val('');
         },
-         error: function (jqXHR, textStatus, errorThrown) {
-             
-            traer_control_embarque(id, calendario);
-        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         
     });
 }
@@ -125,10 +136,11 @@ function registrar_pendientes(cod_lote, tipo, nro_carrito, item_codigo, cantidad
             //  aviso_registro_embarque(data.resultad_final,data.out_cod_lote_rec,data.out_area_rec,data.out_numero_fact_rec,data.nro_embarque);
             //  return data;
         },
-        timeout: 800000,
-        error: function () {
-            //aviso_error_conexion();
-        }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -150,10 +162,11 @@ function eliminar_fila_embarque_pendientes() {
                 table.row($('#row' + id_carro)).remove().draw();
                 calculos_cantidades_grilla();
             },
-            timeout: 800000,
-            error: function () {
-                //aviso_error_conexion();
-            }
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
 
 

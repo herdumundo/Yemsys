@@ -1,11 +1,18 @@
-<%@page import="clases.controles"%>
-<%@page import="java.sql.Connection"%>
+ 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
 <%@page import="net.sf.jasperreports.engine.*"%>
-<%@include  file="../../chequearsesion.jsp" %>
-<%  String clasificadora = (String) sesionOk.getAttribute("clasificadora");
+<%@include  file="../../chequearsesion_reporte.jsp" %>
+<%@include file="../../cruds/conexion.jsp" %>
+
+<% 
+    
+        try 
+    {
+        if(sesion==true)
+        { 
+    String clasificadora = (String) sesionOk.getAttribute("clasificadora");
     String fecha_puesta = request.getParameter("calendario_reporte_carros");
     String estado = request.getParameter("cbox_estado");
     String fecha_clasificacion = request.getParameter("calendario_reporte_clasificacion");
@@ -15,8 +22,7 @@
     String tipo_huevo = request.getParameter("tipo_huevo");
     String clasificacion="";
     
-    clases.controles.connectarBD();  
-    Connection con = clases.controles.connect;
+     
     if(fecha_clasificacion.length()==0)
     {
         clasificacion="0";
@@ -41,13 +47,22 @@
             parameter.put("fecha_clasificacion", clasificacion );
             parameter.put("hora_desde", hora_desde );
             parameter.put("hora_hasta", hora_hasta );
-        byte [] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, con);
+        byte [] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
         response.setContentType("application/pdf");
         response.setContentLength(bytes.length);
         ServletOutputStream outputstream = response.getOutputStream();
         outputstream.write(bytes,0,bytes.length);
         outputstream.flush();
         outputstream.close();
-        con.close();
-        controles.DesconnectarBD();
+         }
+    
+    } 
+    catch (Exception e) 
+    {
+        String efd=e.toString();
+    } 
+    finally 
+    {
+        connection.close();
+    } 
         %>

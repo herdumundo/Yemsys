@@ -8,11 +8,12 @@
 <%@page import="net.sf.jasperreports.view.JasperViewer"%>
 <%@page session="true" %>
 <%@include  file="../../cruds/conexion.jsp" %>
-<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../chequearsesion_reporte.jsp" %>
 <%
     try 
     {
-  
+        if(sesion==true)
+        {
         File reportfile = new File(application.getRealPath("reportes/log_pedidos/log_pedidos_cyo/principal.jasper"));
 
         Map<String, Object> parameter = new HashMap<String, Object>();
@@ -30,7 +31,7 @@
         outputstream.write(bytes, 0, bytes.length);
         outputstream.flush();
         outputstream.close();
-
+        }
     } catch (Exception e) {
 
     } finally {

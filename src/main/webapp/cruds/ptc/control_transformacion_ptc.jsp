@@ -9,7 +9,8 @@
 <%@include  file="../../chequearsesion.jsp" %>
 
 
-<%  
+<%           if (sesion == true) {
+  
     JSONObject ob = new JSONObject();
     ob=new JSONObject();
     clases.controles.connectarBD();  
@@ -39,5 +40,5 @@
                 out.print(ob);
                 cn.close();
                 controles.DesconnectarBD();
-                 
+}     
 %> 

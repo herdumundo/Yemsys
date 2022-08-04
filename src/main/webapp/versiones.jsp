@@ -3,6 +3,7 @@
     Created on : 30-may-2022, 16:41:50
     Author     : hvelazquez
 --%>
+
 <%
     String contenedores_embarque_informe_factura = "0094-PAN-27062022-A";
     String desc_contenedores_embarque_informe_factura = "0094-PAN-27062022-A";
@@ -66,7 +67,11 @@
 
     String contenedores_vista_permisos = "0026-REP-15032022-A";
     String contenedores_ppr_vista_registrar_usuario = "0027-REP-15032022-A";
+    
+    
     String grilla_ppr_grilla_usuarios = "0028-REP-15032022-A";
+    
+    
     String contenedores_ppr_vista_registrar_roles = "0029-REP-15032022-A";
     String grilla_ppr_grilla_rol = "0030-REP-15032022-A";
 

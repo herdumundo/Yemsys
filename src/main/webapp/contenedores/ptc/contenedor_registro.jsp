@@ -1,20 +1,11 @@
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <%@include  file="../../chequearsesion.jsp" %>
-      <%
-         String fecha_clasificacion="";
-         clases.controles.connectarBD();   
-    try {
-            
-         Statement stmt = clases.controles.connect.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT  convert(varchar,getdate(),111) as fecha,REPLACE(CONVERT(VARCHAR(10),  convert(varchar,getdate(),103), 5),'/','') ");
-       
-        while(rs.next())
-        {          
-            fecha_clasificacion=rs.getString(1);
-        }     
-     String version=clases.versiones.contenedores_ptc_contenedor_registro;
-
-       %>
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../consultas/consulta_gen_options.jsp" %> 
+<%
+ String version= contenedores_ptc_contenedor_registro;
+ String usuario = (String) sesionOk.getAttribute("nombre_usuario");
+%>
+ 
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" id="contenido_version"
@@ -38,7 +29,7 @@ PTC
             <div class="input-group">
                 <div class="form-groupss " >
                     <b>Fecha de clasificación inicial</b>
-                    <input type="text" style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker" required   value="<%=fecha_clasificacion%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"/>
+                    <input type="text" style="font-weight: bold;" id="calendario_registro" name="calendario_registro"  class="datepicker" required   value="<%=fecha_hora%>"  onchange=" $('#fecha_clas_final').val($('#calendario_registro').val());validar_fechaInicial_fechaFinal();"/>
  
                 </div>
                 <input type="checkbox"  class="checkbox"  data-toggle="toggle" data-on="BORROSO SI"     data-off="BORROSO NO"   id="chkToggle2"             data-onstyle="success" data-offstyle="warning">
@@ -86,7 +77,7 @@ PTC
                 <div class="input-append">  
                     <div class="form-groupss ">
                         <b>Fecha de puesta</b>
-                        <input style="font-weight: bold;" id="fecha_puesta" name="fecha_puesta" class="datepicker"   width="276" value="<%=fecha_clasificacion%>" placeholder="Fecha puesta"  required="true"/>
+                        <input style="font-weight: bold;" id="fecha_puesta" name="fecha_puesta" class="datepicker"   width="276" value="<%=fecha_hora%>" placeholder="Fecha puesta"  required="true"/>
                     </div>
                 </div>
             </div> 
@@ -143,7 +134,7 @@ PTC
             <br>
              <div class="input-group">
                 <b>   Fecha final de clasificacion</b>
-                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_clasificacion%>" onchange="validar_fechaInicial_fechaFinal()" required >
+                <input type="text" id="fecha_clas_final"  name="fecha_clas_final" class="datepicker" placeholder="FECHA FINAL " value="<%=fecha_hora%>" onchange="validar_fechaInicial_fechaFinal()" required >
             </div>
             <br>
             <div class="input-group">
@@ -208,14 +199,4 @@ PTC
         <br><br> 
     </form> 
             
-            <%
-            
-            
-        } catch (Exception e) {
-        }
-finally{
-clases.controles.DesconnectarBD(); 
-
-}
-            
-            %>
+  

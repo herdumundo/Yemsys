@@ -11,7 +11,8 @@
 
 <%@include  file="../../chequearsesion.jsp" %>
 <%
-    clases.controles.connectarBD();  
+           if (sesion == true) {
+ clases.controles.connectarBD();  
     Connection cn = clases.controles.connect;
     fuente.setConexion(cn);   
     int res_out=4;
@@ -141,4 +142,5 @@
         cn.close();
         controles.DesconnectarBD();
         out.print(ob);  
+           }
 %>   

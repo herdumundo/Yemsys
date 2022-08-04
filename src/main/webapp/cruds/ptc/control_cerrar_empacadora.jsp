@@ -11,7 +11,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%      
-    
+           if (sesion == true) {
+ 
     clases.controles.VerificarConexion();
     Connection cn = clases.controles.connectSesion;            
     fuente.setConexion(cn);
@@ -49,4 +50,4 @@
             
              cn.close();
  
-                out.print(ob); %>
+                out.print(ob); }%>

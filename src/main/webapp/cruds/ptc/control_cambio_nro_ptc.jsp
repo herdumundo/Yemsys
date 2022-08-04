@@ -6,8 +6,12 @@
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="application/json; charset=utf-8" %>
+<%@include  file="../../chequearsesion.jsp" %>
+
 
 <%  
+            if (sesion == true) {
+
     JSONObject ob = new JSONObject();
     ob=new JSONObject();
     clases.controles.VerificarConexion();
@@ -37,5 +41,5 @@
                  ob.put("tipo", tipo);
                 ob.put("mensaje", mensaje); 
                 out.print(ob);
-                 
+            }         
 %> 

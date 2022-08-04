@@ -39,7 +39,7 @@
             
             + " <tr>" 
                 + " <th       style='color: #fff; ' class='bg-dark'  > Fecha puesta  </th>     "
-                + " <th     style='color: #fff; ;font-weight:bold' class='bg-red'>  Tipo  </th>       "
+                + " <th     style='color: #fff; ;font-weight:bold' class='bg-gray'>  Tipo  </th>       "
                 + " <th  style='color: #fff; ' class='bg-dark' >Stock   </th>        <th  style='color: #fff; ' class='bg-dark'>Res</th>"
                 + " <th  style='color: #fff; ' class='bg-dark'>Aceptado   </th>        <th  style='color: #fff; ' class='bg-dark'>Res</th>"
                 + " <th  style='color: #fff; ' class='bg-dark'>Involucrado   </th>        <th  style='color: #fff; ' class='bg-dark'>Res</th>"

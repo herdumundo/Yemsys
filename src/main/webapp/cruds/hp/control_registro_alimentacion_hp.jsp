@@ -9,6 +9,8 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 <%   
+ if (sesion == true) {
+
     String grilla         = request.getParameter("json_string");
     String usuario        = (String) sesionOk.getAttribute("nombre_usuario");
      String clasificadora  = (String) sesionOk.getAttribute("clasificadora");
@@ -70,7 +72,7 @@
         
         clases.controles.DesconnectarBD();
         out.print(ob);
-    }
+    }}
  %>
  
  

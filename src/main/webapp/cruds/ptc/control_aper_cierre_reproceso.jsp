@@ -13,6 +13,8 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 
 <%
+            if (sesion == true) {
+
     clases.controles.VerificarConexion();
     Connection cn = clases.controles.connectSesion;
     fuente.setConexion(cn);
@@ -87,4 +89,5 @@
             ob.put("tipo_respuesta", tipo_respuesta);
         }
         cn.close();
-         out.print(ob);   %>       
+         out.print(ob); 
+            }%>       

@@ -32,7 +32,7 @@
             rs_GM = st.executeQuery(" "
                     + "     select t1.id,convert(varchar,fecha_registro,103) as fecha,cod_formula,usuario, formula,t2.descripcion"
                     + "     from mae_bal_mtp_cab_solicitud t1 inner join mae_bal_estados t2 on t1.estado=t2.id  "
-                    + "     where estado=1  and cod_formula not in ('"+cod_formula+"')   ");
+                    + "     where estado in (1,2,3)  and cod_formula not in ('"+cod_formula+"')   ");
             String tr="<tr style='display:none'><td>"+id+"</td><td>"+desc_formula+"</td><td  colspan='4'><input id='formula_seleccionada' data-formula=\""+cod_formula+"\" data-id_pedido=\""+id+"\" type=\"button\" class=\"form-control  bg-warning\" value=\"Formula seleccionada\"></td>  </tr> ";
             while (rs_GM.next()) 
             {

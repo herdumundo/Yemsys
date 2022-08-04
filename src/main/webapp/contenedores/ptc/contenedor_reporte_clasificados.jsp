@@ -1,5 +1,8 @@
- <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_reporte_clasificados;
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+
+<% 
+     String version= contenedores_ptc_contenedor_reporte_clasificados;
 
        %>
   <head>  

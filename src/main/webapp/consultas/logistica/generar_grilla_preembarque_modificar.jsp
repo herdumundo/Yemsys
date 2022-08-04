@@ -3,24 +3,16 @@
     Created on : 16-sep-2021, 8:37:03
     Author     : hvelazquez
 --%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="clases.controles"%>
-<%@page import="clases.fuentedato"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
-<%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
+<%@include  file="../../cruds/conexion.jsp" %> 
+<%@include  file="../../chequearsesion.jsp" %> 
 <%@page contentType="application/json; charset=utf-8" %>
 
 <%     
-    clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
+    
  try 
  {
     String id_pedido=     request.getParameter("id_pedido");
     
-    ResultSet rs,rs2,rs3;
     String grilla_html="";
     String fp_a="N/A";
     String fp_b="N/A";
@@ -40,7 +32,15 @@
     String style_d="style='display:none'";
     String style_s="style='display:none'";
     String style_j="style='display:none'";
-     rs3 = fuente.obtenerDato("  select min(convert(date,fecha_puesta)) as fecha_puesta ,tipo_huevo ,SUM(cantidad) AS cantidad from [v_mae_log_stock_pedidos_maehara] as cantidad  with(nolock)  group by tipo_huevo  ");
+    
+      ResultSet rs, rs2, rs3, rs4, rs_c ;
+        Statement st,  st2,st3,st4,st_c  ;
+        st=connection.createStatement();
+        st2=connection.createStatement();
+        st3=connection.createStatement();
+        st4=connection.createStatement();
+        
+     rs3 = st3.executeQuery("  select min(convert(date,fecha_puesta)) as fecha_puesta ,tipo_huevo ,SUM(cantidad) AS cantidad from [v_mae_log_stock_pedidos_maehara] as cantidad  with(nolock)  group by tipo_huevo  ");
     
     // mae_log_ptc_reporte_carros_total_min
      while(rs3.next())
@@ -138,7 +138,7 @@
                 + " <th  style='color: #fff; background: black;'>Pal    </th>      <th  style='color: #fff; background: black;'>Cant</th>   <th  style='color: #fff; background: black;'>Res</th>"
             + "</tr>"
             + "</thead> <tbody >";
-      rs = fuente.obtenerDato(" exec mae_log_stock_pedidos_maehara_3 @tipo=4 ,@id_pedido="+id_pedido);
+      rs =  st.executeQuery(" exec mae_log_stock_pedidos_maehara_3 @tipo=4 ,@id_pedido="+id_pedido);
       
       while(rs.next())
         {
@@ -159,7 +159,7 @@
             + "</thead> <tbody > ";
               
         String grilla_html2 ="";  
-         rs2 = fuente.obtenerDato("select cod_carrito,cantidad_caj,clasificadora_actual,convert(varchar,fecha_puesta,103) as fecha_puesta,tipo_huevo "
+         rs2 =  st2.executeQuery("select cod_carrito,cantidad_caj,clasificadora_actual,convert(varchar,fecha_puesta,103) as fecha_puesta,tipo_huevo "
                  + "from v_mae_log_stock_pedidos_maehara_cajones"
                  + " where   "
                  + "    cod_carrito not in (select cod_carrito from  mae_log_ptc_det_pedidos2 with(nolock) where estado in (1,2) and u_medida='MIXTO' and id_cab<>"+id_pedido +"  ) order by 1,4");
@@ -243,6 +243,6 @@
          String s=e.getMessage();
      }
 finally{
-        clases.controles.DesconnectarBD();
+        connection.close();
  }
      %> 

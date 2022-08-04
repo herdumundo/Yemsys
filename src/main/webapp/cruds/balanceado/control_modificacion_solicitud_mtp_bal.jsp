@@ -9,13 +9,14 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%    
+<% 
+            if (sesion == true) {
+
     String grilla = request.getParameter("json_string");
     String id = request.getParameter("id");
     String estado = request.getParameter("estado");
     String fecha_modificacion = request.getParameter("fecha_modificacion");
     String usuario = (String) sesionOk.getAttribute("nombre_usuario");
- 
      
     
     int tipo_respuesta = 0;
@@ -80,7 +81,7 @@
 
         connection.close();
         out.print(ob);
-    }
+    }}
 %>
 
 

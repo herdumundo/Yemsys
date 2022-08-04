@@ -37,8 +37,12 @@ function consulta_lotes_transferencias_reprocesos(carro) {
                 }
             });
             $('#txt_lote').val('');
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -89,8 +93,12 @@ function consulta_lotes_transferencias_subproductos(carro) {
                 }
             });
             $('#txt_lote').val('');
-
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -244,7 +252,12 @@ function confirmar_registro_transfer_mis(valor, pagina) {
                 success: function (data)
                 {
                     aviso_registro_transfer(data.tipo_respuesta, data.mensaje);
-                }
+                },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
             });
 
         }

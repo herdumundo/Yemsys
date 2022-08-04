@@ -5,7 +5,9 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@ page contentType="application/json; charset=utf-8" %>
-<%         
+<%    
+          if (sesion == true) {
+  
      String numero_factura = request.getParameter("nro_factura");
     String area = (String) sesionOk.getAttribute("area_gm");
     int id = Integer.parseInt(request.getParameter("id"));
@@ -29,5 +31,5 @@
         ob = new JSONObject();
         connection.close();
         out.print(ob);
-    }
+    }}
 %>  

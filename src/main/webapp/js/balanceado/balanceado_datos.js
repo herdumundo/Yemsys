@@ -29,7 +29,12 @@ function ir_solCambioFormula_bal()
             })
             cerrar_load();
     
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -66,7 +71,8 @@ function ir_grilla_formulacion_bal()
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
-            $("#tb_formulacion").DataTable({
+            $("#tb_formulacion").DataTable({ 
+                "scrollX": true,
                 paging: false,
                 ordering:false,
                         responsive: true,
@@ -105,7 +111,12 @@ function ir_grilla_formulacion_bal()
             });
             solo_numeros_td();
             get_mtp_bal_select();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -283,6 +294,7 @@ function onblur_nueva_mtp_bal(id)
 }
 
 
+
 function validar_datos_mtp_sol(){
     var cantidad_validada=$("#total_insumos").html();
     var resultado_esperado=$("#resultado_esperado").val();
@@ -388,10 +400,15 @@ function ir_pendientes_solicitud_bal()
         {
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
-            
             cerrar_load();
-            
-        }
+            $('#example').DataTable({"scrollX": true,"ordering": false,"paging": false, "searching": false});
+
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -410,10 +427,14 @@ function ir_pendientes_ger_solicitud_bal()
         {
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
-            
+            $('#example').DataTable({"scrollX": true,"ordering": false,"paging": false, "searching": false});
             cerrar_load();
-            
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -436,7 +457,12 @@ function ir_pendientes_formulas_procesar_bal()
             
             cerrar_load();
             
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -457,7 +483,12 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }
 
@@ -503,7 +534,12 @@ function acepCance_solicitud_bal(id,tipo_operacion)
                         {
                             $("#contenedor_principal").html("");
                         }
-                    }
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
                 });
 
             }
@@ -566,9 +602,6 @@ function control_verificador_gerencia(id) {
 
 
 function ir_informes_formulas_procesar_bal (){
-    
-    
-    
     window.location.hash = "IIFPB";
     $.ajax({
         type: "POST",
@@ -583,8 +616,12 @@ function ir_informes_formulas_procesar_bal (){
             $("#contenedor_principal").html(data);
             cargar_estilo_calendario_global("dd/mm/yyyy",true);
             cerrar_load();
-            
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -592,8 +629,6 @@ function ir_informes_formulas_procesar_bal (){
 
 
 function ir_informes_formulas_procesar_bal2 (desde,hasta){
-      
-    
      $.ajax({
         type: "POST",
         url: ruta_consultas_bal + "consulta_gen_informe.jsp",
@@ -607,8 +642,12 @@ function ir_informes_formulas_procesar_bal2 (desde,hasta){
             $("#div_grilla2").html("");
             $("#div_grilla2").html(data.grilla);
              cerrar_load();
-            
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 
 }
@@ -672,6 +711,11 @@ function ir_pendientes_generados_area()
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
             cerrar_load();
-        }
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
     });
 }

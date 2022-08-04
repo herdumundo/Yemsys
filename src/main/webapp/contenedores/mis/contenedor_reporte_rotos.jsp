@@ -1,7 +1,8 @@
-      
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../chequearsesion.jsp" %>
     
       <% 
-     String version=clases.versiones.contenedores_mis_contenedor_reporte_rotos;
+     String version=contenedores_mis_contenedor_reporte_rotos;
 
       %>
 

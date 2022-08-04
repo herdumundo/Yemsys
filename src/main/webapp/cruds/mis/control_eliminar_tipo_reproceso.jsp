@@ -1,52 +1,42 @@
-<%@page import="clases.controles"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.CallableStatement"%>
-<%@page import="java.sql.PreparedStatement"%>
- <%@page import="java.sql.Connection"%>
-<%@page import="java.sql.ResultSet"%>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
-     <%@include  file="../../chequearsesion.jsp" %>
-
+<%@page import="org.json.JSONObject"%> 
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include file="../../cruds/conexion.jsp" %>
 <%@ page contentType="application/json; charset=utf-8" %>
 
- <%
-     controles.VerificarConexion();
-     Connection cn = controles.connectSesion;
-     // Asignar conexion al objeto manejador de datos
-     fuente.setConexion(cn);   
-     String    id=request.getParameter("id");
-         int tipo_mensaje=0;
-        String mensaje="";
-        String mensaje_impresion="";
-        
-          try {
-            CallableStatement  callableStatement=null;   
+<%     
+    if (sesion == true) 
+    {
+        String id = request.getParameter("id");
+        int tipo_mensaje = 0;
+        String mensaje = "";
+        String mensaje_impresion = "";
 
+        try {
+            CallableStatement callableStatement = null;
             String call_detalle = "{call  pa_eliminar_tipo_reproceso ( ?, ?   )}";
-            callableStatement = cn.prepareCall(call_detalle);
-            callableStatement .setInt(1,Integer.parseInt(id));
-               
+            callableStatement = connection.prepareCall(call_detalle);
+            callableStatement.setInt(1, Integer.parseInt(id));
             callableStatement.registerOutParameter("mensaje", java.sql.Types.INTEGER);
-            
             callableStatement.execute();
             tipo_mensaje = callableStatement.getInt("mensaje");
-            
-            
-             mensaje="REGISTRO ELIMINADO"; 
-             mensaje_impresion="error";
 
-              } 
-          catch (Exception e) {
-                    tipo_mensaje=1;
-                    mensaje=e.toString();
-                    mensaje_impresion="error";
-              }
-                      clases.controles.DesconnectarBDsession();
+            mensaje = "REGISTRO ELIMINADO";
+            mensaje_impresion = "error";
 
-        JSONObject ob = new JSONObject();
-        ob=new JSONObject();
-        ob.put("mensaje", mensaje);
-        ob.put("tipo_mensaje",tipo_mensaje);
-        ob.put("mensaje_impresion",mensaje_impresion);
-        out.print(ob); 
+        } catch (Exception e) {
+            tipo_mensaje = 1;
+            mensaje = e.toString();
+            mensaje_impresion = "error";
+        }
+        finally
+        {
+            connection.close();
+            JSONObject ob = new JSONObject();
+            ob = new JSONObject();
+            ob.put("mensaje", mensaje);
+            ob.put("tipo_mensaje", tipo_mensaje);
+            ob.put("mensaje_impresion", mensaje_impresion);
+            out.print(ob); 
+        }
+    }
 %>     

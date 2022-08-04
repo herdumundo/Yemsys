@@ -1,13 +1,15 @@
   <!DOCTYPE html>
  <%@ page session="true" %>
  <%@include  file="../../chequearsesion.jsp" %>
+ <%@include  file="../../versiones.jsp" %>
+
 <%    
       String clasificadora = (String) sesionOk.getAttribute("clasificadora");
       sesionOk.setAttribute("area",clasificadora);
 %>
 
    <% 
-     String version=clases.versiones.contenedores_ptc_contenedor_informe_huevo_recibido;
+     String version= contenedores_ptc_contenedor_informe_huevo_recibido;
 
        %> 
   <head>  

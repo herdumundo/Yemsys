@@ -59,22 +59,23 @@ function cargar_datos_key_reproceso_alimentacion() {
                     } else {
                         //alert(item.nro_carrito);
                        cargar_grilla_trans_ptc(item.item_codigo, item.nro_carrito, item.cod_lote, item.cantidad, item.fecha_puesta, item.estado, item.id, item.motivo, item.estado_costeo);
-                      
                     }
-
                 });
                  $('#txt_lote').val("");
                  $('#div_cargar').hide();
-               
-
-            }
+            },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
     
 }
 
 function consulta_lotes_procesar(id) {
        
-     try {
+   
          $.ajax({
              type: "POST",
             url: ruta_consultas_ptc+'transferencia_select_procesar.jsp',
@@ -104,16 +105,17 @@ function consulta_lotes_procesar(id) {
                $('#txt_lote').val('');
               //  return data;
              },
-             timeout:10000,
-            error: function () {
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+             else {
                 aviso_error_conexion();
             }
+         }
+            
         });
-   }
-    catch (error) {
-        aviso_error();
-
-    }
+    
 }
 
 function consulta_lotes_transferencias_SC(carro) {
@@ -138,7 +140,12 @@ function consulta_lotes_transferencias_SC(carro) {
             }    );
                $('#txt_lote').val('');
                
-             } 
+             } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
    
 }
@@ -167,7 +174,12 @@ function consulta_lotes_reproceso_alimentacion(carro) {
                  }    );
                 $('#txt_lote').val('');
                 sumar_grilla_reprocesos();   
-            } 
+            } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
 }
 
@@ -418,7 +430,12 @@ function control_transferencia_PTC(valor,tipo_transferencia){
             {
                  aviso_registro_transfer(data.tipo,data.mensaje);
                 return data;
-            } 
+            } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
 }
  
@@ -566,7 +583,12 @@ function confirmar_registro_transfer_SC(valor) {
                 success: function (data) 
             {
                     aviso_registro_transfer(data.tipo_respuesta,data.mensaje)  
-             } 
+             } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
         });
       
         }
