@@ -206,7 +206,7 @@ function ir_registro_sp_tradicional() {
 
 
 function traer_informe_mis() {
-    ir_pagina_generico(ruta_contenedores_mis, "contenedor_informe.jsp","misInforme","dd/mm/yyyy","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis, "contenedor_informe.jsp","misInforme","dd/mm/yyyy",false,"FALSE");
 }
 
 
@@ -232,21 +232,21 @@ function traer_reporte_lotes_mis() {
 }
 function ir_carro_a_mesa() 
 {
-    ir_pagina_generico(ruta_contenedores_mis,'contenedor_carro_mesa.jsp',"misCarroMesa","dd/mm/yyyy","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_carro_mesa.jsp',"misCarroMesa","dd/mm/yyyy",false,"FALSE");
 }
 
 function ir_reporte_rotos_mis()
 {
-    ir_pagina_generico(ruta_contenedores_mis,'contenedor_reporte_rotos.jsp',"ptcReporteRotos","dd/mm/yyyy","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_reporte_rotos.jsp',"ptcReporteRotos","dd/mm/yyyy",false,"FALSE");
 }
 
 function ir_transferencias_reprocesos_mis()
 {
-    ir_pagina_generico(ruta_contenedores_mis,'contenedor_registro_transferencias_reprocesos.jsp',"misTransfeReprocesos","FALSE","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_registro_transferencias_reprocesos.jsp',"misTransfeReprocesos","FALSE",false,"FALSE");
 }
 function ir_transferencias_subproductos_mis()
 {
-    ir_pagina_generico(ruta_contenedores_mis,'contenedor_transferencia_subproducto.jsp',"misTransfeSuproductos","FALSE","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis,'contenedor_transferencia_subproducto.jsp',"misTransfeSuproductos","FALSE",false,"FALSE");
 }
 function ir_informe_pendientes_alimentacion_mis()
 {
@@ -288,7 +288,7 @@ function llenar_grilla_pendientes_alimentacion_mis()
 
 function traer_contendor_pdf_reproceso_mis(pagina)
 {
-    ir_pagina_generico(ruta_contenedores_mis,pagina+'.jsp',"mispdfRep","dd/mm/yyyy","FALSE");
+    ir_pagina_generico(ruta_contenedores_mis,pagina+'.jsp',"mispdfRep","dd/mm/yyyy",false,"FALSE");
 }
 
 function cuadro_registro_mis(id_carrito, nro_carro) {

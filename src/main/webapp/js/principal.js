@@ -705,7 +705,7 @@ function cargar_datos_modal_version(ribbon, titulo, descripcion)
     
 }   
 
-function ir_pagina_generico(ruta,pagina,hash,calendario_formato,datatable){
+function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,datatable){
      window.location.hash =hash;
     var cal=calendario_formato;
     var dat=datatable;
@@ -722,12 +722,19 @@ function ir_pagina_generico(ruta,pagina,hash,calendario_formato,datatable){
             $("#contenedor_principal").html(res);
             if(cal!=="FALSE")
             {
-                cargar_estilo_calendario_insert(calendario_formato);
+                cargar_estilo_calendario_global(calendario_formato,max_calendario);
             }
             
             if(dat!=="FALSE")
             {
-                 $(datatable).DataTable(); 
+                 $(datatable).DataTable({
+                     paging: false,
+                     "ordering": false,
+                     "language":
+                    {
+                        "sUrl": "js/Spanish.txt"
+                    }
+                 }); 
             }
             
             cerrar_load();

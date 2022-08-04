@@ -37,5 +37,5 @@
 
     } catch (Exception e) {
     } finally {
-        connection.close( 
+        connection.close();} 
 %>

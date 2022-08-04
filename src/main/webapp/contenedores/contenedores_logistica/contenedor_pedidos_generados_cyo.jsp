@@ -57,7 +57,7 @@
             + "	sum(c.cantidad) as cantidad, 0 as carro,a.id_camion,a.id_chofer  "
             + "from mae_log_ptc_cab_pedidos a    "
             + "	inner join maehara.dbo.[@CAMIONES] b     on a.id_camion=b.Code collate database_default     and a.estado IN (2)    "
-            + "	inner join mae_log_ptc_det_pedidos2 c on a.id=c.id_cab and c.estado<>4 and c.clasificadora='" + area + "' "
+            + "	inner join mae_log_ptc_det_pedidos2 c on a.id=c.id_cab and c.estado=2 and c.clasificadora='" + area + "' "
              + "group by a.id,a.fecha_registro,code,name,a.id_camion,a.id_chofer ) t "
             + "group by  id,fecha_registro,camion,id_camion,id_chofer "); %>
 

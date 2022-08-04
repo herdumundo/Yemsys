@@ -205,14 +205,15 @@
                 }   
                 else  
                 {
-                      connection.rollback(); 
-                   // connection.commit();
+                  connection.commit();
                 }
                 if(mensaje.equals("DUPLICADO")){
                         tipo_respuesta=2;
                       
                         //CANTIDAD EXCEDIDA
-                        ResultSet consulta_tipos_cargados=  fuente.obtenerDato("exec [mae_ptc_select_tipos_cargados] @cod_carrito='"+nrocarro+"'");
+                        Statement st;
+                        st = connection.createStatement();
+                        ResultSet consulta_tipos_cargados=  st.executeQuery( "exec [mae_ptc_select_tipos_cargados] @cod_carrito='"+nrocarro+"'");
 
                         while (consulta_tipos_cargados.next())
                          {

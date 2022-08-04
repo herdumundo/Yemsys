@@ -119,6 +119,7 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
                     scrollY: "547px",
                     scrollX: "500px",
                     paging: false,
+                    "ordering": false,
                     "language":
                     {
                         "sUrl": "js/Spanish.txt"
@@ -817,7 +818,7 @@ function registrar_pedido_mod_cyo()
     var textos = document.querySelectorAll("[texto]");
     validacion_carros = 0;
     var cantidad_excedida_celda = false;
-    var editables = document.querySelectorAll("[contentEditable]");
+    var editables = document.querySelectorAll("[contentEditable=true]");
 
     jsonObj = [];
 

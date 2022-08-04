@@ -6,6 +6,8 @@
  <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="application/json; charset=utf-8" %>
+<%@include  file="../../chequearsesion.jsp" %>
+
 
 <%  
             if (sesion == true) {

@@ -2908,3 +2908,267 @@ function modificar_estado_lote_ppr(lote_id) {
                 }
               });
               }
+              
+              
+ function ir_proyeccion_ppr() 
+{
+    ir_pagina_generico(ruta_vistas_ppr,'contenedor_proyeccion.jsp',"pry1",'yyyy-mm-dd',false,"#example");
+    
+ }
+
+
+
+
+
+function grafico_proyeccion_ppr(id,aviario,nacimiento,produccion,predescarte,lote,raza) {
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry1.jsp",
+        data: {id: id,aviario:aviario},
+        beforeSend: function (xhr) {
+            cargar_load();
+        },
+        success: function (result)
+        {
+            var c = 0;
+            $.each(result.charts, function (i, item)
+            {
+                var a = '  <div class="card card-navy" >   ';
+                a += '  <div class="card-header"> ';
+                a += '   <h3 class="card-title">Proyeccion aviario - ' + result.charts[c].options.plugins.title.text + '  </h3> <br> '
+                
+               
+                a += '   </div> ';
+               a += ' <table class="table"> <tr> <th> Fecha de nacimiento: '+nacimiento+'  </th><th>  Fecha de produccion: '+produccion+' </th><th> Fecha de predescarte: '+predescarte+'   </th></tr>\n\
+                <tr> <th> Lote: '+lote+'  </th><th>  Raza: '+raza+' </th> </tr></table>  ';
+                a += '  <div class="card-body"><div class="chartjs-size-monitor">\n\
+                        <div div class="chart-container"   ><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div> ';
+                a += '   <canvas id="' + result.charts[c].options.plugins.title.text + '"></canvas>';
+                a += '  </div> ';
+
+
+                $("#cargarzoom").html("");
+
+                $("#cargarzoom").append(a);
+
+
+                var resChart = new Chart(document.getElementById(result.charts[c].options.plugins.title.text), result.charts[c]);
+                c++;
+            });
+            $("#grilla_log").html(result.grilla);
+            cerrar_load();
+        }
+    });
+ 
+
+}
+
+function edit_lote_proyeccion_ppr(id,lote,aviario,aves,nacimiento,produccion,predescarte) {
+ 
+    $("#txt_id").val(id);
+    $("#txt_lote").val(lote);
+    $("#txt_aviario").val(aviario);
+    $("#txt_cantidad_aves").val(aves);
+    $("#txt_fecha_nacimiento").val(nacimiento);
+    $("#txt_fecha_produccion").val(produccion);
+    $("#txt_fecha_predescarte").val(predescarte);
+    $("#modal_upd_user").modal("show");
+   contar_dias_proyeccion_ppr(); 
+}
+
+
+function ajuste_lote_proyeccion_ppr(id,lote,aviario,aves,nacimiento,produccion,predescarte) {
+ 
+    $("#txt_id_ajuste").val(id);
+    $("#txt_lote_ajuste").val(lote);
+    $("#txt_aviario_ajuste").val(aviario);
+    $("#txt_cantidad_aves_ajuste").val(aves);
+    $("#txt_fecha_ajuste").val(produccion);
+   
+    $("#modal_ajuste").modal("show");
+    
+}
+
+
+
+function diferencia_saldo_ajuste_lote_proyeccion_ppr() {
+ 
+    var saldo_actual_fecha  =  $("#txt_cantidad_aves_ajuste").val();
+    var saldo_nuevo         =  $("#txt_nuevo_saldo_ajuste").val();
+  
+    var diferencia=(parseInt(saldo_nuevo)-parseInt(saldo_actual_fecha));
+    $("#txt_cantidad_ajuste").val(diferencia);
+   
+   
+     
+}
+
+
+function sumar_dias_fechas_ppr(fecha_nacimiento){
+    
+    
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry.jsp",
+        data: {fecha_nacimiento: fecha_nacimiento},
+        beforeSend: function (xhr) {
+         },
+        success: function (res)
+        { 
+               $("#txt_fecha_produccion").val(res.fecha_produccion);
+               $("#txt_fecha_predescarte").val(res.fecha_predescarte);
+                $("#label_produccion").html('Fecha de produccion '+res.dias_produccion+' dias');
+               $("#label_predescarte").html('Fecha de predescarte '+res.dias_predescarte+' dias'); 
+        }
+    });
+    
+}
+
+
+
+function sumar_dias_semanas_ajuste_ppr(){
+    
+    var id= $("#txt_id_ajuste").val();
+    var fecha= $("#txt_fecha_ajuste").val();
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_dias_semanas_ajuste.jsp",
+        data: {id: id,fecha:fecha},
+        beforeSend: function (xhr) {
+         },
+        success: function (res)
+        { 
+            $("#txt_cantidad_aves_ajuste").val(res.saldo_ave);
+            $("#label_dias_ajuste").html( res.dias );
+            $("#label_semanas_ajuste").html( res.semanas ); 
+        }
+    });
+    
+}
+
+
+function contar_dias_proyeccion_ppr(){
+   var fecha_nacimiento= $("#txt_fecha_nacimiento").val();
+   var fecha_produccion=  $("#txt_fecha_produccion").val();
+    var fecha_predescarte= $("#txt_fecha_predescarte").val();
+    
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry_2.jsp",
+        data: {fecha_nacimiento: fecha_nacimiento,fecha_produccion:fecha_produccion,fecha_predescarte:fecha_predescarte},
+        beforeSend: function (xhr) {
+         },
+        success: function (res)
+        { 
+               $("#label_produccion").html('Fecha de produccion '+res.dias_produccion+' dias');
+               $("#label_predescarte").html('Fecha de predescarte '+res.dias_predescarte+' dias');
+ 
+        }
+    });
+ 
+    
+}
+
+
+function control_modificar_proyeccion_lote_ppr() {
+   var id=  $("#txt_id").val();
+   var aves= $("#txt_cantidad_aves").val();
+   var nacimiento= $("#txt_fecha_nacimiento").val();
+   var produccion= $("#txt_fecha_produccion").val();
+   var predescarte= $("#txt_fecha_predescarte").val();
+    
+                 $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_ppr + "control_modificar_proyeccion_lote.jsp",
+                    data:{id: id, aves:aves,nacimiento:nacimiento,produccion:produccion,predescarte:predescarte} ,
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: "PROCESANDO!",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+                        });
+                    },
+                    success: function (data) { 
+                        $('.modal-backdrop').remove();
+                        aviso_generico(data.tipo_respuesta, data.mensaje)
+                        if(data.tipo_respuesta==1)
+                        {
+                            $("#contenedor_principal").html("");
+                            ir_proyeccion_ppr();
+                        }      
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+                });        
+            }
+    
+
+
+function control_modificar_proyeccion_lote_ajuste_ppr() {
+   var id               = $("#txt_id_ajuste").val();
+   var fecha_ajuste     = $("#txt_fecha_ajuste").val();
+   var saldo_nuevo      = $("#txt_nuevo_saldo_ajuste").val();
+   var saldo_viejo      = $("#txt_cantidad_aves_ajuste").val();
+   var dia_ajuste       = $("#label_dias_ajuste").html();
+   var semana_ajuste    = $("#label_semanas_ajuste").html();
+   var comentario    = $("#comentario").val();
+    
+    
+    /*
+        String id               = request.getParameter("id");
+        String fecha_ajuste     = request.getParameter("fecha_ajuste");
+        String saldo_nuevo      = request.getParameter("saldo_nuevo");
+        String saldo_viejo      = request.getParameter("saldo_viejo");
+        String dia_ajuste       = request.getParameter("dia_ajuste");
+        String semana_ajuste    = request.getParameter("semana_ajuste");
+   
+     */
+                 $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_ppr + "control_modificar_proyeccion_lote_ajuste.jsp",
+                    data:{  id              : id, 
+                            fecha_ajuste    :fecha_ajuste,
+                            saldo_nuevo     :saldo_nuevo,
+                            saldo_viejo     :saldo_viejo,
+                            dia_ajuste      :dia_ajuste,
+                            comentario      :comentario,
+                            semana_ajuste   :semana_ajuste
+                        } ,
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: "PROCESANDO!",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+                        });
+                    },
+                    success: function (data) { 
+                        $('.modal-backdrop').remove();
+                        aviso_generico(data.tipo_respuesta, data.mensaje)
+                        if(data.tipo_respuesta==1)
+                        {
+                            $("#contenedor_principal").html("");
+                            ir_proyeccion_ppr();
+                        }      
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+                });        
+            }
+    

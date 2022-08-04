@@ -215,8 +215,7 @@
                 }   
                 else  
                 {
-                   //  cn.rollback(); 
-                     cn.commit();
+                      cn.commit();
                 }
                
               }

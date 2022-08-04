@@ -84,7 +84,7 @@
         {
             
         }
-        rs = st.executeQuery(" exec mae_log_select_reserva_camion_modificacion_cyo @id_camion="+id_camion+"  , @area='"+area_form+"'");
+        rs = st.executeQuery(" exec mae_log_select_reserva_camion_modificacion_cyo2 @id_camion="+id_camion+"  , @area='"+area_form+"'");
      
         while(rs.next())
         {

@@ -56,12 +56,12 @@ PTC
              </div> </div>
                 <select style=" font-weight: bold" class="form-control" name="cbox_chofer" id="cbox_chofer">
                 <option style=" font-weight: bold" value="-" selected="selected" >  CHOFER </option>
-                    <%=option_choferes%>
+                    <%=option_choferes2%>
                 </select>  
                 <span class="input-group-addon">-</span>
                 <select class="form-control" name="cbox_camion" id="cbox_camion">
                     <option style=" font-weight: bold" selected="selected"  value="-" >  CAMION </option>
-                     <%=option_camiones%>
+                     <%=option_camiones2%>
                 </select>
            <br>
            <br>

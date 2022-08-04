@@ -8,7 +8,7 @@
 <%@ page contentType="application/json; charset=utf-8" %>
 <%@include  file="../../chequearsesion.jsp" %>
 
-<%          if (sesion == true) {
+<%          if (sesion == true) { 
 
     JSONObject ob = new JSONObject();
     ob=new JSONObject();

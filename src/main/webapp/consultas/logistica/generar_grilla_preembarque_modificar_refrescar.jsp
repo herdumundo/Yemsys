@@ -21,7 +21,7 @@
         String grilla_html = "";
 
         String cabecera = "   "
-                + "<table id='tb_preembarque'  class='display compact' style='width: 20%;'>"
+                + "<table id='tb_preembarque'  class='  compact' style='width: 20%;'>"
                 + "<thead>"
                 + " <tr >"
                 + " <th rowspan='1'     style='color: #fff; background:     black;' ><b> </b></th>  "

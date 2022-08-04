@@ -20,7 +20,7 @@
       sesion=false;   
       response.sendRedirect("login_sesion.jsp");
  
-    }
+    } 
 
  
 %>
