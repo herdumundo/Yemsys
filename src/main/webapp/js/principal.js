@@ -720,6 +720,7 @@ function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,d
         success: function (res) 
         {
             $("#contenedor_principal").html(res);
+            
             if(cal!=="FALSE")
             {
                 cargar_estilo_calendario_global(calendario_formato,max_calendario);
