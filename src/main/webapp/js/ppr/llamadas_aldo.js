@@ -3207,8 +3207,9 @@ function control_modificar_proyeccion_lote_ajuste_ppr() {
     var saldo_nuevo = $("#txt_nuevo_saldo_ajuste").val();
     var saldo_viejo = $("#txt_cantidad_aves_ajuste").val();
     var dia_ajuste = $("#label_dias_ajuste").html();
+    var fecha_descarte = $("#txt_fecha_predescarte_ajuste").val();
     var semana_ajuste = $("#label_semanas_ajuste").html();
-    var comentario = $("#comentario").val();
+    var comentario = $("#comentario_ajuste").val();
 
 
     /*
@@ -3229,7 +3230,8 @@ function control_modificar_proyeccion_lote_ajuste_ppr() {
             saldo_viejo: saldo_viejo,
             dia_ajuste: dia_ajuste,
             comentario: comentario,
-            semana_ajuste: semana_ajuste
+            semana_ajuste: semana_ajuste,
+            fecha_descarte: fecha_descarte
         },
         beforeSend: function () {
             Swal.fire({
@@ -3262,8 +3264,9 @@ function control_modificar_proyeccion_lote_ajuste_ppr() {
 
 
 
-function control_modificar_proyeccion_lote_ppr() 
-{  $("#form_crear").submit(function (e) {
+function control_crear_proyeccion_lote_ppr() 
+{  
+    $("#form_crear").submit(function (e) {
         e.preventDefault(),
         $.ajax({
                     type: "POST",

@@ -315,7 +315,7 @@
 
                 </table> 
                 <strong><a>Comentario</a></strong> 
-                <textarea class="form-control" id="comentario" placeholder="Ingrese comentario" > </textarea>
+                <textarea class="form-control" id="comentario_ajuste" placeholder="Ingrese comentario" > </textarea>
 
 
                 <div class="modal-footer align-right">
@@ -391,6 +391,6 @@
     }
 %>
 <script> 
-control_modificar_proyeccion_lote_ppr();
+control_crear_proyeccion_lote_ppr();
 
 </script>

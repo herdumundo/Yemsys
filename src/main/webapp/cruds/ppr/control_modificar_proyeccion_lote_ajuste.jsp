@@ -9,6 +9,7 @@
     {
         String id               = request.getParameter("id");
         String fecha_ajuste     = request.getParameter("fecha_ajuste");
+        String fecha_descarte     = request.getParameter("fecha_descarte");
         String saldo_nuevo      = request.getParameter("saldo_nuevo");
         String saldo_viejo      = request.getParameter("saldo_viejo");
         String dia_ajuste       = request.getParameter("dia_ajuste");
@@ -26,7 +27,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_ajuste] (?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_ajuste] (?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setInt(1, Integer.parseInt(id));
         callableStatement.setString(2, fecha_ajuste);
         callableStatement.setString(3, saldo_nuevo);
@@ -35,6 +36,7 @@
         callableStatement.setString(6, semana_ajuste); 
         callableStatement.setString(7, comentario); 
         callableStatement.setString(8, usuario); 
+        callableStatement.setString(9, fecha_descarte); 
         
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
