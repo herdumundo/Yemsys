@@ -6,24 +6,35 @@
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>  
-<%    PreparedStatement pst, pst2;
-    ResultSet rs, rs2;
+<%    
+    PreparedStatement pst, pst2,pst3;
+    ResultSet rs, rs2,rs3;
 
     pst = connection.prepareStatement("SELECT   t0.[id]  ,"
             + " t0.[fecha_nacimiento],"
             + " FORMAT (t0.[fecha_nacimiento], 'dd/MM/yyyy')   as fecha_nacimiento_form,"
             + "t0.[lote] ,t0.[id_raza],t0.[aviario],t0.[cantidad_aves],t0.[edad_produccion_dias],t0.fecha_produccion,t0.fecha_predescarte,"
             + " FORMAT (t0.[fecha_produccion], 'dd/MM/yyyy')   as fecha_produccion_form , "
-            + " FORMAT (t0.[fecha_predescarte], 'dd/MM/yyyy')   as  fecha_predescarte_form ,t1.raza_name "
-            + ""
-            + "FROM [ppr_pry_cab] t0 inner join ppr_razas t1 on t0.id_raza=t1.raza_id order by convert(date,fecha_predescarte )asc");
+            + " FORMAT (t0.[fecha_predescarte], 'dd/MM/yyyy')   as  fecha_predescarte_form ,t1.raza_name,t0.nuevo "
+            + " ,DATEDIFF(day, t0.[fecha_nacimiento],[fecha_predescarte]) as dias_predescarte,  DATEDIFF(week, t0.[fecha_nacimiento],[fecha_predescarte]) as semanas_predescarte"
+            + " FROM [ppr_pry_cab] t0 inner join ppr_razas t1 on t0.id_raza=t1.raza_id "
+            + " where t0.id_estado=1 order by convert(date,fecha_predescarte )asc");
     rs = pst.executeQuery();
+
+    pst2 = connection.prepareStatement("SELECT         id, descripcion, capacidad, estado	"
+            + " FROM            ppr_aviarios_capacidades			   where estado=1");
+    rs2 = pst2.executeQuery();
+
+    pst3 = connection.prepareStatement(" select * from ppr_razas");
+    rs3 = pst3.executeQuery();
 
     String version = "Test";
     String desc_version = "Test";
+
     try {
 
 %>
+
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
@@ -42,43 +53,61 @@
     </div>
 </div>  <br>    
 
-<table  id="example" class=' table-bordered compact hover' style='width:100%'>
-    <thead>
-    <th>Nro.</th>
-    <th>Fecha nacimiento</th>
-    <th>Lote</th>
-    <th>Raza</th>
-    <th>Aviario</th>
-    <th>Cantidad aves</th>
-    <th>Edad produccion (dias)</th>
-    <th>Fecha produccion</th>
-    <th>Fecha predescarte</th>
-    <th></th>
-    <th></th>
-    <th></th>
+<div class="card card-dark ">
+    <div class="card-header">
 
-</thead>
-<tbody>
-    <% while (rs.next()) {%>
-    <tr>
-        <td><%=rs.getString("id")%></td>
-        <td><%=rs.getString("fecha_nacimiento_form")%></td>
-        <td><%=rs.getString("lote")%></td>
-        <td><%=rs.getString("raza_name")%></td>
-        <td><%=rs.getString("aviario")%></td>
-        <td><%=rs.getString("cantidad_aves")%></td>
-        <td><%=rs.getString("edad_produccion_dias")%></td>
-        <td><%=rs.getString("fecha_produccion_form")%></td>
-        <td><%=rs.getString("fecha_predescarte_form")%></td>
-        <td><input type="button" value="Editar" class="bg-navy" onclick="edit_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>')"   > </td>
-        <td><input type="button" value="Ajuste" class="bg-warning" onclick="ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>')"   > </td>
-        <td><input type="button" data-toggle="modal" data-target="#exampleModalPreview" value="Visualizar" onclick="grafico_proyeccion_ppr(<%=rs.getString("id")%>, '<%=rs.getString("aviario")%>', '<%=rs.getString("fecha_nacimiento_form")%>', '<%=rs.getString("fecha_produccion_form")%>', '<%=rs.getString("fecha_predescarte_form")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("raza_name")%>')" > </td>
+        <button type="button" class="btn bg-navy btn-block btn-sm" onclick="abrir_crear_lote_proyeccion_ppr()" ><i class="fa fa-plus"></i> Nuevo lote</button> 
+
+    </div>
 
 
-    </tr>
-    <%   } %>
-</tbody>
-</table>
+
+    <table  id="example" class=' table-bordered compact hover' style='width:100%'>
+        <thead>
+        <th></th>
+        <th>Nro.</th>
+        <th>Fecha nacimiento</th>
+        <th>Lote</th>
+        <th>Raza</th>
+        <th>Aviario</th>
+        <th>Cantidad aves</th>
+        <th>Edad produccion (dias)</th>
+        <th>Fecha produccion</th>
+        <th>Fecha predescarte</th>
+  
+        </thead>
+        <tbody>
+            <% while (rs.next()) {%>
+            <tr>
+                <td>
+                    <button class="btn btn-xs btn-success"onclick="edit_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>')"  title="Editar lote"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-xs btn-warning"   onclick="ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>', '<%=rs.getString("dias_predescarte")%>', '<%=rs.getString("semanas_predescarte")%>')" title="Ajuste de Saldo de aves"><i class="fa fa-calculator"></i></button>
+                    <button class="btn btn-xs bg-navy"  data-toggle="modal" data-target="#exampleModalPreview"  onclick="grafico_proyeccion_ppr(<%=rs.getString("id")%>, '<%=rs.getString("aviario")%>', '<%=rs.getString("fecha_nacimiento_form")%>', '<%=rs.getString("fecha_produccion_form")%>', '<%=rs.getString("fecha_predescarte_form")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("raza_name")%>')"  title="Visualizar grafico"><i class="fa fa-eye"></i></button>
+                    <% if (rs.getString("nuevo").equals("1")){
+                     %><button class="btn btn-xs btn-danger" onclick="ppr_pro_lotes_delete(<%=rs.getString("id")%>);"  title="Eliminar lote" ><i class="fa fa-trash-o"></i></button> <%
+                    }
+                        %>
+                    
+                </td>                
+                <td><%=rs.getString("id")%></td>
+                <td><%=rs.getString("fecha_nacimiento_form")%></td>
+                <td><%=rs.getString("lote")%></td>
+                <td><%=rs.getString("raza_name")%></td>
+                <td><%=rs.getString("aviario")%></td>
+                <td><%=rs.getString("cantidad_aves")%></td>
+                <td><%=rs.getString("edad_produccion_dias")%></td>
+                <td><%=rs.getString("fecha_produccion_form")%></td>
+                <td><%=rs.getString("fecha_predescarte_form")%></td>
+               
+ 
+
+            </tr>
+            <%   } %>
+        </tbody>
+    </table>
+
+
+</div><!-- comment -->
 
 
 
@@ -132,8 +161,109 @@
 
 
 
+<div class="modal fade" id="modal_crear_lote" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-black">
+                <h5 class="modal-title" id="exampleModalLabel">Registro de lote</h5>
+                <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body bg-navy"   >  
+
+                <form id="form_crear" >
+                     <table class="table">
+                        <tr> 
+                            <th> <strong><a>Lote</a></strong> 
+                                <input  id="txt_lote_crear" name="txt_lote_crear"  class="form-control text-left  is-invalid " required placeholder="Ingrese lote" style="width: 100%" type="text"     >
+                            </th>
+                            <th>
+                                <strong><a>Aviario</a></strong>
+                                <select id="select_aviario_crear" name="select_aviario_crear"  class="form-control  is-invalid " onchange="capacidad_aviario_set_pry()">
+                                    <option value="-">Seleccione aviario</option>    
+                                    <% while (rs2.next()) {%>
+                                    <option data-capacidad="<%=rs2.getString("capacidad")%>" value="<%=rs2.getString("descripcion")%>"><%=rs2.getString("descripcion")%></option>
+                                    <%}%>
+                                </select>  
+                            </th>
+                            <th> <strong><a>Capacidad</a></strong> 
+                                <input  name="txt_capacidad_crear" class="form-control text-left "  style="width: 100%" type="text"   id="txt_capacidad_crear" readonly       >
+                            </th>
+                        </tr>
+
+                        <tr>  
+                            <th> <strong><a>Fecha de nacimiento A</a></strong>
+                                <input  id="txt_fecha_nacA_crear"  name="txt_fecha_nacA_crear"  required  class="form-control text-left is-invalid  "  style="width: 100%" type="date"    onchange="sumar_dias_fechas_crear_ppr($('#txt_fecha_nacA_crear').val())"    >
+                            </th>
+                            <th> <strong><a>Fecha de nacimiento B</a></strong>
+                                <input  id="txt_fecha_nacB_crear" name="txt_fecha_nacB_crear"   required  class="form-control text-left is-invalid  "  style="width: 100%" type="date"    >
+                            </th>
+                        </tr>
+                        <tr> 
+                            <th> <strong><a>Cantidad aves</a></strong> 
+                                <input  id="txt_cant_aves_crear" name="txt_cant_aves_crear"  required class="form-control text-left is-invalid " style="width: 100%" type="number"     ></th>
+                              <th>
+                                <strong><a>Raza</a></strong>
+                                <select id="select_raza_crear"  name="select_raza_crear"  class="form-control  is-invalid " >
+                                    <option value="-">Seleccione raza</option>    
+                                    <% while (rs3.next()) {%>
+                                    <option value="<%=rs3.getString("raza_id")%>"><%=rs3.getString("raza_name")%></option>
+                                    <%}%>
+                                </select>  
+                            </th>
+                            
+                            <th> 
+                                <strong><a>Comentario</a></strong> 
+                                <textarea id="comentario" name="comentario" class="form-control"  placeholder="Ingrese comentario" > </textarea>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th> <strong><a>Edad produccion (días)</a></strong> 
+                                <input  id="txt_eddad_dias_prod_crear" name="txt_eddad_dias_prod_crear" required  class="form-control text-left is-invalid " style="width: 100%" type="number"  onchange="cal_fecha_dia_crear_pry_ppr()"   ></th>
+                            <th> <strong><a>(Semanas)</a></strong> 
+                                <input id="txt_eddad_sems_prod_crear" name="txt_eddad_sems_prod_crear"  class="form-control text-left   " style="width: 100%" type="text"   readonly  onchange="cal_fecha_dia_crear_pry_ppr()"      >
+                            </th> 
+                                <th><strong><a>Fecha de producción</a></strong>
+                                    <input  id="txt_fecha_produccion_crear" name="txt_fecha_produccion_crear" class="form-control text-left  " style="width: 100%" type="date"    readonly >
+                                </th>  
+                        </tr>
+
+
+                        <tr> 
+                            <th> <strong><a>Edad predescarte (días)</a></strong> 
+                                <input id="txt_eddad_dias_pred_crear"  name="txt_eddad_dias_pred_crear" required class="form-control text-left is-invalid " style="width: 100%" type="number"   onchange="cal_fecha_dia_crear_pry_ppr()"      >
+                            </th>
+                            <th> <strong><a>(Semanas)</a></strong> 
+                                <input id="txt_eddad_sems_pred_crear"  name="txt_eddad_sems_pred_crear"  class="form-control text-left   " style="width: 100%" type="text"     readonly   >
+                            </th>
+                            <th><strong><a>Fecha de predescarte</a></strong>
+                                <input  id="txt_fecha_predescarte_crear" name="txt_fecha_predescarte_crear"  class="form-control text-left  " style="width: 100%" type="date"  readonly ></th>  
+                        </tr>    
+
+
+                    </table> 
+
+
+
+                    <div class="modal-footer align-right">
+                        <input  class="btn bg-white"  type="submit"    value="Registrar" >
+                        <input  class="btn bg-white"  type="button"   data-dismiss="modal"   value="Cancelar" >            
+                    </div>
+
+                </form>             
+            </div>
+        </div>
+    </div>
+</div>   
+
+
+
+
+
 <div class="modal fade" id="modal_ajuste" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <h5 class="modal-title" id="exampleModalLabel">Ajustes de lote</h5>
@@ -144,7 +274,8 @@
             <div class="modal-body bg-navy"   >  
 
 
-                <input hidden="true" class="form-control text-left " type="text" style="width: 100%" disabled="true" id="txt_id_ajuste"  >
+                <input hidden="true"  id="txt_id_ajuste"  >
+                <input hidden="true"  id="txt_fnac_ajuste"  >
                 <table class="table">
                     <tr> 
                         <th> <strong><a>Lote</a></strong> 
@@ -170,12 +301,21 @@
                         <th><strong><a>Ajuste</a></strong>
                             <input class="form-control text-left  " style="width: 100%" type="number"   id="txt_cantidad_ajuste" disabled ></th>
                     </tr>
-
+                       <tr> 
+                            <th> <strong><a>Edad predescarte (días)</a></strong> 
+                                <input id="txt_edad_dias_pred_ajuste"  name="txt_edad_dias_pred_ajuste" required class="form-control text-left is-invalid " style="width: 100%" type="number"   onchange="cal_fecha_dia_predescarte_ajuste_pry_ppr()"      >
+                            </th>
+                            <th> <strong><a>(Semanas)</a></strong> 
+                                <input id="txt_edad_sems_pred_ajuste"  name="txt_edad_sems_pred_ajuste"  class="form-control text-left   " style="width: 100%" type="text"     readonly   >
+                            </th>
+                            <th><strong><a>Fecha de predescarte</a></strong>
+                                <input  id="txt_fecha_predescarte_ajuste" name="txt_fecha_predescarte_ajuste"  class="form-control text-left  " style="width: 100%" type="date"  readonly ></th>  
+                        </tr>  
 
 
                 </table> 
                 <strong><a>Comentario</a></strong> 
-                <textarea class="form-control" id="comentario" placeholder="Ingrese comentario" > </textarea>
+                <textarea class="form-control" id="comentario_ajuste" placeholder="Ingrese comentario" > </textarea>
 
 
                 <div class="modal-footer align-right">
@@ -185,10 +325,26 @@
             </div>
         </div>
     </div>
-</div>   
+</div>
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
@@ -210,13 +366,10 @@
                         <div id="cargarzoom"  ></div> 
 
                     </div>
-                   <div id="grilla_log"  > 
+                    <div id="grilla_log"  > 
 
- 
+
                     </div>
-                     
-
-
                 </div>
                 <div class="modal-footer-full-width  modal-footer">
                     <button type="button" class="btn btn-danger btn-md btn-rounded" data-dismiss="modal">Cerrar</button>
@@ -224,15 +377,20 @@
             </div>
         </div>
     </div>
+</div>
 
 
 
 
 
-    <%
-        } catch (Exception e) {
+<%
+    } catch (Exception e) {
 
-        } finally {
-            connection.close();
-        }
-    %>
+    } finally {
+        connection.close();
+    }
+%>
+<script> 
+control_crear_proyeccion_lote_ppr();
+
+</script>

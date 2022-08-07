@@ -14,7 +14,8 @@
     String id =  request.getParameter ("id");;
     String aviario =  request.getParameter ("aviario");;
      JSONObject charts = new JSONObject();
-    
+  try {
+          
     Statement st,st2,st3;
     ResultSet rs,rs2,rs3 ;
     int min=0;
@@ -25,7 +26,10 @@
     
     rs=st.executeQuery("select * from ppr_pry_det 	where id in ( 	select id 	from ( 			select max(id) as id,semanas  from	ppr_pry_det where id_cab="+id+" group by semanas 		)  d )" );
     rs2=st2.executeQuery(" select min(cantidad_aves) as min,max(cantidad_aves) as max from ppr_pry_det 	where id_cab="+id );
-    rs3=st3.executeQuery("select *, format(convert(date,fecha),'dd/MM/yyyy') as fecha_form from ppr_pry_det 	where     id_cab="+id +" and comentario is not null" );
+    
+    rs3=st3.executeQuery("select *, format(convert(date,fecha_ajuste),'dd/MM/yyyy') as fecha_ajuste_form,"
+            + " format(convert(date,fecha_registro),'dd/MM/yyyy') as fecha_registro_form , isnull(saldo_nuevo,0) as saldo_nuevo_form"
+            + " from ppr_pry_det_log	where     id_cab="+id +"  " );
  
       while(rs2.next()) 
                 {
@@ -154,11 +158,13 @@
             String     cabecera = " <table id='tb_log' class=' table'  >"
                 + "<thead>"
 
-                + "<tr><th colspan='5' style='color: #fff; background: black;'>Historial de ajustes </th></tr>"
+                + "<tr><th colspan='7' style='color: #fff; background: black;'>Historial de ajustes </th></tr>"
                 + "<tr>"
                 + " <th  style='color: #fff; background: black;' >Fecha</th>      "
+                + " <th  style='color: #fff; background: black;' >Registro</th>      "
                 + " <th  style='color: #fff; background: black;' >Semana</th>      "
                 + " <th  style='color: #fff; background: black;' >Saldo nuevo</th>      "
+                + " <th  style='color: #fff; background: black;' >Ajuste</th>      "
                 + " <th  style='color: #fff; background: black;' >Usuario</th>      "
                 + " <th  style='color: #fff; background: black;' >Comentario</th>"
                     + "</tr>      "
@@ -173,10 +179,12 @@
         {
             grilla_html = grilla_html
                     + "<tr > "
-                    + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_form") + "</td>"
-                    + "<td style=\"font-weight:bold\">" +   rs3.getString("semanas") + "</td>"
-                    + "<td style=\"font-weight:bold\">" +   formatea.format(rs3.getInt("cantidad_aves") ) + "</td>"
-                    + "<td style=\"font-weight:bold\">" +   rs3.getString("usuario")  + "</td>"
+                    + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_ajuste_form") + "</td>"
+                    + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_registro_form") + "</td>"
+                    + "<td style=\"font-weight:bold\">" +   rs3.getString("semana_ajuste") + "</td>"
+                     + "<td style=\"font-weight:bold\">" +   formatea.format(rs3.getInt("saldo_nuevo_form") ) + "</td>"
+                     + "<td style=\"font-weight:bold\">" +   rs3.getString("ajuste") + "</td>"
+                     + "<td style=\"font-weight:bold\">" +   rs3.getString("usuario")  + "</td>"
                     + "<td style=\"font-weight:bold\">" +   rs3.getString("comentario") + "</td>"
                       + "</tr>";
             
@@ -192,7 +200,14 @@
                 charts.put("charts", dataArray); 
                 charts.put("grilla", cabecera + grilla_html + "</tbody></table>"); 
          
-                out.print(charts); 
+    
+      } catch (Exception e) {
+        String error=e.getMessage();
+      }
+      finally{
+      connection.close();
+      out.print(charts);
+    } 
  %>
  
  

@@ -2042,7 +2042,7 @@ function necropsias_nuevafila_ppr(score_id) {
             necropsias_detalle_onselect_ppr();
             cerrar_load();
 
-      
+
         }
     });
 }
@@ -2403,7 +2403,7 @@ function desactivar_lote_ppr() {
 }
 
 function activar_lote_ppr() {
-   
+
     Swal.fire({
         title: 'Comfimacion',
         text: "Enviar Peticion?",
@@ -2430,7 +2430,7 @@ function activar_lote_ppr() {
                     fecha: fecha,
                     lote: lote,
                     aviario: aviario,
-                    saldo_inicial:saldo_inicial
+                    saldo_inicial: saldo_inicial
 
                 },
                 success: function (res) {
@@ -2455,8 +2455,8 @@ function activar_lote_ppr() {
                     $('#lote').html("");
                     $('#saldo_inicial').html("");
                     $('#aviario_lote').html("");
-                 carga_grilla_registro_datos_diarios_A_ppr();
-                 //carga_grilla_pre_des_convencionales_ppr2();
+                    carga_grilla_registro_datos_diarios_A_ppr();
+                    //carga_grilla_pre_des_convencionales_ppr2();
                 }});
         }
     });
@@ -2554,7 +2554,7 @@ function contador_registro_huevos_ppr(avi) {
             $("#avi").val(data.aviario);
             $("#productividad").val(productividad + '%');
             $("#poduc_pad").val(data.pad_productividad + '%');
-            $("#diferencia").val(subTotalFormatted+ '%');
+            $("#diferencia").val(subTotalFormatted + '%');
             $("#edad").val(data.dias + ' dias (' + data.sems + ' sems.)');
             $("#poduc_pad").css("background-color", "#EA80FC");
             onselect_grilla_contador_huevo_ppr();
@@ -2668,7 +2668,7 @@ function contador_registro_huevos_actualizar_ppr() {
             $("#avi").val(data.aviario);
             $("#productividad").val(productividad + '%');
             $("#poduc_pad").val(data.pad_productividad + '%');
-            $("#diferencia").val(subTotalFormatted+ '%');
+            $("#diferencia").val(subTotalFormatted + '%');
             $("#edad").val(data.dias + ' dias (' + data.sems + ' sems.)');
             $("#poduc_pad").css("background-color", "#EA80FC");
             onselect_grilla_contador_huevo_ppr();
@@ -2676,8 +2676,8 @@ function contador_registro_huevos_actualizar_ppr() {
     });
 }
 
- function traer_vista_registro_lotes_ppr() {
-     ir_consultar_registro_lotes_ppr();
+function traer_vista_registro_lotes_ppr() {
+    ir_consultar_registro_lotes_ppr();
     //window.location.hash = "pprRegistroNecropsias";
 
     $.ajax({
@@ -2709,7 +2709,6 @@ function ir_consultar_registro_lotes_ppr() {
             limpiarg_ppr(), cargar_load("Consultando...");
 
         },
- 
 
         success: function (data) {
 
@@ -2722,7 +2721,7 @@ function ir_consultar_registro_lotes_ppr() {
 
             cerrar_load();
 
-        
+
             //$("#datosnecropsiasregistrados").dataTable({language: {sUrl: "js/Spanish.txt"}});
             $(".ocultar").show();
 
@@ -2747,25 +2746,25 @@ function registrar_lote_ppr() {
             $.ajax({
                 type: "POST",
                 url: ruta_cruds_ppr + "crud_agregar_lote.jsp",
-                data: {nombrelote:  $('#nombrelote').val(),
-                       lote_pedido: $('#lote_pedido').val(),
-                       raza_lote:   $('#raza_lote').val(),
-                       fecha_pedido:$('#fecha_pedido').val(),
-                       fecha_naci:  $('#fecha_naci').val()
+                data: {nombrelote: $('#nombrelote').val(),
+                    lote_pedido: $('#lote_pedido').val(),
+                    raza_lote: $('#raza_lote').val(),
+                    fecha_pedido: $('#fecha_pedido').val(),
+                    fecha_naci: $('#fecha_naci').val()
                 },
                 beforeSend: function (xhr) {
                     cargar_load();
                 },
                 success: function (res)
                 {
-                     if (res.tipo_registro == "2") {
+                    if (res.tipo_registro == "2") {
                         swal.fire({
                             type: 'success',
                             text: res.mensaje,
                             confirmButtonText: "CERRAR",
-                            });
-                 
-                    
+                        });
+
+
                     } else
                     {
                         swal.fire({
@@ -2773,18 +2772,18 @@ function registrar_lote_ppr() {
                             text: res.mensaje,
                             confirmButtonText: "CERRAR"
                         });
-                  
+
                     }
-                    
+
                     $('#ppr_lote_form').modal('hide');
                     ir_consultar_registro_lotes_ppr();
-                     cerrar_load();
-                 }
-                 });
+                    cerrar_load();
                 }
-              });
-              }
- function modificar_lote_ppr() {
+            });
+        }
+    });
+}
+function modificar_lote_ppr() {
     Swal.fire({
         title: 'CONFIRMACION',
         text: "DESEA MODIFICAR LOTE?",
@@ -2799,27 +2798,27 @@ function registrar_lote_ppr() {
         {
             $.ajax({
                 type: "POST",
-                url: ruta_cruds_ppr +  "crud_modificar_lote.jsp",
-                data: {idlote:      $('#idlote').val(),
-                       nombrelote:  $('#nombrelote').val(),
-                       lote_pedido: $('#lote_pedido').val(),
-                       raza_lote:   $('#raza_lote').val(),
-                       fecha_pedido:$('#fecha_pedido').val(),
-                       fecha_naci:  $('#fecha_naci').val()
+                url: ruta_cruds_ppr + "crud_modificar_lote.jsp",
+                data: {idlote: $('#idlote').val(),
+                    nombrelote: $('#nombrelote').val(),
+                    lote_pedido: $('#lote_pedido').val(),
+                    raza_lote: $('#raza_lote').val(),
+                    fecha_pedido: $('#fecha_pedido').val(),
+                    fecha_naci: $('#fecha_naci').val()
                 },
                 beforeSend: function (xhr) {
                     cargar_load();
                 },
                 success: function (data)
                 {
-                     if (data.tipo_respuesta == "2") {
+                    if (data.tipo_respuesta == "2") {
                         swal.fire({
                             type: 'success',
                             text: data.mensaje,
                             confirmButtonText: "CERRAR",
-                            });
-                 
-                    
+                        });
+
+
                     } else
                     {
                         swal.fire({
@@ -2827,17 +2826,17 @@ function registrar_lote_ppr() {
                             text: data.mensaje,
                             confirmButtonText: "CERRAR"
                         });
-                  
+
                     }
                     $('#ppr_lote_form').modal('hide');
                     ir_consultar_registro_lotes_ppr();
-                     cerrar_load();
-                 }
-                 });
+                    cerrar_load();
                 }
-              });
-              }
-function edit_lotes_ppr(lote_id,lote_name,lote_raza,lote_cped,lote_fped,lote_fnac) {
+            });
+        }
+    });
+}
+function edit_lotes_ppr(lote_id, lote_name, lote_raza, lote_cped, lote_fped, lote_fnac) {
     $("#idlote").val(lote_id);
     $("#nombrelote").val(lote_name);
     $("#lote_pedido").val(lote_cped);
@@ -2845,7 +2844,7 @@ function edit_lotes_ppr(lote_id,lote_name,lote_raza,lote_cped,lote_fped,lote_fna
     $("#fecha_pedido").val(lote_fped);
     $("#fecha_naci").val(lote_fnac);
     $(".modal-title").text("MODIFICAR LOTE");
-    document.getElementById("cambio").setAttribute("onclick","modificar_lote_ppr()");
+    document.getElementById("cambio").setAttribute("onclick", "modificar_lote_ppr()");
     $("#ppr_lote_form").modal("show");
 }
 
@@ -2857,7 +2856,7 @@ function modal_lotes_ppr() {
     document.getElementById("fecha_pedido").value = "";
     document.getElementById("fecha_naci").value = "";
     $(".modal-title").text("REGISTRO NUEVO LOTE");
-    document.getElementById("cambio").setAttribute("onclick","registrar_lote_ppr()");
+    document.getElementById("cambio").setAttribute("onclick", "registrar_lote_ppr()");
     $("#ppr_lote_form").modal("show");
 }
 
@@ -2876,7 +2875,7 @@ function modificar_estado_lote_ppr(lote_id) {
         {
             $.ajax({
                 type: "POST",
-                url: ruta_cruds_ppr +  "crud_modificar_estado_lote.jsp",
+                url: ruta_cruds_ppr + "crud_modificar_estado_lote.jsp",
                 data: {idlote: lote_id
                 },
                 beforeSend: function (xhr) {
@@ -2884,14 +2883,14 @@ function modificar_estado_lote_ppr(lote_id) {
                 },
                 success: function (data)
                 {
-                     if (data.tipo_respuesta == "2") {
+                    if (data.tipo_respuesta == "2") {
                         swal.fire({
                             type: 'success',
                             text: data.mensaje,
                             confirmButtonText: "CERRAR",
-                            });
-                 
-                    
+                        });
+
+
                     } else
                     {
                         swal.fire({
@@ -2899,33 +2898,33 @@ function modificar_estado_lote_ppr(lote_id) {
                             text: data.mensaje,
                             confirmButtonText: "CERRAR"
                         });
-                  
+
                     }
                     ir_consultar_registro_lotes_ppr();
-                     cerrar_load();
-                 }
-                 });
+                    cerrar_load();
                 }
-              });
-              }
-              
-              
- function ir_proyeccion_ppr() 
+            });
+        }
+    });
+}
+
+
+function ir_proyeccion_ppr()
 {
-    ir_pagina_generico(ruta_vistas_ppr,'contenedor_proyeccion.jsp',"pry1",'yyyy-mm-dd',false,"#example");
+    ir_pagina_generico(ruta_vistas_ppr, 'contenedor_proyeccion.jsp', "pry1", 'yyyy-mm-dd', false, "#example");
     
- }
+}
 
 
 
 
 
-function grafico_proyeccion_ppr(id,aviario,nacimiento,produccion,predescarte,lote,raza) {
+function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte, lote, raza) {
 
     $.ajax({
         type: "POST",
         url: ruta_consultas_ppr + "consulta_gen_grafico_pry1.jsp",
-        data: {id: id,aviario:aviario},
+        data: {id: id, aviario: aviario},
         beforeSend: function (xhr) {
             cargar_load();
         },
@@ -2937,11 +2936,11 @@ function grafico_proyeccion_ppr(id,aviario,nacimiento,produccion,predescarte,lot
                 var a = '  <div class="card card-navy" >   ';
                 a += '  <div class="card-header"> ';
                 a += '   <h3 class="card-title">Proyeccion aviario - ' + result.charts[c].options.plugins.title.text + '  </h3> <br> '
-                
-               
+
+
                 a += '   </div> ';
-               a += ' <table class="table"> <tr> <th> Fecha de nacimiento: '+nacimiento+'  </th><th>  Fecha de produccion: '+produccion+' </th><th> Fecha de predescarte: '+predescarte+'   </th></tr>\n\
-                <tr> <th> Lote: '+lote+'  </th><th>  Raza: '+raza+' </th> </tr></table>  ';
+                a += ' <table class="table"> <tr> <th> Fecha de nacimiento: ' + nacimiento + '  </th><th>  Fecha de produccion: ' + produccion + ' </th><th> Fecha de predescarte: ' + predescarte + '   </th></tr>\n\
+                <tr> <th> Lote: ' + lote + '  </th><th>  Raza: ' + raza + ' </th> </tr></table>  ';
                 a += '  <div class="card-body"><div class="chartjs-size-monitor">\n\
                         <div div class="chart-container"   ><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div> ';
                 a += '   <canvas id="' + result.charts[c].options.plugins.title.text + '"></canvas>';
@@ -2960,12 +2959,12 @@ function grafico_proyeccion_ppr(id,aviario,nacimiento,produccion,predescarte,lot
             cerrar_load();
         }
     });
- 
+
 
 }
 
-function edit_lote_proyeccion_ppr(id,lote,aviario,aves,nacimiento,produccion,predescarte) {
- 
+function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccion, predescarte) {
+
     $("#txt_id").val(id);
     $("#txt_lote").val(lote);
     $("#txt_aviario").val(aviario);
@@ -2974,175 +2973,305 @@ function edit_lote_proyeccion_ppr(id,lote,aviario,aves,nacimiento,produccion,pre
     $("#txt_fecha_produccion").val(produccion);
     $("#txt_fecha_predescarte").val(predescarte);
     $("#modal_upd_user").modal("show");
-   contar_dias_proyeccion_ppr(); 
+    contar_dias_proyeccion_ppr();
 }
 
 
-function ajuste_lote_proyeccion_ppr(id,lote,aviario,aves,nacimiento,produccion,predescarte) {
- 
+
+function abrir_crear_lote_proyeccion_ppr() {
+
+
+    $("#modal_crear_lote").modal("show");
+}
+
+
+function ajuste_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccion, predescarte,dias_predescarte,semanas_predescarte) {
+
     $("#txt_id_ajuste").val(id);
+    $("#txt_fnac_ajuste").val(nacimiento);
     $("#txt_lote_ajuste").val(lote);
     $("#txt_aviario_ajuste").val(aviario);
     $("#txt_cantidad_aves_ajuste").val(aves);
     $("#txt_fecha_ajuste").val(produccion);
-   
+    $("#txt_fecha_predescarte_ajuste").val(predescarte);
+    $("#txt_edad_dias_pred_ajuste").val(dias_predescarte);
+    $("#txt_edad_sems_pred_ajuste").val(semanas_predescarte);
+
     $("#modal_ajuste").modal("show");
-    
+
 }
 
 
 
 function diferencia_saldo_ajuste_lote_proyeccion_ppr() {
- 
-    var saldo_actual_fecha  =  $("#txt_cantidad_aves_ajuste").val();
-    var saldo_nuevo         =  $("#txt_nuevo_saldo_ajuste").val();
-  
-    var diferencia=(parseInt(saldo_nuevo)-parseInt(saldo_actual_fecha));
+
+    var saldo_actual_fecha = $("#txt_cantidad_aves_ajuste").val();
+    var saldo_nuevo = $("#txt_nuevo_saldo_ajuste").val();
+
+    var diferencia = (parseInt(saldo_nuevo) - parseInt(saldo_actual_fecha));
     $("#txt_cantidad_ajuste").val(diferencia);
-   
-   
-     
+
+
+
 }
 
 
-function sumar_dias_fechas_ppr(fecha_nacimiento){
-    
-    
+function sumar_dias_fechas_ppr(fecha_nacimiento) {
+
+
     $.ajax({
         type: "POST",
         url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry.jsp",
         data: {fecha_nacimiento: fecha_nacimiento},
         beforeSend: function (xhr) {
-         },
+        },
         success: function (res)
-        { 
-               $("#txt_fecha_produccion").val(res.fecha_produccion);
-               $("#txt_fecha_predescarte").val(res.fecha_predescarte);
-                $("#label_produccion").html('Fecha de produccion '+res.dias_produccion+' dias');
-               $("#label_predescarte").html('Fecha de predescarte '+res.dias_predescarte+' dias'); 
+        {
+            $("#txt_fecha_produccion").val(res.fecha_produccion);
+            $("#txt_fecha_predescarte").val(res.fecha_predescarte);
+            $("#label_produccion").html('Fecha de produccion ' + res.dias_produccion + ' dias');
+            $("#label_predescarte").html('Fecha de predescarte ' + res.dias_predescarte + ' dias');
         }
     });
-    
+
 }
 
 
+function sumar_dias_fechas_crear_ppr(fecha_nacimiento) {
 
-function sumar_dias_semanas_ajuste_ppr(){
-    
-    var id= $("#txt_id_ajuste").val();
-    var fecha= $("#txt_fecha_ajuste").val();
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry.jsp",
+        data: {fecha_nacimiento: fecha_nacimiento},
+        beforeSend: function (xhr) {
+        },
+        success: function (res)
+        {
+            $("#txt_fecha_produccion_crear").val(res.fecha_produccion);
+            $("#txt_fecha_predescarte_crear").val(res.fecha_predescarte);
+            $("#txt_eddad_dias_prod_crear").val(res.dias_produccion);
+            $("#txt_eddad_dias_pred_crear").val(res.dias_predescarte);
+            $("#txt_eddad_sems_prod_crear").val(res.semanas_produccion);
+            $("#txt_eddad_sems_pred_crear").val(res.semanas_predescarte);
+        }
+    });
+
+}
+
+
+function capacidad_aviario_set_pry() {
+
+    var aviario = $("#select_aviario_crear").find(':selected').attr('data-capacidad');
+    $("#txt_capacidad_crear").val(aviario);
+
+}
+
+
+function cal_fecha_dia_crear_pry_ppr() {
+
+    var fecha_nacimiento = $("#txt_fecha_nacA_crear").val();
+    var dias_produccion = $("#txt_eddad_dias_prod_crear").val();
+    var dias_predescarte = $("#txt_eddad_dias_pred_crear").val();
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry_1.jsp",
+        data: {fecha_nacimiento: fecha_nacimiento, dias_produccion: dias_produccion, dias_predescarte: dias_predescarte},
+        beforeSend: function (xhr) {
+        },
+        success: function (res)
+        {
+            $("#txt_fecha_produccion_crear").val(res.fecha_produccion);
+            $("#txt_fecha_predescarte_crear").val(res.fecha_predescarte);
+            $("#txt_eddad_sems_prod_crear").val(res.semanas_produccion);
+            $("#txt_eddad_sems_pred_crear").val(res.semanas_predescarte);
+
+
+        }
+    });
+
+}
+
+
+function cal_fecha_dia_predescarte_ajuste_pry_ppr() {
+
+    var fecha_nacimiento = $("#txt_fnac_ajuste").val();
+    var dias_predescarte = $("#txt_edad_dias_pred_ajuste").val();
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry_1.jsp",
+        data: {fecha_nacimiento: fecha_nacimiento, dias_produccion: dias_predescarte, dias_predescarte: dias_predescarte},
+        beforeSend: function (xhr) {
+        },
+        success: function (res)
+        {
+            $("#txt_edad_sems_pred_ajuste").val(res.semanas_predescarte);
+            $("#txt_fecha_predescarte_ajuste").val(res.fecha_predescarte);
+
+        }
+    });
+
+}
+
+function sumar_dias_semanas_ajuste_ppr() {
+
+    var id = $("#txt_id_ajuste").val();
+    var fecha = $("#txt_fecha_ajuste").val();
     $.ajax({
         type: "POST",
         url: ruta_consultas_ppr + "consulta_gen_calculo_dias_semanas_ajuste.jsp",
-        data: {id: id,fecha:fecha},
+        data: {id: id, fecha: fecha},
         beforeSend: function (xhr) {
-         },
+        },
         success: function (res)
-        { 
+        {
             $("#txt_cantidad_aves_ajuste").val(res.saldo_ave);
-            $("#label_dias_ajuste").html( res.dias );
-            $("#label_semanas_ajuste").html( res.semanas ); 
+            $("#label_dias_ajuste").html(res.dias);
+            $("#label_semanas_ajuste").html(res.semanas);
         }
     });
-    
+
 }
 
 
-function contar_dias_proyeccion_ppr(){
-   var fecha_nacimiento= $("#txt_fecha_nacimiento").val();
-   var fecha_produccion=  $("#txt_fecha_produccion").val();
-    var fecha_predescarte= $("#txt_fecha_predescarte").val();
-    
+function contar_dias_proyeccion_ppr() {
+    var fecha_nacimiento = $("#txt_fecha_nacimiento").val();
+    var fecha_produccion = $("#txt_fecha_produccion").val();
+    var fecha_predescarte = $("#txt_fecha_predescarte").val();
+
     $.ajax({
         type: "POST",
         url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_pry_2.jsp",
-        data: {fecha_nacimiento: fecha_nacimiento,fecha_produccion:fecha_produccion,fecha_predescarte:fecha_predescarte},
+        data: {fecha_nacimiento: fecha_nacimiento, fecha_produccion: fecha_produccion, fecha_predescarte: fecha_predescarte},
         beforeSend: function (xhr) {
-         },
+        },
         success: function (res)
-        { 
-               $("#label_produccion").html('Fecha de produccion '+res.dias_produccion+' dias');
-               $("#label_predescarte").html('Fecha de predescarte '+res.dias_predescarte+' dias');
- 
+        {
+            $("#label_produccion").html('Fecha de produccion ' + res.dias_produccion + ' dias');
+            $("#label_predescarte").html('Fecha de predescarte ' + res.dias_predescarte + ' dias');
+
         }
     });
- 
-    
+
+
 }
 
 
 function control_modificar_proyeccion_lote_ppr() {
-   var id=  $("#txt_id").val();
-   var aves= $("#txt_cantidad_aves").val();
-   var nacimiento= $("#txt_fecha_nacimiento").val();
-   var produccion= $("#txt_fecha_produccion").val();
-   var predescarte= $("#txt_fecha_predescarte").val();
-    
-                 $.ajax({
-                    type: "POST",
-                    url: ruta_cruds_ppr + "control_modificar_proyeccion_lote.jsp",
-                    data:{id: id, aves:aves,nacimiento:nacimiento,produccion:produccion,predescarte:predescarte} ,
-                    beforeSend: function () {
-                        Swal.fire({
-                            title: "PROCESANDO!",
-                            html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
-                            allowOutsideClick: !1,
-                             willOpen: () => {
+    var id = $("#txt_id").val();
+    var aves = $("#txt_cantidad_aves").val();
+    var nacimiento = $("#txt_fecha_nacimiento").val();
+    var produccion = $("#txt_fecha_produccion").val();
+    var predescarte = $("#txt_fecha_predescarte").val();
+
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_ppr + "control_modificar_proyeccion_lote.jsp",
+        data: {id: id, aves: aves, nacimiento: nacimiento, produccion: produccion, predescarte: predescarte},
+        beforeSend: function () {
+            Swal.fire({
+                title: "PROCESANDO!",
+                html: "<strong>ESPERE</strong>...",
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: !1,
+                willOpen: () => {
                     Swal.showLoading()
                 }
-                        });
-                    },
-                    success: function (data) { 
-                        $('.modal-backdrop').remove();
-                        aviso_generico(data.tipo_respuesta, data.mensaje)
-                        if(data.tipo_respuesta==1)
-                        {
-                            $("#contenedor_principal").html("");
-                            ir_proyeccion_ppr();
-                        }      
-                    },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
-                });        
+            });
+        },
+        success: function (data) {
+            $('.modal-backdrop').remove();
+            aviso_generico(data.tipo_respuesta, data.mensaje)
+            if (data.tipo_respuesta == 1)
+            {
+                $("#contenedor_principal").html("");
+                ir_proyeccion_ppr();
             }
-    
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
 
 
 function control_modificar_proyeccion_lote_ajuste_ppr() {
-   var id               = $("#txt_id_ajuste").val();
-   var fecha_ajuste     = $("#txt_fecha_ajuste").val();
-   var saldo_nuevo      = $("#txt_nuevo_saldo_ajuste").val();
-   var saldo_viejo      = $("#txt_cantidad_aves_ajuste").val();
-   var dia_ajuste       = $("#label_dias_ajuste").html();
-   var semana_ajuste    = $("#label_semanas_ajuste").html();
-   var comentario    = $("#comentario").val();
-    
-    
+    var id = $("#txt_id_ajuste").val();
+    var fecha_ajuste = $("#txt_fecha_ajuste").val();
+    var saldo_nuevo = $("#txt_nuevo_saldo_ajuste").val();
+    var saldo_viejo = $("#txt_cantidad_aves_ajuste").val();
+    var dia_ajuste = $("#label_dias_ajuste").html();
+    var fecha_descarte = $("#txt_fecha_predescarte_ajuste").val();
+    var semana_ajuste = $("#label_semanas_ajuste").html();
+    var comentario = $("#comentario_ajuste").val();
+
+
     /*
-        String id               = request.getParameter("id");
-        String fecha_ajuste     = request.getParameter("fecha_ajuste");
-        String saldo_nuevo      = request.getParameter("saldo_nuevo");
-        String saldo_viejo      = request.getParameter("saldo_viejo");
-        String dia_ajuste       = request.getParameter("dia_ajuste");
-        String semana_ajuste    = request.getParameter("semana_ajuste");
-   
+     String id               = request.getParameter("id");
+     String fecha_ajuste     = request.getParameter("fecha_ajuste");
+     String saldo_nuevo      = request.getParameter("saldo_nuevo");
+     String saldo_viejo      = request.getParameter("saldo_viejo");
+     String dia_ajuste       = request.getParameter("dia_ajuste");
+     String semana_ajuste    = request.getParameter("semana_ajuste");
+     
      */
-                 $.ajax({
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_ppr + "control_modificar_proyeccion_lote_ajuste.jsp",
+        data: {id: id,
+            fecha_ajuste: fecha_ajuste,
+            saldo_nuevo: saldo_nuevo,
+            saldo_viejo: saldo_viejo,
+            dia_ajuste: dia_ajuste,
+            comentario: comentario,
+            semana_ajuste: semana_ajuste,
+            fecha_descarte: fecha_descarte
+        },
+        beforeSend: function () {
+            Swal.fire({
+                title: "PROCESANDO!",
+                html: "<strong>ESPERE</strong>...",
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: !1,
+                willOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+        },
+        success: function (data) {
+            $('.modal-backdrop').remove();
+            aviso_generico(data.tipo_respuesta, data.mensaje)
+            if (data.tipo_respuesta == 1)
+            {
+                $("#contenedor_principal").html("");
+                ir_proyeccion_ppr();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
+
+
+function control_crear_proyeccion_lote_ppr() 
+{  
+    $("#form_crear").submit(function (e) {
+        e.preventDefault(),
+        $.ajax({
                     type: "POST",
-                    url: ruta_cruds_ppr + "control_modificar_proyeccion_lote_ajuste.jsp",
-                    data:{  id              : id, 
-                            fecha_ajuste    :fecha_ajuste,
-                            saldo_nuevo     :saldo_nuevo,
-                            saldo_viejo     :saldo_viejo,
-                            dia_ajuste      :dia_ajuste,
-                            comentario      :comentario,
-                            semana_ajuste   :semana_ajuste
-                        } ,
+                    url: ruta_cruds_ppr + "control_crear_lote_proyeccion.jsp",
+                    data:$("#form_crear").serialize() ,
                     beforeSend: function () {
                         Swal.fire({
                             title: "PROCESANDO!",
@@ -3164,11 +3293,65 @@ function control_modificar_proyeccion_lote_ajuste_ppr() {
                             ir_proyeccion_ppr();
                         }      
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
-                });        
-            }
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                });   
+        e.stoppropagation();
+    });
+        
+    }
     
+function ppr_pro_lotes_delete (id){
+      Swal.fire({
+        title: 'CONFIRMACION',
+        text: "DESEA ELIMINAR EL LOTE?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#001F3F',
+        cancelButtonColor: '#001F3F',
+        confirmButtonText: 'SI!',
+        cancelButtonText: 'NO!'}).then((result) =>
+    {
+        if (result.value)
+        {
+            $.ajax({
+                type: "POST",
+                url: ruta_cruds_ppr + "crud_eliminar_lote_proyeccion.jsp",
+                data: {id: id },
+                beforeSend: function () {
+                    Swal.fire({
+                        title: "PROCESANDO!",
+                        html: "<strong>ESPERE</strong>...",
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: !1,
+                        onBeforeOpen: () => {
+                            Swal.showLoading(),
+                                    (timerInterval = setInterval(() => {
+                                        Swal.getContent().querySelector("strong").textContent = Swal.getTimerLeft();
+                                    }, 1e3));
+                        },
+                    });
+                },
+                success: function (data)
+                {
+                    aviso_generico(data.tipo_respuesta, data.mensaje)
+                    if (data.tipo_respuesta == 1)
+                    {
+                        $("#contenedor_principal").html("");
+                        ir_proyeccion_ppr();
+                    }
+                },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+            });
+        }
+    });
+    
+}
