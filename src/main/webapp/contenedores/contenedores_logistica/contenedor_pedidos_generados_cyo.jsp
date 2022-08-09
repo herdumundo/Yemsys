@@ -50,14 +50,14 @@
             + "  from mae_log_ptc_det_mixtos_pedidos a "
             + "  inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id"
             + "   inner join maehara.dbo.[@CAMIONES] c on b.id_camion=c.Code collate database_default "
-            + "  where a.estado=2 and a.clasificadora='" + area + "' "
+            + "  where a.estado in (2,3) and a.clasificadora='" + area + "' "
             + "  group by a.id_cab,b.fecha_registro,code,name ,carro,b.id_camion,b.id_chofer"
             + " union all"
             + " select distinct a.id,FORMAT (a.fecha_registro, 'dd/MM/yyyy HH:mm') as fecha_registro,concat(code,'-',name) as camion  ,"
             + "	sum(c.cantidad) as cantidad, 0 as carro,a.id_camion,a.id_chofer  "
             + "from mae_log_ptc_cab_pedidos a    "
-            + "	inner join maehara.dbo.[@CAMIONES] b     on a.id_camion=b.Code collate database_default     and a.estado IN (2)    "
-            + "	inner join mae_log_ptc_det_pedidos2 c on a.id=c.id_cab and c.estado=2 and c.clasificadora='" + area + "' "
+            + "	inner join maehara.dbo.[@CAMIONES] b     on a.id_camion=b.Code collate database_default     and a.estado IN (2,3)    "
+            + "	inner join mae_log_ptc_det_pedidos2 c on a.id=c.id_cab and c.estado in (2,3) and c.clasificadora='" + area + "' "
              + "group by a.id,a.fecha_registro,code,name,a.id_camion,a.id_chofer ) t "
             + "group by  id,fecha_registro,camion,id_camion,id_chofer "); %>
 

@@ -3267,7 +3267,7 @@ function control_modificar_proyeccion_lote_ajuste_ppr() {
 function control_crear_proyeccion_lote_ppr() 
 {  
     $("#form_crear").submit(function (e) {
-        e.preventDefault(),
+        e.preventDefault();
         $.ajax({
                     type: "POST",
                     url: ruta_cruds_ppr + "control_crear_lote_proyeccion.jsp",
@@ -3285,10 +3285,10 @@ function control_crear_proyeccion_lote_ppr()
                         });
                     },
                     success: function (data) { 
-                        $('.modal-backdrop').remove();
+                       
                         aviso_generico(data.tipo_respuesta, data.mensaje)
                         if(data.tipo_respuesta==1)
-                        {
+                        {   $('.modal-backdrop').remove();
                             $("#contenedor_principal").html("");
                             ir_proyeccion_ppr();
                         }      

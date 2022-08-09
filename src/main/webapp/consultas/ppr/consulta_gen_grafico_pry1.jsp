@@ -160,8 +160,8 @@
 
                 + "<tr><th colspan='7' style='color: #fff; background: black;'>Historial de ajustes </th></tr>"
                 + "<tr>"
-                + " <th  style='color: #fff; background: black;' >Fecha</th>      "
-                + " <th  style='color: #fff; background: black;' >Registro</th>      "
+                + " <th  style='color: #fff; background: black;' >Fecha de ajuste</th>      "
+                + " <th  style='color: #fff; background: black;' >Fecha de registro</th>      "
                 + " <th  style='color: #fff; background: black;' >Semana</th>      "
                 + " <th  style='color: #fff; background: black;' >Saldo nuevo</th>      "
                 + " <th  style='color: #fff; background: black;' >Ajuste</th>      "
