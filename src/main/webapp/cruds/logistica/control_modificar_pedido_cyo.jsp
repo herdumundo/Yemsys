@@ -19,9 +19,12 @@
         ob = new JSONObject();
         String json = request.getParameter("json");
         String id_pedido = request.getParameter("id_pedido");
+        String mensaje_pedido = request.getParameter("mensaje");
         String area = (String) sesionOk.getAttribute("area_nuevo");
         String id_usuario = (String) sesionOk.getAttribute("id_usuario");
         String usuario = (String) sesionOk.getAttribute("user_name");
+        
+        
         String mensaje = "";
         int tipo_respuesta = 0;
 
@@ -59,12 +62,13 @@
 
             connection.setAutoCommit(false);
             CallableStatement callableStatement = null;
-            callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_modificar_cyo](?,?,?,?,?,?,?)}");
+            callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_modificar_cyo2](?,?,?,?,?,?,?,?)}");
             callableStatement.setObject(1, DataTableGrilla);
             callableStatement.setInt(2, Integer.parseInt(id_pedido));
             callableStatement.setInt(3, Integer.parseInt(id_usuario));
             callableStatement.setString(4, area);
             callableStatement.setString(5, usuario);
+            callableStatement.setString(6, mensaje_pedido);
 
             callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
             callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);

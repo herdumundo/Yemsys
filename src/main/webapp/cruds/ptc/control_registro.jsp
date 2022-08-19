@@ -8,32 +8,35 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <% 
     
-        if (sesion == true) {
+    if (sesion == true) 
+    {
     
     JSONObject ob = new JSONObject();
     ob=new JSONObject();
     String fecha_puesta         =   request.getParameter("fecha_puesta");
     String codigo_cepillado     =   request.getParameter("codigo_cepillado");
-    String clasificadora        =   (String) sesionOk.getAttribute("clasificadora");
     String nrocarro             =   request.getParameter("cod_carrito");
     String codigo_borroso       =   request.getParameter("codigo_borroso");
     String tipo_maples          =   request.getParameter("tipo_maples");
     String codigo_especial      =   request.getParameter("codigo_especial");
-    String area=                    (String) sesionOk.getAttribute("area_cch");
     String tipo_huevo           =   request.getParameter("tipo_huevo");
     String cantidad             =   request.getParameter("txt_cantidad");
     String unidad_medida        =   request.getParameter("unidad_medida");
-    String categoria            =   (String) sesionOk.getAttribute("categoria");
-    String hora_desde_minutos           =   request.getParameter("hora_desde");
-    String hora_hasta_minutos           =   request.getParameter("hora_hasta");
+    String hora_desde_minutos   =   request.getParameter("hora_desde");
+    String hora_hasta_minutos   =   request.getParameter("hora_hasta");
     String fecha                =   request.getParameter("calendario_registro");
     String tipo_aviario         =   request.getParameter("tipo_aviario");
     String tipo_almacenamiento  =   request.getParameter("tipo_almacenamiento");
     String responsable          =   request.getParameter("txt_responsable");
     String liberado             =   request.getParameter("txt_liberado");
     String comentario           =   request.getParameter("txt_obs");
-    String nombre_usuario       =   (String) sesionOk.getAttribute("nombre_usuario");
     String fecha_fin            =   request.getParameter("fecha_clas_final");
+    
+    String area=                    (String) sesionOk.getAttribute("area_cch");
+    String clasificadora        =   (String) sesionOk.getAttribute("clasificadora");
+    String nombre_usuario       =   (String) sesionOk.getAttribute("nombre_usuario");
+    String categoria            =   (String) sesionOk.getAttribute("categoria");
+   
     int cantidad_bd=0;
     int cantidad_movimiento=0;
     String mensaje="";

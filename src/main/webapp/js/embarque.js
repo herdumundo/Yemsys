@@ -100,8 +100,8 @@ function llenar_grilla_pendientes(nro_factura) {
     
      $.ajax({
         type: "POST",
-        url: cruds_emb + 'control_grilla_recuperada.jsp',
-        data:({nro_factura: nro_factura}),
+         url: cruds_emb + 'control_grilla_recuperada.jsp',
+         data:({nro_factura: nro_factura}),
         beforeSend: function ()
         {
             cargar_load("Cargando")
@@ -112,7 +112,7 @@ function llenar_grilla_pendientes(nro_factura) {
             $("#div_aviso").html("");
             $("#div_aviso").html(res.div_aviso);
             $(".ocultar").hide();
-            activar_datatable();// EN ESTE PROCESO SE HABILITA POR UNICA VEZ EL DATATABLE, CADA VEZ QUE LLAME A TRAER_EMBARQUE ESTE PROCESO SE EJECUTA.
+            activar_datatable_embarque();// EN ESTE PROCESO SE HABILITA POR UNICA VEZ EL DATATABLE, CADA VEZ QUE LLAME A TRAER_EMBARQUE ESTE PROCESO SE EJECUTA.
             eliminar_fila_embarque_pendientes();
             counter = res.count;
             
@@ -302,7 +302,18 @@ function validar_embarque(datos_grilla) {
         confirmar_registro(datos_grilla);
     }
 }
+function aviso_cantidad_mayor_embarque(tipo,cantidad) {
+ 
+    swal.fire({
+        type: 'error',
+        title: "TIPO "+tipo+" SUPERA LA CANTIDAD REQUERIDA",
+        text: "CANTIDAD REQUERIDA '"+cantidad +" CAJONES' ",
 
+        confirmButtonText: "CERRAR"
+    });
+    
+    
+}
 function registrar_embarque() {
 
     var total_a_grilla = ($('#tipo_cja').val() * 360) + ($('#tipo_ca').val() * 4320);
@@ -330,25 +341,25 @@ function registrar_embarque() {
     {
         if (total_a_grilla > fac_a)
         {
-            aviso_cantidad_mayor('A', (fac_a / 360));
+            aviso_cantidad_mayor_embarque('A', (fac_a / 360));
         } else if (total_b_grilla > fac_b)
         {
-            aviso_cantidad_mayor('B', (fac_b / 360));
+            aviso_cantidad_mayor_embarque('B', (fac_b / 360));
         } else if (total_c_grilla > fac_c)
         {
-            aviso_cantidad_mayor('C', (fac_c / 360));
+            aviso_cantidad_mayor_embarque('C', (fac_c / 360));
         } else if (total_d_grilla > fac_d)
         {
-            aviso_cantidad_mayor('D', (fac_d / 360));
+            aviso_cantidad_mayor_embarque('D', (fac_d / 360));
         } else if (total_s_grilla > fac_s)
         {
-            aviso_cantidad_mayor('S', (fac_s / 360));
+            aviso_cantidad_mayor_embarque('S', (fac_s / 360));
         } else if (total_j_grilla > fac_j)
         {
-            aviso_cantidad_mayor('J', (fac_j / 360));
+            aviso_cantidad_mayor_embarque('J', (fac_j / 360));
         } else if (total_g_grilla > fac_g)
         {
-            aviso_cantidad_mayor('G', (fac_g / 360));
+            aviso_cantidad_mayor_embarque('G', (fac_g / 360));
         } else {
 
             var valores = '';

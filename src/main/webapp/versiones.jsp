@@ -173,4 +173,7 @@ String contenedores_bal_pendiente_aprobacion_gerencia = "0096-PAN-09062022-A";
 
     String contenedores_bal_pendientes_creados_usuario = "0099-PAN-30062022-A";
     String desc_contenedores_bal_pendientes_creados_usuario = " ";
+    
+    String contenedores_log_logModificaciones = "0101-PAN-10082022-A";
+    String desc_contenedores_log_logModificaciones = " ";
 %>

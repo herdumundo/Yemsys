@@ -61,7 +61,7 @@
             <td><%=rs.getString("areas")%></td>
             <td>
                 <button class="btn btn-xs bg-navy"   title="Editar pedido"><i class="fa fa-edit" onclick="ir_pedido_modificar_logistica(2,<%=rs.getString("id")%>,<%=rs.getString("cod_camion")%>,<%=rs.getString("id_chofer")%>)"></i></button>
-             
+              
                  <button class="btn btn-xs bg-warning"   title="Cambiar camión"><i class="fa fa-truck" onclick="cambiar_camion_log(<%=rs.getString("cod_camion")%>,<%=rs.getString("id")%>,<%=rs.getString("U_capacidad")%>);" class="form-control btn-dark"data-toggle="modal" data-target=".modal_camion" ></i></button>
                  <button class="btn btn-xs bg-danger"   title="Anular pedido"><i class="fa fa-trash-o" onclick="anular_pedido(<%=rs.getString("id")%>)"></i></button>
               

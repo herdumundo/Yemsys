@@ -27,6 +27,7 @@
     try 
     {
         connection.setAutoCommit(false);
+        
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_crear](?,?,?,?,?,?,?)}");
         callableStatement.setInt(1, Integer.parseInt(cantidad_total));
@@ -37,9 +38,10 @@
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
         callableStatement.execute();
+        
         tipo_respuesta = callableStatement.getInt("estado_registro");
         mensaje = callableStatement.getString("mensaje");
-        if (tipo_respuesta == 0) 
+       if (tipo_respuesta == 0) 
         {
             connection.rollback();
         } 
@@ -47,13 +49,14 @@
         {
             connection.commit();
         }
-
+ 
     } 
     catch (Exception e) 
     {
         mensaje = e.toString();
         tipo_respuesta = 0;
-    } finally {
+    } 
+    finally {
         ob.put("mensaje", mensaje);
         ob.put("tipo_respuesta", tipo_respuesta);
         out.print(ob);

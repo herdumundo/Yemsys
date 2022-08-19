@@ -8,7 +8,7 @@
 <%@page contentType="application/json; charset=utf-8" %>
 
 <%    
-    String area = (String) sesionOk.getAttribute("area_log");
+     String area_form = request.getParameter("area");
     String id_camion = request.getParameter("id_camion");
     String id_pedido = request.getParameter("id_pedido");
 
@@ -20,18 +20,7 @@
     st4 = connection.createStatement();
 
     JSONObject ob = new JSONObject();
-    String area_form = "";
-    if (area.equals("A")) {
-        area_form = "CCHA";
-    } else if (area.equals("B")) {
-        area_form = "CCHB";
-    } else if (area.equals("H")) {
-        area_form = "CCHH";
-    } else if (area.equals("O")) {
-        area_form = "LAVADOS";
-    } else if (area.equals("C")) {
-        area_form = "CYO";
-    }
+     
      String grilla_html = "";
     String cabecera = "  "
             + " "
@@ -61,7 +50,7 @@
             + " </tr>"
             + "</thead> <tbody >";
 
-    if (area.equals("O")) {
+    if (area_form.equals("LAVADOS")) {
         cabecera = " "
                 + " "
                 + " "
@@ -95,8 +84,8 @@
 
         rs2 = st2.executeQuery("  select tipo_huevo "
                 + "     from mae_log_ptc_det_pedidos2 a "
-                + "     inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id where  b.id_camion=" + id_camion + " and a.clasificadora='" + area_form + "' "
-                + "     and b.estado=2 group by tipo_huevo");
+                + "     inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id where  b.id=" + id_pedido + " and a.clasificadora='" + area_form + "' "
+                + "     and b.estado in (1,2) group by tipo_huevo");
         String huevos_cargados = "";
         int i = 0;
         while (rs2.next()) {

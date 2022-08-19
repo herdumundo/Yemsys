@@ -36,7 +36,11 @@
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
         <link href="plugins/lib/themes/default.css" rel="stylesheet" id="theme_base" />
         <link href="plugins/lib/themes/default.date.css" rel="stylesheet" id="theme_date" />
-        <link href="plugins/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+       
+        <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
+ 
+        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
          <link rel="stylesheet" type="text/css" href="plugins/autoFill.bootstrap4.min.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/buttons.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/colReorder.bootstrap4.css"/>
@@ -47,6 +51,8 @@
         <link href="plugins/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/rowGroup.bootstrap4.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/rowReorder.bootstrap4.css" rel="stylesheet" type="text/css"/>
+        
+        
         <link rel="stylesheet" type="text/css" href="plugins/scroller.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/searchBuilder.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/searchPanes.bootstrap4.css"/>
@@ -361,8 +367,10 @@
             <script src="plugins/jszip.min.js" type="text/javascript"></script>
             <script type="text/javascript" src="plugins/pdfmake.min.js"></script>
             <script type="text/javascript" src="plugins/vfs_fonts.js"></script>
+            
             <script src="plugins/jquery.dataTables.min.js" type="text/javascript"></script> 
             <script src="plugins/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+            
             <script type="text/javascript" src="plugins/dataTables.autoFill.min.js"></script>
             <script type="text/javascript" src="plugins/autoFill.bootstrap4.min.js"></script>
             <script type="text/javascript" src="plugins/dataTables.buttons.min.js"></script>
@@ -371,6 +379,9 @@
             <script type="text/javascript" src="plugins/buttons.html5.min.js"></script>
             <script type="text/javascript" src="plugins/buttons.print.min.js"></script>
             <script src="plugins/dataTables.checkboxes.min.js" type="text/javascript"></script>
+            <!---------------------------------------------------------------------------------> 
+            
+            
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
             <script src="js/principal.js?v=2.8" type="text/javascript"></script>

@@ -32,35 +32,19 @@
     } else if (area.equals("C")) {
         area_form = "CYO";
     }
-     String grilla_html = "";
+    String th="";
+    String grilla_html = "";
     String cabecera = "  "
             + " "
             + " "
-            + " <table id='tb_preembarque' class=' compact' style='width: 100%;'>"
+            + " <table id='tb_preembarque' class='display compact' style='width: 100%;'>"
             + "<thead>"
             + " <tr>"
             + "<th rowspan='2'  style='color: #fff;' class='bg-navy'><b>Fecha puesta</b></th>  "
             + " <th rowspan='2' class='bg-navy' ><b>Tipo</b></th>  "
-            + " <th colspan='15'  style='color: #fff;'   class='bg-navy text-center'  ><b><a id='td_" + area_form + "'>" + area_form + "</a></b></th>   </tr>"
-            + " <tr>"
-            + " <th  style='color: #fff;   ' class='bg-navy'>LIB</th>      "
-            + " <th style='color: #fff;' class='bg-navy'>Cant</th>"
-            + " <th style='color: #fff;' class='bg-navy'>Res</th>"
-            + " <th  style='color: #fff;  'class='bg-navy'>Acep</th>      "
-            + " <th style='color: #fff; 'class='bg-navy' >Cant</th>"
-            + " <th style='color: #fff;' class='bg-navy'>Res</th>"
-            + " <th  style='color: #fff;  'class='bg-navy'>Invo</th>      "
-            + " <th  style='color: #fff;  'class='bg-navy'>Cant</th>"
-            + " <th style='color: #fff;' class='bg-navy'>Res</th>"
-            + " <th  style='color: #fff;  'class='bg-navy'>LDO</th>      "
-            + " <th  style='color: #fff;  'class='bg-navy'>Cant</th>  "
-            + " <th style='color: #fff;' class='bg-navy'>Res</th>"
-            + " <th  style='color: #fff;  'class='bg-navy'>Pallet</th>      "
-            + " <th  style='color: #fff;  'class='bg-navy'>Cant</th>"
-            + " <th style='color: #fff;' class='bg-navy'>Res</th>"
-            + " </tr>"
-            + "</thead> <tbody >";
+            + " <th colspan='10'  style='color: #fff;'   class='bg-navy text-center'  ><b><a id='td_" + area_form + "'>" + area_form + "</a></b></th>   </tr>";
 
+    
     if (area.equals("O")) {
         cabecera = " "
                 + " "
@@ -69,7 +53,7 @@
                 + "<table id='tb_preembarque' class='table table-bordered table-hover' style='width:50%'>"
                 + "<thead>"
                 + " <tr>"
-                + "<th rowspan='2'  class='bg-navy' style='color: #fff;'><b>Fecha puesta</b></th>  "
+                + " <th rowspan='2'  class='bg-navy' style='color: #fff;'><b>Fecha puesta</b></th>  "
                 + " <th rowspan='2'  class='bg-navy' ><b>Tipo</b></th>  "
                 + " <th colspan='8' class='bg-navy text-center'       ><b><a id='td_" + area_form + "'>" + area_form + " </a></b></th>   </tr>"
                 + " <tr>"
@@ -89,10 +73,47 @@
       //  rs = st.executeQuery(" exec mae_log_select_reserva_camion_modificacion_cyo2 @id_camion=" + id_camion + "  , @area='" + area_form + "'");
         rs = st.executeQuery(" exec mae_log_select_reserva_camion_modificacion_cyo4 @id_camion=" + id_camion + "  , @id_pedido=" + id_pedido + "  , @area='" + area_form + "'");
 
-        while (rs.next()) {
+        while (rs.next()) 
+        {
             grilla_html = grilla_html + rs.getString("tr");
         }
+        
+        String das="ASdasd";
 
+        if(grilla_html.contains("LIB"))
+        {
+           th=th+ " <th  style='color: #fff;   ' class='bg-navy'>LIB</th>      "
+            + " <th style='color: #fff;' class='bg-navy'>Cant</th>"
+            + " <th style='color: #fff;' class='bg-navy'>Res</th>";
+        }   
+        if(grilla_html.contains("INVO"))
+        {
+            th=th+ " <th  style='color: #fff;   ' class='bg-navy'>INVO</th>      "
+            + " <th style='color: #fff;' class='bg-navy'>Cant</th>"
+            + " <th style='color: #fff;' class='bg-navy'>Res</th>";   
+        }
+          
+        if(grilla_html.contains("ACEP"))
+        {
+             th=th+ " <th  style='color: #fff;   ' class='bg-navy'>ACEP</th>      "
+            + " <th style='color: #fff;' class='bg-navy'>Cant</th>"
+            + " <th style='color: #fff;' class='bg-navy'>Res</th>";
+        }
+        if(grilla_html.contains("LDO"))
+        {
+        
+        }
+        if(grilla_html.contains("PAL"))
+        {
+            th=th+ " <th  style='color: #fff;   ' class='bg-navy'>PAL</th>      "
+            + " <th style='color: #fff;' class='bg-navy'>Cant</th>"
+            + " <th style='color: #fff;' class='bg-navy'>Res</th>";  
+        }
+        
+        cabecera=cabecera+"<tr>"+th+"</tr>  </thead> <tbody >";
+        
+        
+        
         rs2 = st2.executeQuery("  select tipo_huevo "
                 + "     from mae_log_ptc_det_pedidos2 a "
                 + "     inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id where  b.id_camion=" + id_camion + " and a.clasificadora='" + area_form + "' "
@@ -130,3 +151,5 @@
         out.print(ob);
     }
 %>
+
+

@@ -97,7 +97,10 @@ LOG
                         
                          
                         </div>
+                          
                         </div>
+                        <br>  <b> <a class="bg-danger">Fecha consulta: </a><a class="bg-danger"  id="fecha_consulta"></a> </b>
+                        
                         <a style="font-weight: bold;color:black">CARROS RESTANTES:</a><input type="text" disabled id="txt_restantes" style="font-weight: bold;color:black" value="0" >
                         <input type="button" value="Refrescar" class="btn bg-navy" onclick="generar_grilla_pedido_log(7)">
                        <a style="font-weight: bold;color:black">SELECCIONE CAMION</a> 

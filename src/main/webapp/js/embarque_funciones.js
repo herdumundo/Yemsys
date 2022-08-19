@@ -176,7 +176,7 @@ function eliminar_fila_embarque_pendientes() {
 }
 
 
-function activar_datatable() {
+function activar_datatable_embarque() {
 
     $('#myTable').DataTable({
       // "retrieve": true,

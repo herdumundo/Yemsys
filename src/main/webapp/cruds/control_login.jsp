@@ -19,7 +19,7 @@
     int tipo_respuesta = 0;
     String id_rol = "";
   
-     MessageDigest m = MessageDigest.getInstance("MD5");
+    MessageDigest m = MessageDigest.getInstance("MD5");
     m.reset();
     m.update(cla.getBytes());
     byte[] digest = m.digest();
@@ -51,7 +51,9 @@
     } finally {
         if (tipo_respuesta == 0) {
             response.sendRedirect("../login_error.jsp");
-        } else {
+        } 
+        else 
+        {
             String notificacion = "  <a class='nav-link  ' data-toggle='dropdown' href='#' aria-expanded='false'>  <i class='far fa-bell '></i>     <span class='badge badge-danger navbar-badge animacion' id='contador_notificacion'>0</span>    </a><div class='dropdown-menu dropdown-menu-lg dropdown-menu-right ' style='left: inherit; right: 0px;' id='notificacion'>   <span class='dropdown-item dropdown-header bg-navy'>Notificaciones</span>   </div>";
             HttpSession sesionOk = request.getSession();
             sesionOk.setAttribute("user_name", user_name);

@@ -7,13 +7,20 @@
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>  <%     
-    ResultSet rs,rs2;
-    PreparedStatement  pst,pst2;
-
+    ResultSet rs,rs2,rs3;
+    PreparedStatement  pst,pst2,pst3;
+    String id = request.getParameter("id") ;
     pst = connection.prepareStatement("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
     pst2 = connection.prepareStatement("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
+    pst3 = connection.prepareStatement("    select id_cab,id_chofer,id_camion,clasificadora  "
+            + "     from 		 mae_log_ptc_det_pedidos2 t0 inner join mae_log_ptc_cab_pedidos t1 on t0.id_cab=t1.id   "
+            + " where id_cab="+id+" and t0.estado=2 group by id_cab,id_chofer,id_camion,clasificadora");
+    
+    
+    
     rs = pst.executeQuery();
     rs2 = pst2.executeQuery();
+    rs3 = pst3.executeQuery();
   
      String version= contenedores_logistica_contenedor_pedidos;
  try {
@@ -68,7 +75,25 @@ LOG
      
     
        </div>
-       
+      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <button type="button" class="btn btn-danger">MODIFICACIONES POR AREA</button>
+                        </div>
+
+                        <div id="grupo_areas" class="btn-group btn-group-toggle" data-toggle="buttons">
+                       
+                            <% 
+                            while (rs3.next()) {
+                                    
+                             %>       
+                            
+                            <label class="btn btn-secondary "> 
+                                <input type="radio" name="options" id="option_a1" autocomplete="off" checked="" onclick="ir_pedido_modificacion_porArea(<%=rs3.getString("id_cab")%>,<%=rs3.getString("id_chofer")%>,<%=rs3.getString("id_camion")%>,'<%=rs3.getString("clasificadora")%>')" ><%=rs3.getString("clasificadora")%></label>
+                            <%   }
+                            %>
+                        </div>
+                          
+                        </div>   
        <div class="container my-4">
         <button id="modalActivate" type="button" class="btn bg-navy form-control" data-toggle="modal" data-target="#exampleModalPreview">
         Abrir ventana de pedidos

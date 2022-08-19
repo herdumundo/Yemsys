@@ -57,38 +57,43 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
     var tipo_pedido = "";
     var pagina = "";
     var area = "";//este sirve solo para enviar para que clasificadora es
-    if (tipo == 1 || tipo == 4)
-    {
-        pagina = "generar_grilla_preembarque.jsp";
-        tipo_pedido = "CREAR";
+    switch (tipo) {
+        case 1:
+        case 4:
+            pagina = "generar_grilla_preembarque.jsp";
+            tipo_pedido = "CREAR";  
+        break;
+        case 2:
+            codigo_camion = cod_camion;
+            pagina = "generar_grilla_preembarque_modificar.jsp?id_pedido=" + codigo;
+            tipo_pedido = "MODIFICAR"; 
+        break;
+        case 3:
+            pagina = "generar_grilla_preembarque_cyo.jsp?id=" + codigo;
+        break;
+        case 5:
+        pagina = "generar_grilla_preembarque_cajones.jsp";       
+        break;
+        case 6:
+            pagina = "generar_grilla_preembarque_camion.jsp?id_camion=" + codigo_camion;
+            tipo_pedido = "CREAR";            
+        break;
+        case 7:
+            pagina = "generar_grilla_preembarque_refrescar_boton.jsp?id_camion=" + codigo_camion;
+            tipo_pedido = "CREAR";    
+        break;
+        case 8:
+            codigo_camion = cod_camion;
+            pagina = "generar_grilla_preembarque_modificar_refrescar.jsp?id_camion=" + codigo_camion + "&id_pedido=" + codigo;
+            tipo_pedido = "MODIFICAR";
+        break;
+        case 9:
+            pagina = "generar_grilla_preembarque_refrescar.jsp?id_camion=" + codigo_camion;
+            tipo_pedido = "CREAR";   
+        break; 
     }
-    if (tipo == 6)
-    {
-        pagina = "generar_grilla_preembarque_camion.jsp?id_camion=" + codigo_camion;
-        tipo_pedido = "CREAR";
-    } 
-    else if (tipo == 7||tipo == 9)
-    {
-        pagina = "generar_grilla_preembarque_refrescar.jsp?id_camion=" + codigo_camion;
-        tipo_pedido = "CREAR";
-    } 
-    else if (tipo == 8)
-    {
-        codigo_camion = cod_camion;
-        pagina = "generar_grilla_preembarque_modificar_refrescar.jsp?id_camion=" + codigo_camion + "&id_pedido=" + codigo;
-        tipo_pedido = "MODIFICAR";
-    } else if (tipo == 2)
-    {
-        codigo_camion = cod_camion;
-        pagina = "generar_grilla_preembarque_modificar.jsp?id_pedido=" + codigo;
-        tipo_pedido = "MODIFICAR";
-    } else if (tipo == 3)
-    {
-        pagina = "generar_grilla_preembarque_cyo.jsp?id=" + codigo;
-    } else if (tipo == 5)
-    {
-        pagina = "generar_grilla_preembarque_cajones.jsp";
-    }
+    
+    
     $.ajax({
         type: "POST",
         url: ruta_consultas + pagina,
@@ -101,6 +106,8 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
             //TIPO 1 ES IGUAL A GENERACION DE PEDIDO
             //TIPO 2 ES IGUAL A FACTURACION
             //TIPO 3 ES IGUAL A CYO
+            //TIPO 7 ES IGUAL A BOTON REFRESCAR 
+            //TIPO 9 ES IGUAL A BOTON GENERAR PEDIDO 
             //FIRT ES EL DIV EN DONDE SE ALMACENA LA GRILLA DE CARROS ENTERO, EL SECOND ALMACENA LOS CARROS MIXTOS.
             $("#1").val("0");
             $("#2").val("0");
@@ -110,9 +117,11 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
             $("#6").val("0");
             $("#7").val("0");
 
-            if (tipo == 1 || tipo == 2)
+           if (tipo == 1 || tipo == 2)
+            // if ( tipo == 2)
             {
                 $("#contenido_grillas").html(res.grilla + " " + res.grilla_mixto);
+                $("#fecha_consulta").html(res.fecha_consulta);
                 $("#tb_preembarque_mixto").DataTable(
                 {
                     responsive: true,
@@ -126,8 +135,10 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
                     }
                 }
                 );
-            } else
+            } 
+            else
             {
+                $("#fecha_consulta").html(res.fecha_consulta);
                 $("#first").html("");
                 $("#first").html(res.grilla);
                 var c = 0;
@@ -337,6 +348,95 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
 
     });
  }
+ 
+ 
+function registrar_pedido_log()
+{
+     //actualiza grilla por si hubo un cambio despues de haber cargado todo.
+    var codigo_camion = $("#cbox_camion").find(':selected').attr('codigo');
+    var codigo_chofer = $("#cbox_chofer").find(':selected').attr('codigo');
+    var capacidad = $("#cbox_camion").find(':selected').attr('capacidad');
+    var negativos = document.querySelectorAll("[negativo]");// CANTIDADES QUE FUERON ELIMINADOS DE CYO, Y APARECEN NEGATIVO EN PEDIDO
+  
+    var i =0;
+    for (  i = 0, len = negativos.length; i < len; i++)
+    {
+        
+    }
+    if(i>0){
+         aviso_generico(2,"LOS CARROS SELECCIONADOS RECAE EN INVENTARIO NEGATIVO.");
+    }
+    else if (codigo_camion == "-") 
+    {
+        aviso_generico(2,"SELECCIONE CAMION");
+    } 
+    else if (codigo_chofer == "-") 
+    {
+        aviso_generico(2,"SELECCIONE CHOFER");
+    } 
+    else if (parseInt(capacidad) > (cantidad_total + cantidad_total_mixtos)) 
+    {
+        aviso_generico(2,"FALTAN CARGAR CARROS");
+    } 
+    else if (parseInt(cantidad_negativa) < 0) 
+    {
+        aviso_generico(2,"NO CUENTA CON STOCK");
+    }  
+    else if ($("#txt_restantes").val() != "0") 
+    {
+        aviso_generico(2, "ERROR EN LA CANTIDAD DE CARROS");
+    } 
+    else
+    {
+        Swal.fire({
+
+            title: 'CONFIRMACION',
+            text: "DESEA REALIZAR EL PEDIDO?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'SI!',
+            cancelButtonText: 'NO!'}).then((result) =>
+        {
+            if (result.value)
+            {   
+                $.ajax({
+                    type: "POST",
+                    url: cruds + "control_crear_pedido.jsp",
+                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad}),
+                    beforeSend: function ()
+                    {
+                        Swal.fire({
+                            title: 'PROCESANDO!',
+                            html: 'ESPERE<strong></strong>...',
+                            allowOutsideClick: false,
+                            willOpen: () => 
+                            {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function (res)
+                    {
+                        aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
+                    } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });
+            }
+        });  
+    }
+    
+ 
+
+} 
+ 
+ 
+ 
 function cambiar_select_camion_log(id_camion){
     $("#cbox_camion").val(id_camion);
     generar_grilla_pedido_log(6);
@@ -546,90 +646,7 @@ function grilla_funciones_log(tipo_pedido) //TIPO PEDIDO ES CREAR O MODIFICAR
     sumar_tipos_huevos_log(total_a, total_b, total_c, total_d, total_s, total_j);
 }
 
-function registrar_pedido_log()
-{
-     //actualiza grilla por si hubo un cambio despues de haber cargado todo.
-    var codigo_camion = $("#cbox_camion").find(':selected').attr('codigo');
-    var codigo_chofer = $("#cbox_chofer").find(':selected').attr('codigo');
-    var capacidad = $("#cbox_camion").find(':selected').attr('capacidad');
-    var negativos = document.querySelectorAll("[negativo]");// CANTIDADES QUE FUERON ELIMINADOS DE CYO, Y APARECEN NEGATIVO EN PEDIDO
-  
-    var i =0;
-    for (  i = 0, len = negativos.length; i < len; i++)
-    {
-        
-    }
-    if(i>0){
-         aviso_generico(2,"LOS CARROS SELECCIONADOS RECAE EN INVENTARIO NEGATIVO.");
-    }
-    else if (codigo_camion == "-") 
-    {
-        aviso_generico(2,"SELECCIONE CAMION");
-    } 
-    else if (codigo_chofer == "-") 
-    {
-        aviso_generico(2,"SELECCIONE CHOFER");
-    } 
-    else if (parseInt(capacidad) > (cantidad_total + cantidad_total_mixtos)) 
-    {
-        aviso_generico(2,"FALTAN CARGAR CARROS");
-    } 
-    else if (parseInt(cantidad_negativa) < 0) 
-    {
-        aviso_generico(2,"NO CUENTA CON STOCK");
-    }  
-    else if ($("#txt_restantes").val() != "0") 
-    {
-        aviso_generico(2, "ERROR EN LA CANTIDAD DE CARROS");
-    } 
-    else
-    {
-        Swal.fire({
 
-            title: 'CONFIRMACION',
-            text: "DESEA REALIZAR EL PEDIDO?",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'SI!',
-            cancelButtonText: 'NO!'}).then((result) =>
-        {
-            if (result.value)
-            {   
-                $.ajax({
-                    type: "POST",
-                    url: cruds + "control_crear_pedido.jsp",
-                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad}),
-                    beforeSend: function ()
-                    {
-                        Swal.fire({
-                            title: 'PROCESANDO!',
-                            html: 'ESPERE<strong></strong>...',
-                            allowOutsideClick: false,
-                            willOpen: () => 
-                            {
-                                Swal.showLoading();
-                            }
-                        });
-                    },
-                    success: function (res)
-                    {
-                        aviso_generico_log(res.tipo_respuesta, res.mensaje, 'PEDIDOS');
-                    } ,
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-              recargar_pagina();
-             }
-         }
-                });
-            }
-        });  
-    }
-    
- 
-
-}
 
 function registrar_pedido_mod_log()
 {
@@ -812,8 +829,12 @@ function grilla_funciones_cyo() //TIPO PEDIDO ES CREAR O MODIFICAR
     cerrar_load();
 }
 
-function registrar_pedido_mod_cyo()
+function registrar_pedido_mod_cyo(tipo_registro)
 {
+    var mensaje="MODIFICADO POR CYO";
+    if(tipo_registro===1){
+        mensaje="MODIFICADO POR LOGISTICA";
+    }
     var codigo_camion = $("#cbox_camion").find(':selected').attr('codigo');
     var textos = document.querySelectorAll("[texto]");
     validacion_carros = 0;
@@ -891,7 +912,7 @@ function registrar_pedido_mod_cyo()
                 $.ajax({
                     type: "POST",
                     url: cruds + "control_modificar_pedido_cyo.jsp",
-                    data: ({json: json_string, id_pedido: $("#id_pedido").val()}),
+                    data: ({json: json_string, id_pedido: $("#id_pedido").val(),mensaje:mensaje}),
                     beforeSend: function ()
                     {
                         Swal.fire({
@@ -1642,6 +1663,67 @@ function buscar_reporte_pedidos_log() {
         success: function (res)
         {
             $('#div_grilla').html(res.grilla);
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+    });
+
+}
+
+function gen_cab_log_modificaciones_log() {
+
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas + 'consulta_gen_grilla_cab_log_modificaciones.jsp',
+        data: ({ fecha_desde: $('#desde').val(), fecha_hasta: $('#hasta').val()}),
+        beforeSend: function ()
+        {
+            cargar_load("Consultando..");
+            $('#div_grilla').html("");
+        },
+        success: function (res)
+        {
+            $('#div_grilla').html(res.grilla);
+            activar_datatable('#tb_grilla_cab');
+             
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+    });
+
+}
+
+function gen_det_log_modificaciones_log(id,pagina) {
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas + pagina,
+        data: ({ id: id}),
+        beforeSend: function ()
+        {
+            cargar_load("Consultando..");
+            $('#div_grilla2').html("");
+        },
+        success: function (res)
+        {
+            $('#div_grilla2').html(res.grilla);
+            activar_datatable('#tb_grilla_det');
+            
+             $(".colorear").css('background','white');
+            $("#"+id).css('background','yellow');            
+            if(pagina=="consulta_gen_grilla_det_log_pedidos.jsp")
+            {
+                $("#"+id).css('background','green');            
+            }
+            
             cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
