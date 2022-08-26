@@ -281,7 +281,13 @@
                             </div>
                         </div>
 
-
+                        <div class="pl-2 pr-2 col-12">
+                            <div class="form-group">
+                                 
+                                <a href="apk/YemSys.apk" class="mx-auto btn btn-warning form-control "><i class="fa fa-fw fa-download"></i> Descargar APP</a>
+                                
+                            </div>
+                        </div>
                     </div>
                 </aside>
                 <div class="modal fade " id="modal_nuevocambio_pass2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

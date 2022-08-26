@@ -540,12 +540,14 @@
             beforeSend: function() 
             {
                 $("#contenido_grillas").html("");
-                reset_cero_variables_log();
+                $("#contenido_grillas_mixto").html("");
+               
             },           
             success: function (res) 
             {
                 
                 $("#contenido_grillas").html(res.grilla);
+                $("#contenido_grillas_mixto").html(res.grilla_mixto);
                  
              },
          error: function(XMLHttpRequest, textStatus, errorThrown) {

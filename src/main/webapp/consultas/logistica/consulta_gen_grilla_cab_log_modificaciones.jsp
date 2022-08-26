@@ -17,7 +17,7 @@
         
         rs_GM = st.executeQuery("   select                                                                                                  "
                 + "                     t0.id,t0.fecha_registro,id_camion,cantidad,nombre,                                                  "   
-                + "                     t2.descripcion as estado,nro_factura,t3.Name,t4.areas                                               "
+                + "                     t2.descripcion as estado,nro_factura,t3.Name,t4.areas,t0.fecha_upd                                              "
                 + "                 from                                                                                                    "
                 + "                     mae_log_ptc_cab_pedidos                     t0                                                      "
                 + "                     inner join usuarios                         t1 on t0.id_usuario=t1.cod_usuario                      "
@@ -31,7 +31,8 @@
                 + "<thead>"
                 + "     <tr>"
                 + "         <th class='text-center'   style='color: #fff; background: black;' >Nro.                          </th>   "
-                + "         <th class='text-center' style='color: #fff; background: black;' >Fecha       </th>   "
+                + "         <th class='text-center' style='color: #fff; background: black;' >Fecha creación       </th>   "
+                + "         <th class='text-center' style='color: #fff; background: black;' >Fecha Embarque       </th>   "
                 + "         <th class='text-center' style='color: #fff; background: black;' >Areas       </th>   "
                 + "         <th class='text-center' style='color: #fff; background: black;' >Camión      </th>   "
                 + "         <th class='text-center' style='color: #fff; background: black;' >Capacidad   </th>   "
@@ -49,6 +50,7 @@
                     + " <tr> "
                     + "     <td id='"+rs_GM.getString("id") +"' class='text-center colorear'    style=\"font-weight:bold\" > " + rs_GM.getString("id") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("fecha_registro") + "</td>"
+                    + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("fecha_upd") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("areas") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("id_camion") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("cantidad") + "</td>"
@@ -57,8 +59,8 @@
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("name") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" > " + rs_GM.getString("estado") + "</td>"
                     + "     <td class='text-center'    style=\"font-weight:bold\" >"
-                    + "     <button class='btn btn-xs bg-yellow' onclick=\"gen_det_log_modificaciones_log(" + rs_GM.getString("id") + "   ,'consulta_gen_grilla_det_log_modificaciones.jsp')\"  title='Visualizar modificaciones'><i class='fa fa-eye'  ></i></button>"
-                    + "     <button class='btn btn-xs bg-green' onclick=\"gen_det_log_modificaciones_log(" + rs_GM.getString("id") + ",'consulta_gen_grilla_det_log_pedidos.jsp')\"  title='Visualizar pedido original'><i class='fa fa-clipboard  '  ></i></button>"
+                    + "     <button class='btn btn-xs bg-yellow' onclick=\"gen_det_log_modificaciones_log(" + rs_GM.getString("id") + "   ,'consulta_gen_grilla_det_log_modificaciones.jsp','" + rs_GM.getString("fecha_registro") + "','" + rs_GM.getString("fecha_upd") + "','" + rs_GM.getString("areas") + "','" + rs_GM.getString("id_camion") + "','" + rs_GM.getString("name") + "' )\"  title='Visualizar modificaciones'><i class='fa fa-eye'  ></i></button>"
+                    + "     <button class='btn btn-xs bg-green' onclick=\"gen_det_log_modificaciones_log(" + rs_GM.getString("id") + ",'consulta_gen_grilla_det_log_pedidos.jsp','" + rs_GM.getString("fecha_registro") + "','" + rs_GM.getString("fecha_upd") + "','" + rs_GM.getString("areas") + "','" + rs_GM.getString("id_camion") + "' ,'" + rs_GM.getString("name") + "')\"  title='Visualizar pedido original'><i class='fa fa-clipboard  '  ></i></button>"
                     + "</td>"
                     + " </tr>";
 

@@ -121,7 +121,8 @@
             + "         <td     class='text-center'  style='color: #000; background: white; font-weight: bold; '   > "
             + "<form action='cruds/logistica/control_reporte_pedidos.jsp' target='_blank' >  "
             + "<input type='hidden' value='"+rs.getString(1)+"' name='id_rep'><input type='hidden' value='"+rs.getString(6)+"' name='estado_rep'>  "
-            + "<input type='submit' value='GENERAR REPORTE' class='form-control  bg-success' style='color: #000; background: white; font-weight: bold; '>   </b> </form>   </td>"
+            + "<input type='submit' value='GENERAR REPORTE' class='form-control  bg-success' style='color: #000; background: white; font-weight: bold; '>   <li class='fa-file-pdf-o'></li></b>"
+            + " </form>   </td>"
               +   " </tr>";
            
     }

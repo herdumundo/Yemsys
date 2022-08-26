@@ -296,14 +296,18 @@ function modal_detalle_formulacion_bal(id_seleccionado,formula_seleccionada,desc
         var n  ="<form id=\"form_verificar\"><br>\n\
         <div class='ribbonvert'> <span class='ribbon2'><b>Nro. <br>"+id_seleccionado+"</b></span>  \n\
         <br> <center><b>"+desc_formula+"</b></center>  </div>\n\
-\n\
-\n\        <div class='bg-black'><label> Formulas pendientes que desea incluir (Opcional)</label></div> \n\ \n\
+        \n\
+        \n\        <div class='bg-black'><label> Formulas pendientes que desea incluir (Opcional)</label></div> \n\ \n\
         <div id=\"div_grilla_form_pen\"> </div> <br>         \n\
- <button type='button' onclick=\"visualizar_detalle_formulacion_bal()\" class='btn bg-black btn-block'><i class='fa fa-eye '></i> Visualizar detalle</button> \n\
-         </form>";
-            Swal.fire({ type: "warning",   customClass: 'swal-wide',html: n, showCancelButton: false, showConfirmButton: false});
-            
-     cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula);
+        <button type='button' onclick=\"visualizar_detalle_formulacion_bal()\" class='btn bg-black btn-block'><i class='fa fa-eye '></i> Visualizar detalle</button> \n\
+        </form>";
+        Swal.fire({ type: "warning",   customClass: 'swal-wide',html: n, showCancelButton: false, showConfirmButton: false});
+        cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula);
+        $(".colorear").css('background','white');
+        $(".colorear").css('color','black');
+        $("#"+id_seleccionado).css('background','#030E3C');            
+        $("#"+id_seleccionado).css('color','white');            
+        
  }
  
  function cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula)

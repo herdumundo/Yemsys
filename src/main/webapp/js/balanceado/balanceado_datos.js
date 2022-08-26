@@ -482,6 +482,23 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
+            $("#tb_formulacion_det").DataTable({
+            paging: false,
+            "ordering": false,
+            "language":
+            {
+                "sUrl": "js/Spanish.txt"
+            },  
+            "rowCallback": function( row, data ) 
+            {
+                $('td.td_gris', row).css( 'background', '#E8E8E8' );
+                $('td.td_negro', row).css( 'background', '#000000' );
+            }
+                
+            });
+
+           
+            
             cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -641,6 +658,18 @@ function ir_informes_formulas_procesar_bal2 (desde,hasta){
         {
             $("#div_grilla2").html("");
             $("#div_grilla2").html(data.grilla);
+            
+         /*    $("#tb_formulacion").DataTable({ 
+                "scrollX": true,
+                paging: false,
+                ordering:false,
+                        responsive: true,
+                 "language":
+                        {
+                            "sUrl": "js/Spanish.txt"
+                        },
+                
+            });*/
              cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {

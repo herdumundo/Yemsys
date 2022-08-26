@@ -357,7 +357,7 @@ function registrar_pedido_log()
     var codigo_chofer = $("#cbox_chofer").find(':selected').attr('codigo');
     var capacidad = $("#cbox_camion").find(':selected').attr('capacidad');
     var negativos = document.querySelectorAll("[negativo]");// CANTIDADES QUE FUERON ELIMINADOS DE CYO, Y APARECEN NEGATIVO EN PEDIDO
-  
+    var txt_obs = $("#txt_obs").val();
     var i =0;
     for (  i = 0, len = negativos.length; i < len; i++)
     {
@@ -404,7 +404,7 @@ function registrar_pedido_log()
                 $.ajax({
                     type: "POST",
                     url: cruds + "control_crear_pedido.jsp",
-                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad}),
+                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad,obs:txt_obs}),
                     beforeSend: function ()
                     {
                         Swal.fire({
@@ -1663,6 +1663,8 @@ function buscar_reporte_pedidos_log() {
         success: function (res)
         {
             $('#div_grilla').html(res.grilla);
+            
+            activar_datatable("#tb_reportes");
             cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -1702,7 +1704,7 @@ function gen_cab_log_modificaciones_log() {
 
 }
 
-function gen_det_log_modificaciones_log(id,pagina) {
+function gen_det_log_modificaciones_log(id,pagina,fecha_registro,fecha_embarque,areas,id_camion,chofer) {
     $.ajax({
         type: "POST",
         url: ruta_consultas + pagina,
@@ -1715,7 +1717,50 @@ function gen_det_log_modificaciones_log(id,pagina) {
         success: function (res)
         {
             $('#div_grilla2').html(res.grilla);
-            activar_datatable('#tb_grilla_det');
+            
+            $('#tb_grilla_det').DataTable(  
+            {
+                paging: false,
+               // "ordering": false,
+                "language":
+                {
+                    "sUrl": "js/Spanish.txt"
+                },    dom: "Bfrtip",
+                        buttons: [
+                                {extend: "copyHtml5", text: "COPIAR GRILLA", exportOptions: {columns: [0, ":visible"]}},
+                                {
+                                    extend: "excelHtml5", 
+                                    title:"REPORTE DE DISTRIBUCION", 
+                                     messageTop: 'Nro. pedido:'+id+ 
+                                                '\nFecha de registro: '+fecha_registro+ 
+                                                '\nFecha de embarque: '+fecha_embarque+
+                                                '\nAreas: '+areas+
+                                                '\nNro. de camion: '+id_camion+
+                                                '\nChofer: '+chofer,
+                                                
+                        
+                                    text: "EXCEL", exportOptions: {columns: ":visible"}},
+                                {
+                                    extend: "pdfHtml5",
+                                    text: "PDF",
+                                        messageTop: 'Nro. pedido:'+id+ 
+                                                '\nFecha de registro: '+fecha_registro+ 
+                                                '\nFecha de embarque: '+fecha_embarque+
+                                                '\nAreas: '+areas+
+                                                '\nNro. de camion: '+id_camion+
+                                                '\nChofer: '+chofer
+                                                
+                                ,
+                                     title:  "REPORTE DE DISTRIBUCION",
+                                    orientation: "landscape",
+                                    pageSize: "LEGAL",
+                                    
+                                    exportOptions: {columns: ":visible"},
+                                },
+                                "colvis",
+                            ],
+                            keys: {clipboard: !1}
+        });
             
              $(".colorear").css('background','white');
             $("#"+id).css('background','yellow');            

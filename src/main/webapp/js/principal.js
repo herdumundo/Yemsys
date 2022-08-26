@@ -708,14 +708,15 @@ function cargar_datos_modal_version(ribbon, titulo, descripcion)
 function activar_datatable(variable){
      $(variable).DataTable
      (  {
-            paging: false,
-           // "ordering": false,
-            "language":
-            {
-                "sUrl": "js/Spanish.txt"
-            }
+                paging: false,
+               // "ordering": false,
+                "language":
+                {
+                    "sUrl": "js/Spanish.txt"
+                } ,
+                scrollX:        true,
         }); 
-}
+} 
 function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,datatable){
      window.location.hash =hash;
     var cal=calendario_formato;
