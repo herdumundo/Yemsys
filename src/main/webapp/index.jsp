@@ -23,7 +23,7 @@
   <img src="img/YEMSYS2.png" width="150" height="50" alt=""/>      
     </div>
     <div class="card-body">
-        <p class="login-box-msg"><strong>Inicio de sesión</strong></p>
+        <p class="login-box-msg" ><strong>Inicio de sesión</strong></p>
 
         <form action="cruds/control_login.jsp" method="post">
         

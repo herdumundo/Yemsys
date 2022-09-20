@@ -352,7 +352,7 @@ function generar_grilla_pedido_log(tipo, codigo, cod_camion, id_chofer)
  
 function registrar_pedido_log()
 {
-     //actualiza grilla por si hubo un cambio despues de haber cargado todo.
+    //actualiza grilla por si hubo un cambio despues de haber cargado todo.
     var codigo_camion = $("#cbox_camion").find(':selected').attr('codigo');
     var codigo_chofer = $("#cbox_chofer").find(':selected').attr('codigo');
     var capacidad = $("#cbox_camion").find(':selected').attr('capacidad');
@@ -388,23 +388,32 @@ function registrar_pedido_log()
     } 
     else
     {
+        
+        
+        
+        
+        
+        
+        
         Swal.fire({
 
             title: 'CONFIRMACION',
-            text: "DESEA REALIZAR EL PEDIDO?",
             type: 'warning',
+            html:'  <label>Numero global del pedido</label>  <input type="number"  id="numeracion"    class="form-control is-invalid" required onchange="crud_generar_numero_pedido_log()"> <br>\n\
+                    <label>Orden del pedido</label>  <input type="text"  id="orden_pedido"  placeholder="Ingrese el orden del pedido"  class="form-control is-invalid" >',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'SI!',
-            cancelButtonText: 'NO!'}).then((result) =>
+            confirmButtonText: 'Generar pedido',
+            cancelButtonText: 'Cancelar'}).then((result) =>
         {
             if (result.value)
             {   
-                $.ajax({
+                 $.ajax({
                     type: "POST",
                     url: cruds + "control_crear_pedido.jsp",
-                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad,obs:txt_obs}),
+                    data: ({id_camion: codigo_camion, id_chofer: codigo_chofer, cantidad_total: capacidad,obs:txt_obs,
+                            numeracion:$("#numeracion").val(),orden_pedido:$("#orden_pedido").val()}),
                     beforeSend: function ()
                     {
                         Swal.fire({
@@ -426,9 +435,31 @@ function registrar_pedido_log()
               recargar_pagina();
              }
          }
-                });
+                }); 
             }
         });  
+    
+    
+    
+    
+    
+    $.ajax({
+                    type: "POST",
+                    url: ruta_consultas + "consulta_numeracion.jsp",
+                    success: function (res)
+                    {
+                        $("#numeracion").val(res.numeracion);
+                    } ,
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });
+    
+    
+    
+    
     }
     
  
@@ -885,10 +916,10 @@ function registrar_pedido_mod_cyo(tipo_registro)
             confirmButtonText: "CERRAR"
         });
     } else if (parseInt(validacion_carros) > 0) {
-        alert("CANTIDADES NO COINCIDEN");
+     //   alert("CANTIDADES NO COINCIDEN");
         swal.fire({
             type: 'error',
-            html: 'Ha ocurrido un error, intente de nuevo.',
+            html: 'CANTIDADES NO COINCIDEN.',
             confirmButtonText: "CERRAR"
         });
     } else
@@ -1631,7 +1662,7 @@ function cargar_cantidades_ingresadas_editar(tipo)
 function filtro_reporte_pedidos_log(tipo) {
     switch (tipo)
     {
-        case "7":
+        case "1,2,3,4":
             $("#contenedor_fechas").show();
             break;
         case "1":
@@ -1640,7 +1671,7 @@ function filtro_reporte_pedidos_log(tipo) {
         case "2":
             $("#contenedor_fechas").hide();
             break;
-        case "5":
+        case "4":
             $("#contenedor_fechas").show();
             break;
 
@@ -1875,3 +1906,25 @@ function crud_cambiar_camion(id_camion, id_pedido, id_camion_nuevo)
     });
 }
 
+function crud_generar_numero_pedido_log()
+{
+            $.ajax({
+                type: "POST",
+                url: cruds + 'control_numeracion_pedido.jsp',
+                data: ({numeracion: $("#numeracion").val()}),
+                beforeSend: function ()
+                {
+                },
+                success: function (res)
+                {
+                    
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) 
+                {
+                    if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+                    {
+                       recargar_pagina();
+                    }
+                }
+            });
+ }

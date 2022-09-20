@@ -71,7 +71,11 @@
         <link href="plugins/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/parpadeo.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
- 
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+                         
+                         
+                         
     </head>
     <input type="hidden" id="clasificadora_menu" value="<%=area%>">
 
@@ -213,7 +217,7 @@
                         </div>
 
 
-                        <div class="modal fade bd-example-modal-xx" id="modal_reporte_varios" tabindex="-1" role="dialog"   aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-xx" id="modal_version" tabindex="-1" role="dialog"   aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                             <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -233,6 +237,7 @@
 
 
                                     <h5><div class="modal-body bg-navy" id="ribbon_titulo"></h5> 
+                                   
                                     <div class="modal-body" id="ribbon_descripcion"></div> 
 
 
@@ -240,7 +245,13 @@
 
 
                                     <div class="modal-footer">
-
+                                       
+                                           
+                                           
+                                        <a  id="form_pdf_manual" style='color: black' target="_blank"><i class='fa fa-file-pdf-o' style='color: red'></i>  Manual de usuario  </a> 
+                                            
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +270,7 @@
                     <strong>Copyright © 2022 - Grupo Maehara</strong>
                     Todos los derechos reservados.
                     <div class="float-right d-none d-sm-inline-block"  >
-                         <a href="img/Documento Version Yemsys.xlsx">Documento Versión</a>
+                          <a href="manuales/Documento Version Yemsys.xlsx">Documento Versión</a>
                      </div>
                 </footer>
 
@@ -390,22 +401,23 @@
             
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
-            <script src="js/principal.js?v=2.8" type="text/javascript"></script>
-            <script src="js/embarque.js?v=2.8" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=2.8" type="text/javascript"></script>
-            <script src="js/logistica.js?v=2.8" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_aldo.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=2.8" type="text/javascript"></script>
+            
+            <script src="js/principal.js?v=3.0" type="text/javascript"></script>
+            <script src="js/embarque.js?v=3.0" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=3.0" type="text/javascript"></script>
+            <script src="js/logistica.js?v=3.0" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_aldo.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=3.0" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>

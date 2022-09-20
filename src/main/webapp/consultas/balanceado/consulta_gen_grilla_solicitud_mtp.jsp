@@ -116,10 +116,11 @@
                 + "<tr  > "
                 + "<td  colspan='8'></td> "
                 
-                + "<td  class='td_gris'   style=\"font-weight:bold\" > " + td_actual + "</td> "
-                + "<td class=' text-right' style=\"font-weight:bold\" > " + td_nuevo + "</td> "
-                + "<td  class=' text-right' style=\"font-weight:bold\" > " + td_diferencia + "</td> "
-                + " </tr> </tfoot> </table>");
+                + "<td class=' text-right' style='font-weight: bold; background: rgb(0, 0, 0);color: #fff;'   > " + td_actual + "</td> "
+                + "<td  class=' text-right' style='font-weight: bold; background: rgb(0, 0, 0);color: #fff;'   > " + td_nuevo + "</td> "
+                + "<td  class=' text-right' style='font-weight: bold; background: rgb(0, 0, 0);color: #fff;' > " + td_diferencia + "</td> "
+                + " </tr> "
+                        + "</tfoot> </table>");
         ob.put("grilla_total", cabecera2 + grilla_html2 + "</tbody></table>");
 
         rs_GM.close();

@@ -305,8 +305,8 @@ function modal_detalle_formulacion_bal(id_seleccionado,formula_seleccionada,desc
         cargar_select_formulas_seleccionables_bal(id_seleccionado,formula_seleccionada,desc_formula);
         $(".colorear").css('background','white');
         $(".colorear").css('color','black');
-        $("#"+id_seleccionado).css('background','#030E3C');            
-        $("#"+id_seleccionado).css('color','white');            
+        $("#p"+id_seleccionado).css('background','#030E3C');            
+        $("#p"+id_seleccionado).css('color','white');            
         
  }
  
@@ -432,3 +432,31 @@ function control_baja_bal() {
             e.stoppropagation();
     });
 }
+
+/*
+function probar_api(){
+    
+    $.ajax({
+                type: "POST",
+                url:  "control.jsp",
+                
+                headers: {"Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtbG9wZXoiLCJleHAiOjE2NjI0MDc3NDMsImlhdCI6MTY2MjQwNDc0M30.52lCwPIUEJhBNWcxcCT3w9ny-7K46CZsMqlmDdHMOnk"},
+                beforeSend: function () 
+                {
+
+                },
+                success: function (data) 
+                { 
+                    $.each(data, function (i, item)
+                    {
+                        document.write(item.nombre);    
+                    } ); 
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) 
+                {
+                     
+                       alert(textStatus);     
+                    
+                }
+            });  
+}*/

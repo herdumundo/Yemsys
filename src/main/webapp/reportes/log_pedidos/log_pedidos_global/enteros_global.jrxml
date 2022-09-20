@@ -7,7 +7,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from v_mae_log_rep_enteros where id=$P{id}   order by 7]]>
+		<![CDATA[select * from v_mae_log_rep_enteros where nro_pedido_global=$P{id}   order by 7
+
+]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha_registro" class="java.lang.String"/>
@@ -22,6 +24,8 @@
 	<field name="obs" class="java.lang.String"/>
 	<field name="tipo_huevo" class="java.lang.String"/>
 	<field name="estado" class="java.lang.Integer"/>
+	<field name="VALIDAR" class="java.lang.String"/>
+	<field name="nro_pedido_global" class="java.lang.Integer"/>
 	<variable name="cantidad_det_1" class="java.lang.Integer" resetType="Group" resetGroup="area" calculation="Sum">
 		<variableExpression><![CDATA[$F{cantidad_det}]]></variableExpression>
 	</variable>

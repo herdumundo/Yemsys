@@ -136,7 +136,8 @@
                 + "</thead> <tbody >";
         rs = st.executeQuery(" exec mae_log_stock_pedidos_maehara_3 @tipo=1 ,@id_pedido=0");
 
-        while (rs.next()) {
+        while (rs.next()) 
+        {
             grilla_html = grilla_html + rs.getString("tr");
         }
 

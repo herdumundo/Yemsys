@@ -60,13 +60,23 @@
                 + " <tr>"
                 + "<th rowspan='2'  class='bg-navy' style='color: #fff;'><b>Fecha puesta</b></th>  "
                 + " <th rowspan='2'  class='bg-navy' ><b>Tipo</b></th>  "
-                + " <th colspan='8' class='bg-navy text-center'       ><b><a id='td_" + area_form + "'>" + area_form + " </a></b></th>   </tr>"
+                + " <th colspan='12' class='bg-navy text-center'       ><b><a id='td_" + area_form + "'>" + area_form + " </a></b></th>   </tr>"
                 + " <tr>"
-                + " <th  style='color: #fff;   black;'  class='bg-navy' >LIB</th>              <th style='color: #fff;' class='bg-navy' >Cant</th>"
-                + " <th  style='color: #fff;  'class='bg-navy'>Acep</th>     <th style='color: #fff;  'class='bg-navy' >Cant</th>"
-                + " <th  style='color: #fff;  'class='bg-navy'>Invo</th>     <th  style='color: #fff;  'class='bg-navy'>Cant</th>"
-                + " <th  style = 'display:none' style='color: #fff;  'class='bg-navy' >LDO</th>      <th  style = 'display:none' style='color: #fff;  'class='bg-navy'>Cant</th>  "
-                + " <th  style='color: #fff;  'class='bg-navy'>Pallet</th>      <th  style='color: #fff;  'class='bg-navy'>Cant</th>"
+                + " <th  style='color: #fff;   black;'  class='bg-navy' >LIB</th>             "
+                + " <th style='color: #fff;' class='bg-navy' >Cant</th>"
+                + " <th style='color: #fff;' class='bg-navy'>Res</th>"
+                
+                + " <th  style='color: #fff;  'class='bg-navy'>Acep</th>     "
+                + "<th style='color: #fff;  'class='bg-navy' >Cant</th>"
+                + " <th style='color: #fff;' class='bg-navy'>Res</th>"
+                
+                + " <th  style='color: #fff;  'class='bg-navy'>Invo</th>     "
+                + "<th  style='color: #fff;  'class='bg-navy'>Cant</th>"
+                + " <th style='color: #fff;' class='bg-navy'>Res</th>"
+            
+                + " <th  style='color: #fff;  'class='bg-navy'>Pallet</th>      "
+                + "<th  style='color: #fff;  'class='bg-navy'>Cant</th>"
+                + " <th style='color: #fff;' class='bg-navy'>Res</th>"
                 + " </tr>"
                 + "</thead> <tbody >";
     }
@@ -96,7 +106,8 @@
             }
             i++;
         }
-        rs3 = st3.executeQuery("   select sum(cantidad) as cantidad,tipo_huevo from mae_log_ptc_det_pedidos2 where estado=2 and id_cab=" + id_pedido + " and u_medida='ENTERO' group by tipo_huevo");
+        rs3 = st3.executeQuery("   select sum(cantidad) as cantidad,tipo_huevo from mae_log_ptc_det_pedidos2 "
+                + "where estado=2 and id_cab=" + id_pedido + " and u_medida='ENTERO' group by tipo_huevo");
         String grilla_tipos = "";
         int c = 0;
         while (rs3.next()) {

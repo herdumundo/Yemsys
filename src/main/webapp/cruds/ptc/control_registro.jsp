@@ -11,51 +11,49 @@
     if (sesion == true) 
     {
     
-    JSONObject ob = new JSONObject();
-    ob=new JSONObject();
-    String fecha_puesta         =   request.getParameter("fecha_puesta");
-    String codigo_cepillado     =   request.getParameter("codigo_cepillado");
-    String nrocarro             =   request.getParameter("cod_carrito");
-    String codigo_borroso       =   request.getParameter("codigo_borroso");
-    String tipo_maples          =   request.getParameter("tipo_maples");
-    String codigo_especial      =   request.getParameter("codigo_especial");
-    String tipo_huevo           =   request.getParameter("tipo_huevo");
-    String cantidad             =   request.getParameter("txt_cantidad");
-    String unidad_medida        =   request.getParameter("unidad_medida");
-    String hora_desde_minutos   =   request.getParameter("hora_desde");
-    String hora_hasta_minutos   =   request.getParameter("hora_hasta");
-    String fecha                =   request.getParameter("calendario_registro");
-    String tipo_aviario         =   request.getParameter("tipo_aviario");
-    String tipo_almacenamiento  =   request.getParameter("tipo_almacenamiento");
-    String responsable          =   request.getParameter("txt_responsable");
-    String liberado             =   request.getParameter("txt_liberado");
-    String comentario           =   request.getParameter("txt_obs");
-    String fecha_fin            =   request.getParameter("fecha_clas_final");
-    
-    String area=                    (String) sesionOk.getAttribute("area_cch");
-    String clasificadora        =   (String) sesionOk.getAttribute("clasificadora");
-    String nombre_usuario       =   (String) sesionOk.getAttribute("nombre_usuario");
-    String categoria            =   (String) sesionOk.getAttribute("categoria");
-   
-    int cantidad_bd=0;
-    int cantidad_movimiento=0;
-    String mensaje="";
-    int tipo_respuesta=0;
-    String combobox="N/A";
-    String empacadora="";
-    String aviarios="";
-    String empacadora_formateada="";
-    String tipo_huevo_formateado=""; 
-    String unidad_format="";
-    String lote=nrocarro+"_"+fecha_puesta.replace("/","")+"_"+categoria+"_"+tipo_huevo;
-    String contenido_cajones_cargados= "";
-    String table_cuerpo= "";
-    String[] empacadora_obs = request.getParameterValues("nro_empacadora");
-    String[] array_aviarios = request.getParameterValues("cbox_aviarios");
-    String fechas_involucradas = request.getParameter("txt_fecha_involucrada");
-    String hora_desde=hora_desde_minutos.substring(0,2);
-    String hora_hasta=hora_hasta_minutos.substring(0,2);
-      try {
+    JSONObject  ob                          =   new JSONObject();
+                ob                          =   new JSONObject();
+    String      fecha_puesta                =   request.getParameter("fecha_puesta");
+    String      codigo_cepillado            =   request.getParameter("codigo_cepillado");
+    String      nrocarro                    =   request.getParameter("cod_carrito");
+    String      codigo_borroso              =   request.getParameter("codigo_borroso");
+    String      tipo_maples                 =   request.getParameter("tipo_maples");
+    String      codigo_especial             =   request.getParameter("codigo_especial");
+    String      tipo_huevo                  =   request.getParameter("tipo_huevo");
+    String      cantidad                    =   request.getParameter("txt_cantidad");
+    String      unidad_medida               =   request.getParameter("unidad_medida");
+    String      hora_desde_minutos          =   request.getParameter("hora_desde");
+    String      hora_hasta_minutos          =   request.getParameter("hora_hasta");
+    String      fecha                       =   request.getParameter("calendario_registro");
+    String      tipo_aviario                =   request.getParameter("tipo_aviario");
+    String      tipo_almacenamiento         =   request.getParameter("tipo_almacenamiento");
+    String      responsable                 =   request.getParameter("txt_responsable");
+    String      liberado                    =   request.getParameter("txt_liberado");
+    String      comentario                  =   request.getParameter("txt_obs");
+    String      fecha_fin                   =   request.getParameter("fecha_clas_final");
+    String      clasificadora               =   (String) sesionOk.getAttribute("clasificadora");
+    String      nombre_usuario              =   (String) sesionOk.getAttribute("nombre_usuario");
+    String      categoria                   =   (String) sesionOk.getAttribute("categoria");
+    String      mensaje                     =   "";
+    String      combobox                    =   "N/A";
+    String      empacadora                  =   "";
+    String      aviarios                    =   "";
+    String      empacadora_formateada       =   "";
+    String      tipo_huevo_formateado       =   ""; 
+    String      unidad_format               =   "";
+    String      lote                        =   nrocarro+"_"+fecha_puesta.replace("/","")+"_"+categoria+"_"+tipo_huevo;
+    String      contenido_cajones_cargados  =   "";
+    String      table_cuerpo                =   "";
+    String[]    empacadora_obs              =   request.getParameterValues("nro_empacadora");
+    String[]    array_aviarios              =   request.getParameterValues("cbox_aviarios");
+    String      fechas_involucradas         =   request.getParameter("txt_fecha_involucrada");
+    String      hora_desde                  =   hora_desde_minutos.substring(0,2);
+    String      hora_hasta                  =   hora_hasta_minutos.substring(0,2);
+    int         tipo_respuesta              =   0;
+    int         cantidad_bd                 =   0;
+    int         cantidad_movimiento         =   0;
+    try 
+    {
           
             if(tipo_huevo.equals("1"))  {
                 tipo_huevo_formateado= "G";
@@ -135,34 +133,7 @@
                     }
                 }
             }
-              
-      /*      ResultSet result_cantidad_existente=  fuente.obtenerDato("exec [mae_ptc_select_lotesCantExist] @cod_carrito='"+nrocarro+"' ");
-                
-         if (result_cantidad_existente.next())
-            {
-                 cantidad_bd= result_cantidad_existente.getInt("cantidad");
-            }
-          
-            if ((cantidad_bd+cantidad_movimiento)>12)
-            {
-                //res_out= resultad_final;
-                tipo_respuesta=2;
-                mensaje="CANTIDAD EXCEDIDA, TOTAL DE CAJONES CARGADOS "+cantidad_bd;
-                //CANTIDAD EXCEDIDA
-                ResultSet consulta_tipos_cargados=  fuente.obtenerDato("exec [mae_ptc_select_tipos_cargados] @cod_carrito='"+nrocarro+"'");
-
-                while (consulta_tipos_cargados.next())
-                 {
-                     contenido_cajones_cargados=contenido_cajones_cargados+"<tr><td>"+consulta_tipos_cargados.getString("tipo_huevo")+"</td><td>"+
-                     consulta_tipos_cargados.getString("cantidad")+"</td><td>"+consulta_tipos_cargados.getString("fecha_puesta")+"</td><td>"+
-                     consulta_tipos_cargados.getString("clasificadora_actual")+"</td><td>"+consulta_tipos_cargados.getString("estado")+"</td></tr>";
-                 } 
-                 table_cuerpo="<table class='table'> "
-                 + "<thead> <tr>  <th>Tipo</th><th>Cantidad</th><th>Puesta</th><th>Area</th><th>Estado</th></tr> </thead>"
-                 + "<tbody>"+contenido_cajones_cargados+"</tbody></table> ";
-             }
-        else 
-            {  */
+     
                 connection.setAutoCommit(false);
                 CallableStatement  callableStatement=null;   
                 callableStatement = connection.prepareCall("{call mae_ptc_insert_liberado(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -208,9 +179,10 @@
                 }   
                 else  
                 {
-                  connection.commit();
+                    connection.commit();
                 }
-                if(mensaje.equals("DUPLICADO")){
+                if(mensaje.equals("DUPLICADO"))
+                {
                         tipo_respuesta=2;
                       
                         //CANTIDAD EXCEDIDA
@@ -231,19 +203,20 @@
                          + "<tbody>"+contenido_cajones_cargados+"</tbody></table> ";
                 }
                
-               //}
             ob.put("mensaje", mensaje);
             ob.put("tipo_respuesta", tipo_respuesta);
             ob.put("cajones_cargados", table_cuerpo);
           
-         } catch (Exception e) 
-         {           
-            ob.put("mensaje", e.toString());
-            ob.put("tipo_respuesta", "0");
-            ob.put("cajones_cargados", table_cuerpo);
-         }
-          finally{
-          connection.close();
-          out.print(ob); 
-      }
+    } 
+    catch (Exception e) 
+    {           
+        ob.put("mensaje", e.toString());
+        ob.put("tipo_respuesta", "0");
+        ob.put("cajones_cargados", table_cuerpo);
+    }
+    finally
+    {
+        connection.close();
+        out.print(ob); 
+    }
         }     %>

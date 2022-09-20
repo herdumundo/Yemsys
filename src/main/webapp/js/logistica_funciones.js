@@ -559,3 +559,60 @@
             
                 });  
     } 
+    
+    
+    function editar_nro_global_pedido_log(id_pedido,pedido_global)
+    {Swal.fire({
+
+            title: 'Modificacion del nro. global de pedido',
+            type: 'warning',
+            html:'  <label>Nro de pedido</label><input type="number" disabled value="'+id_pedido+'" class="form-control"> <br>\n\
+                    <label>Nro actual de pedido global</label><input type="number" disabled value="'+pedido_global+'" class="form-control"> <br>\n\
+                    <label>Nro nuevo de pedido global</label><input type="number" id="nro_nuevo" class="form-control">',
+            
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'SI!',
+            cancelButtonText: 'NO!'}).then((result) =>
+        {
+            if (result.value)
+            {
+                  $.ajax({
+                    type: "POST",
+                    url: cruds + "control_editar_nro_global_pedido.jsp",
+                    data: ({id_pedido: id_pedido, nro_global_nuevo:  $("#nro_nuevo").val()}),
+                    beforeSend: function ()
+                    {
+                        Swal.fire({
+                            title: 'PROCESANDO!',
+                            html: 'ESPERE<strong></strong>...',
+                            allowOutsideClick: false,
+                            willOpen: () => 
+                            {
+                                Swal.showLoading()
+                            }
+               
+                        });
+                    },
+                    success: function (res)
+                    {
+                        aviso_generico(res.tipo_respuesta,res.mensaje);
+                       
+                        if(res.tipo_respuesta==1)
+                        {
+                            buscar_reporte_pedidos_log(); 
+                        }   
+                         
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });
+
+                         
+            }
+        });
+    }

@@ -20,9 +20,14 @@
 
     String contenedores_embarque_registro_embarque = "0003-REP-15032022-A";
 
-    String contenedores_logistica_contenedor_pedidos = "0070-PAN-09042022-A";
-    String desc_contenedores_logistica_contenedor_pedidos = "SE AGREGO COLUMNA RESERVAS PARA PEDIDOS Y BOTON DE REFRESCAR PEDIDO POR CAMION";
-
+    String contenedores_logistica_contenedor_pedidos = "0103-PAN-30092022-A";
+    String desc_contenedores_logistica_contenedor_pedidos = "0103-PAN-30092022-A: SE AGREGÓ INGRESO DE  NRO. GLOBAL DEL PEDIDO, SE AGREGÓ EL INGRESO  DE ORDEN DEL PEDIDO.&0070-PAN-09042022-A: SE AGREGO COLUMNA RESERVAS PARA PEDIDOS Y BOTON DE REFRESCAR PEDIDO POR CAMION";
+    String pdf_contenedores_logistica_contenedor_pedidos = "Manual_Logistica_Registro_Pedidos.pdf";
+    
+    
+    
+    
+    
     String contenedores_logistica_contenedor_pedidos_generados_menu = "0074-PAN-08042022-A";
     String desc_contenedores_logistica_contenedor_pedidos_generados_menu = " &0071-PAN-09042022-A: EN MODIFICACION SE AGREGO COLUMNA PARA RESERVAS.&0074-PAN-08042022-A: SE AGREGÓ LA OPCIÓN DE MODIFICAR EL CAMION DEL PEDIDO.";
 
@@ -34,8 +39,15 @@
     String desc_contenedores_logistica_contenedor_pedidos_generados_cyo =   "0093-PAN-23062022-A:SE AGREGÓ LA DESCARGA EN PDF DEL PEDIDO.";
     
     
-    String contenedores_logistica_contenedor_reporte = "0008-REP-15032022-A";
+    String contenedores_logistica_contenedor_reporte = "0102-PAN-30092022-A";
 
+    String pdf_contenedores_log_contenedor_reporte = "Manual_Logistica_reportes.pdf";
+    String desc_contenedores_contenedor_reporte = "&0102-PAN-30092022-A: SE AGREGÓ COLUMNA DE  NRO. GLOBAL, SE AGREGÓ COLUMNA DE ORDEN DEL PEDIDO, SE AGREGÓ DESCARGA DE REPORTE POR PEDIDO GLOBAL, SE AGREGÓ MODIFICACIÓN DEL NRO. GLOBAL DEL PEDIDO..";
+
+    
+    
+    
+    
     String contenedores_ppr_vista_informe_aviarios_dinamico = "0009-REP-15032022-A";
     String contenedores_ppr_vista_informe_aviarios = "0010-REP-15032022-A";
     String contenedores_ppr_vista_grilla_contadores_de_huevos = "0011-REP-15032022-A";
@@ -176,4 +188,8 @@ String contenedores_bal_pendiente_aprobacion_gerencia = "0096-PAN-09062022-A";
     
     String contenedores_log_logModificaciones = "0101-PAN-10082022-A";
     String desc_contenedores_log_logModificaciones = " ";
+    String pdf_contenedores_log_logModificaciones = "Manual_Logistica_Log_modificaciones.pdf";
+    
+
+
 %>

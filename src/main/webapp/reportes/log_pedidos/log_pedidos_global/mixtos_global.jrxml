@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from v_mae_log_rep_mixtos_logistica where id=$P{id}  ORDER BY 5,6]]>
+		<![CDATA[select * from v_mae_log_rep_mixtos_logistica where nro_pedido_global=$P{id}  ORDER BY 5,6]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha_puesta" class="java.sql.Timestamp"/>
@@ -15,6 +15,7 @@
 	<field name="tipo_huevo" class="java.lang.String"/>
 	<field name="clasificadora" class="java.lang.String"/>
 	<field name="carro" class="java.lang.Integer"/>
+	<field name="nro_pedido_global" class="java.lang.Integer"/>
 	<variable name="cantidad_det_1" class="java.lang.Integer" resetType="Group" resetGroup="carro" calculation="Sum">
 		<variableExpression><![CDATA[$F{cantidad_det}]]></variableExpression>
 	</variable>
