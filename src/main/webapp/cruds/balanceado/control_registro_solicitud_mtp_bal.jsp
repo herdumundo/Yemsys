@@ -12,21 +12,22 @@
 <%
         if (sesion == true) {
     
-    String grilla = request.getParameter("json_string");
-    String fecha_solicitud = request.getParameter("fecha_solicitud");
-    String recomendado = request.getParameter("recomendado");
-    String motivo = request.getParameter("motivo");
-    String desc_formula = request.getParameter("desc_formula");
-    String toneladas = request.getParameter("toneladas");
-    String resultado_esperado = request.getParameter("resultado_esperado");
-    String impacto = request.getParameter("impacto");
-    String cod_formula = request.getParameter("cod_formula");
-    String plazo_evaluacion = request.getParameter("plazo_evaluacion");
-    String indicadores = request.getParameter("indicadores");
-    String urgente = request.getParameter("urgente");
-    String usuario = (String) sesionOk.getAttribute("nombre_usuario");
-    String area = (String) sesionOk.getAttribute("area_gm");
- 
+    String grilla               = request.getParameter("json_string");
+    String fecha_solicitud      = request.getParameter("fecha_solicitud");
+    String recomendado          = request.getParameter("recomendado");
+    String motivo               = request.getParameter("motivo");
+    String desc_formula         = request.getParameter("desc_formula");
+    String toneladas            = request.getParameter("toneladas");
+    String resultado_esperado   = request.getParameter("resultado_esperado");
+    String impacto              = request.getParameter("impacto");
+    String cod_formula          = request.getParameter("cod_formula");
+    String plazo_evaluacion     = request.getParameter("plazo_evaluacion");
+    String indicadores          = request.getParameter("indicadores");
+    String urgente              = request.getParameter("urgente");
+    String usuario              = (String) sesionOk.getAttribute("nombre_usuario");
+    String area                 = (String) sesionOk.getAttribute("area_gm");
+    String id_usuario           = (String) sesionOk.getAttribute("id_usuario");
+
     int tipo_respuesta = 0;
     String mensaje = "";
     JSONObject ob = new JSONObject();
@@ -37,14 +38,14 @@
 
         SQLServerDataTable sourceDataTable = new SQLServerDataTable();
 
-        sourceDataTable.addColumnMetadata("accion", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("codigo_formula", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("codigo_mtp", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("descripcion", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("cantidad_nueva", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("cantidad_actual", java.sql.Types.FLOAT);
-        sourceDataTable.addColumnMetadata("costo", java.sql.Types.VARCHAR);
-        sourceDataTable.addColumnMetadata("grupo", java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("accion",             java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("codigo_formula",     java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("codigo_mtp",         java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("descripcion",        java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("cantidad_nueva",     java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("cantidad_actual",    java.sql.Types.FLOAT);
+        sourceDataTable.addColumnMetadata("costo",              java.sql.Types.VARCHAR);
+        sourceDataTable.addColumnMetadata("grupo",              java.sql.Types.VARCHAR);
 
         for (solicitud_mtp mtp : pp1) {
             sourceDataTable.addRow(
@@ -61,7 +62,7 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setString(2,  fecha_solicitud);
         callableStatement.setString(3,  recomendado);
@@ -76,6 +77,7 @@
         callableStatement.setString(12, indicadores); 
         callableStatement.setString(13, urgente); 
         callableStatement.setString(14, area); 
+        callableStatement.setInt(   15, Integer.parseInt(id_usuario)); 
 
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
@@ -92,7 +94,6 @@
         else
         {
             connection.commit();
-           //  connection.rollback();
         }
     } 
     catch (Exception e) 

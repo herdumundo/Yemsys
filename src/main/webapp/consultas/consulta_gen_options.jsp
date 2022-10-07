@@ -37,7 +37,7 @@
         
            while (rs_GM4.next()) {
             option_camiones2 = option_camiones2
-                    + "<option   value='" + rs_GM4.getString(1) + "-" + rs_GM4.getString(2) + "'> " + rs_GM4.getString(2) + " </option> ";
+                    + "<option   value='" + rs_GM4.getString(1) + "-" + rs_GM4.getString(2) + "'> " + rs_GM4.getString(1) + "-" + rs_GM4.getString(2) + " </option> ";
         }
         rs_GM4.close();
         

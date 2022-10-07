@@ -3,9 +3,8 @@
     Created on : 05/03/2020, 11:04:47 AM
     Author     : hvelazquez
 --%>
- <%@page import="java.sql.*"%>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
   
  <body>
@@ -15,11 +14,9 @@
         String fecha =request.getParameter("fecha");
         String tipo =request.getParameter("tipo");
         String tipo_reporte =request.getParameter("tipo_reporte");
-        clases.controles.VerificarConexion();
-        Connection cn = clases.controles.connectSesion;
-    
-        fuente.setConexion(cn); 
         ResultSet rs ;
+        Statement st=connection.createStatement();
+        
           try 
     {
         String bd_area="area ";
@@ -28,7 +25,7 @@
         if(tipo_reporte.equals("2")){
             bd_area="destino ";
         }
-       rs = fuente.obtenerDato ("select * "
+       rs = st.executeQuery("select * "
                + "from lotes_transferencia "
                + "where convert(varchar,fecha,103)='"+fecha+"'"
                + " and "+bd_area+"='"+area+"' and tipo_transferencia='"+tipo+"' order by 1 desc");
@@ -63,9 +60,8 @@
     }
     finally 
     {
-        cn.close();
-        clases.controles.DesconnectarBDsession();
-    }
+        connection.close();
+     }
          
         %>
          

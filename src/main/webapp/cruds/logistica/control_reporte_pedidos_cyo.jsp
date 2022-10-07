@@ -9,28 +9,25 @@
 <%@page session="true" %>
 <%@include  file="../../cruds/conexion.jsp" %>
 <%@include  file="../../chequearsesion_reporte.jsp" %>
-<%
-    try 
-    {
-        if(sesion==true)
-        {
-        File reportfile = new File(application.getRealPath("reportes/log_pedidos/log_pedidos_cyo/principal.jasper"));
+<%    try {
+        if (sesion == true) {
+            File reportfile = new File(application.getRealPath("reportes/log_pedidos/log_pedidos_cyo/principal.jasper"));
 
-        Map<String, Object> parameter = new HashMap<String, Object>();
-        String id = request.getParameter("id_rep");
-        String clasificadora = (String) sesionOk.getAttribute("area_nuevo");
-        parameter.put("id", id);
-        parameter.put("clasificadora", clasificadora);
-       parameter.put("SUBREPORT_DIR", new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_pedidos\\log_pedidos_cyo\\"));
-       //  parameter.put("SUBREPORT_DIR", new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_cyo\\"));
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            String id = request.getParameter("id_rep");
+            String clasificadora = (String) sesionOk.getAttribute("area_nuevo");
+            parameter.put("id", id);
+            parameter.put("clasificadora", clasificadora);
+         //   parameter.put("SUBREPORT_DIR", new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_pedidos\\log_pedidos_cyo\\"));
+              parameter.put("SUBREPORT_DIR", new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_cyo\\"));
 
-        byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
-        response.setContentType("application/pdf");
-        response.setContentLength(bytes.length);
-        ServletOutputStream outputstream = response.getOutputStream();
-        outputstream.write(bytes, 0, bytes.length);
-        outputstream.flush();
-        outputstream.close();
+            byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outputstream = response.getOutputStream();
+            outputstream.write(bytes, 0, bytes.length);
+            outputstream.flush();
+            outputstream.close();
         }
     } catch (Exception e) {
 

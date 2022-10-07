@@ -3,11 +3,14 @@
 
 <%
     String version =  contenedores_logistica_contenedor_reporte;
+    
+    String pdf=pdf_contenedores_log_contenedor_reporte;
+    String version_desc=desc_contenedores_contenedor_reporte;
 %>  
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>','<%=version_desc%>','<%=pdf%>',true)">
     <label ><%=version%></label>  
 </div>
 </head>
@@ -23,10 +26,10 @@
 </div>  <br>  
 <a style='color: #000; background: white; font-weight: bold; '> Tipo de reporte</a>
 <select id="cbox_tipo" class="bg-navy" style='color: #fff; background: white; font-weight: bold; ' onchange="filtro_reporte_pedidos_log($('#cbox_tipo').val())">
-    <option value="7">GENERADOS</option>
+    <option value="1,2,3,4">GENERADOS</option>
     <option value="1">PENDIENTES FACTURACION</option>
     <option value="2">PENDIENTES A EMBARCAR</option>
-    <option value="5">EMBARCADOS</option>
+    <option value="4">EMBARCADOS</option>
 </select>
 
 <br><br>

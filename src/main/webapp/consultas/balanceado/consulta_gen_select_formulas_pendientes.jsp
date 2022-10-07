@@ -14,7 +14,7 @@
 
     try {
             String grilla_html="";
-            String  cabecera = " <table id='tb_formulacion_pendiente' class='table-bordered compact' style='width:100%'>"
+            String  cabecera = " <table id='tb_formulacion_pendiente' class='table-bordered compact display' style='width:100%'>"
                     + " <thead>"
                     + "     <tr>"
                     + "         <th  style='color: #fff; background: black;' >NRO</th>      "

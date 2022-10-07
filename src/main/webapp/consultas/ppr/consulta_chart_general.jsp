@@ -46,6 +46,7 @@
                     
             while(rs.next()) // va a recorrer 22 veces
             {
+ 
                     String aviarios=rs.getString("aviario");
                     
                     DataMortandad = new JSONObject();

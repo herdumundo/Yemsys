@@ -10,13 +10,7 @@
 <%@include  file="../../cruds/conexion.jsp" %><% 
     ResultSet rs, rs2;
    PreparedStatement  pst,pst2;
-    pst = connection.prepareStatement("   select "
-            + "                     a.id,FORMAT (a.fecha_registro, 'dd/MM/yyyy hh:mm') as fecha_registro,concat(b.code,'-',b.name) as camion,"
-            + "                     b.code as cod_camion,id_chofer,c.Name as nombre_chofer,b.U_capacidad  "
-            + "                 from "
-            + "                     mae_log_ptc_cab_pedidos a  "
-            + "                     inner join maehara.dbo.[@CAMIONES] b    on a.id_camion=b.Code collate database_default and estado   in (1,2)   "
-            + "                     inner join maehara.dbo.[@CHOFERES] C 	on a.id_chofer collate database_default=c.Code order by 1 asc ");
+    pst = connection.prepareStatement("  select * from v_mae_log_lista_modificar order by 1 asc ");
         rs = pst.executeQuery();
 
     String version = contenedores_logistica_contenedor_pedidos_generados_menu;
@@ -50,9 +44,10 @@
             <th>FECHA</th> 
             <th>CAMION</th> 
             <th>CHOFER</th> 
+            <th>ESTADO</th> 
+            <th>AREAS INVOLUCRADAS</th> 
             <th>ACCION</th> 
-            <th>ACCION</th> 
-            <th>ACCION</th> 
+           
         </tr> 
     </thead>
     <tbody>
@@ -62,10 +57,15 @@
             <td><%=rs.getString("fecha_registro")%></td>
             <td><%=rs.getString("camion")%></td>
             <td><%=rs.getString("nombre_chofer")%></td>
-            <td><input type="button" value="IR AL PEDIDO"  class="form-control bg-navy" onclick="ir_pedido_modificar_logistica(2,<%=rs.getString("id")%>,<%=rs.getString("cod_camion")%>,<%=rs.getString("id_chofer")%>)"></td>
-            <td><input type="button" value="CAMBIAR CAMIÓN" onclick="cambiar_camion_log(<%=rs.getString("cod_camion")%>,<%=rs.getString("id")%>,<%=rs.getString("U_capacidad")%>);" class="form-control btn-dark"data-toggle="modal" data-target=".modal_camion"  ></td>
-            <td><input type="button" value="ANULAR" class="form-control btn-danger" onclick="anular_pedido(<%=rs.getString("id")%>)"></td>
-        </tr>                             
+            <td><%=rs.getString("estado")%></td>
+            <td><%=rs.getString("areas")%></td>
+            <td>
+                <button class="btn btn-xs bg-navy"   title="Editar pedido"><i class="fa fa-edit" onclick="ir_pedido_modificar_logistica(2,<%=rs.getString("id")%>,<%=rs.getString("cod_camion")%>,<%=rs.getString("id_chofer")%>)"></i></button>
+              
+                 <button class="btn btn-xs bg-warning"   title="Cambiar camión"><i class="fa fa-truck" onclick="cambiar_camion_log(<%=rs.getString("cod_camion")%>,<%=rs.getString("id")%>,<%=rs.getString("U_capacidad")%>);" class="form-control btn-dark"data-toggle="modal" data-target=".modal_camion" ></i></button>
+                 <button class="btn btn-xs bg-danger"   title="Anular pedido"><i class="fa fa-trash-o" onclick="anular_pedido(<%=rs.getString("id")%>)"></i></button>
+              
+         </tr>                             
         <% }
         %>
     </tbody>

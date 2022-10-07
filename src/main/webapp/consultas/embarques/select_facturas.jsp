@@ -3,22 +3,18 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.ResultSet"%>
 <%@ page contentType="application/json; charset=utf-8" %>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page"/>   
+<%@include  file="../../cruds/conexion.jsp" %> 
  <%@include  file="../../chequearsesion.jsp" %>
 
 <%
-
-    clases.controles.connectarBD();   
-    Connection cn = clases.controles.connect;
-    fuente. setConexion(cn);  
-    
+  
     String area =(String) sesionOk.getAttribute("area");
     String numero_factura = request.getParameter("numero");  
     ResultSet rs,res_fac_cant; 
-            
+    
+    Statement st = connection.createStatement();
+    Statement st2 = connection.createStatement();
     int caja_tipo_A = 0;
     int caja_tipo_B = 0;
     int caja_tipo_C = 0;
@@ -38,7 +34,7 @@
        //CAMBIAR BASE DE DATOS                  //CAMBIAR BASE DE DATOS       
          
     int total_carros=0;
-    rs = fuente.obtenerDato("select  case itemcode when 1 then sum(convert(int,(b.Quantity)*12)/180) "
+    rs = st.executeQuery("select  case itemcode when 1 then sum(convert(int,(b.Quantity)*12)/180) "
               + "else sum(convert(int,(b.Quantity)*12)/360) end as 'cantidad', ItemCode  "
               + "from "
             + "      "+clases.variables.BD2+".dbo.oinv a  with(nolock)  "
@@ -55,7 +51,7 @@
 
         }
          
-            res_fac_cant = fuente.obtenerDato(" select  case itemcode when 1 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'G', "
+            res_fac_cant = st2.executeQuery(" select  case itemcode when 1 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'G', "
                     + "case itemcode when 2 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'j',           "
                     + "case itemcode when 3 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 's', "
                     + "case itemcode when 4 then sum(convert(int,(b.Quantity-isnull(b.delivrdqty,0))*12)) else 0 end as 'a',           "
@@ -93,8 +89,7 @@
             ob=new JSONObject();
             ob.put("codigo", total_restante);
             ob.put("total", total_carros/12);
-            cn.close();
-            clases.controles.DesconnectarBD();
+            connection.close();
             out.print(ob);
 
 %>

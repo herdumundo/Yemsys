@@ -7,23 +7,26 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>  
 <%     
-    PreparedStatement  pst,pst2;
-    ResultSet rs,rs2;
+    PreparedStatement  pst,pst2,pst3;
+    ResultSet rs,rs2,rs3;
     
     pst  = connection.prepareStatement ("select * from  maehara.dbo.[@CAMIONES] where u_estado='Activo' and   u_desc<>'' ");
     rs = pst.executeQuery();
     pst2 = connection.prepareStatement("select code,name  from maehara.dbo.[@CHOFERES] where U_estado='activo'");
     rs2 = pst2.executeQuery();
+    String version      =  contenedores_logistica_contenedor_pedidos;
+    String descripcion  =  desc_contenedores_logistica_contenedor_pedidos;
+    String pdf          =  pdf_contenedores_logistica_contenedor_pedidos;
 
-    String version= contenedores_logistica_contenedor_pedidos;
- try 
+    
+  try 
  {
-         
+        
       %>
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
-     onclick="cargar_datos_modal_version('<%=version%>','VERSION: <%=version%>','DESCRIPCION:<%=desc_contenedores_logistica_contenedor_pedidos%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>','<%=descripcion%>','<%=pdf%>',true)">
     <label ><%=version%> </label>  
 </div>
 </head>
@@ -64,9 +67,10 @@ LOG
         <form  class="row align-items-end"  action="cruds/logistica/control_reporte_log_stock_ptc.jsp" target="_blank">
             <input type="button" value="GENERAR PEDIDO"   onclick="generar_grilla_pedido_log(9);"  class="form-control col bg-success inline" id="btn_generar"style="font-weight: bold;color:white;"   >
             <input type="submit" value="GENERAR REPORTE"    class="form-control col bg-dark "  style="font-weight: bold;color:white;"   >
-
-       </form> <br>
-       
+ 
+       </form> 
+        <br>
+         
        <input type="text" placeholder="Observación (Opcional)" id="txt_obs" class="form-control"><br> 
      
     
@@ -97,7 +101,10 @@ LOG
                         
                          
                         </div>
+                          
                         </div>
+                        <br>  <b> <a class="bg-danger">Fecha consulta: </a><a class="bg-danger"  id="fecha_consulta"></a> </b>
+                        
                         <a style="font-weight: bold;color:black">CARROS RESTANTES:</a><input type="text" disabled id="txt_restantes" style="font-weight: bold;color:black" value="0" >
                         <input type="button" value="Refrescar" class="btn bg-navy" onclick="generar_grilla_pedido_log(7)">
                        <a style="font-weight: bold;color:black">SELECCIONE CAMION</a> 
@@ -114,10 +121,11 @@ LOG
                         
                         
                         <input type="hidden" id="filtro_tipo">
-                        
-                        <div id="contenido_grillas"   class="table-responsive" style="display: none">
+                       
+                        <div id="contenido_grillas"         class="table-responsive" style="display: none">
 
                         </div>  
+                        
                         <div id="contenido_grillas_mixto"   class="table-responsive">
 
                         </div>  

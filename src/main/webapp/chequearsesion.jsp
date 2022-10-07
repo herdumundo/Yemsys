@@ -8,14 +8,17 @@
     HttpSession sesionOk = request.getSession();
     sesionOk.setMaxInactiveInterval(30*60);
     Boolean sesion =true; 
+    
     if (sesionOk.getAttribute("id_usuario") == null ) 
     {
         
-        if(clases.controles.connectSesion!=null ){
+        if(clases.controles.connectSesion!=null )
+        {
             clases.controles.connectSesion.close();
-            }
-        if (clases.controles.connect!=null){
-        clases.controles.connect.close();
+        }
+        if (clases.controles.connect!=null)
+        {
+            clases.controles.connect.close();
         }
       sesion=false;   
       response.sendRedirect("login_sesion.jsp");

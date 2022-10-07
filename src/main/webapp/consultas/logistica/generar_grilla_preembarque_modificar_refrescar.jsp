@@ -7,7 +7,8 @@
 <%@include  file="../../chequearsesion.jsp" %> 
 <%@page contentType="application/json; charset=utf-8" %>
 
-<%    String id_camion = request.getParameter("id_camion");
+<%    
+    String id_camion = request.getParameter("id_camion");
     String id_pedido = request.getParameter("id_pedido");
 
     try {

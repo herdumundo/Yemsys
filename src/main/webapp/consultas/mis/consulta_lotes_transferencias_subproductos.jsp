@@ -1,29 +1,18 @@
- <%@page import="clases.controles"%>
-<%@page import="clases.variables"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@ page contentType="application/json; charset=utf-8" %>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <jsp:useBean id="fuente_GM" class="clases.fuentedato" scope="page"/>   
 <%@include  file="../../chequearsesion.jsp" %>
 <%          
         JSONObject ob = new JSONObject();
         JSONArray jarray = new JSONArray();         
     try {
-           
             String area =(String) sesionOk.getAttribute("clasificadora");
             String carro =  request.getParameter("carro");
             ResultSet rs_GM ;
             String area_cch =(String) sesionOk.getAttribute("area_cch");
-            clases.controles.VerificarConexion();
-            Connection cn_GM = clases.controles.connectSesion;
-            fuente_GM.setConexion(cn_GM);  
-               
-                    
+            Statement st= connection.createStatement();
+ 
             int verificador_SAP=0;
-             rs_GM = fuente_GM.obtenerDato(" exec [mae_ptc_select_lotes_disponiblesTransferencias_rp_sub]  @area='"+area+"',@area_cch='"+area_cch+"',@cod_carrito='"+carro+"',@tipo_transferencia='SP'") ;
+             rs_GM = st.executeQuery(" exec [mae_ptc_select_lotes_disponiblesTransferencias_rp_sub]  @area='"+area+"',@area_cch='"+area_cch+"',@cod_carrito='"+carro+"',@tipo_transferencia='SP'") ;
         while(rs_GM.next())
         {      
             ob=new JSONObject();
@@ -54,17 +43,16 @@
             ob.put("estado_costeo", "0");
             jarray.put(ob);  
         }
-        rs_GM.close();
-        cn_GM.close();
-        } catch (Exception e) 
+            rs_GM.close();
+         } catch (Exception e) 
                
         {
             String a=e.toString();
         } 
        finally 
         {
-        controles.DesconnectarBDsession();
-        out.print(jarray); 
+            connection.close();
+            out.print(jarray); 
         }
         
         

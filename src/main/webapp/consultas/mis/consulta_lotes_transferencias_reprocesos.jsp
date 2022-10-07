@@ -1,13 +1,6 @@
- <%@page import="clases.controles"%>
-<%@page import="clases.variables"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@ page contentType="application/json; charset=utf-8" %>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
- <jsp:useBean id="fuente_GM" class="clases.fuentedato" scope="page"/>   
+<%@ page contentType="application/json; charset=utf-8" %>   
 <%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%          
         JSONObject ob = new JSONObject();
         JSONArray jarray = new JSONArray();         
@@ -17,13 +10,9 @@
             String carro =  request.getParameter("carro");
             ResultSet rs_GM ;
             String area_cch =(String) sesionOk.getAttribute("area_cch");
-            controles.connectarBD();
-            Connection cn_GM = clases.controles.connect;
-            fuente_GM.setConexion(cn_GM);  
-               
-                    
+            Statement st= connection.createStatement();
             int verificador_SAP=0;
-             rs_GM = fuente_GM.obtenerDato(" exec [mae_ptc_select_lotes_disponiblesTransferencias_rp_sub]  @area='"+area+"',@area_cch='"+area_cch+"',@cod_carrito='"+carro+"',@tipo_transferencia='REP'") ;
+             rs_GM = st.executeQuery(" exec [mae_ptc_select_lotes_disponiblesTransferencias_rp_sub]  @area='"+area+"',@area_cch='"+area_cch+"',@cod_carrito='"+carro+"',@tipo_transferencia='REP'") ;
         while(rs_GM.next())
         {      
             ob=new JSONObject();
@@ -51,8 +40,7 @@
             jarray.put(ob);  
         }
         rs_GM.close();
-        cn_GM.close();
-    
+     
         } catch (Exception e) 
                
         {
@@ -60,7 +48,7 @@
         } 
         finally 
         {
-            controles.DesconnectarBD();
+            connection.close();
               out.print(jarray); 
         }
       

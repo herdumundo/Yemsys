@@ -3,9 +3,7 @@
     Created on : 08/03/2021, 03:16:05 PM
     Author     : hvelazquez
 --%>
-<%@page import="clases.controles"%>
-<%@page import="org.json.JSONObject"%>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 <%
@@ -17,23 +15,21 @@
     ob=new JSONObject();
     String contenedor=""; 
     try {
-        controles.connectarBD();
-        Statement stmt = clases.controles.connect.createStatement();
+       Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("exec grupomaehara.dbo.[mae_ptc_select_aviariosInvolucrados] @area='"+clasificadora+"',"
         + "@inicio='"+fecha_inicio+"',@final='"+fecha_final+"' ");
         while(rs.next())
         {
             contenedor=contenedor+"<OPTION  VALUE='"+ rs.getString("aviario")+"'>"+ rs.getString("aviario")+"</OPTION>";
         }
-        controles.DesconnectarBD();
-        ob.put("aviarios",contenedor);
+         ob.put("aviarios",contenedor);
         
         }
     catch (Exception e) {
        
         }
     finally{
-          clases.controles.DesconnectarBD();
-    }
+        connection.close();
         out.print(ob);
+     }
        %> 

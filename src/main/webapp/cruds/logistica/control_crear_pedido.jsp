@@ -19,6 +19,8 @@
     ob = new JSONObject();
     String id_camion = request.getParameter("id_camion");
     String id_chofer = request.getParameter("id_chofer");
+    String numeracion = request.getParameter("numeracion");
+    String orden_pedido = request.getParameter("orden_pedido");
     String cantidad_total = request.getParameter("cantidad_total");
     String obs = request.getParameter("obs");
     String id_usuario = (String) sesionOk.getAttribute("id_usuario");
@@ -27,33 +29,40 @@
     try 
     {
         connection.setAutoCommit(false);
+        
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_crear](?,?,?,?,?,?,?)}");
-        callableStatement.setInt(1, Integer.parseInt(cantidad_total));
-        callableStatement.setInt(2, Integer.parseInt(id_camion));
-        callableStatement.setInt(3, Integer.parseInt(id_usuario));
+        callableStatement = connection.prepareCall("{call [mae_log_ptc_pedidos_crear2](?,?,?,?,?,?,?,?,?)}");
+        callableStatement.setInt(   1, Integer.parseInt(cantidad_total));
+        callableStatement.setInt(   2, Integer.parseInt(id_camion));
+        callableStatement.setInt(   3, Integer.parseInt(id_usuario));
         callableStatement.setString(4, id_chofer);
         callableStatement.setString(5, obs);
+        callableStatement.setInt(   6, Integer.parseInt(numeracion));
+        callableStatement.setString(7, orden_pedido);
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
         callableStatement.execute();
+        
         tipo_respuesta = callableStatement.getInt("estado_registro");
         mensaje = callableStatement.getString("mensaje");
-        if (tipo_respuesta == 0) 
+       if (tipo_respuesta == 0) 
         {
             connection.rollback();
         } 
         else 
         {
-            connection.commit();
-        }
+           connection.commit();
+           //  connection.rollback();
 
+        }
+ 
     } 
     catch (Exception e) 
     {
         mensaje = e.toString();
         tipo_respuesta = 0;
-    } finally {
+    } 
+    finally {
         ob.put("mensaje", mensaje);
         ob.put("tipo_respuesta", tipo_respuesta);
         out.print(ob);

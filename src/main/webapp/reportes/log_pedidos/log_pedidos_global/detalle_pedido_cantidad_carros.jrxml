@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="542" pageHeight="600" columnWidth="502" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04e0fbe0-017f-4394-9ad7-341545e7ce4c">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(cantidad_det) as carros,tipo_huevo from v_mae_log_rep_enteros where nro_pedido_global=$P{id} 	 group by tipo_huevo
+ UNION ALL
+select count(carro) as carros,'MIXTOS' FROM (select carro from v_mae_log_rep_mixtos_logistica where nro_pedido_global= $P{id}     group by	 carro)	T  ]]>
+	</queryString>
+	<field name="carros" class="java.lang.Integer"/>
+	<field name="tipo_huevo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="149" y="0" width="100" height="20" uuid="b50ab8f4-0d4e-4010-96bf-13baa876430b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad carros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="0" width="100" height="20" uuid="10760983-7f1e-419d-b1a1-282537509e12"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="19" width="500" height="1" uuid="e4d15afd-4fa4-46bd-9e66-1f8fe1b3aaf7"/>
+			</line>
+			<textField>
+				<reportElement x="149" y="0" width="100" height="20" uuid="b1909d50-83fd-4a01-8ce5-b86fe3950a68"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{carros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="0" width="100" height="20" uuid="fcfe660f-2685-4245-a48b-94d0afe8f8c3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipo_huevo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

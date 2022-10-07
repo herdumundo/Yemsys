@@ -120,6 +120,7 @@
         $.ajax({
                 type: "POST",
                 url: ruta_contenedores+'contenedor_pedidos_modificar_logistica.jsp',
+                data: ({id:codigo}),
             beforeSend: function() 
             {
                 $("#contenedor_principal").html("");
@@ -141,12 +142,7 @@
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
                   location.reload();
              }
-             else{
-                 if(tipo==1)
-               {
-                    ir_pedido(1);
-               }
-             }
+              
          } 
             
                 });  
@@ -160,6 +156,7 @@
         {
             type: "POST",type: "POST",
             url: ruta_contenedores+'contenedor_pedidos_cyo.jsp',
+            
             beforeSend: function() 
             {
                     cargar_load();
@@ -179,6 +176,72 @@
                   location.reload();
              }
          }
+        });  
+    }
+    
+    function ir_pedido_modificacion_porArea(id,id_chofer,id_camion,area)
+    {
+        $.ajax(
+        {
+            type: "POST",type: "POST",
+            url: ruta_contenedores+'contenedor_pedidos_modificar_porArea.jsp',
+            
+            beforeSend: function() 
+            {
+                    cargar_load();
+                $("#contenedor_principal").html("");
+            },           
+            success: function (res) 
+            {
+                $("#contenedor_principal").html(res);
+                $("#id_chofer").val(id_chofer);
+                $("#cbox_camion").val(id_camion);
+                 $("#cbox_camion").prop('disabled', 'disabled'); 
+                $("#id_pedido").val(id);
+                generar_grilla_modificar_pedido_porArea_log(id,id_camion,area);
+            },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+        });  
+    }
+    
+     function generar_grilla_modificar_pedido_porArea_log(id,id_camion,area)
+    {
+        $.ajax(
+        {
+            type: "POST",
+            url: ruta_consultas+'generar_grilla_preembarque_modificar_porArea.jsp',
+            data:{id_pedido:id,id_camion:id_camion,area:area},
+            beforeSend: function() 
+            {
+                $("#contenido_grilla").html("");
+            },           
+            success: function (res) 
+            {
+                $("#contenido_grilla").html(res.grilla);
+                $("#huevos_cargados").val(res.huevos_cargados);
+                $("#contenido_grilla_tipos").html(res.grilla_tipos);
+                 
+                 $("#tb_preembarque").DataTable(
+                {
+                        responsive: true,
+                        scrollY: "547px",
+                        scrollX: "500px",
+                        paging: false,
+                        "language":
+                        {
+                            "sUrl": "js/Spanish.txt"
+                        }
+                });    /*   GENERA ERROR EN LAVADOS    */
+                     grilla_funciones_cyo();
+            },
+            error: function (error) 
+            {
+                    
+            }
         });  
     }
     
@@ -223,7 +286,7 @@
                 $("#huevos_cargados").val(res.huevos_cargados);
                 $("#contenido_grilla_tipos").html(res.grilla_tipos);
                  
-              /*   $("#tb_preembarque").DataTable(
+                 $("#tb_preembarque").DataTable(
                 {
                         responsive: true,
                         scrollY: "547px",
@@ -233,7 +296,7 @@
                         {
                             "sUrl": "js/Spanish.txt"
                         }
-                });       GENERA ERROR EN LAVADOS    */
+                });    /*   GENERA ERROR EN LAVADOS    */
                      grilla_funciones_cyo();
             },
             error: function (error) 
@@ -463,3 +526,93 @@
             }
         });  
   }
+
+
+
+
+
+   function ir_pedido_log_vizualizacion_log(codigo)
+    {
+        $.ajax({
+                type: "POST",
+                url: ruta_consultas+'generar_grilla_preembarque_visualizacion.jsp',
+                data: ({id:codigo}),
+            beforeSend: function() 
+            {
+                $("#contenido_grillas").html("");
+                $("#contenido_grillas_mixto").html("");
+               
+            },           
+            success: function (res) 
+            {
+                
+                $("#contenido_grillas").html(res.grilla);
+                $("#contenido_grillas_mixto").html(res.grilla_mixto);
+                 
+             },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+              
+         } 
+            
+                });  
+    } 
+    
+    
+    function editar_nro_global_pedido_log(id_pedido,pedido_global)
+    {Swal.fire({
+
+            title: 'Modificacion del nro. global de pedido',
+            type: 'warning',
+            html:'  <label>Nro de pedido</label><input type="number" disabled value="'+id_pedido+'" class="form-control"> <br>\n\
+                    <label>Nro actual de pedido global</label><input type="number" disabled value="'+pedido_global+'" class="form-control"> <br>\n\
+                    <label>Nro nuevo de pedido global</label><input type="number" id="nro_nuevo" class="form-control">',
+            
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'SI!',
+            cancelButtonText: 'NO!'}).then((result) =>
+        {
+            if (result.value)
+            {
+                  $.ajax({
+                    type: "POST",
+                    url: cruds + "control_editar_nro_global_pedido.jsp",
+                    data: ({id_pedido: id_pedido, nro_global_nuevo:  $("#nro_nuevo").val()}),
+                    beforeSend: function ()
+                    {
+                        Swal.fire({
+                            title: 'PROCESANDO!',
+                            html: 'ESPERE<strong></strong>...',
+                            allowOutsideClick: false,
+                            willOpen: () => 
+                            {
+                                Swal.showLoading()
+                            }
+               
+                        });
+                    },
+                    success: function (res)
+                    {
+                        aviso_generico(res.tipo_respuesta,res.mensaje);
+                       
+                        if(res.tipo_respuesta==1)
+                        {
+                            buscar_reporte_pedidos_log(); 
+                        }   
+                         
+                    },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+                });
+
+                         
+            }
+        });
+    }

@@ -597,11 +597,13 @@ function cerrar_sidebar()
 
 function aviso_generico(tipo, mensaje) 
 {
-    if (tipo == 1) {
+    if (tipo == 1)
+    {
         Swal.fire(mensaje, '', 'success');//
 
 
-    } else {
+    } 
+    else {
         Swal.fire(mensaje, '', 'error');//
 
     }
@@ -694,17 +696,36 @@ function formato_hora_input()
     );
 }
 
-function cargar_datos_modal_version(ribbon, titulo, descripcion)
+function cargar_datos_modal_version(ribbon, titulo, descripcion,pdf,manual_bolean)
 {
     $("#ribbon_version").html(ribbon);
     $("#ribbon_titulo").html(titulo);
+    $("#form_pdf_manual").attr("href","./manuales/"+pdf);
+    
+    
+    $("#form_pdf_manual").hide();
     $("#ribbon_descripcion").html("");
     $("#ribbon_descripcion").html(descripcion.replaceAll("&", "<br>"));
     
-    
+    if(manual_bolean)
+    {
+        $("#form_pdf_manual").show();
+    }
     
 }   
 
+function activar_datatable(variable){
+     $(variable).DataTable
+     (  {
+                paging: false,
+               // "ordering": false,
+                "language":
+                {
+                    "sUrl": "js/Spanish.txt"
+                } ,
+                scrollX:        true,
+        }); 
+} 
 function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,datatable){
      window.location.hash =hash;
     var cal=calendario_formato;

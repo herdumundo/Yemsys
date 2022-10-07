@@ -14,23 +14,26 @@
         String father = request.getParameter("father");
         ResultSet rs_GM;
         Statement st = connection.createStatement();
-        rs_GM = st.executeQuery(" "
-                + "    select    "
-                + "        A.Code,B.ItemName,CONVERT(varchar, convert(money, B.AvgPrice), 1)   as AvgPrice ,   B.ItmsGrpCod   "
-                + "    from    "
-                + "        maehara.dbo.itt1 A with (nolock)    "
-                + "        INNER JOIN  maehara.dbo.OITM B with (nolock)  ON A.CODE=B.ItemCode      "
-                + "    WHERE    "
-                + "        code like '%MATP%' and code not in "
-                + "         (   "
-                + "             select  A.Code   "
-                + "             from  maehara.dbo.itt1 A  with (nolock)   "
-                + "             INNER JOIN  maehara.dbo.OITM B with (nolock)  ON A.CODE=B.ItemCode    "
-                + "             WHERE    FATHER='" + father + "'"
-                        + "     union all "
-                + "         select descripcion collate database_default from mae_bal_mtp_bloqueados  with (nolock)  "
-
-                        + " ) group by   A.Code,B.ItemName ,B.AvgPrice, B.ItmsGrpCod  ");
+        rs_GM = st.executeQuery( 
+         "      select "
+        +"          ItemCode as Code,ItemName,AvgPrice,ItmsGrpCod from maehara.dbo.OITM	     "
+        +"      WHERE   " 
+	+"	ItemCode like '%MATP%' and "
+	+"	ItemCode not in "
+        +"      (   "
+        +"		select  "
+	+"			A.Code   "
+	+"		from  "
+	+"			maehara.dbo.itt1 A  with (nolock)  " 
+	+"			INNER JOIN  maehara.dbo.OITM B with (nolock)  ON A.CODE=B.ItemCode  " 
+	+"		WHERE    "
+	+"			FATHER='"+father+"' "
+	+"		union all "
+	+"		select "
+        +"                  descripcion collate database_default "
+        +"              from "
+        +"                  mae_bal_mtp_bloqueados  with (nolock) "  
+	+"	) order by itemname ");
 
         while (rs_GM.next()) 
         {

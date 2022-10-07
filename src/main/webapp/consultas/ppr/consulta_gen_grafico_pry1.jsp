@@ -57,20 +57,28 @@
                     
                     DataMortandad.put("label",  "Aves");
                     DataMortandad.put("yAxisID","A");
-                    DataMortandad.put("backgroundColor",    "rgb(186, 6, 6)");
+                    DataMortandad.put("backgroundColor",    "rgb(209, 75, 75)");
                     DataMortandad.put("borderColor",  "rgb(186, 6, 6)");
+                    DataMortandad.put("pointRadius",2);
                     DataMortandad.put("borderWidth",  2);
+                    //DataMortandad.put("fill",  "start");
                     DataMortandad.put("type",  "line");
+                    DataMortandad.put("pointHoverRadius",  4  );
+                            
+
                     
                     DataAgua= new JSONObject();
                     DataAgua.put("label",  "Aves padron");
                     DataAgua.put("yAxisID","A");
-                    DataAgua.put("backgroundColor",    "rgb(132, 132, 132)");
+                    DataAgua.put("pointRadius",2);
+                    DataAgua.put("backgroundColor",    "rgb(196, 187, 187)");
                     DataAgua.put("borderColor",  "rgb(132, 132, 132)");
                     DataAgua.put("borderWidth",  2);
                     DataAgua.put("type",  "line");
-                    
-                    
+                    DataAgua.put("tension",  "0.4");
+                   // DataAgua.put("fill",  "start");
+     
+                   
                     DataB= new JSONObject();                
                     DataB.put("type",    "linear");
                     DataB.put("display",    true);
@@ -160,8 +168,8 @@
 
                 + "<tr><th colspan='7' style='color: #fff; background: black;'>Historial de ajustes </th></tr>"
                 + "<tr>"
-                + " <th  style='color: #fff; background: black;' >Fecha</th>      "
-                + " <th  style='color: #fff; background: black;' >Registro</th>      "
+                + " <th  style='color: #fff; background: black;' >Fecha de ajuste</th>      "
+                + " <th  style='color: #fff; background: black;' >Fecha de registro</th>      "
                 + " <th  style='color: #fff; background: black;' >Semana</th>      "
                 + " <th  style='color: #fff; background: black;' >Saldo nuevo</th>      "
                 + " <th  style='color: #fff; background: black;' >Ajuste</th>      "

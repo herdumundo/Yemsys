@@ -36,7 +36,11 @@
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
         <link href="plugins/lib/themes/default.css" rel="stylesheet" id="theme_base" />
         <link href="plugins/lib/themes/default.date.css" rel="stylesheet" id="theme_date" />
-        <link href="plugins/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+       
+        <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
+ 
+        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
          <link rel="stylesheet" type="text/css" href="plugins/autoFill.bootstrap4.min.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/buttons.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/colReorder.bootstrap4.css"/>
@@ -47,6 +51,8 @@
         <link href="plugins/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/rowGroup.bootstrap4.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/rowReorder.bootstrap4.css" rel="stylesheet" type="text/css"/>
+        
+        
         <link rel="stylesheet" type="text/css" href="plugins/scroller.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/searchBuilder.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/searchPanes.bootstrap4.css"/>
@@ -64,8 +70,14 @@
         <link href="plugins/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/parpadeo.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/chart.js/Chart.css" rel="stylesheet" type="text/css"/>
+        
         <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
- 
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+                         
+                         
+                         
     </head>
     <input type="hidden" id="clasificadora_menu" value="<%=area%>">
 
@@ -207,7 +219,7 @@
                         </div>
 
 
-                        <div class="modal fade bd-example-modal-xx" id="modal_reporte_varios" tabindex="-1" role="dialog"   aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-xx" id="modal_version" tabindex="-1" role="dialog"   aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                             <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -227,6 +239,7 @@
 
 
                                     <h5><div class="modal-body bg-navy" id="ribbon_titulo"></h5> 
+                                   
                                     <div class="modal-body" id="ribbon_descripcion"></div> 
 
 
@@ -234,7 +247,13 @@
 
 
                                     <div class="modal-footer">
-
+                                       
+                                           
+                                           
+                                        <a  id="form_pdf_manual" style='color: black' target="_blank"><i class='fa fa-file-pdf-o' style='color: red'></i>  Manual de usuario  </a> 
+                                            
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -252,8 +271,8 @@
                 <footer class="main-footer" >
                     <strong>Copyright © 2022 - Grupo Maehara</strong>
                     Todos los derechos reservados.
-                    <div class="float-right d-none d-sm-inline-block"  >
-                         <a href="img/Documento Version Yemsys.xlsx">Documento Versión</a>
+                    <div class="float-right d-none d-sm-inline-block">
+                     <a href="manuales/Documento Version Yemsys 30092022.xlsx">Documento Versión</a>
                      </div>
                 </footer>
 
@@ -275,7 +294,13 @@
                             </div>
                         </div>
 
-
+                        <div class="pl-2 pr-2 col-12">
+                            <div class="form-group">
+                                 
+                                <a href="apk/YemSys.apk" class="mx-auto btn btn-warning form-control "><i class="fa fa-fw fa-download"></i> Descargar APP</a>
+                                
+                            </div>
+                        </div>
                     </div>
                 </aside>
                 <div class="modal fade " id="modal_nuevocambio_pass2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -342,7 +367,11 @@
             <!-- AdminLTE App -->
             <script src="dist/js/adminlte.js"></script>
             <script src="plugins/numeral.min.js" type="text/javascript"></script>
-            <script src="plugins/chart.min.js" type="text/javascript"></script>
+            
+            <script src="plugins/chart_1.js" type="text/javascript"></script>
+            
+            <script src="plugins/chartjs-plugin-datalabels.js" type="text/javascript"></script>
+            
             <script src="plugins/selectPicker/bootstrap-select.min.js" type="text/javascript"></script>
             <script src="plugins/jquery.loadingModal.js" type="text/javascript"></script>
             <script src="plugins/sweetalert2/sweetalert2.all.min.js" type="text/javascript"></script>
@@ -361,8 +390,10 @@
             <script src="plugins/jszip.min.js" type="text/javascript"></script>
             <script type="text/javascript" src="plugins/pdfmake.min.js"></script>
             <script type="text/javascript" src="plugins/vfs_fonts.js"></script>
+            
             <script src="plugins/jquery.dataTables.min.js" type="text/javascript"></script> 
             <script src="plugins/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+            
             <script type="text/javascript" src="plugins/dataTables.autoFill.min.js"></script>
             <script type="text/javascript" src="plugins/autoFill.bootstrap4.min.js"></script>
             <script type="text/javascript" src="plugins/dataTables.buttons.min.js"></script>
@@ -371,26 +402,33 @@
             <script type="text/javascript" src="plugins/buttons.html5.min.js"></script>
             <script type="text/javascript" src="plugins/buttons.print.min.js"></script>
             <script src="plugins/dataTables.checkboxes.min.js" type="text/javascript"></script>
+            <!---------------------------------------------------------------------------------> 
+            
+            
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
-            <script src="js/principal.js?v=2.8" type="text/javascript"></script>
-            <script src="js/embarque.js?v=2.8" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=2.8" type="text/javascript"></script>
-            <script src="js/logistica.js?v=2.8" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_aldo.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=2.8" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=2.8" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=2.8" type="text/javascript"></script>
+            
+            <script src="js/principal.js?v=3.0" type="text/javascript"></script>
+            <script src="js/embarque.js?v=3.0" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=3.0" type="text/javascript"></script>
+            <script src="js/logistica.js?v=3.0" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_aldo.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=3.0" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=3.0" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=3.0" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
+ 
+            
+        
     </body>
 </html>

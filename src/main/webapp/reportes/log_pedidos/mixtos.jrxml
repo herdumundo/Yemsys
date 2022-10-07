@@ -6,11 +6,8 @@
 	<parameter name="id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="estado" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
-		<![CDATA[ select * from v_mae_log_rep_mixtos_logistica where id=$P{id}  ORDER BY 5,6]]>
+		<![CDATA[select * from v_mae_log_rep_mixtos_logistica where id=$P{id}  ORDER BY 5,6]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha_puesta" class="java.sql.Timestamp"/>

@@ -7,6 +7,7 @@
     String area =  (String) sesionOk.getAttribute("area_gm");
      String version =  contenedores_logistica_contenedor_pedidos_generados_cyo;
      String version_desc = desc_contenedores_logistica_contenedor_pedidos_generados_cyo;
+     String estado=""; 
 %>
 <head>   
 <label  ><b></b></label> 
@@ -44,22 +45,7 @@
     } else if (area.equals("C")) {
         area = "CYO";
     }
-    rs = st.executeQuery(" 	select id,fecha_registro,camion,sum(cantidad) as cantidad,id_camion,id_chofer from "
-            + "("
-            + "	select id_cab as id, FORMAT(b.fecha_registro, 'dd/MM/yyyy HH:mm') as fecha_registro,concat(code,'-',name) as camion,1 as cantidad, carro,b.id_camion,b.id_chofer"
-            + "  from mae_log_ptc_det_mixtos_pedidos a "
-            + "  inner join mae_log_ptc_cab_pedidos b on a.id_cab=b.id"
-            + "   inner join maehara.dbo.[@CAMIONES] c on b.id_camion=c.Code collate database_default "
-            + "  where a.estado=2 and a.clasificadora='" + area + "' "
-            + "  group by a.id_cab,b.fecha_registro,code,name ,carro,b.id_camion,b.id_chofer"
-            + " union all"
-            + " select distinct a.id,FORMAT (a.fecha_registro, 'dd/MM/yyyy HH:mm') as fecha_registro,concat(code,'-',name) as camion  ,"
-            + "	sum(c.cantidad) as cantidad, 0 as carro,a.id_camion,a.id_chofer  "
-            + "from mae_log_ptc_cab_pedidos a    "
-            + "	inner join maehara.dbo.[@CAMIONES] b     on a.id_camion=b.Code collate database_default     and a.estado IN (2)    "
-            + "	inner join mae_log_ptc_det_pedidos2 c on a.id=c.id_cab and c.estado=2 and c.clasificadora='" + area + "' "
-             + "group by a.id,a.fecha_registro,code,name,a.id_camion,a.id_chofer ) t "
-            + "group by  id,fecha_registro,camion,id_camion,id_chofer "); %>
+    rs = st.executeQuery(" select * from v_mae_log_pendientes_embarque where clasificadora='"+area+"' and estado in (1,2)"); %>
 
 
 <script>
@@ -78,7 +64,9 @@
                 String id = rs.getString("id");
                 String id_chofer = rs.getString("id_chofer");
                 String id_camion = rs.getString("id_camion");
-              String contenido_cab = "Pedido nro. " + rs.getString("id") + "  Fecha registro: " + rs.getString("fecha_registro") + "  Camion:" + rs.getString("camion") + " TOTAL CARROS:" + rs.getString("cantidad");%> 
+                estado = rs.getString("estado");
+                
+                String contenido_cab = "Pedido nro. " + rs.getString("id") + "  Fecha registro: " + rs.getString("fecha_registro") + "  Camion:" + rs.getString("camion") + " TOTAL CARROS:" + rs.getString("cantidad");%> 
 
 <div id="accordion" >
 
@@ -116,7 +104,8 @@
                                             + " where id_cab=" + id + "  and u_medida='ENTERO' AND   clasificadora='" + area + "' "
                                             + " group by clasificadora,tipo_huevo,fecha_puesta ");
 
-                                    while (rs2.next()) {%>             
+                                    while (rs2.next()) 
+                                    {%>             
                                 <tr> 
                                     <td><%=rs2.getString("fecha_puesta")%></td>
                                     <td><%=rs2.getString("tipo_huevo")%></td>
@@ -135,7 +124,7 @@
                             int comprobar_mixto = 0;
                             rs4 = st3.executeQuery("  SELECT clasificadora ,carrito as carro ,  stuff(( select   ','+  [tipo_huevo] + ':'+convert(varchar,[cantidad])    "
                                     + " from mae_log_ptc_det_mixtos_pedidos with (nolock)  where carro =  carrito for XML path('') ),1,1,'')as cajones  "
-                                    + "FROM  (  select clasificadora,carro as carrito,tipo_huevo,cantidad from mae_log_ptc_det_mixtos_pedidos where id_cab= " + id + "  and clasificadora='" + area + "' and estado=2  )  T  "
+                                    + "FROM  (  select clasificadora,carro as carrito,tipo_huevo,cantidad from mae_log_ptc_det_mixtos_pedidos where id_cab= " + id + "  and clasificadora='" + area + "' and estado in (1,2)  )  T  "
                                     + "  group by clasificadora ,carrito");
 
                             while (rs4.next()) {
@@ -154,9 +143,9 @@
                             <tbody>
                                 <%
                                     rs3 = st4.executeQuery("  SELECT clasificadora ,carrito as carro ,  stuff(( select   ','+  [tipo_huevo] + ':'+convert(varchar,[cantidad])    "
-                                            + " from mae_log_ptc_det_mixtos_pedidos with (nolock)  where ESTADO=2 AND carro =  carrito for XML path('') ),1,1,'')as cajones  "
+                                            + " from mae_log_ptc_det_mixtos_pedidos with (nolock)  where ESTADO in (1,2)  AND carro =  carrito for XML path('') ),1,1,'')as cajones  "
                                             + "FROM  (  select clasificadora,carro as carrito,tipo_huevo,cantidad "
-                                            + "         from mae_log_ptc_det_mixtos_pedidos where id_cab= " + id + "   and clasificadora='" + area + "'  and estado =2 "
+                                            + "         from mae_log_ptc_det_mixtos_pedidos where id_cab= " + id + "   and clasificadora='" + area + "'  and estado in (1,2)  "
                                             + ")  T  "
                                             + "  group by clasificadora ,carrito");
 
@@ -178,10 +167,16 @@
 
 
                     </div>
-
+                           
                         <div class="card-footer"  >
-                            <input type="button"  value="MODIFICAR PEDIDO" class="btn form-control bg-navy" onclick="ir_pedido_cyo(<%=id%>,<%=id_chofer%>,<%=id_camion%>)" >
-           
+                            <%
+                            if(estado.equals("2"))
+                            { 
+                                
+                             %> 
+                                <input type="button"  value="MODIFICAR PEDIDO" class="btn form-control bg-navy" onclick="ir_pedido_cyo(<%=id%>,<%=id_chofer%>,<%=id_camion%>)" >
+                             <%    }
+                            %> 
                         </div>
 
                 </div>

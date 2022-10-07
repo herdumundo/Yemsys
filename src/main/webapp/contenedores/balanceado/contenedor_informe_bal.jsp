@@ -33,17 +33,28 @@
   
 <div class="input-append">
 
-           <br><br> 
-           <table> 
-           <tr>
-                <td><label>INGRESAR FECHA DESDE</label>
-                <input id="desde" name="desde" class="datepicker "   > </td>
-                <td><label>INGRESAR FECHA HASTA</label>
-                <input id="hasta" name="hasta" class="datepicker "    ></td> 
-                <td> 
-                    <input type="button" class="form-control bg-navy" value="Buscar" onclick="ir_informes_formulas_procesar_bal2($('#desde').val(),$('#hasta').val())" ></td> 
-            </tr>
-            </table>
+       <table>
+    <thead>
+    <tr><th>Fecha desde</th>
+    <th>Fecha hasta</th>
+    </tr></thead>
+    <tbody>
+        <tr>
+            <td> 
+                <input id="desde" name="desde" class="datepicker "   >          
+            </td>
+            <td>
+                <input id="hasta" name="hasta" class="datepicker "    >           
+            </td>
+        </tr>
+         <tr>
+             <td colspan="2">
+                    <input type="button" class="form-control bg-navy" value="Buscar" onclick="ir_informes_formulas_procesar_bal2($('#desde').val(),$('#hasta').val())" ></td>             </td>
+         </tr>
+    </tbody>
+</table>     
+           
+           
 </div>      
 
 

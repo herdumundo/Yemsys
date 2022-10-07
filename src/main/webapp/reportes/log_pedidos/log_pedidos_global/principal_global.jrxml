@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cfafee4-c6f3-4b74-b55e-796f84763d49">
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="236"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from v_mae_log_rep_logistica_entero where nro_pedido_global=$P{id}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha_registro" class="java.lang.String"/>
+	<field name="camion" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="chofer" class="java.lang.String"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="capacidad" class="java.lang.Integer"/>
+	<field name="fecha_embarque" class="java.sql.Timestamp"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="nro_pedido_global" class="java.lang.Integer"/>
+	<field name="orden_pedido" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="676" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="96" width="100" height="20" uuid="0fc9ca5f-469d-4090-aa92-aae9889c81d9"/>
+				<text><![CDATA[Fecha de registro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="96" width="100" height="20" uuid="1490e5f8-1520-4669-9241-16fd68894d3d"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="116" width="555" height="31" backcolor="#CCFFCC" uuid="48135fb1-17d4-4d7b-a17a-55da449f6d88"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="6" width="306" height="15" uuid="0e6fd03d-ce14-4b3c-8085-48c4dde01e36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="137" height="20" uuid="06d1752e-8876-49c6-aeff-c999654cf3c0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[AGROPECUARIA COMERCIAL E INDUSTRIAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="1" height="47" uuid="403288b5-ff72-4cd0-8fe5-afb05c890c6a"/>
+			</line>
+			<staticText>
+				<reportElement x="137" y="28" width="306" height="15" uuid="4fbc2f0c-6ff9-44db-a88d-126c6313755a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRE-EMBARQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="2" width="97" height="30" uuid="e716de9c-368f-47c6-933a-9ae9b7f20204"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAEHARA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="448" y="2" width="1" height="46" uuid="3f04f58e-86bc-4ed5-9670-b536fa783854"/>
+			</line>
+			<staticText>
+				<reportElement x="95" y="6" width="41" height="26" uuid="64a47b61-f877-4185-b894-189318f71632"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.A.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="136" y="2" width="1" height="46" uuid="24a1c8c4-54fa-4931-9def-adbf19285143"/>
+			</line>
+			<line>
+				<reportElement x="1" y="1" width="554" height="1" uuid="cf7ddd2d-6f1f-4997-b28a-2d0da603ad67"/>
+			</line>
+			<staticText>
+				<reportElement x="449" y="3" width="106" height="45" uuid="e1d26e2e-177a-4f63-81bf-7b1ba507d88d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[M-FOR-LOG-14]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="49" width="554" height="1" uuid="9e2958bd-9721-46b7-a6d5-8e8b3728929e"/>
+			</line>
+			<line>
+				<reportElement x="554" y="3" width="1" height="46" uuid="6f37417c-8ebf-41e0-bdf4-a4308480aec6"/>
+			</line>
+			<staticText>
+				<reportElement x="303" y="63" width="100" height="20" uuid="b2e78e15-b49c-434b-81b3-9615a3182966"/>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="345" y="63" width="100" height="20" uuid="82e77176-2ab4-4a5f-a390-8f8f99f817ec"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="false">
+				<reportElement isPrintRepeatedValues="false" x="0" y="147" width="555" height="100" uuid="7de78147-b6ab-4a3a-9168-72b182e7b4c5"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_global\\detalle_pedido.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="1" y="63" width="100" height="20" uuid="0d9efe02-9b9e-42d3-9822-5e92e8615435"/>
+				<text><![CDATA[Nro pedido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="63" width="100" height="20" uuid="d0f432e5-4520-4878-83d8-1c181c913f9d"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_pedido_global}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="564" width="554" height="31" backcolor="#FFFFCC" uuid="3801e8c9-0efe-4c47-9484-e5a21a1b0d95"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carros enteros]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement x="-1" y="576" width="554" height="100" uuid="a2bb7beb-12b5-47e6-8e12-88ebee2e0e47"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_global\\enteros_global.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="320" width="555" height="31" backcolor="#CCCCCC" uuid="c38848f6-1f44-434f-900d-56214571d270"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de carros]]></text>
+			</staticText>
+			<subreport isUsingCache="true" runToBottom="false">
+				<reportElement isPrintRepeatedValues="false" x="1" y="351" width="553" height="100" uuid="f4fc29df-f049-4f53-8e5f-9961935c23d8"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_global\\detalle_pedido_cantidad_carros.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<summary>
+		<band height="128">
+			<subreport runToBottom="false">
+				<reportElement x="80" y="28" width="476" height="100" uuid="2ac908fd-76f7-48c1-9d6c-ccbc41ece403"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\log_pedidos_global\\mixtos_global.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="555" height="31" backcolor="#CCFFFF" uuid="7b4d0cae-30ae-45ba-82f0-78fb96846f5c"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carros mixtos]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -8,8 +8,10 @@
 <%@page import="java.security.MessageDigest"%>
 <%@include file="../cruds/conexion.jsp" %>
 <%@page session="true" %>
-<%    String usu = request.getParameter("usuario");
+<%    
+    String usu = request.getParameter("usuario");
     String cla = request.getParameter("pass");
+    
     String area = "";
     String area_form = "";
     String user_name = "";
@@ -19,7 +21,7 @@
     int tipo_respuesta = 0;
     String id_rol = "";
   
-     MessageDigest m = MessageDigest.getInstance("MD5");
+    MessageDigest m = MessageDigest.getInstance("MD5");
     m.reset();
     m.update(cla.getBytes());
     byte[] digest = m.digest();
@@ -39,19 +41,22 @@
         callableStatement.registerOutParameter("username", java.sql.Types.VARCHAR);
 
         callableStatement.execute();
-        tipo_respuesta = callableStatement.getInt("tipo");
-        user_name = callableStatement.getString("username");
-        nombre_usu = callableStatement.getString("nombre");
-        clasificadora = callableStatement.getString("clasificadora");
-        cod_usuario = callableStatement.getString("cod_usuario");
-        id_rol = callableStatement.getString("id_rol");
+        tipo_respuesta  = callableStatement.getInt("tipo");
+        user_name       = callableStatement.getString("username");
+        nombre_usu      = callableStatement.getString("nombre");
+        clasificadora   = callableStatement.getString("clasificadora");
+        cod_usuario     = callableStatement.getString("cod_usuario");
+        id_rol          = callableStatement.getString("id_rol");
 
     } catch (Exception e) {
 
     } finally {
-        if (tipo_respuesta == 0) {
+        if (tipo_respuesta == 0) 
+        {
             response.sendRedirect("../login_error.jsp");
-        } else {
+        } 
+        else 
+        {
             String notificacion = "  <a class='nav-link  ' data-toggle='dropdown' href='#' aria-expanded='false'>  <i class='far fa-bell '></i>     <span class='badge badge-danger navbar-badge animacion' id='contador_notificacion'>0</span>    </a><div class='dropdown-menu dropdown-menu-lg dropdown-menu-right ' style='left: inherit; right: 0px;' id='notificacion'>   <span class='dropdown-item dropdown-header bg-navy'>Notificaciones</span>   </div>";
             HttpSession sesionOk = request.getSession();
             sesionOk.setAttribute("user_name", user_name);
