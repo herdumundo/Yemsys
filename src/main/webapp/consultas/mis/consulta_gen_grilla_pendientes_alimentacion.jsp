@@ -3,10 +3,7 @@
     Created on : 05/03/2020, 11:04:47 AM
     Author     : hvelazquez
 --%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="clases.controles"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.*"%>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
 <%    
@@ -15,7 +12,6 @@
     JSONArray jarray2 = new JSONArray();
     String area = (String) sesionOk.getAttribute("clasificadora");
     try {
-        controles.connectarBD();
         String query = "select "
                 + "convert(date,fecha_puesta) as fecha_puesta, "
                 + "cod_carrito,cantidad,origen,tipo_huevo,"
@@ -31,7 +27,7 @@
                     + "desFallaZona "
                     + " from lotes a left outer join fallas b on a.zona_falla=b.codigo where clasificadora_actual='HP' and fecha_alimentacion is null ";
         }
-        Statement stmt = clases.controles.connect.createStatement();
+        Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
             jarray = new JSONArray();
@@ -47,7 +43,7 @@
     } catch (Exception e) {
         String error = e.getMessage();
     } finally {
-        clases.controles.DesconnectarBD();
+        connection.close();
         out.print(ob2);
     }
 %>

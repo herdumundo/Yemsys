@@ -70,6 +70,8 @@
         <link href="plugins/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <link href="plugins/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/parpadeo.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/chart.js/Chart.css" rel="stylesheet" type="text/css"/>
+        
         <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 
@@ -269,8 +271,8 @@
                 <footer class="main-footer" >
                     <strong>Copyright © 2022 - Grupo Maehara</strong>
                     Todos los derechos reservados.
-                    <div class="float-right d-none d-sm-inline-block"  >
-                          <a href="manuales/Documento Version Yemsys.xlsx">Documento Versión</a>
+                    <div class="float-right d-none d-sm-inline-block">
+                     <a href="manuales/Documento Version Yemsys 30092022.xlsx">Documento Versión</a>
                      </div>
                 </footer>
 
@@ -365,7 +367,11 @@
             <!-- AdminLTE App -->
             <script src="dist/js/adminlte.js"></script>
             <script src="plugins/numeral.min.js" type="text/javascript"></script>
-            <script src="plugins/chart.min.js" type="text/javascript"></script>
+            
+            <script src="plugins/chart_1.js" type="text/javascript"></script>
+            
+            <script src="plugins/chartjs-plugin-datalabels.js" type="text/javascript"></script>
+            
             <script src="plugins/selectPicker/bootstrap-select.min.js" type="text/javascript"></script>
             <script src="plugins/jquery.loadingModal.js" type="text/javascript"></script>
             <script src="plugins/sweetalert2/sweetalert2.all.min.js" type="text/javascript"></script>
@@ -421,5 +427,8 @@
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
+ 
+            
+        
     </body>
 </html>

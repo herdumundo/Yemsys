@@ -8,8 +8,10 @@
 <%@page import="java.security.MessageDigest"%>
 <%@include file="../cruds/conexion.jsp" %>
 <%@page session="true" %>
-<%    String usu = request.getParameter("usuario");
+<%    
+    String usu = request.getParameter("usuario");
     String cla = request.getParameter("pass");
+    
     String area = "";
     String area_form = "";
     String user_name = "";
@@ -39,17 +41,18 @@
         callableStatement.registerOutParameter("username", java.sql.Types.VARCHAR);
 
         callableStatement.execute();
-        tipo_respuesta = callableStatement.getInt("tipo");
-        user_name = callableStatement.getString("username");
-        nombre_usu = callableStatement.getString("nombre");
-        clasificadora = callableStatement.getString("clasificadora");
-        cod_usuario = callableStatement.getString("cod_usuario");
-        id_rol = callableStatement.getString("id_rol");
+        tipo_respuesta  = callableStatement.getInt("tipo");
+        user_name       = callableStatement.getString("username");
+        nombre_usu      = callableStatement.getString("nombre");
+        clasificadora   = callableStatement.getString("clasificadora");
+        cod_usuario     = callableStatement.getString("cod_usuario");
+        id_rol          = callableStatement.getString("id_rol");
 
     } catch (Exception e) {
 
     } finally {
-        if (tipo_respuesta == 0) {
+        if (tipo_respuesta == 0) 
+        {
             response.sendRedirect("../login_error.jsp");
         } 
         else 

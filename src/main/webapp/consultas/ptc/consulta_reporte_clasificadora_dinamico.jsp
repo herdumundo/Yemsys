@@ -3,28 +3,19 @@
     Created on : 02-ene-2022, 19:57:59
     Author     : aespinola
 --%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.CallableStatement"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
- <jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 <%@page contentType="application/json; charset=utf-8"%>
-<%@page import="java.sql.*" %>
-<%@page import="java.util.*" %>
-
+ 
 <% 
     String fecha_desde_ptc= request.getParameter("fecha_desde_cla") ;
     String fecha_hasta_ptc= request.getParameter("fecha_hasta_cla") ;
-    String tipo_grafico_ptc= request.getParameter("tipo_grafico_cla") ;
+    String tipo_grafico_ptc= "bar";//request.getParameter("tipo_grafico_cla") ;
     String[] array_clasificadora_ptc= request.getParameterValues("clasif_cla");
     String[] array_categoria_ptc= request.getParameterValues("categorias2_cla");
     
     String clasificadora="";
-    String script="function () {"
+   /* String script="function () {"
                 +"var chartInstance = this.chart,"
                     +"ctx = chartInstance.ctx;"
                     +"ctx.textAlign = 'center';"
@@ -38,18 +29,14 @@
                         +"    ctx.fillText(data, bar._model.x, bar._model.y - 5);"
                        +" });"
                     +"});"
-               +" }";
-    String categoria="";
-    int tot_mortandad=0;
+               +" }";*/
     boolean ptc   =true;
     boolean rp =true;
     boolean pi     =true;
     boolean r     =true;
    
 
-    clases.controles.VerificarConexion();
-    fuente.setConexion(clases.controles.connectSesion);
-    JSONObject charts_clasificadora = new JSONObject();
+     JSONObject charts_clasificadora = new JSONObject();
     
     for(int i=0; i<array_clasificadora_ptc.length; i++)   
     {
@@ -85,7 +72,7 @@
     
       String query ="select FORMAT(fecha,'dd-MM')fecha,CONVERT(NUMERIC(10,2),(SUM(ptc)/(SUM(ptc)+sum(pi)))*100)PTC_POR,CONVERT(NUMERIC(10,2),(SUM(rp)/(SUM(rp)+SUM(ptc)+sum(pi)))*100)RP_POR,CONVERT(NUMERIC(10,2),(SUM(pi)/(SUM(ptc)+sum(pi)))*100)PI_POR,CONVERT(NUMERIC(10,2),sum(r)/(SUM(ptc)+(SUM(pi))+(SUM(r)))*100) as R_POR from v_mae_ptc_indicadores where clasificadora_origen in ("+clasificadora+") and FECHA between '"+fecha_desde_ptc+"' and '"+fecha_hasta_ptc+"'GROUP BY FECHA order by fecha";
       
-    PreparedStatement pt=clases.controles.connectSesion.prepareStatement(query);
+    PreparedStatement pt=connection.prepareStatement(query);
     ResultSet rs=pt.executeQuery();
  
         
@@ -124,7 +111,7 @@
                     
                     animation = new JSONObject();
                     animation.put("duration",  1);
-                    animation.put("onComplete",  script);
+                 //   animation.put("onComplete",  script);
 
                     
                     Dataptc = new JSONObject();
@@ -312,9 +299,54 @@
                 
             }
            
+              PreparedStatement pt2 = connection.prepareStatement(""
+        + " select SUM(PTC) as ptc2,  SUM(REPROCESOS) as  rp2 ,SUM(SUBPRODUCTOS) as  pi2 ,SUM(ROTOS) as r "
+	+ " from   "
+	+ " ("
+	+ " select "
+  	+ " 	CONVERT(NUMERIC(10,2),(SUM(ptc)/(SUM(ptc)+sum(pi)+sum(r)))*100) as PTC,"
+	+ " 	0 as REPROCESOS,"
+	+ " 	CONVERT(NUMERIC(10,2),(SUM(pi)/(SUM(ptc)+sum(pi)+sum(r)))*100) as SUBPRODUCTOS,"
+	+ " 	CONVERT(NUMERIC(10,2),sum(r)/(SUM(ptc)+(SUM(pi))+(SUM(r)))*100) as ROTOS "
+	+ " from v_mae_ptc_indicadores"
+	+ " where clasificadora_origen in ("+clasificadora+") "
+	+ " and FECHA between '"+fecha_desde_ptc+"' and '"+fecha_hasta_ptc+"'	 "
+	+ " union all"
+	+ " select "
+	+ " 	0 as PTC,"
+	+ " 	CONVERT(NUMERIC(10,2),(SUM(rp)/(SUM(rp)+SUM(ptc)+sum(pi)+sum(r)))*100) as REPROCESOS,"
+	+ " 	0 as SUBPRODUCTOS,"
+	+ " 	0 as ROTOS "
+	+ " 	    	  "
+	+ " from v_mae_ptc_indicadores"
+	+ " where clasificadora_origen in ("+clasificadora+" ) AND clasificadora_origen NOT IN ('O')"
+	+ " and FECHA between '"+fecha_desde_ptc+"' and '"+fecha_hasta_ptc+"'	 )t ");
+       
+              
+              
+              
+              
+              
+              
+              
+              
+              
+        
             
-             PreparedStatement pt2 = clases.controles.connectSesion.prepareStatement("select CONVERT(NUMERIC(10,2),(SUM(ptc)/(SUM(ptc)+sum(pi)))*100) as ptc2,CONVERT(NUMERIC(10,2),(SUM(rp)/(SUM(rp)+SUM(ptc)+sum(pi)))*100) as rp2,CONVERT(NUMERIC(10,2),(SUM(pi)/(SUM(ptc)+sum(pi)))*100) as pi2,CONVERT(NUMERIC(10,2),sum(r)/(SUM(ptc)+(SUM(pi))+(SUM(r)))*100) as r from v_mae_ptc_indicadores where clasificadora_origen in ("+clasificadora+") and FECHA between '"+fecha_desde_ptc+"' and '"+fecha_hasta_ptc+"'");
-       ResultSet rs2 = pt2.executeQuery();
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              ResultSet rs2 = pt2.executeQuery();
         
         //PreparedStatement pt2 = clases.controles.connectSesion.prepareStatement("select * from v_mae_ptc_indicadores where  FECHA between '"+fecha_desde_ptc+"' and '"+fecha_hasta_ptc+"'");
        // ResultSet rs2 = pt2.executeQuery();
@@ -535,8 +567,13 @@
              charts_clasificadora.put("charts_clasificadora", dataArray); 
              charts_clasificadora.put("totales", dataArray); 
              charts_clasificadora.put("totales2", dataArray2); 
-         clases.controles.DesconnectarBDsession();   
+         connection.close();
          out.print(charts_clasificadora); 
  %>
  
  
+ 
+ 
+ 
+ 
+                                         

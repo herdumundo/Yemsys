@@ -399,8 +399,9 @@ function registrar_pedido_log()
 
             title: 'CONFIRMACION',
             type: 'warning',
-            html:'  <label>Numero global del pedido</label>  <input type="number"  id="numeracion"    class="form-control is-invalid" required onchange="crud_generar_numero_pedido_log()"> <br>\n\
-                    <label>Orden del pedido</label>  <input type="text"  id="orden_pedido"  placeholder="Ingrese el orden del pedido"  class="form-control is-invalid" >',
+            html:'  <label>Numero global del pedido</label> \n\
+                 <input type="number"  id="numeracion"    class="form-control is-invalid" required onchange="crud_generar_numero_pedido_log()"> <br>\n\
+                     <input type="hidden"  id="orden_pedido"  placeholder="Ingrese el orden del pedido"  class="form-control is-invalid" >',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

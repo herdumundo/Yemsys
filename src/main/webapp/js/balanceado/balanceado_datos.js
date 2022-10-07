@@ -658,19 +658,7 @@ function ir_informes_formulas_procesar_bal2 (desde,hasta){
         {
             $("#div_grilla2").html("");
             $("#div_grilla2").html(data.grilla);
-            
-         /*    $("#tb_formulacion").DataTable({ 
-                "scrollX": true,
-                paging: false,
-                ordering:false,
-                        responsive: true,
-                 "language":
-                        {
-                            "sUrl": "js/Spanish.txt"
-                        },
-                
-            });*/
-             cerrar_load();
+            cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
@@ -680,6 +668,10 @@ function ir_informes_formulas_procesar_bal2 (desde,hasta){
     });
 
 }
+
+
+
+
 
 function procesar_sap_bal(id,cod_formula) 
 {
@@ -747,4 +739,59 @@ function ir_pendientes_generados_area()
              }
          }
     });
+}
+
+
+
+ 
+function ir_informes_pedidos_creados_por_usuario_bal (){
+    window.location.hash = "IIFPBU";
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_bal + "contenedor_informe_bal_creados.jsp",
+    
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#contenedor_principal").html("");
+            $("#contenedor_principal").html(data);
+            cargar_estilo_calendario_global("dd/mm/yyyy",true);
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    });
+
+}
+
+
+
+
+function consulta_informes_pedidos_creados_por_usuario_bal (desde,hasta){
+     $.ajax({
+        type: "POST",
+        url: ruta_consultas_bal + "consulta_gen_informe_por_usuario.jsp",
+        data:({desde:desde,hasta:hasta}),
+    
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#div_grilla2").html("");
+            $("#div_grilla2").html(data.grilla);
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    });
+
 }

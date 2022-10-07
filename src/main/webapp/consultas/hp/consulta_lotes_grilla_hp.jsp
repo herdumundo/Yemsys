@@ -1,22 +1,16 @@
-<%@page import="clases.controles"%>
-<%@page import="clases.variables"%>
-<%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
 <%@include  file="../../chequearsesion.jsp" %>
-<%    String grilla_html = "";
+<%@page contentType="application/json; charset=utf-8" %>
+
+ <%    String grilla_html = "";
     String cabecera = "";
-
     try {
-
         String fecha = request.getParameter("fecha_alimentacion");
         ResultSet rs_GM;
-        clases.controles.connectarBD();
-        Statement st = controles.connect.createStatement();
+        Statement st = connection.createStatement();
 
-         rs_GM = st.executeQuery(" select"
+        rs_GM = st.executeQuery(" select"
                 + " a.fecha_registro as fecha_alimentacion,c.cod_carrito,CONVERT(DATE,c.fecha_puesta) AS fecha_puesta ,c.cantidad,c.clasificadora_origen,d.desFallaZona,a.usuario, "
                 + " c.tipo_huevo "
                 + " from mae_ptc_alimentacion_hp a "
@@ -39,8 +33,7 @@
                 + "</tr>"
                 + " </thead> "
                 + " <tbody >";
-        while (rs_GM.next()) 
-        {
+        while (rs_GM.next()) {
             grilla_html = grilla_html
                     + "<tr> "
                     + "<td>   " + rs_GM.getString("fecha_alimentacion") + "</td>"
@@ -58,11 +51,9 @@
     } catch (Exception e) {
         String a = e.toString();
     } finally {
-        controles.DesconnectarBD();
-        out.print(cabecera + grilla_html + "</tbody></table>"); 
+        connection.close();
+        out.print(cabecera + grilla_html + "</tbody></table>");
     }
-
-
 %>
 
 
