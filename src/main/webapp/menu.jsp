@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <%@include  file="chequearsesion.jsp" %>
-
 <html lang="en">
     <head>
         <% String usuario = (String) sesionOk.getAttribute("nombre_usuario");
@@ -8,8 +7,6 @@
             String area = (String) sesionOk.getAttribute("clasificadora");
             String nav_area = (String) sesionOk.getAttribute("nav_area");
             String notificacion = (String) sesionOk.getAttribute("notificacion");
-
-
         %>
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -408,27 +405,29 @@
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
             
-            <script src="js/principal.js?v=3.0" type="text/javascript"></script>
-            <script src="js/embarque.js?v=3.0" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=3.0" type="text/javascript"></script>
-            <script src="js/logistica.js?v=3.0" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_aldo.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=3.0" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=3.0" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=3.0" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=3.0" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=3.0" type="text/javascript"></script>
+            <script src="js/principal.js?v=3.1" type="text/javascript"></script>
+            <script src="js/embarque.js?v=3.1" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=3.1" type="text/javascript"></script>
+            <script src="js/logistica.js?v=3.1" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ppr/ppr_funciones.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=3.1" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=3.1" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=3.1" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=3.1" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=3.1" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
- 
-            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
+
         
     </body>
 </html>
+
+ 

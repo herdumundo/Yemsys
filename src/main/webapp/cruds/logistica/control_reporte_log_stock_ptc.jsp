@@ -22,8 +22,8 @@
         Map<String, Object> parameter = new HashMap<String, Object>();
         String hora = request.getParameter("hora");
         parameter.put("hora", hora);
-        parameter.put("SUBREPORT_DIR", new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_stock_huevos\\"));
-        //  parameter.put("SUBREPORT_DIR",new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\grupomaehara\\web\\reportes\\log_stock_huevos\\"));
+        parameter.put("SUBREPORT_DIR",  new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_stock_huevos\\"));
+    //  parameter.put("SUBREPORT_DIR",  new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\grupomaehara\\web\\reportes\\log_stock_huevos\\"));
 
         byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, cn);
         response.setContentType("application/pdf");

@@ -25,7 +25,8 @@
         String select = "";
         JSONObject ob = new JSONObject();
         ob = new JSONObject();
-        while (rs2.next()) {
+        while (rs2.next()) 
+        {
             group = "";
             option = "";
             group = group + "<optgroup  label='" + rs2.getString("descripcion") + "'  >";// EL FINAL DEL UL Y EL LI VAN ABAJO, LUEGO DE CARGAR EL SUBMENU

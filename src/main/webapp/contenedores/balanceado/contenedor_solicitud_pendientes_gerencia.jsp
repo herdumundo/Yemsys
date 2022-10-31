@@ -13,6 +13,9 @@
 <%    
     String version = contenedores_bal_pendiente_aprobacion_gerencia;
     String version_desc = desc_contenedores_bal_pendiente_aprobacion_gerencia;
+    String pdf =  pdf_bal_pendiente_aprobacion_gerencia;
+    
+    
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
@@ -26,7 +29,7 @@
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>','','<%=pdf%>',true)">
     <label ><%=version%></label> 
 </div>
 </head><!-- comment -->
@@ -62,7 +65,7 @@
             <tbody>
                 <% while (rs.next()){ %>
                 <tr>
-                    <td class="colorear" id="<%=rs.getString("id")%>">
+                    <td class="colorear" id="p<%=rs.getString("id")%>">
                       <h5><span class='badge badge-dark right'><%=rs.getString("id")%></span></h5>   
                         </td>
                     <td><%=rs.getString("fecha_registro")%></td>
