@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="542" pageHeight="600" columnWidth="502" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04e0fbe0-017f-4394-9ad7-341545e7ce4c">
-	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.zoom" value="1.7715610000000017"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.String">
@@ -21,38 +21,39 @@
 	<field name="cliente" class="java.lang.String"/>
 	<field name="nro_pedido_global" class="java.lang.Integer"/>
 	<field name="orden_pedido" class="java.lang.String"/>
+	<field name="creado_por" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="b50ab8f4-0d4e-4010-96bf-13baa876430b"/>
+				<reportElement x="0" y="0" width="83" height="20" uuid="b50ab8f4-0d4e-4010-96bf-13baa876430b"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Camion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="20" uuid="10760983-7f1e-419d-b1a1-282537509e12"/>
+				<reportElement x="84" y="0" width="84" height="20" uuid="10760983-7f1e-419d-b1a1-282537509e12"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Capacidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="190" height="20" uuid="3b5d57aa-b063-4bc3-ac1f-07c651e45562"/>
+				<reportElement x="168" y="0" width="175" height="20" uuid="3b5d57aa-b063-4bc3-ac1f-07c651e45562"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Chofer]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="0" width="100" height="20" uuid="32e8a178-916a-4a7f-9695-8f1f60998399"/>
+				<reportElement x="355" y="0" width="145" height="20" uuid="12d4a9d2-d629-4118-8cbc-82ddb6b3152e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Orden pedido]]></text>
+				<text><![CDATA[Creado por]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -62,22 +63,22 @@
 				<reportElement x="0" y="19" width="500" height="1" uuid="e4d15afd-4fa4-46bd-9e66-1f8fe1b3aaf7"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="b1909d50-83fd-4a01-8ce5-b86fe3950a68"/>
+				<reportElement x="0" y="0" width="83" height="20" uuid="b1909d50-83fd-4a01-8ce5-b86fe3950a68"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{camion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="100" height="20" uuid="fcfe660f-2685-4245-a48b-94d0afe8f8c3"/>
+				<reportElement x="84" y="0" width="84" height="20" uuid="fcfe660f-2685-4245-a48b-94d0afe8f8c3"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="200" y="0" width="190" height="20" uuid="c079d7e8-d01a-405b-816e-8f7e98b0a632"/>
+				<reportElement x="168" y="0" width="175" height="20" uuid="c079d7e8-d01a-405b-816e-8f7e98b0a632"/>
 				<textFieldExpression><![CDATA[$F{chofer}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="400" y="0" width="100" height="20" uuid="108337ab-6db1-4674-af52-c80a2e83eb9f"/>
-				<textFieldExpression><![CDATA[$F{orden_pedido}]]></textFieldExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="355" y="0" width="145" height="20" uuid="bdb971d6-5d17-4e4c-a057-1acd2bbc9074"/>
+				<textFieldExpression><![CDATA[$F{creado_por}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

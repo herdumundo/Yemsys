@@ -173,8 +173,10 @@
     String contenedores_bal_pendiente_aprobacion = "0095-PAN-29062022-A";
     String desc_contenedores_bal_pendiente_aprobacion = " ";
 
-String contenedores_bal_pendiente_aprobacion_gerencia = "0096-PAN-09062022-A";
+    String contenedores_bal_pendiente_aprobacion_gerencia = "0096-PAN-09062022-A";
     String desc_contenedores_bal_pendiente_aprobacion_gerencia = " ";
+    String pdf_bal_pendiente_aprobacion_gerencia = "Manual_Balanceado_aprobar_gerencia.pdf";
+
 
     String contenedores_bal_formula_procesar = "0097-PAN-09062022-A";
     String desc_contenedores_bal_formula_procesar = " ";

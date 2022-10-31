@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="clases.fuentedato"%>
 <%@page import="org.json.JSONObject"%>
@@ -6,21 +7,13 @@
 <%@include  file="../../versiones.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %>  
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <%    
     PreparedStatement pst, pst2,pst3;
     ResultSet rs, rs2,rs3;
 
-    pst = connection.prepareStatement("SELECT   t0.[id]  ,"
-            + " t0.[fecha_nacimiento],"
-            + " FORMAT (t0.[fecha_nacimiento], 'dd/MM/yyyy')   as fecha_nacimiento_form,"
-            + "t0.[lote] ,t0.[id_raza],t0.[aviario],t0.[cantidad_aves],t0.[edad_produccion_dias],t0.fecha_produccion,t0.fecha_predescarte,"
-            + " FORMAT (t0.[fecha_produccion], 'dd/MM/yyyy')   as fecha_produccion_form , "
-            + " FORMAT (t0.[fecha_predescarte], 'dd/MM/yyyy')   as  fecha_predescarte_form ,t1.raza_name,t0.nuevo "
-            + " ,DATEDIFF(day, t0.[fecha_nacimiento],[fecha_predescarte]) as dias_predescarte,  DATEDIFF(week, t0.[fecha_nacimiento],[fecha_predescarte]) as semanas_predescarte"
-            + " FROM [ppr_pry_cab] t0 inner join ppr_razas t1 on t0.id_raza=t1.raza_id "
-            + " where t0.id_estado=1 order by convert(date,fecha_predescarte )asc");
-    rs = pst.executeQuery();
-
+    
     pst2 = connection.prepareStatement("SELECT         id, descripcion, capacidad, estado	"
             + " FROM            ppr_aviarios_capacidades			   where estado=1");
     rs2 = pst2.executeQuery();
@@ -30,7 +23,10 @@
 
     String version = "Test";
     String desc_version = "Test";
-
+    DecimalFormat formatea = new DecimalFormat("###,###.##");
+    int aves_inicial=0;
+    int aves_actual=0;
+    int promedio_semana=0;
     try {
 
 %>
@@ -62,64 +58,24 @@
 
 
 
-    <table  id="example" class=' table-bordered compact hover' style='width:100%'>
-        <thead>
-        <th></th>
-        <th>Nro.</th>
-        <th>Fecha nacimiento</th>
-        <th>Lote</th>
-        <th>Raza</th>
-        <th>Aviario</th>
-        <th>Cantidad aves</th>
-        <th>Edad produccion (dias)</th>
-        <th>Fecha produccion</th>
-        <th>Fecha predescarte</th>
-  
-        </thead>
-        <tbody>
-            <% while (rs.next()) {%>
-            <tr>
-                <td>
-                    <button class="btn btn-xs btn-success"onclick="edit_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>')"  title="Editar lote"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-xs btn-warning"   onclick="ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("cantidad_aves")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>', '<%=rs.getString("dias_predescarte")%>', '<%=rs.getString("semanas_predescarte")%>')" title="Ajuste de Saldo de aves"><i class="fa fa-calculator"></i></button>
-                    <button class="btn btn-xs bg-navy"  data-toggle="modal" data-target="#exampleModalPreview"  onclick="grafico_proyeccion_ppr(<%=rs.getString("id")%>, '<%=rs.getString("aviario")%>', '<%=rs.getString("fecha_nacimiento_form")%>', '<%=rs.getString("fecha_produccion_form")%>', '<%=rs.getString("fecha_predescarte_form")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("raza_name")%>')"  title="Visualizar grafico"><i class="fa fa-eye"></i></button>
-                    <% if (rs.getString("nuevo").equals("1")){
-                     %><button class="btn btn-xs btn-danger" onclick="ppr_pro_lotes_delete(<%=rs.getString("id")%>);"  title="Eliminar lote" ><i class="fa fa-trash-o"></i></button> <%
-                    }
-                        %>
-                    
-                </td>                
-                <td><%=rs.getString("id")%></td>
-                <td><%=rs.getString("fecha_nacimiento_form")%></td>
-                <td><%=rs.getString("lote")%></td>
-                <td><%=rs.getString("raza_name")%></td>
-                <td><%=rs.getString("aviario")%></td>
-                <td><%=rs.getString("cantidad_aves")%></td>
-                <td><%=rs.getString("edad_produccion_dias")%></td>
-                <td><%=rs.getString("fecha_produccion_form")%></td>
-                <td><%=rs.getString("fecha_predescarte_form")%></td>
-               
- 
+    <div id="div_grilla_pry">
+        
+        
+    </div>
 
-            </tr>
-            <%   } %>
-        </tbody>
-    </table>
-
+    
+    
+    
 
 </div><!-- comment -->
-
-
-
-
-
+ 
 <div class="modal fade" id="modal_upd_user" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <h5 class="modal-title" id="exampleModalLabel">Editar Lote</h5>
                 <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">Ã—</span>
                 </button>
             </div>
             <div class="modal-body bg-navy"   >  
@@ -155,19 +111,14 @@
         </div>
     </div>
 </div>       
-
-
-
-
-
-
+ 
 <div class="modal fade" id="modal_crear_lote" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <h5 class="modal-title" id="exampleModalLabel">Registro de lote</h5>
                 <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">Ã—</span>
                 </button>
             </div>
             <div class="modal-body bg-navy"   >  
@@ -220,19 +171,19 @@
                         </tr>
 
                         <tr>
-                            <th> <strong><a>Edad produccion (días)</a></strong> 
+                            <th> <strong><a>Edad produccion (dÃ­as)</a></strong> 
                                 <input  id="txt_eddad_dias_prod_crear" name="txt_eddad_dias_prod_crear" required  class="form-control text-left is-invalid " style="width: 100%" type="number"  onchange="cal_fecha_dia_crear_pry_ppr()"   ></th>
                             <th> <strong><a>(Semanas)</a></strong> 
                                 <input id="txt_eddad_sems_prod_crear" name="txt_eddad_sems_prod_crear"  class="form-control text-left   " style="width: 100%" type="text"   readonly  onchange="cal_fecha_dia_crear_pry_ppr()"      >
                             </th> 
-                                <th><strong><a>Fecha de producción</a></strong>
+                                <th><strong><a>Fecha de producciÃ³n</a></strong>
                                     <input  id="txt_fecha_produccion_crear" name="txt_fecha_produccion_crear" class="form-control text-left  " style="width: 100%" type="date"    readonly >
                                 </th>  
                         </tr>
 
 
                         <tr> 
-                            <th> <strong><a>Edad predescarte (días)</a></strong> 
+                            <th> <strong><a>Edad predescarte (dÃ­as)</a></strong> 
                                 <input id="txt_eddad_dias_pred_crear"  name="txt_eddad_dias_pred_crear" required class="form-control text-left is-invalid " style="width: 100%" type="number"   onchange="cal_fecha_dia_crear_pry_ppr()"      >
                             </th>
                             <th> <strong><a>(Semanas)</a></strong> 
@@ -257,18 +208,14 @@
         </div>
     </div>
 </div>   
-
-
-
-
-
+ 
 <div class="modal fade" id="modal_ajuste" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-black">
                 <h5 class="modal-title" id="exampleModalLabel">Ajustes de lote</h5>
                 <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">Ã—</span>
                 </button>
             </div>
             <div class="modal-body bg-navy"   >  
@@ -302,7 +249,7 @@
                             <input class="form-control text-left  " style="width: 100%" type="number"   id="txt_cantidad_ajuste" disabled ></th>
                     </tr>
                        <tr> 
-                            <th> <strong><a>Edad predescarte (días)</a></strong> 
+                            <th> <strong><a>Edad predescarte (dÃ­as)</a></strong> 
                                 <input id="txt_edad_dias_pred_ajuste"  name="txt_edad_dias_pred_ajuste" required class="form-control text-left is-invalid " style="width: 100%" type="number"   onchange="cal_fecha_dia_predescarte_ajuste_pry_ppr()"      >
                             </th>
                             <th> <strong><a>(Semanas)</a></strong> 
@@ -326,32 +273,12 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
     <div class="modal-dialog-full-width modal-dialog momodel modal-fluid" role="document">
         <div class="modal-content-full-width modal-content ">
             <div class=" modal-header-full-width   modal-header text-center">
-                <b>Test</b>  <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                <b>PROYECCIÃ“N DE VIABILIDAD</b>  <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                     <span style="font-size: 1.3em;" aria-hidden="true">&times;</span>
                 </button>
 
@@ -378,19 +305,19 @@
         </div>
     </div>
 </div>
-
-
-
+    
+                                <canvas id="grafico_gral_aves" width="1500" height="400">
+                                        
+                                </canvas> 
+                                <canvas id="grafico_gral_semanas" width="1500" height="400"></canvas>
 
 
 <%
     } catch (Exception e) {
 
-    } finally {
+    } 
+    finally 
+    {
         connection.close();
     }
-%>
-<script> 
-control_crear_proyeccion_lote_ppr();
-
-</script>
+%> 

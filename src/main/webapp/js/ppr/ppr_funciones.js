@@ -6,8 +6,10 @@ var ruta_vistas_general = "./contenedores/";
 var ruta_imagen_necropsias = "./necropsias_imagen/";
 var ruta_servlet = "../../../java/clases/";
 var serial = 0;
-
-
+let  myChart;
+let  chart_generalAves;
+let  chart_generalSemanas;
+ 
 function registrar_usuario_ppr() {
     Swal.fire({
         title: 'CONFIRMACION',
@@ -365,6 +367,7 @@ function modificar_usuario_ppr() {
         }
     });
 }
+
 function traer_vista_roles_ppr() {
     window.location.hash = "pprCrearRoles";
     cargar_load();
@@ -2911,8 +2914,144 @@ function modificar_estado_lote_ppr(lote_id) {
 
 function ir_proyeccion_ppr()
 {
-    ir_pagina_generico(ruta_vistas_ppr, 'contenedor_proyeccion.jsp', "pry1", 'yyyy-mm-dd', false, "#example");
+  //  ir_pagina_generico(ruta_vistas_ppr, 'contenedor_proyeccion.jsp', "pry1", 'yyyy-mm-dd', false);
     
+    $.ajax({
+        type: "POST",
+        url: ruta_vistas_ppr + "contenedor_proyeccion.jsp",
+        
+        beforeSend: function (xhr) 
+        {
+            cargar_load();
+            $("#contenedor_principal").html("");
+        },
+        success: function (data)
+        { 
+            $("#contenedor_principal").html(data);
+            control_crear_proyeccion_lote_ppr();
+            refrescar_grilla_pry_lotes_ppr();
+            refrescar_grafico_proyeccion_general_ppr();
+           cerrar_load();  
+         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+    }); 
+    
+}
+
+
+function refrescar_grafico_proyeccion_general_ppr() 
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_semanas.jsp",
+        beforeSend: function (xhr) {
+         },
+        success: function (result)
+        { 
+            refrescar_grilla_pry_lotes_ppr();//SE REFRESCA LA GRILLA DE LOS LOTES
+            const config = 
+                {
+                    data    : result.charts[0].data,
+                    //options : result.charts[0].options,
+                    options : 
+                            {
+                                plugins:
+                                {
+                                    legend:
+                                    {
+                                        display:false
+                                    }, 
+                                    datalabels:
+                                    {
+                                       color:'white',
+                                       anchor:'end',
+                                       align:'end',
+                                       offset:2,
+                                       borderWidth:1,
+                                       borderRadius:5,
+                                       backgroundColor:'rgb(209, 75, 75)',
+                                       borderColor:'rgb(102, 3, 3)',
+                                       
+                                    }
+                                },
+                                    scales:result.charts[0].options.scales                             
+                                },
+                    type    : result.charts[0].type,
+                    plugins : [ChartDataLabels]
+                } 
+                 
+            if (chart_generalAves) 
+            {
+                chart_generalAves.destroy();
+            } 
+            chart_generalAves= new Chart(document.getElementById("grafico_gral_aves"),  config /*result.charts[0]*/);
+            
+ 
+            $.ajax({
+            type: "POST",
+            url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_semanas.jsp",
+            data: ({tipo:2}),
+            beforeSend: function (xhr) 
+            {
+                $("#grafico_pry3").html("");
+            },
+            success: function (result)
+            { 
+                const config = 
+                {
+                    data    : result.charts[0].data,
+                    options : 
+                            {
+                                plugins:
+                                {
+                                    legend:
+                                    {
+                                        display:false
+                                    }, 
+                                    datalabels:
+                                    {
+                                       color:'white',
+                                       anchor:'end',
+                                       align:'end',
+                                       offset:2,
+                                       borderWidth:1,
+                                       borderRadius:5,
+                                        backgroundColor:'rgb(1, 77, 20)',
+                                       borderColor:'rgb(102, 3, 3)',
+                                    }
+                                },
+                                scales:result.charts[0].options.scales 
+                            },
+                    type    : result.charts[0].type,
+                    plugins : [ChartDataLabels]
+                } 
+                if (chart_generalSemanas) 
+                {
+                    chart_generalSemanas.destroy();
+                } 
+                chart_generalSemanas= new Chart(document.getElementById("grafico_gral_semanas"), config);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) 
+            {
+                if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+                {
+                    recargar_pagina();
+                }
+            }
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+            {
+                recargar_pagina();
+            }
+        }
+    });
 }
 
 
@@ -2931,19 +3070,33 @@ function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte
         success: function (result)
         {
             var c = 0;
-            $.each(result.charts, function (i, item)
-            {
+             
                 var a = '  <div class="card card-navy" >   ';
                 a += '  <div class="card-header"> ';
-                a += '   <h3 class="card-title">Proyeccion aviario - ' + result.charts[c].options.plugins.title.text + '  </h3> <br> '
+                a += '   <h3 class="card-title">Aviario '+aviario+' </h3> <br> '
 
 
                 a += '   </div> ';
-                a += ' <table class="table"> <tr> <th> Fecha de nacimiento: ' + nacimiento + '  </th><th>  Fecha de produccion: ' + produccion + ' </th><th> Fecha de predescarte: ' + predescarte + '   </th></tr>\n\
-                <tr> <th> Lote: ' + lote + '  </th><th>  Raza: ' + raza + ' </th> </tr></table>  ';
+                a += ' <table class="table"> \n\
+                        <tr> \n\
+                            <th> Fecha de nacimiento: ' + nacimiento + '  </th>\n\
+                            <th>  Fecha de produccion: ' + produccion + ' </th>\n\
+                            <th> Fecha de predescarte: ' + predescarte + '   </th>\n\
+                        </tr>\n\
+                        <tr> \n\
+                            <th> Lote: ' + lote + '  </th>\n\
+                            <th>  Raza: ' + raza + ' </th> \n\
+                            <th class="bg-green" id="td_titulo_semanas_graf_lote">  ' + result.subtitulo + ' </th> \n\
+                        </tr>\n\
+\n\                     <tr> \n\
+                            <th> Ultima carga:  <input type="date" id="semana_barra" onchange="modificar_fecha_carga_pry_barra_lote_ppr()" class="form-control">  </th>\n\
+                            <th><br>  <input onclick="restablecer_barra_viabilidad_lote_ppr();" type="button" value="Restablecer a ultima carga" class="form-control bg-navy">  </th> \n\
+                            <th>  <input type="hidden" id="id_lote_barra" class="form-control"> <input type="hidden" id="id_pry_barra" class="form-control">   </th> \n\
+                        </tr>\n\
+</table>  ';
                 a += '  <div class="card-body"><div class="chartjs-size-monitor">\n\
                         <div div class="chart-container"   ><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div> ';
-                a += '   <canvas id="' + result.charts[c].options.plugins.title.text + '"></canvas>';
+                a += '   <canvas id="grafico_pry"></canvas>';
                 a += '  </div> ';
 
 
@@ -2951,17 +3104,162 @@ function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte
 
                 $("#cargarzoom").append(a);
 
-
-                var resChart = new Chart(document.getElementById(result.charts[c].options.plugins.title.text), result.charts[c]);
-                c++;
-            });
+             myChart=   new Chart(document.getElementById("grafico_pry"), result.charts[0]);
+              
+            
             $("#grilla_log").html(result.grilla);
+            $("#semana_barra").val(result.semana_barra);
+            $("#id_lote_barra").val(result.id_lote);
+            $("#id_pry_barra").val(id);
+            
+            
+            $("#tb_log").dataTable({"language":
+                    {
+                        "sUrl": "js/Spanish.txt"
+                    }});
+            
+            
             cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+        
+        
+        
+        
+    });
+
+
+}
+
+
+
+function refrescar_grafico_proyeccion_lote_ppr(id,tipo_respuesta, mensaje) 
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry1.jsp",
+        data: {id: id},
+        beforeSend: function (xhr) {
+         },
+        success: function (result)
+        { 
+            $("#td_titulo_semanas_graf_lote").html(result.subtitulo);
+            
+            $("#grafico_pry").html("");
+             if (myChart) {
+                myChart.destroy();
+            }
+            
+           myChart= new Chart(document.getElementById("grafico_pry"), result.charts[0]);
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+    });
+}
+
+
+function refrescar_grilla_pry_lotes_ppr() 
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_grilla_ppr + "grilla_pry_lotes.jsp",
+        success: function (result)
+        { 
+            $("#div_grilla_pry").html("");
+            $("#div_grilla_pry").html(result);
+            $("#grilla_proyeccion_lotes").DataTable
+            ({
+                paging: false,
+                "language":
+                {
+                    "sUrl": "js/Spanish.txt"
+                }
+            }); 
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+            {
+                recargar_pagina();
+            }
+        }
+    });
+}
+
+
+
+function modificar_fecha_carga_pry_barra_lote_ppr()
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_ppr + "control_modificar_proyeccion_barra_lote.jsp",
+        data: {id: $("#id_lote_barra").val(),id_cab:$("#id_pry_barra").val(),fecha:$("#semana_barra").val()},
+        beforeSend: function ()
+        { 
+        },
+        success: function (data)
+        {
+            
+            refrescar_grafico_proyeccion_lote_ppr($("#id_pry_barra").val(),data.tipo_respuesta, data.mensaje);
+            refrescar_grafico_proyeccion_general_ppr();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
         }
     });
 
 
 }
+
+
+
+
+
+function restablecer_barra_viabilidad_lote_ppr (){
+       Swal.fire({
+        title: 'CONFIRMACION',
+        text: "DESEA RESTABLECER LA ULTIMA CARGA?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#001F3F',
+        cancelButtonColor: '#001F3F',
+        confirmButtonText: 'SI!',
+        cancelButtonText: 'NO!'}).then((result) =>
+        {
+        if (result.value)
+        {
+            $.ajax({
+                type: "POST",
+                url: ruta_cruds_ppr + "crud_resetear_barra_viabilidad_pry_lote.jsp",
+                data: {id:$("#id_lote_barra").val(),id_cab:$("#id_pry_barra").val() },
+                beforeSend: function () 
+                { 
+                },
+                success: function (data)
+                {
+                    $("#semana_barra").val(data.fecha);
+                     modificar_fecha_carga_pry_barra_lote_ppr();
+                },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+            });
+        }
+    });
+}
+
 
 function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccion, predescarte) {
 
