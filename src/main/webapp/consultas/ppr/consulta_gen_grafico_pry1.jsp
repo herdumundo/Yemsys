@@ -28,7 +28,13 @@
     st6=connection.createStatement();
     String semana_barra="";
     int id_lote=0;
-     rs=st.executeQuery("  	select t1.*,t2.aves_padron  as cantidad_aves_pad from	ppr_pry_det_carga  t1 inner join v_mae_ppr_aves_padron t2 on t1.id_cab=t2.id_cab   and t1.semanas=t2.semanas   where     id in ( 	select id 	from ( 			select max(id) as id,semanas  from	ppr_pry_det_carga where id_cab="+id+" group by semanas 		)  d )" );
+     rs=st.executeQuery("   select "
+             + "                t1.*,t2.aves_padron  as cantidad_aves_pad ,t3.huevos_padron "
+             + "            from  "
+             + "                ppr_pry_det_carga  t1 "
+             + "                inner join v_mae_ppr_aves_padron t2 on t1.id_cab=t2.id_cab   and t1.semanas=t2.semanas   "
+                        +"      inner join v_ppr_pry_productividad_semanas t3 on t1.id_cab=t3.id_cab  and t3.semanas=t2.semanas"    
+                        +"  where     id in  ( 	select id 	from ( 			select max(id) as id,semanas  from	ppr_pry_det_carga where id_cab="+id+" group by semanas 		)  d )" );
     
     rs2=st2.executeQuery(" select min(cantidad_aves) as min,max(cantidad_aves) as max from ppr_pry_det 	where id_cab="+id +"" );
     

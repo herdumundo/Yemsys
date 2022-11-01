@@ -306,11 +306,37 @@
     </div>
 </div>
     
-                                <canvas id="grafico_gral_aves" width="1500" height="400">
-                                        
-                                </canvas> 
-                                <canvas id="grafico_gral_semanas" width="1500" height="400"></canvas>
+                                
+                                
+                                <div class="card card-navy" >   
+                                    <div class="card-header"> 
+                                        <h3 class="card-title">Viabilidad de aves</h3> <br>                        
 
+                                    </div> 
+                                    <canvas id="grafico_gral_aves" width="1500" height="400">
+                                    </canvas> 
+
+                                </div> 
+
+                                <div class="card card-navy" >   
+                                    <div class="card-header"> 
+                                        <h3 class="card-title">Semanas de aves</h3> <br>                        
+
+                                    </div> 
+                                    <canvas id="grafico_gral_semanas" width="1500" height="400"></canvas>
+
+
+                                </div>                 
+
+                                   <div class="card card-navy" >   
+                                    <div class="card-header"> 
+                                        <h3 class="card-title">Productividad de aves</h3> <br>                        
+
+                                    </div> 
+                                    <canvas id="grafico_gral_productividad" width="1500" height="400"></canvas>
+
+
+                                </div>   
 
 <%
     } catch (Exception e) {

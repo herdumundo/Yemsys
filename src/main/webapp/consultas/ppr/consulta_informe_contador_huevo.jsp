@@ -4,21 +4,21 @@
     Author     : aespinola
 --%>
 
-<%@page import="java.text.DecimalFormat"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Date"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.text.DateFormat"%>
-<%@page import="java.util.Locale"%>
+<%@page     import="java.text.DecimalFormat"%>
+<%@page     import="java.text.SimpleDateFormat"%>
+<%@page     import="java.sql.PreparedStatement"%>
+<%@page     import="java.sql.ResultSet"%>
+<%@page     import="java.sql.Date"%>
+<%@page     import="java.util.Calendar"%>
+<%@page     import="java.text.DateFormat"%>
+<%@page     import="java.util.Locale"%> 
 
-<%@page import="java.sql.Connection"%>
+<%@page     import="java.sql.Connection"%>
 <%@include  file="../../chequearsesion.jsp" %>
-<%@page contentType="application/json; charset=utf-8" %>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.*" %>
-<%@page import="java.util.*" %>
+<%@page     contentType="application/json; charset=utf-8" %>
+<%@page     import="org.json.JSONObject"%>
+<%@page     import="java.sql.*" %>
+<%@page     import="java.util.*" %>
 
 
 <jsp:useBean id="fuente" class="clases.fuentedato" scope="page" /><%
