@@ -99,7 +99,7 @@ function consulta_grafico_detallado_indicadores_ptc()
 {
     var fecha_desde = $('#fecha_desde_cla').val();
     var fecha_hasta = $('#fecha_hasta_cla').val();
-    var tipo_grafico = "linear";//$('#tipo_grafico').val();
+    var tipo_grafico = $('#tipo_grafico').val();
     
     
     
@@ -188,7 +188,8 @@ function consulta_grafico_detallado_indicadores_ptc()
                             beginAtZero: true
                         }
                     }
-                }
+                },
+                plugins: [ChartDataLabels]
             };
             // render init block
             const myChart = new Chart(

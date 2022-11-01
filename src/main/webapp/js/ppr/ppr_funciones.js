@@ -9,6 +9,7 @@ var serial = 0;
 let  myChart;
 let  chart_generalAves;
 let  chart_generalSemanas;
+let  chart_generalSemanasProductividad;
  
 function registrar_usuario_ppr() {
     Swal.fire({
@@ -2947,7 +2948,7 @@ function refrescar_grafico_proyeccion_general_ppr()
 {
     $.ajax({
         type: "POST",
-        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_semanas.jsp",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_viabilidad.jsp",
         beforeSend: function (xhr) {
          },
         success: function (result)
@@ -2956,24 +2957,23 @@ function refrescar_grafico_proyeccion_general_ppr()
             const config = 
                 {
                     data    : result.charts[0].data,
-                    //options : result.charts[0].options,
                     options : 
                             {
                                 plugins:
                                 {
                                     legend:
                                     {
-                                        display:false
+                                        display:true
                                     }, 
                                     datalabels:
                                     {
-                                       color:'white',
+                                       color:'black',
                                        anchor:'end',
                                        align:'end',
                                        offset:2,
                                        borderWidth:1,
                                        borderRadius:5,
-                                       backgroundColor:'rgb(209, 75, 75)',
+                                     //  backgroundColor:'rgb(209, 75, 75)',
                                        borderColor:'rgb(102, 3, 3)',
                                        
                                     }
@@ -2981,7 +2981,7 @@ function refrescar_grafico_proyeccion_general_ppr()
                                     scales:result.charts[0].options.scales                             
                                 },
                     type    : result.charts[0].type,
-                    plugins : [ChartDataLabels]
+                   // plugins : [ChartDataLabels]
                 } 
                  
             if (chart_generalAves) 
@@ -3010,17 +3010,17 @@ function refrescar_grafico_proyeccion_general_ppr()
                                 {
                                     legend:
                                     {
-                                        display:false
+                                        display:true
                                     }, 
                                     datalabels:
                                     {
-                                       color:'white',
+                                       color:'black',
                                        anchor:'end',
                                        align:'end',
                                        offset:2,
                                        borderWidth:1,
                                        borderRadius:5,
-                                        backgroundColor:'rgb(1, 77, 20)',
+                                       //backgroundColor:'rgb(1, 77, 20)',
                                        borderColor:'rgb(102, 3, 3)',
                                     }
                                 },
@@ -3034,6 +3034,12 @@ function refrescar_grafico_proyeccion_general_ppr()
                     chart_generalSemanas.destroy();
                 } 
                 chart_generalSemanas= new Chart(document.getElementById("grafico_gral_semanas"), config);
+                
+                
+                
+                    cargar_grafico_global_productividad();
+                
+                
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) 
             {
@@ -3055,7 +3061,66 @@ function refrescar_grafico_proyeccion_general_ppr()
 }
 
 
-
+function cargar_grafico_global_productividad(){
+      $.ajax({
+            type: "POST",
+            url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_productividad.jsp",
+            data: ({tipo:2}),
+            beforeSend: function (xhr) 
+            {
+                $("#grafico_pry3").html("");
+            },
+            success: function (result)
+            { 
+                const config = 
+                {
+                    data    : result.charts[0].data,
+                    options : 
+                            {
+                                plugins:
+                                {
+                                    legend:
+                                    {
+                                        display:true
+                                    }, 
+                                    datalabels:
+                                    {
+                                       color:'black',
+                                       anchor:'end',
+                                       align:'end',
+                                       offset:2,
+                                       borderWidth:1,
+                                       borderRadius:5,
+                                       //backgroundColor:'rgb(1, 77, 20)',
+                                       borderColor:'rgb(102, 3, 3)',
+                                    }
+                                },
+                                scales:result.charts[0].options.scales 
+                            },
+                    type    : result.charts[0].type,
+                    plugins : [ChartDataLabels]
+                } 
+                if (chart_generalSemanasProductividad) 
+                {
+                    chart_generalSemanasProductividad.destroy();
+                } 
+                chart_generalSemanasProductividad= new Chart(document.getElementById("grafico_gral_productividad"), config);
+                
+                
+                
+                
+                
+                chart_generalSemanasProductividad
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) 
+            {
+                if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+                {
+                    recargar_pagina();
+                }
+            }
+            });
+}
 
 
 function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte, lote, raza) {
@@ -3652,4 +3717,42 @@ function ppr_pro_lotes_delete (id){
         }
     });
     
+}
+
+
+
+function modificar_fecha_carga_pry_global_ppr()
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_ppr + "control_modificar_proyeccion_viabilidad_global.jsp",
+        data: {fecha_proyeccion_principal: $("#fecha_proyeccion_principal").val()},
+        beforeSend: function ()
+        { 
+             Swal.fire({
+                            title: "ACTUALIZANDO PROYECCION",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+                        });
+        },
+        success: function (data)
+        {
+            aviso_generico(data.tipo_respuesta, data.mensaje);
+            refrescar_grilla_pry_lotes_ppr();
+            refrescar_grafico_proyeccion_general_ppr(); 
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+
+
 }
