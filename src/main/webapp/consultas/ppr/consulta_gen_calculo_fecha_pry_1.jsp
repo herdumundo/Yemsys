@@ -12,9 +12,9 @@
     JSONObject ob = new JSONObject();
      try 
      {
-        String fecha_nacimiento = request.getParameter("fecha_nacimiento");
-        String dias_produccion = request.getParameter("dias_produccion");
-        String dias_predescarte = request.getParameter("dias_predescarte");
+        String fecha_nacimiento     = request.getParameter("fecha_nacimiento");
+        String dias_produccion      = request.getParameter("dias_produccion");
+        String dias_predescarte     = request.getParameter("dias_predescarte");
         ResultSet rs_GM;
         Statement st = connection.createStatement();
         rs_GM = st.executeQuery("select "

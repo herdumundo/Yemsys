@@ -14,7 +14,10 @@
     String tipo =  request.getParameter ("tipo");;
     JSONObject charts = new JSONObject();
   try {
-          
+       
+      
+    PreparedStatement pst,pst2 ;
+    ResultSet  rs2 ;
     Statement st;
     ResultSet rs;
     DecimalFormat formatea = new DecimalFormat("###,###.##");
@@ -27,6 +30,15 @@
     int min=20000;
     int max=70000;
     
+     pst2 = connection.prepareStatement(" select * from ppr_pry_fecha");
+    rs2 = pst2.executeQuery();
+    String fecha="";
+      while (rs2.next()) 
+            {
+              fecha=rs2.getString("fecha");
+            }
+    
+    
     if(tipo!=null)
     {
             query="semana_lote_barra";
@@ -37,12 +49,23 @@
             min=0;
             max=150;
     }
-        rs=st.executeQuery(" SELECT "
-                + "             aviario,cantidad_semana_lote as cantidad_aves,"
+      /*  rs=st.executeQuery(" select * from (SELECT "
+                + "             aviario,"
+                + "             case when fecha_predescarte<'"+fecha+"' then 0 else  isnull(cantidad_semana_lote,0) end as cantidad_aves,"
                 + "             semana_lote_barra,"
                 + "             huevos_padron,"
                 + "             CONVERT(INT,PAD_PRODUCTIVIDAD*cantidad_semana_lote/100) AS huevos_dias    "
-                + "         FROM ppr_pry_cab	  t1 left join   v_ppr_pry_productividad_semanas t2 on t1.id=t2.id_cab and t1.semana_lote_barra=t2.semanas" );
+                + "         FROM ppr_pry_cab	  t1 left join   v_ppr_pry_productividad_semanas t2 on t1.id=t2.id_cab and t1.semana_lote_barra=t2.semanas) t where cantidad_aves>0 order by 1 " );
+       
+        */
+        rs=st.executeQuery(" SELECT t1.* FROM v_ppr_pry_productividad_semanas"
+                + " t1 inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>='"+fecha+"' " );
+       
+        
+        
+        
+        
+        
         JSONObject DataScale= new JSONObject();
          
         JSONObject  contenidoData,  dataOptions,    data,
@@ -59,10 +82,10 @@
                     DataAves = new JSONObject();
                     DataAves.put("label",               titulo);
                     DataAves.put("yAxisID",             "Y");
-                    DataAves.put("backgroundColor",     color_grafico);
-                    DataAves.put("borderColor",         color_grafico);
+                    DataAves.put("backgroundColor",     "black");
+                    DataAves.put("borderColor",         "black");
                     DataAves.put("pointRadius",         3);
-                    DataAves.put("borderWidth",         1);
+                    DataAves.put("borderWidth",         2);
                     DataAves.put("type",                "line");
                     DataAves.put("tension",             "0.2");
                      
@@ -93,7 +116,7 @@
                 { 
                     // este recorre la cantidad de registros que hay en ese mes y en ese aviario
                     contenido_subcategorias.put (rs.getString("aviario")            );
-                    array_aves.put              (formatea.format(rs.getInt(query))  );
+                    array_aves.put              (formatea.format(rs.getInt("semanas"))  );
                       
                 } ////FIN DEL RECORRIDO LARGO
                  

@@ -7,10 +7,51 @@ var ruta_imagen_necropsias = "./necropsias_imagen/";
 var ruta_servlet = "../../../java/clases/";
 var serial = 0;
 let  myChart;
+let  chart_lote_productividad;
 let  chart_generalAves;
 let  chart_generalSemanas;
 let  chart_generalSemanasProductividad;
- 
+  const options_graf_pry =
+    {
+        
+        legend:
+        {
+            display:true,
+            position: 'top',
+        },
+        datalabels:
+        {   
+           align: chart =>{
+            return chart.dataset.align;    
+           },
+            offset:20,
+           backgroundColor: chart =>
+           {
+              return chart.dataset.borderColor;   
+           },
+           
+            color:'white',
+            borderRadius:5,
+            formatter: function(value, context)
+            { 
+                 
+                 return context.chart.data.labels[context.dataIndex] + '\n'+  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+             
+            },
+            labels: 
+            {
+               title: 
+               {
+                   font: 
+                   {
+                       weight: 'bold'
+                   }
+               } 
+            }
+        } 
+    }
+    
+    
 function registrar_usuario_ppr() {
     Swal.fire({
         title: 'CONFIRMACION',
@@ -2930,6 +2971,7 @@ function ir_proyeccion_ppr()
         { 
             $("#contenedor_principal").html(data);
             control_crear_proyeccion_lote_ppr();
+            registrar_lote_descarte();
             refrescar_grilla_pry_lotes_ppr();
             refrescar_grafico_proyeccion_general_ppr();
            cerrar_load();  
@@ -2959,29 +3001,12 @@ function refrescar_grafico_proyeccion_general_ppr()
                     data    : result.charts[0].data,
                     options : 
                             {
-                                plugins:
-                                {
-                                    legend:
-                                    {
-                                        display:true
-                                    }, 
-                                    datalabels:
-                                    {
-                                       color:'black',
-                                       anchor:'end',
-                                       align:'end',
-                                       offset:2,
-                                       borderWidth:1,
-                                       borderRadius:5,
-                                     //  backgroundColor:'rgb(209, 75, 75)',
-                                       borderColor:'rgb(102, 3, 3)',
-                                       
-                                    }
-                                },
-                                    scales:result.charts[0].options.scales                             
-                                },
+                                plugins:options_graf_pry
+                                ,
+                                scales:result.charts[0].options.scales                             
+                            },
                     type    : result.charts[0].type,
-                   // plugins : [ChartDataLabels]
+                    plugins : [ChartDataLabels]
                 } 
                  
             if (chart_generalAves) 
@@ -3001,29 +3026,92 @@ function refrescar_grafico_proyeccion_general_ppr()
             },
             success: function (result)
             { 
+                
+    const options_graf_pry_semanas =
+    {
+        
+        legend:
+        {
+            display:true,
+            position: 'top',
+        },
+        datalabels:
+        {   
+           align: chart =>{
+            return chart.dataset.align;    
+           },
+            offset:20,
+           backgroundColor: chart =>
+           {
+                var index = chart.dataIndex;
+                var value = chart.dataset.data[index];
+                 
+               if(value<=18)
+               {
+                  return 'rgba(0, 80, 219, 1)'; 
+               }
+                 else if(value<=44){
+                  return 'rgba(0, 122, 31, 1)'; 
+               }
+               else   if(value<=64){
+                return 'rgba(245, 200, 0, 1)'; 
+               }
+               else {
+                   
+                 return 'rgba(168, 0, 0, 1)';   
+               }
+          },
+           
+            color: chart =>
+           {
+                var index = chart.dataIndex;
+                var value = chart.dataset.data[index];
+                if(value<=44)
+                {
+                  return 'white'; 
+                }
+                else if(value<=64)
+                {
+                    return 'black'; 
+                }
+                else 
+                {
+                    return 'white';   
+                }
+          },
+            borderRadius:5,
+            formatter:  function(value, context)
+            { 
+                 
+                 return context.chart.data.labels[context.dataIndex] + '\n'+  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+             
+            } ,
+            labels: 
+            {
+               title: 
+               {
+                   font: 
+                   {
+                       weight: 'bold'
+                   }
+               } 
+            }
+        } 
+    }
+                
+                
+                
+                
+                
+                
+                
                 const config = 
                 {
                     data    : result.charts[0].data,
                     options : 
                             {
-                                plugins:
-                                {
-                                    legend:
-                                    {
-                                        display:true
-                                    }, 
-                                    datalabels:
-                                    {
-                                       color:'black',
-                                       anchor:'end',
-                                       align:'end',
-                                       offset:2,
-                                       borderWidth:1,
-                                       borderRadius:5,
-                                       //backgroundColor:'rgb(1, 77, 20)',
-                                       borderColor:'rgb(102, 3, 3)',
-                                    }
-                                },
+                                plugins:options_graf_pry_semanas,
+                                 
                                 scales:result.charts[0].options.scales 
                             },
                     type    : result.charts[0].type,
@@ -3077,24 +3165,7 @@ function cargar_grafico_global_productividad(){
                     data    : result.charts[0].data,
                     options : 
                             {
-                                plugins:
-                                {
-                                    legend:
-                                    {
-                                        display:true
-                                    }, 
-                                    datalabels:
-                                    {
-                                       color:'black',
-                                       anchor:'end',
-                                       align:'end',
-                                       offset:2,
-                                       borderWidth:1,
-                                       borderRadius:5,
-                                       //backgroundColor:'rgb(1, 77, 20)',
-                                       borderColor:'rgb(102, 3, 3)',
-                                    }
-                                },
+                                plugins: options_graf_pry,
                                 scales:result.charts[0].options.scales 
                             },
                     type    : result.charts[0].type,
@@ -3138,41 +3209,42 @@ function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte
              
                 var a = '  <div class="card card-navy" >   ';
                 a += '  <div class="card-header"> ';
-                a += '   <h3 class="card-title">Aviario '+aviario+' </h3> <br> '
+                a += '   <h3 class="card-title"><b>Aviario '+aviario+' - '+ lote+ '</b> </h3> <br> '
 
 
                 a += '   </div> ';
-                a += ' <table class="table"> \n\
+                a += ' <table class="table "> \n\
                         <tr> \n\
                             <th> Fecha de nacimiento: ' + nacimiento + '  </th>\n\
                             <th>  Fecha de produccion: ' + produccion + ' </th>\n\
                             <th> Fecha de predescarte: ' + predescarte + '   </th>\n\
                         </tr>\n\
                         <tr> \n\
-                            <th> Lote: ' + lote + '  </th>\n\
+                            <th> Ultima carga:  <input type="date" id="semana_barra" onchange="modificar_fecha_carga_pry_barra_lote_ppr()" class="form-control">   </th>\n\
                             <th>  Raza: ' + raza + ' </th> \n\
                             <th class="bg-green" id="td_titulo_semanas_graf_lote">  ' + result.subtitulo + ' </th> \n\
                         </tr>\n\
-\n\                     <tr> \n\
-                            <th> Ultima carga:  <input type="date" id="semana_barra" onchange="modificar_fecha_carga_pry_barra_lote_ppr()" class="form-control">  </th>\n\
-                            <th><br>  <input onclick="restablecer_barra_viabilidad_lote_ppr();" type="button" value="Restablecer a ultima carga" class="form-control bg-navy">  </th> \n\
+                        \n\                     <tr> \n\
+                            <th><br>  <input onclick="restablecer_barra_viabilidad_lote_ppr();" type="button" value="Restablecer a ultima carga" class="form-control bg-navy">   </th>\n\
+                            <th></th> \n\
                             <th>  <input type="hidden" id="id_lote_barra" class="form-control"> <input type="hidden" id="id_pry_barra" class="form-control">   </th> \n\
                         </tr>\n\
-</table>  ';
-                a += '  <div class="card-body"><div class="chartjs-size-monitor">\n\
-                        <div div class="chart-container"   ><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div> ';
-                a += '   <canvas id="grafico_pry"></canvas>';
-                a += '  </div> ';
+                        </table>  '; 
 
 
-                $("#cargarzoom").html("");
+                $("#div_cabecera_graf_lote").html("");
 
-                $("#cargarzoom").append(a);
-
-             myChart=   new Chart(document.getElementById("grafico_pry"), result.charts[0]);
+                $("#div_cabecera_graf_lote").html(a);
+                
+                
+            if (myChart) {
+                myChart.destroy();
+            }
+             myChart=   new Chart(document.getElementById("grafViab"), result.charts[0]);
               
             
             $("#grilla_log").html(result.grilla);
+            $("#grilla_log_prod").html(result.grilla_productividad);
             $("#semana_barra").val(result.semana_barra);
             $("#id_lote_barra").val(result.id_lote);
             $("#id_pry_barra").val(id);
@@ -3182,8 +3254,46 @@ function grafico_proyeccion_ppr(id, aviario, nacimiento, produccion, predescarte
                     {
                         "sUrl": "js/Spanish.txt"
                     }});
-            
-            
+              
+            $("#tb_log_prod").dataTable({"language":
+                    {
+                        "sUrl": "js/Spanish.txt"
+                    }});
+            grafico_proyeccion_productividad_lote_ppr(id);
+            cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+              recargar_pagina();
+             }
+         }
+        
+        
+        
+        
+    });
+
+
+}
+
+
+
+function grafico_proyeccion_productividad_lote_ppr(id) {
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_lote_productividad.jsp",
+        data: {id: id },
+        beforeSend: function (xhr) {
+            cargar_load();
+        },
+        success: function (result)
+        {
+            $("#grafProd").html("");
+            if (chart_lote_productividad) {
+                chart_lote_productividad.destroy();
+            }
+            chart_lote_productividad=   new Chart(document.getElementById("grafProd"), result.charts[0]);
             cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -3214,12 +3324,13 @@ function refrescar_grafico_proyeccion_lote_ppr(id,tipo_respuesta, mensaje)
         { 
             $("#td_titulo_semanas_graf_lote").html(result.subtitulo);
             
-            $("#grafico_pry").html("");
-             if (myChart) {
+              if (myChart) {
                 myChart.destroy();
             }
             
-           myChart= new Chart(document.getElementById("grafico_pry"), result.charts[0]);
+           myChart= new Chart(document.getElementById("grafViab"), result.charts[0]);
+           
+            grafico_proyeccion_productividad_lote_ppr(id);
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
@@ -3246,6 +3357,7 @@ function refrescar_grilla_pry_lotes_ppr()
                 {
                     "sUrl": "js/Spanish.txt"
                 }
+                
             }); 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) 
@@ -3335,7 +3447,7 @@ function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccio
     $("#txt_fecha_nacimiento").val(nacimiento);
     $("#txt_fecha_produccion").val(produccion);
     $("#txt_fecha_predescarte").val(predescarte);
-    $("#modal_upd_user").modal("show");
+    $("#modalLote").modal("show");
     contar_dias_proyeccion_ppr();
 }
 
@@ -3360,8 +3472,7 @@ function ajuste_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, producc
     $("#txt_edad_dias_pred_ajuste").val(dias_predescarte);
     $("#txt_edad_sems_pred_ajuste").val(semanas_predescarte);
 
-    $("#modal_ajuste").modal("show");
-
+ 
 }
 
 
@@ -3755,4 +3866,100 @@ function modificar_fecha_carga_pry_global_ppr()
     });
 
 
+}
+
+function get_val_lote_predescarte_ppr(){
+    
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_get_pry_datos_lote_ppr.jsp",
+        data: {lote: $("#txt_lote_crear_pred").val()},
+       
+        success: function (data)
+        {
+            $("#txt_fecha_nacA_crear_pred")         .val(data.fechaA);
+            $("#txt_fecha_nacB_crear_pred")         .val(data.fechaB);
+            $("#txt_eddad_dias_prod_crear_pred")    .val(data.eddadProduccionDias);
+            $("#txt_eddad_sems_prod_crear_pred")    .val(data.eddadProduccionSemanas);
+            $("#txt_fecha_produccion_crear_pred")   .val(data.fechaProduccion);
+            $("#txt_eddad_dias_pred_crear_pred")    .val(data.eddadPredescarteDias);
+            $("#txt_eddad_dias_salida_pred")    .val(data.eddadPredescarteDias);
+            $("#txt_eddad_sems_pred_crear_pred")    .val(data.eddadPredescarteSemanas);
+            $("#txt_fecha_predescarte_crear_pred")  .val(data.fechaPredescarte);
+            $("#txt_cant_aves_crear_pred")  .val(data.cantidad_aves);
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
+
+
+function sumar_dias_fechas_crear_salida_ppr() {
+
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_descarte_pry.jsp",
+        data:   { 
+                    fecha_nacimiento:   $("#txt_fecha_nacA_crear_pred").val(),
+                    dia_descarte:       $("#txt_eddad_dias_salida_pred").val() 
+                },
+        beforeSend: function (xhr) {
+        },
+        success: function (res)
+        {
+            $("#txt_eddad_semanas_salida_pred").val(res.semana_descarte);
+            $("#txt_fecha_salida_pred").val(res.fecha_descarte);
+             
+        }
+    });
+
+}
+
+
+function registrar_lote_descarte()
+{
+    $("#form_crear_descarte").submit(function (e) 
+    {
+        e.preventDefault();
+        $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_ppr + "control_crear_lote_descarte_proyeccion.jsp",
+                    data:$("#form_crear_descarte").serialize() ,
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: "PROCESANDO!",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+                        });
+                    },
+                    success: function (data) { 
+                       
+                        aviso_generico(data.tipo_respuesta, data.mensaje)
+                        if(data.tipo_respuesta==1)
+                        {   $('.modal-backdrop').remove();
+                            $("#contenedor_principal").html("");
+                            ir_proyeccion_ppr();
+                        }      
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                });   
+        e.stoppropagation();
+    });
+        
 }

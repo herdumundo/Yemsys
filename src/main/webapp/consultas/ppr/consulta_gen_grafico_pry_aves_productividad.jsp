@@ -14,7 +14,8 @@
     String tipo =  request.getParameter ("tipo");;
     JSONObject charts = new JSONObject();
   try {
-          
+        PreparedStatement pst,pst2 ;
+    ResultSet  rs2 ;      
     Statement st;
     ResultSet rs;
     DecimalFormat formatea = new DecimalFormat("###,###.##");
@@ -27,6 +28,16 @@
     int min=20000;
     int max=70000;
     
+    
+    
+       pst2 = connection.prepareStatement(" select * from ppr_pry_fecha");
+    rs2 = pst2.executeQuery();
+    String fecha="";
+      while (rs2.next()) 
+            {
+              fecha=rs2.getString("fecha");
+            }
+    
     if(tipo!=null)
     {
             query="semana_lote_barra";
@@ -37,13 +48,13 @@
             min=0;
             max=150;
     }
-        rs=st.executeQuery(" select  aviario, "
-			+"				isnull(cantidad_semana_lote,0) as cantidad_aves,  "
-                        +"    isnull(semana_lote_barra,0) as semana_lote_barra,  "
-                        +"    isnull(huevos_padron,0) as huevos_padron,  "
-                        +"    isnull(huevos_carga,0) as huevos_carga "
-                + "         FROM ppr_pry_cab	  t1 left join   "
-                + "         v_ppr_pry_productividad_semanas t2 on t1.id=t2.id_cab and t1.semana_lote_barra=t2.semanas  " );
+      
+        
+         rs=st.executeQuery("  SELECT t1.* "
+                 + "    FROM v_ppr_pry_productividad_semanas t1 "
+                 + "    inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
+                 + "    where t1.fecha_predescarte>='"+fecha+"' " );
+    
         JSONObject DataScale= new JSONObject();
          
         JSONObject  contenidoData,  dataOptions,    data,
@@ -60,10 +71,11 @@
                     DataAves = new JSONObject();
                     DataAves.put("label",               "PRODUCTIVIDAD");
                     DataAves.put("yAxisID",             "Y");
-                    DataAves.put("backgroundColor",     color_grafico);
-                    DataAves.put("borderColor",         color_grafico);
+                    DataAves.put("backgroundColor",     "green");
+                    DataAves.put("borderColor",         "green");
                     DataAves.put("pointRadius",         3);
                     DataAves.put("borderWidth",         1);
+                    DataAves.put("align",               "start");
                     DataAves.put("type",                "line");
                     DataAves.put("tension",             "0.2");
                      
@@ -88,9 +100,10 @@
                     DataHuevos= new JSONObject();
                     DataHuevos.put("label",             "PRODUCTIVIDAD PADRON");
                     DataHuevos.put("yAxisID",           "A");
-                    DataHuevos.put("backgroundColor",   "rgb(209, 224, 0)");
-                    DataHuevos.put("borderColor",       "rgb(203, 142, 11)");
+                    DataHuevos.put("backgroundColor",   "black");
+                    DataHuevos.put("borderColor",       "black");
                     DataHuevos.put("borderWidth",       2);
+                    DataHuevos.put("align",             "end");
                     DataHuevos.put("pointRadius",       2);
                     DataHuevos.put("type",              "line");
                     DataHuevos.put("tension",           "0.4");
@@ -118,15 +131,15 @@
                     DataPoint= new JSONObject();
                     DataPoint.put("point",              ContenidoPoint);
                     contenido_subcategorias         = new JSONArray();
-                    array_aves                      = new JSONArray();
+                     array_aves                      = new JSONArray();
                     array_huevos                = new JSONArray();
-                while(rs.next()) 
+                 while(rs.next()) 
                 { 
                     // este recorre la cantidad de registros que hay en ese mes y en ese aviario
                     contenido_subcategorias.put (rs.getString("aviario")            );
-                    array_aves.put              ( rs.getInt("huevos_carga")  );
+                     array_aves.put              ( rs.getInt("huevos_carga")  );
                     array_huevos.put            ( rs.getInt("huevos_padron")       );
-                     
+                      
                 } ////FIN DEL RECORRIDO LARGO
                  
                 categories=new JSONArray();
@@ -134,6 +147,7 @@
                 
                 DataAves.put    (   "data",array_aves);  
                 DataHuevos.put  (   "data",array_huevos);
+                
                 Dataset= new JSONArray();
                 Dataset.put(DataAves);  
                 Dataset.put(DataHuevos);   
@@ -142,7 +156,7 @@
                 data= new JSONObject(); 
                 
                 contenidoData.put("labels", contenido_subcategorias);
-                contenidoData.put("datasets",    Dataset);
+                 contenidoData.put("datasets",    Dataset);
                 contenidoData.put("datasetFill ",    false);
                 contenidoData.put("lineAtIndex ",    30);
                 DataScale.put(    "Y",DataScaleAves);  

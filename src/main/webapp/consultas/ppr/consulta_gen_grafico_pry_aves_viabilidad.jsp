@@ -17,7 +17,7 @@
   try {
           
     Statement st;
-    ResultSet rs;
+    ResultSet rs,rs2;
     DecimalFormat formatea = new DecimalFormat("###,###.##");
     st=connection.createStatement();
     String query="cantidad_aves";
@@ -27,6 +27,14 @@
     String color_grafico="rgb(209, 75, 75)";
     int min=20000;
     int max=70000;
+    PreparedStatement pst,pst2 ;
+     pst2 = connection.prepareStatement(" select * from ppr_pry_fecha");
+    rs2 = pst2.executeQuery();
+    String fecha="";
+      while (rs2.next()) 
+            {
+              fecha=rs2.getString("fecha");
+            }
     
     if(tipo!=null)
     {
@@ -38,18 +46,11 @@
             min=0;
             max=150;
     }
-         rs=st.executeQuery(" "
-            + " SELECT  "
-	+ "         aviario,"
-	+ "         cantidad_semana_lote as   aves_carga, "
-	+ "         t3.cantidad_aves_pad as   aves_padron, "
-	+ "         semana_lote_barra, "
-	+ "         huevos_padron, "
-	+ "         CONVERT(INT,PAD_PRODUCTIVIDAD*cantidad_semana_lote/100) AS huevos_dias    " 
-	+ "     FROM "
-	+ "         ppr_pry_cab	  t1 "
-	+ "         inner join ppr_pry_det t3 on t1.id=t3.id_cab and t1.semana_barra=t3.fecha"
-	+ "         left join   v_ppr_pry_productividad_semanas t2 on t1.id=t2.id_cab and t1.semana_lote_barra=t2.semanas " );
+      
+          rs=st.executeQuery("SELECT t1.* "
+                  + "   FROM v_ppr_pry_productividad_semanas t1 inner join "
+                  + "    ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
+                  + " where t1.fecha_predescarte>='"+fecha+"' " );
         JSONObject DataScale= new JSONObject();
          
         JSONObject  contenidoData,  dataOptions,    data,
@@ -66,9 +67,10 @@
                     DataAves = new JSONObject();
                     DataAves.put("label",               "VIABILIDAD");
                     DataAves.put("yAxisID",             "Y");
-                    DataAves.put("backgroundColor",     color_grafico);
-                    DataAves.put("borderColor",         color_grafico);
+                    DataAves.put("backgroundColor",     "rgba(158, 0, 0, 1)");
+                    DataAves.put("borderColor",         "rgba(158, 0, 0, 1)");
                     DataAves.put("pointRadius",         3);
+                    DataAves.put("align",               "start");
                     DataAves.put("borderWidth",         1);
                     DataAves.put("type",                "line");
                     DataAves.put("tension",             "0.2");
@@ -94,9 +96,10 @@
                     DataHuevos= new JSONObject();
                     DataHuevos.put("label",             "VIABILIDAD PADRON");
                     DataHuevos.put("yAxisID",           "A");
-                    DataHuevos.put("backgroundColor",   "rgb(209, 224, 0)");
-                    DataHuevos.put("borderColor",       "rgb(203, 142, 11)");
+                    DataHuevos.put("backgroundColor",   "black");
+                    DataHuevos.put("borderColor",       "black");
                     DataHuevos.put("borderWidth",       2);
+                    DataHuevos.put("align",             "end");
                     DataHuevos.put("pointRadius",       2);
                     DataHuevos.put("type",              "line");
                     DataHuevos.put("tension",           "0.4");
