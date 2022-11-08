@@ -131,3 +131,14 @@ display: none;
   border-bottom: 30px solid transparent;
 }  
  
+
+ 
+ .page-item.active .page-link {
+    background-color: #00254d !important;
+    border: 1px solid black;
+      color: white !important;
+
+}
+.page-link {
+    color: black !important;
+}
