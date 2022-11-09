@@ -16,7 +16,7 @@
         String saldo_ave="";
         ResultSet rs_GM;
         Statement st = connection.createStatement();
-        rs_GM = st.executeQuery(" select * from	ppr_pry_det WHERE id_cab="+id+" AND FECHA=convert(date,'"+fecha+"')");
+        rs_GM = st.executeQuery(" select * from	ppr_pry_det_carga WHERE id_cab="+id+" AND FECHA=convert(date,'"+fecha+"')");
       
         while (rs_GM.next()) 
         {

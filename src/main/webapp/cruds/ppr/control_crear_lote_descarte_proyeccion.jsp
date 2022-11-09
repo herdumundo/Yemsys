@@ -6,13 +6,10 @@
 <%@page contentType="application/json; charset=utf-8" %>
 <%    if (sesion == true) {
 
-        String lote = request.getParameter("txt_lote_crear_pred");
-        String cantidad = request.getParameter("txt_cant_aves_crear_pred");
-        String obse = request.getParameter("comentario_pred");
-        String fecha_descarte = request.getParameter("txt_fecha_salida_pred");
-        String semana_descarte = request.getParameter("txt_eddad_semanas_salida_pred");
-        String dia_descarte = request.getParameter("txt_eddad_dias_salida_pred");
-         
+        String id = request.getParameter("id_clon_pred");
+        String fecha_descarte = request.getParameter("calendario_pred_inicio");
+        String fecha_descarte_fin = request.getParameter("calendario_pred_fin");
+           
 
         int tipo_respuesta = 0;
         String mensaje = "";
@@ -22,13 +19,10 @@
         try {
             connection.setAutoCommit(false);
             CallableStatement callableStatement = null;
-            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_descarte_lote_crear](?,?,?,?,?,?,?,?)}");
-            callableStatement.setString(1, lote);
-            callableStatement.setString(2, cantidad);
-            callableStatement.setString(3, obse);
-            callableStatement.setString(4, fecha_descarte);
-            callableStatement.setString(5, semana_descarte);
-            callableStatement.setString(6, dia_descarte);
+            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_descarte_lote_crear](?,?,?,?,?)}");
+            callableStatement.setString(1, id);
+            callableStatement.setString(2, fecha_descarte);
+            callableStatement.setString(3, fecha_descarte_fin);
              
 
             callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
