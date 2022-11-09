@@ -11,6 +11,7 @@
     String fecha="";
     String nivel_produccion="";
     String nivel_aves="";
+    String clon="";
       while (rs2.next()) 
             {
               fecha=rs2.getString("fecha");
@@ -18,7 +19,13 @@
     
    
     pst = connection.prepareStatement(" SELECT "
-            + " t1.*,t1.fecha_produccion as fecha_produccion_form,t1.fecha_nacimiento as fecha_nacimiento_form,t1.fecha_predescarte as fecha_predescarte_form"
+            + " t1.*,"
+            + " t1.fecha_produccion     as fecha_produccion_form,"
+            + " t1.fecha_nacimiento     as fecha_nacimiento_form,"
+            + " t1.fecha_predescarte    as fecha_predescarte_form,"
+            + " convert(varchar,t1.fecha_produccion,103)    as fecha_produccion_format,"
+            + " convert(varchar,t1.fecha_nacimiento,103)    as fecha_nacimiento_format,"
+            + " convert(varchar,t1.fecha_predescarte,103)    as fecha_predescarte_format"
             + " FROM "
             + " v_ppr_pry_productividad_semanas t1 "
             + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>='"+fecha+"' ");
@@ -68,7 +75,23 @@
         </thead>
         <tbody>
             <% while (rs.next()) 
-            {%>
+            {
+            
+                if(rs.getString("clonado").equals("SI"))
+                {
+                    clon=rs.getString("fecha_predescarte_format");
+                }
+                else
+                {
+                    clon=rs.getString("fecha_predescarte_format")+ "  <button class='btn btn-xs btn-warning' "
+                    + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
+                    +rs.getString("aves_predescarte")+","
+                    + ""+rs.getString("edad_descarte_semanas")+","
+                    + "'"+rs.getString("fecha_nacimiento")+"','"+rs.getString("lote")+"','"+rs.getString("fecha_predescarte_format")+"')\"  title='Crear Lote Predescarte' ><i class='fa fa-clone'></i></button>";
+                }
+             
+            
+            %>
             <tr>
                 <td>
                     <button class="btn btn-xs btn-success"onclick="edit_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("aves_inicial")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>');ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("aves_inicial")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>', '<%=rs.getString("edad_descarte_dias")%>', '<%=rs.getString("semanas")%>')"  title="Editar lote"><i class="fa fa-pencil"></i></button>
@@ -122,7 +145,7 @@
 
                 %>
                 <td class="text-center"><%=rs.getString("aviario")%></td>
-                <td class="text-center"><%=rs.getString("fecha_nacimiento")%></td>
+                <td class="text-center"><%=rs.getString("fecha_nacimiento_format")%></td>
                 <td class="text-center"><%=rs.getString("lote")%></td>
                 <td class="text-right"><%=formatea.format(rs.getInt("aves_inicial"))%></td>
                 <td class="text-right"><%=nivel_aves+formatea.format(rs.getInt("aves_carga"))%></td>
@@ -130,8 +153,8 @@
                 <td class="text-center"><h5><span class='badge badge-<%=color_semana%> right'><%=rs.getString("semanas")%></span></h5> </td>
                 <td class="text-right"><%=nivel_produccion+formatea.format(rs.getInt("huevos_carga"))%></td>
                 <td class="text-center"><%=formatea.format(rs.getInt("huevos_padron"))%></td>
-                <td class="text-center"><%=rs.getString("fecha_produccion")%></td>
-                <td class="text-center"><%=rs.getString("fecha_predescarte")%></td>
+                <td class="text-center"><%=rs.getString("fecha_produccion_format")%></td>
+                <td class="text-center"><%=clon%></td>
                
  
 

@@ -13,16 +13,14 @@
      try 
      {
         String fecha_nacimiento     = request.getParameter("fecha_nacimiento");
-        String dias_descarte     = request.getParameter("dia_descarte");
+        String fecha_descarte        = request.getParameter("fecha_descarte");
         ResultSet rs_GM;
         Statement st = connection.createStatement();
         rs_GM = st.executeQuery("select "
-                + "                 dateadd(day,"+dias_descarte+" ,convert(date,'"+fecha_nacimiento+"'))            as fecha_descarte,"
-                + "                CEILING(convert(numeric(10,2),("+dias_descarte+" ))/convert(numeric(10,2),(7)))  as semanas_descarte");
+                 + "                CEILING(convert(numeric(10,2),(DATEDIFF(DAY, '"+fecha_nacimiento +"' , '"+fecha_descarte +"')))/convert(numeric(10,2),(7)))  as semanas_descarte");
         while (rs_GM.next()) 
         {
-            ob.put("fecha_descarte", rs_GM.getString("fecha_descarte"));
-            ob.put("semana_descarte", rs_GM.getString("semanas_descarte")); 
+             ob.put("semana_salida","Semana: "+ rs_GM.getString("semanas_descarte")); 
         }
         rs_GM.close();
     } catch (Exception e) {

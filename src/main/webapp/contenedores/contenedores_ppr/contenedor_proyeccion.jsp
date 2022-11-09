@@ -183,11 +183,7 @@
     </div>
 </div>
 
-
-
-    <script>
-        $('.tab-pane a[href="#ajusLote"]').tab('show');
-    </script> 
+ 
 <div class="modal fade" id="modal_crear_lote" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -199,18 +195,11 @@
             </div>
             <div class="modal-body bg-navy"   >  
 
-                <div class="card">
-                    <div class="card-header p-2">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item "><a class="nav-link"   href="#nuevoLoteAv"    data-toggle="tab">Nuevo Lote Aviarios</a></li>
-                            <li class="nav-item"><a class="nav-link"    href="#nuevoLotePre"     data-toggle="tab">Nuevo Lote Predescarte</a></li>
-                        </ul>
-                    </div>
+                 
                     <div class="card-body">
                         <div class="tab-content"> 
 
-                            <div class="tab-pane" id="nuevoLoteAv">
-                                <div class="modal-body bg-navy"   >  
+                                 <div class="modal-body bg-navy"   >  
 
                                     <form id="form_crear" >
                                         <table class="table">
@@ -294,91 +283,12 @@
 
                                     </form>   
                                 </div>
-                            </div>
-                            <!-- COMIENZA EL NUEVO FRAME-->
-                                 <div class="tab-pane" id="nuevoLotePre">
-                                <div class="modal-body bg-navy"   >  
-
-                                    <form id="form_crear_descarte" >
-                                        <table class="table">
-                                            <tr> 
-                                                <th> <strong><a>Lote</a></strong> 
-                                                    <input  id="txt_lote_crear_pred" name="txt_lote_crear_pred" onchange="get_val_lote_predescarte_ppr()" class="form-control text-left  is-invalid " required placeholder="Ingrese lote" style="width: 100%" type="text"     >
-                                                </th>
-                                                <th> <strong><a>Nacimiento A</a></strong>
-                                                    <input  id="txt_fecha_nacA_crear_pred"   required  class="form-control text-left  "  style="width: 100%" type="date"      >
-                                                </th>
-                                                <th> <strong><a>Nacimiento B</a></strong>
-                                                    <input  id="txt_fecha_nacB_crear_pred"  required  class="form-control text-left  "  style="width: 100%" type="date"    >
-                                                </th>
-                                                
-                                            </tr>
-
-                                            <tr>  
-                                                
-                                            </tr>
-                                            <tr> 
-                                                <th> <strong><a>Cantidad aves a Predescarte</a></strong> 
-                                                    <input  id="txt_cant_aves_crear_pred"   name="txt_cant_aves_crear_pred"    required class="form-control text-left is-invalid " style="width: 100%" type="number"     ></th>
-                                               
-
-                                                <th> 
-                                                    <strong><a>Comentario</a></strong> 
-                                                    <textarea id="comentario_pred" name="comentario_pred"  class="form-control"  placeholder="Ingrese comentario" > </textarea>
-                                                </th>
-                                            </tr>
-
-                                            <tr>
-                                                <th> <strong><a>Edad produccion (días)</a></strong> 
-                                                    <input  id="txt_eddad_dias_prod_crear_pred"  required  class="form-control text-left is-invalid " style="width: 100%" type="number" readonly  ></th>
-                                                <th> <strong><a>(Semanas)</a></strong> 
-                                                    <input id="txt_eddad_sems_prod_crear_pred"   class="form-control text-left   " style="width: 100%" type="text"   readonly      >
-                                                </th> 
-                                                <th><strong><a>Fecha de producción</a></strong>
-                                                    <input  id="txt_fecha_produccion_crear_pred" class="form-control text-left  " style="width: 100%" type="date"    readonly >
-                                                </th>  
-                                            </tr>
-
-
-                                            <tr> 
-                                                <th> <strong><a>Edad predescarte (días)</a></strong> 
-                                                    <input id="txt_eddad_dias_pred_crear_pred"   required class="form-control text-left is-invalid " style="width: 100%" type="number"   readonly     >
-                                                </th>
-                                                <th> <strong><a>(Semanas)</a></strong> 
-                                                    <input id="txt_eddad_sems_pred_crear_pred"   class="form-control text-left   " style="width: 100%" type="text"     readonly   >
-                                                </th>
-                                                <th><strong><a>Fecha de predescarte</a></strong>
-                                                    <input  id="txt_fecha_predescarte_crear_pred"  class="form-control text-left  " style="width: 100%" type="date"  readonly ></th>  
-                                            </tr>    
-                                              
-                                            <tr> 
-                                                <th> <strong><a>Salida de predescarte (días)</a></strong> 
-                                                    <input id="txt_eddad_dias_salida_pred" name="txt_eddad_dias_salida_pred" onchange="sumar_dias_fechas_crear_salida_ppr()"   required class="form-control text-left is-invalid " style="width: 100%" type="number"         >
-                                                </th>
-                                                <th> <strong><a>(Semanas)</a></strong> 
-                                                    <input id="txt_eddad_semanas_salida_pred" name="txt_eddad_semanas_salida_pred"   class="form-control text-left   " style="width: 100%" type="text"     readonly   >
-                                                </th>
-                                                <th><strong><a>Fecha de Salida</a></strong>
-                                                    <input  id="txt_fecha_salida_pred"   name="txt_fecha_salida_pred"  class="form-control text-left  " style="width: 100%" type="date"  readonly ></th>  
-                                            </tr>     
-
-                                        </table> 
-
-
-
-                                        <div class="modal-footer align-right">
-                                            <input  class="btn bg-white"  type="submit"    value="Registrar" >
-                                            <input  class="btn bg-white"  type="button"   data-dismiss="modal"   value="Cancelar" >            
-                                        </div>
-
-                                    </form>   
-                                </div>
-                            </div>     
+                             <!-- COMIENZA EL NUEVO FRAME-->
+                                   
 
                         </div> 
                     </div> 
-                </div> 
-                
+                 
                 
                 
                 

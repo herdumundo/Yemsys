@@ -3045,8 +3045,7 @@ function refrescar_grafico_proyeccion_general_ppr()
            {
                 var index = chart.dataIndex;
                 var value = chart.dataset.data[index];
-                 
-               if(value<=18)
+                if(value<=18)
                {
                   return 'rgba(0, 80, 219, 1)'; 
                }
@@ -3900,38 +3899,16 @@ function get_val_lote_predescarte_ppr(){
 
 
 
-function sumar_dias_fechas_crear_salida_ppr() {
-
-
-    $.ajax({
-        type: "POST",
-        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_descarte_pry.jsp",
-        data:   { 
-                    fecha_nacimiento:   $("#txt_fecha_nacA_crear_pred").val(),
-                    dia_descarte:       $("#txt_eddad_dias_salida_pred").val() 
-                },
-        beforeSend: function (xhr) {
-        },
-        success: function (res)
-        {
-            $("#txt_eddad_semanas_salida_pred").val(res.semana_descarte);
-            $("#txt_fecha_salida_pred").val(res.fecha_descarte);
-             
-        }
-    });
-
-}
-
 
 function registrar_lote_descarte()
 {
-    $("#form_crear_descarte").submit(function (e) 
+    $("#clonar_pred").submit(function (e) 
     {
         e.preventDefault();
         $.ajax({
                     type: "POST",
                     url: ruta_cruds_ppr + "control_crear_lote_descarte_proyeccion.jsp",
-                    data:$("#form_crear_descarte").serialize() ,
+                    data:$("#clonar_pred").serialize() ,
                     beforeSend: function () {
                         Swal.fire({
                             title: "PROCESANDO!",
@@ -3962,4 +3939,61 @@ function registrar_lote_descarte()
         e.stoppropagation();
     });
         
+}
+
+function clonar_lote_predescarte(id,fecha_predescarte,cantidad,semana_inicio,fecha_nacimiento,lote,fecha_predescarte_format){
+      const decimal = numeral(cantidad).format('0,0');
+      var html='<div class="modal-header bg-navy">'+
+               ' <h5 class="modal-title " id="exampleModalLabel"><strong>Crear Lote para Pre-descarte '+lote+'</strong></h5>'+
+            ' </div> '+"<form id='clonar_pred'> <br>\n\
+                \n\
+              <table class='table'>\n\
+            <tr>\n\
+            <th >Cantidad de aves "+decimal.replace(',', '.')+" </th>\n\
+            <th><p style='color:red'>Excedentes 0*</p> </th>\n\
+            </tr>\n\
+\n\         <tr>\n\
+\n\            <th>Fecha a predescarte <br><label id='label_semana_inicial'> "+fecha_predescarte_format+" </label>  <input type='hidden'    name='calendario_pred_inicio' id='calendario_pred_inicio' value="+fecha_predescarte+" ></th>\n\
+            <th>Fecha finalizacion predescarte <br><input required  class='form-control  is-invalid  '    onchange=\"sumar_dias_fechas_crear_salida_ppr('"+fecha_nacimiento+"',$('#calendario_pred_fin').val(),'label_semana_final')\" type='date' name='calendario_pred_fin' id='calendario_pred_fin' value="+fecha_predescarte+" ></th>\n\
+           </tr>\n\
+\n\         <tr>\n\
+\n\            <th><label id='label_semana_inicial'>Semana: "+semana_inicio+" </label></th>\n\
+\n\            <th><label id='label_semana_final'>Semana: "+semana_inicio+" </label></th>\n\
+           </tr>\n\
+</table> <br> <input type='hidden' required name='id_clon_pred' id='id_clon_pred' value="+id+" >  <input type='submit' class='btn bg-navy' value='Crear lote' ></form> ";
+    
+    Swal.fire({
+                             html: html,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                                customClass: 'swal-wide',
+
+                        });
+                        
+                        
+         registrar_lote_descarte();               
+}
+
+
+
+
+function sumar_dias_fechas_crear_salida_ppr(fecha_nacimiento,fecha_descarte,id_input) {
+
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + "consulta_gen_calculo_fecha_descarte_pry.jsp",
+        data:   { 
+                    fecha_nacimiento:   fecha_nacimiento,
+                    fecha_descarte:     fecha_descarte
+                },
+        beforeSend: function (xhr) {
+        },
+        success: function (res)
+        {
+            $("#"+id_input).html(res.semana_salida);
+              
+        }
+    });
+
 }
