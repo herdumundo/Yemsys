@@ -343,15 +343,7 @@
 </div>
       
               
-                                  <div class="card card-navy">   
-                                    <div class="card-header"> 
-                                        <h3 class="card-title">Lotes Gantt</h3> <br>                        
-
-                                    </div> 
-                                    <div id="chart_div"   ></div>
-
-                                </div>                          
-                                
+                                  
                                 <div class="card card-navy" >   
                                     <div class="card-header"> 
                                         <h3 class="card-title">Viabilidad de aves</h3> <br>                        
@@ -380,7 +372,17 @@
                                     <canvas id="grafico_gral_productividad" width="1500" height="400"></canvas>
 
 
-                                </div>   
+                                </div> 
+                                                    
+                                                    <div class="card card-navy">   
+                                    <div class="card-header"> 
+                                        <h3 class="card-title">Proyección General</h3> <br>                        
+
+                                    </div> 
+                                    <div id="chart_div"   ></div>
+
+                                </div>                          
+                                
 
                             
 <%

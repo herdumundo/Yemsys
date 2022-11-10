@@ -40,10 +40,7 @@
    
       
         
-         rs=st.executeQuery("  SELECT t1.aviario,t1.fecha_produccion,t1.fecha_predescarte,t1.ubicacion  "
-                 + "    FROM v_ppr_pry_productividad_semanas t1 "
-                 + "    inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
-                 + "    where t1.fecha_predescarte>'"+fecha+"' " );
+         rs=st.executeQuery(" SELECT id,AVIARIO,LOTE,ubicacion,fecha_produccion,fecha_predescarte,id_padre FROM v_ppr_pry_productividad_semanas GROUP BY ubicacion, AVIARIO,LOTE,fecha_produccion,fecha_predescarte,id_padre,id " );
     
         JSONObject DataScale= new JSONObject();
          
@@ -53,7 +50,7 @@
                                Category        = new JSONObject();
       
         JSONArray   categories,     Dataset,        contenido_subcategorias,
-                    array_aves,array_fechas_fin,array_ubicacion,     dataArray       = new JSONArray();       
+                    array_aves,array_fechas_fin,array_id,array_padre,array_color,array_ubicacion,     dataArray       = new JSONArray();       
         
          
     //////////////////////////////////////////AVES //////////////////////////////////////////////////////////////////////////////////        
@@ -92,6 +89,9 @@
                     array_fechas_fin                   = new JSONArray();
                     array_aves                      = new JSONArray();
                     array_ubicacion                      = new JSONArray();
+                    array_padre                      = new JSONArray();
+                    array_id                      = new JSONArray();
+                    array_color                      = new JSONArray();
 
                   while(rs.next()) 
                 { 
@@ -99,13 +99,17 @@
                     contenido_subcategorias.put (rs.getString("aviario")            );
                     array_aves.put              ( rs.getString("fecha_produccion")  );
                     array_fechas_fin.put              ( rs.getString("fecha_predescarte")  );
+                    array_padre.put              ( rs.getString("id_padre")  );
+                    array_id.put              ( rs.getString("id")  );
                  
                     if(rs.getString("ubicacion").equals("PPR") ){
-                    array_ubicacion.put              ( "winter"  );
+                    array_color.put              ( 100  );
                     }
                     else {
-                    array_ubicacion.put              ( "sports"  );
+                    array_color.put              ( 0  );
                     }
+                    
+                     
 
 //  array_aves.put              ( rs.getString("fecha_predescarte")  );
                     //array_fechas.put(array_aves);
@@ -117,6 +121,9 @@
                 DataAves.put    (   "data",array_aves);  
                 DataAves.put    (   "data2",array_fechas_fin);  
                 DataAves.put    (   "data3",array_ubicacion);  
+                DataAves.put    (   "padre",array_padre);  
+                DataAves.put    (   "id",array_id);  
+                DataAves.put    (   "color",array_color);  
                  
                 Dataset= new JSONArray();
                 Dataset.put(DataAves);  

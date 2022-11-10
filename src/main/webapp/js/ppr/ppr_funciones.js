@@ -3014,18 +3014,29 @@ function drawChart() {
             $.each(result.charts[0].data.labels, function (i, item)
             {
                 data.addRow([
+                    result.charts[0].data.datasets[0].id[i], 
                     result.charts[0].data.labels[i], 
-                    result.charts[0].data.labels[i], 
-                   null,  new Date(result.charts[0].data.datasets[0].data[i]), new Date(result.charts[0].data.datasets[0].data2[i]), null, 100, null]);
+                   null,  new Date(result.charts[0].data.datasets[0].data[i]), new Date(result.charts[0].data.datasets[0].data2[i]),
+                   null, result.charts[0].data.datasets[0].color[i], result.charts[0].data.datasets[0].padre[i]]);
             });
              
            
 
             var options = {
-                height: 1000,
+ 
+                height: data.getNumberOfRows() * 35,
                 gantt: {
-                    trackHeight: 30
-                }
+                    trackHeight: 30,
+                     palette: 
+                         [
+  {
+    "color": "#ad1c1c",
+    "dark": "#1f7a0f",
+    "light": "#9ca6b5" 
+}
+]
+                 },
+                
             };
 
             var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
@@ -3042,7 +3053,8 @@ function drawChart() {
 
 function gantt (){ 
     
-   google.charts.load('current', {'packages':['gantt']});
+    google.charts.load('current', {'packages':['gantt'], 'language': 'es'});
+
     google.charts.setOnLoadCallback(drawChart);
 }
 
