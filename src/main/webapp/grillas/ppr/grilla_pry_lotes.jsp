@@ -28,7 +28,7 @@
             + " convert(varchar,t1.fecha_predescarte,103)    as fecha_predescarte_format"
             + " FROM "
             + " v_ppr_pry_productividad_semanas t1 "
-            + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>='"+fecha+"' ");
+            + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>'"+fecha+"' ");
     rs = pst.executeQuery();
     
     
@@ -48,20 +48,21 @@
     int huevos_padron=0;
     int huevos_carga =0;
     String color_semana="";
+    String ubicacion="";
 %>
-
-<div class="card-header">
-    <label>Fecha</label>
-    <input type="date"  value="<%=fecha%>" id="fecha_proyeccion_principal" onchange="modificar_fecha_carga_pry_global_ppr()">
-</div><!-- comment -->
-
-
+         
+    
+ 
+    <table>
+        <th><button type="button" class="btn bg-black btn-block btn-sm" onclick="abrir_crear_lote_proyeccion_ppr()" ><i class="fa fa-plus"></i> Nuevo lote</button> </th>
+        <th> <label>Fecha</label>
+    <input type="date"  value="<%=fecha%>" id="fecha_proyeccion_principal" onchange="modificar_fecha_carga_pry_global_ppr()"></th>
+    </table>
 
 <table  id="grilla_proyeccion_lotes" class=' table-bordered compact hover' style='width:100%'>
         <thead>
         <th></th>
         <th class="text-center">Aviario.</th>
-        <th class="text-center">Fecha nacimiento</th>
         <th class="text-center">Lote</th>
         <th class="text-right">Aves inicial</th>
         <th class="text-right">Aves actual</th>
@@ -69,32 +70,62 @@
         <th class="text-center">Semana actual</th>
         <th class="text-center">Contador Orion</th>
         <th class="text-center">Huevos padron</th>
-        <th class="text-center">Fecha produccion</th>
-        <th class="text-center">Fecha predescarte</th>
+        <th class="text-center">Entrada</th>
+        <th class="text-center">Salida</th>
+        <th class="text-center">Ubicación</th>
   
         </thead>
         <tbody>
             <% while (rs.next()) 
             {
-            
-                if(rs.getString("clonado").equals("SI"))
+                if(rs.getString("ubicacion").equals("PRED"))
                 {
-                    clon=rs.getString("fecha_predescarte_format");
+                    clon="<h7><span class='badge badge-danger right'>"+rs.getString("ubicacion")+"</span></h7>";
                 }
                 else
                 {
-                    clon=rs.getString("fecha_predescarte_format")+ "  <button class='btn btn-xs btn-warning' "
-                    + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
-                    +rs.getString("aves_predescarte")+","
-                    + ""+rs.getString("edad_descarte_semanas")+","
-                    + "'"+rs.getString("fecha_nacimiento")+"','"+rs.getString("lote")+"','"+rs.getString("fecha_predescarte_format")+"')\"  title='Crear Lote Predescarte' ><i class='fa fa-clone'></i></button>";
+                    clon="<h7><span class='badge badge-success right'>"+rs.getString("ubicacion")+"</span></h7>";
+                   /* if(rs.getString("clonado").equals("SI"))
+                    {
+                        clon="<h7><span class='badge badge-danger right'>"+rs.getString("ubicacion")+"</span></h7>";
+                    }
+                    else
+                    {   ubicacion="<h7><span class='badge badge-success right'>"+rs.getString("ubicacion")+"</span></h7>";
+                        clon=ubicacion+ "  <button class='btn btn-xs btn-warning' "
+                        + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
+                        +rs.getString("aves_predescarte")+","//falta
+                        + ""+rs.getString("edad_descarte_semanas")+","//falta
+                        + "'"+rs.getString("fecha_nacimiento")+"','"
+                        +rs.getString("lote")+"','"
+                        +rs.getString("fecha_predescarte_format")+"')\"  title='Crear Lote Predescarte' ><i class='fa fa-clone'></i></button>";//falta
+                    }
+                    */
+                    
                 }
-             
-            
+                String boton="  <button class='btn btn-xs btn-warning' "
+                        + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
+                        +rs.getString("aves_predescarte")+","//falta
+                        + ""+rs.getString("edad_descarte_semanas")+","//falta
+                        + "'"+rs.getString("fecha_nacimiento")+"','"
+                        +rs.getString("lote")+"','"
+                        +rs.getString("fecha_predescarte_format")+"')\"  title='Crear Lote Predescarte' ><i class='fa fa-clone'></i></button>";
             %>
             <tr>
                 <td>
-                    <button class="btn btn-xs btn-success"onclick="edit_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("aves_inicial")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>');ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("aves_inicial")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>', '<%=rs.getString("edad_descarte_dias")%>', '<%=rs.getString("semanas")%>')"  title="Editar lote"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-xs btn-success"
+                            onclick=" edit_lote_proyeccion_ppr(' <%=rs.getString("id")%>',  
+                                            '<%=rs.getString("lote")%>',  
+                                            '<%=rs.getString("aviario")%>',  
+                                            '<%=rs.getString("aves_inicial")%>',  
+                                            '<%=rs.getString("fecha_nacimiento")%>',  
+                                            '<%=rs.getString("fecha_produccion")%>', 
+                                            '<%=rs.getString("fecha_predescarte")%>', 
+                                            '<%=rs.getString("aves_predescarte")%>', 
+                                            '<%=rs.getString("edad_descarte_semanas")%>', 
+                                            '<%=rs.getString("fecha_predescarte_format")%>', 
+                                            '<%=rs.getString("clonado")%>'  ); 
+                        ajuste_lote_proyeccion_ppr('<%=rs.getString("id")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("aviario")%>', '<%=rs.getString("aves_inicial")%>', '<%=rs.getString("fecha_nacimiento")%>', '<%=rs.getString("fecha_produccion")%>', '<%=rs.getString("fecha_predescarte")%>', '<%=rs.getString("edad_descarte_dias")%>', '<%=rs.getString("semanas")%>');
+                                            "  title="Editar lote"><i class="fa fa-pencil"></i></button>
                      <button class="btn btn-xs bg-navy"  data-toggle="modal" data-target="#exampleModalPreview"  onclick="grafico_proyeccion_ppr(<%=rs.getString("id")%>, '<%=rs.getString("aviario")%>', '<%=rs.getString("fecha_nacimiento_form")%>', '<%=rs.getString("fecha_produccion_form")%>', '<%=rs.getString("fecha_predescarte_form")%>', '<%=rs.getString("lote")%>', '<%=rs.getString("raza_name")%>')"  title="Visualizar grafico"><i class="fa fa-eye"></i></button>
                     <% if (rs.getString("id_lote")==null){
                      %><button class="btn btn-xs btn-danger" onclick="ppr_pro_lotes_delete(<%=rs.getString("id")%>);"  title="Eliminar lote" ><i class="fa fa-trash-o"></i></button> <%
@@ -145,7 +176,6 @@
 
                 %>
                 <td class="text-center"><%=rs.getString("aviario")%></td>
-                <td class="text-center"><%=rs.getString("fecha_nacimiento_format")%></td>
                 <td class="text-center"><%=rs.getString("lote")%></td>
                 <td class="text-right"><%=formatea.format(rs.getInt("aves_inicial"))%></td>
                 <td class="text-right"><%=nivel_aves+formatea.format(rs.getInt("aves_carga"))%></td>
@@ -154,6 +184,7 @@
                 <td class="text-right"><%=nivel_produccion+formatea.format(rs.getInt("huevos_carga"))%></td>
                 <td class="text-center"><%=formatea.format(rs.getInt("huevos_padron"))%></td>
                 <td class="text-center"><%=rs.getString("fecha_produccion_format")%></td>
+                <td class="text-center"><%=rs.getString("fecha_predescarte_format")%></td>
                 <td class="text-center"><%=clon%></td>
                
  

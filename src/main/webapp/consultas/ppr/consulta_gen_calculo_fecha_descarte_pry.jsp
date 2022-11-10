@@ -14,6 +14,7 @@
      {
         String fecha_nacimiento     = request.getParameter("fecha_nacimiento");
         String fecha_descarte        = request.getParameter("fecha_descarte");
+    //    String fecha_descarte2        = request.getParameter("fecha_descarte");
         ResultSet rs_GM;
         Statement st = connection.createStatement();
         rs_GM = st.executeQuery("select "

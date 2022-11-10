@@ -19,7 +19,7 @@
     pst = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PPR'");
     rs = pst.executeQuery(); 
     
-    pst2 = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='DESCARTE'");
+    pst2 = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PRED'");
     rs2 = pst2.executeQuery(); 
  try {
         connection.setAutoCommit(false);

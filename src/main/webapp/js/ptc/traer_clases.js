@@ -243,7 +243,8 @@ function ir_liberados_viejo() {
         beforeSend: function () {
             cargar_load(), $("#contenedor_principal").html("");
         },
-        success: function (e) {
+        success: function (e) 
+        {
             $("#div_cargar_menu").hide(),
                     $("#contenedor_principal").html(e),
                     $("#contenedor_principal").show(),
@@ -254,8 +255,11 @@ function ir_liberados_viejo() {
                     inicializar_unidad_medida_PTC(),
                     (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
                     (document.getElementById("boxColor_red").style.backgroundColor = "green"),
-                    $("#formulario").on("submit", function (e) {
-                e.preventDefault(), procesar("control_registro_costeado"), e.stopPropagation();
+                    $("#formulario").on("submit", function (e) 
+            {
+                e.preventDefault(), 
+                        procesar_PTC("control_registro_costeado"),
+                e.stopPropagation();
             }),
                     $("#txt_fecha_involucrada").multiDatesPicker({dateFormat: "yy/mm/dd"}),
                     comprobar_clasificadora(),

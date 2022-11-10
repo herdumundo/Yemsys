@@ -11,13 +11,10 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%   
    
-    String tipo =  request.getParameter ("tipo");;
-    JSONObject charts = new JSONObject();
+     JSONObject charts = new JSONObject();
   try {
-       
-      
-    PreparedStatement pst,pst2 ;
-    ResultSet  rs2 ;
+        PreparedStatement pst,pst2 ;
+    ResultSet  rs2 ;      
     Statement st;
     ResultSet rs;
     DecimalFormat formatea = new DecimalFormat("###,###.##");
@@ -30,7 +27,9 @@
     int min=20000;
     int max=70000;
     
-     pst2 = connection.prepareStatement(" select * from ppr_pry_fecha");
+    
+    
+       pst2 = connection.prepareStatement(" select * from ppr_pry_fecha");
     rs2 = pst2.executeQuery();
     String fecha="";
       while (rs2.next()) 
@@ -38,54 +37,35 @@
               fecha=rs2.getString("fecha");
             }
     
+   
+      
+        
+         rs=st.executeQuery("  SELECT t1.aviario,t1.fecha_produccion,t1.fecha_predescarte,t1.ubicacion  "
+                 + "    FROM v_ppr_pry_productividad_semanas t1 "
+                 + "    inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
+                 + "    where t1.fecha_predescarte>'"+fecha+"' " );
     
-    if(tipo!=null)
-    {
-            query="semana_lote_barra";
-            query_huevos="huevos_padron";
-            titulo="SEMANAS POR AVIARIOS";
-            titulo_barra="SEMANAS";
-            color_grafico="rgb(4, 82, 13)";
-            min=0;
-            max=150;
-    }
-      /*  rs=st.executeQuery(" select * from (SELECT "
-                + "             aviario,"
-                + "             case when fecha_predescarte<'"+fecha+"' then 0 else  isnull(cantidad_semana_lote,0) end as cantidad_aves,"
-                + "             semana_lote_barra,"
-                + "             huevos_padron,"
-                + "             CONVERT(INT,PAD_PRODUCTIVIDAD*cantidad_semana_lote/100) AS huevos_dias    "
-                + "         FROM ppr_pry_cab	  t1 left join   v_ppr_pry_productividad_semanas t2 on t1.id=t2.id_cab and t1.semana_lote_barra=t2.semanas) t where cantidad_aves>0 order by 1 " );
-       
-        */
-        rs=st.executeQuery(" SELECT t1.* FROM v_ppr_pry_productividad_semanas"
-                + " t1 inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>'"+fecha+"' " );
-       
-        
-        
-        
-        
-        
         JSONObject DataScale= new JSONObject();
          
-        JSONObject  contenidoData,  dataOptions,    data,
+        JSONObject  contenidoData,  dataOptions, fechaObj,   data,
                     DataAves, DataScaleAves,  DataPoint,              
-                    ticksScaleAves,ticksScaleHuevos, TitleScaleAves,TitleScaleHuevos, ContenidoPoint, 
+                    ticksScaleAves, TitleScaleAves, ContenidoPoint, 
                                Category        = new JSONObject();
       
         JSONArray   categories,     Dataset,        contenido_subcategorias,
-                    array_aves,array_huevos,     dataArray       = new JSONArray();       
+                    array_aves,array_fechas_fin,array_ubicacion,     dataArray       = new JSONArray();       
         
          
     //////////////////////////////////////////AVES //////////////////////////////////////////////////////////////////////////////////        
     
                     DataAves = new JSONObject();
-                    DataAves.put("label",               titulo);
+                    DataAves.put("label",               "PRODUCTIVIDAD");
                     DataAves.put("yAxisID",             "Y");
-                    DataAves.put("backgroundColor",     "black");
-                    DataAves.put("borderColor",         "black");
+                    DataAves.put("backgroundColor",     "green");
+                    DataAves.put("borderColor",         "green");
                     DataAves.put("pointRadius",         3);
-                    DataAves.put("borderWidth",         2);
+                    DataAves.put("borderWidth",         1);
+                    DataAves.put("align",               "start");
                     DataAves.put("type",                "line");
                     DataAves.put("tension",             "0.2");
                      
@@ -93,17 +73,15 @@
                     
                     TitleScaleAves= new JSONObject();          
                     TitleScaleAves.put("display",       true);
-                    TitleScaleAves.put("text",          titulo_barra);
+                    TitleScaleAves.put("text",          "PRODUCTIVIDAD");
                     DataScaleAves.put("title",          TitleScaleAves);
                     ticksScaleAves= new JSONObject(); 
                     ticksScaleAves.put("stepSize",      25);// NIVEL VERTICAL DE AVES.
                     DataScaleAves.put("ticks",          ticksScaleAves);
-                    DataScaleAves.put("type",           "linear");
+                    DataScaleAves.put("type",           "bar");
                     DataScaleAves.put("display",        true);
                     DataScaleAves.put("beginAtZero",    true);
-                    DataScaleAves.put("position",       "right"); 
-                   /* DataScaleAves.put("min",            min);
-                    DataScaleAves.put("max",            max);*/
+                    DataScaleAves.put("position",       "right");  
                   ////////////////////////////////////////////////////////////////////////////  
                     
                     ContenidoPoint= new JSONObject();
@@ -111,35 +89,50 @@
                     DataPoint= new JSONObject();
                     DataPoint.put("point",              ContenidoPoint);
                     contenido_subcategorias         = new JSONArray();
+                    array_fechas_fin                   = new JSONArray();
                     array_aves                      = new JSONArray();
-                 while(rs.next()) 
+                    array_ubicacion                      = new JSONArray();
+
+                  while(rs.next()) 
                 { 
                     // este recorre la cantidad de registros que hay en ese mes y en ese aviario
                     contenido_subcategorias.put (rs.getString("aviario")            );
-                    array_aves.put              (formatea.format(rs.getInt("semanas"))  );
-                      
+                    array_aves.put              ( rs.getString("fecha_produccion")  );
+                    array_fechas_fin.put              ( rs.getString("fecha_predescarte")  );
+                 
+                    if(rs.getString("ubicacion").equals("PPR") ){
+                    array_ubicacion.put              ( "winter"  );
+                    }
+                    else {
+                    array_ubicacion.put              ( "sports"  );
+                    }
+
+//  array_aves.put              ( rs.getString("fecha_predescarte")  );
+                    //array_fechas.put(array_aves);
                 } ////FIN DEL RECORRIDO LARGO
                  
                 categories=new JSONArray();
                 categories.put(Category);   
                 
                 DataAves.put    (   "data",array_aves);  
+                DataAves.put    (   "data2",array_fechas_fin);  
+                DataAves.put    (   "data3",array_ubicacion);  
+                 
                 Dataset= new JSONArray();
                 Dataset.put(DataAves);  
-               // Dataset.put(DataHuevos);   
-                
+                 
                 contenidoData= new JSONObject();
                 data= new JSONObject(); 
                 
                 contenidoData.put("labels", contenido_subcategorias);
-                contenidoData.put("datasets",    Dataset);
+                 contenidoData.put("datasets",    Dataset);
                 contenidoData.put("datasetFill ",    false);
                 contenidoData.put("lineAtIndex ",    30);
                 DataScale.put(    "Y",DataScaleAves);  
                  
                 
                 data.put("data",contenidoData); 
-                data.put("type",  "linear");
+                data.put("type",  "bar");
                 dataOptions= new JSONObject();   
                 dataOptions.put("scales", DataScale);
                 dataOptions.put("elements", DataPoint);
