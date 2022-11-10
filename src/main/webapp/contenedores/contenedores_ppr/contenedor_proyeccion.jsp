@@ -42,19 +42,14 @@
     <div class="position-relative p-3 bg-navy"  >
         <div class="ribbon-wrapper">
             <div class="ribbon bg-warning">
-                LOG
+                ppr
             </div>
         </div>
         <center><b>PROYECCION DE PRODUCCIÓN PRIMARIA</b></center>
     </div>
-</div>  <br>    
+</div>      
 
-<div class="card card-dark ">
-    <div class="card-header">
-
-        <button type="button" class="btn bg-navy btn-block btn-sm" onclick="abrir_crear_lote_proyeccion_ppr()" ><i class="fa fa-plus"></i> Nuevo lote</button> 
-
-    </div>
+    
 
 
 
@@ -67,8 +62,7 @@
     
     
 
-</div><!-- comment -->
-
+ 
 <div class="modal fade" id="modalLote" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -83,6 +77,7 @@
                     <ul class="nav nav-pills">
                         <li class="nav-item "><a class="nav-link"   href="#ajusLote"    data-toggle="tab">Ajuste lote</a></li>
                         <li class="nav-item"><a class="nav-link"    href="#modLote"     data-toggle="tab">Modificacion lote</a></li>
+                        <li class="nav-item"><div id="div_crear_pred"><input type="button" value=crear predescarte""></div></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -346,9 +341,16 @@
         </div>
     </div>
 </div>
-    
+      
               
-                                                          
+                                  <div class="card card-navy">   
+                                    <div class="card-header"> 
+                                        <h3 class="card-title">Lotes Gantt</h3> <br>                        
+
+                                    </div> 
+                                    <div id="chart_div"   ></div>
+
+                                </div>                          
                                 
                                 <div class="card card-navy" >   
                                     <div class="card-header"> 

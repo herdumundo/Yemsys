@@ -2985,17 +2985,162 @@ function ir_proyeccion_ppr()
     
 }
 
+  
+function drawChart() {
 
-function refrescar_grafico_proyeccion_general_ppr() 
-{
+ 
     $.ajax({
         type: "POST",
-        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_viabilidad.jsp",
+        //   url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_viabilidad.jsp",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_gantt.jsp",
+        beforeSend: function (xhr) {
+        },
+        success: function (result)
+        {
+
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task ID');
+            data.addColumn('string', 'Task Name');
+            data.addColumn('string', 'Resource');
+            data.addColumn('date', 'Start Date');
+            data.addColumn('date', 'End Date');
+            data.addColumn('number', 'Duration');
+            data.addColumn('number', 'Percent Complete');
+            data.addColumn('string', 'Dependencies');
+            
+            
+            
+            $.each(result.charts[0].data.labels, function (i, item)
+            {
+                data.addRow([
+                    result.charts[0].data.labels[i], 
+                    result.charts[0].data.labels[i], 
+                   null,  new Date(result.charts[0].data.datasets[0].data[i]), new Date(result.charts[0].data.datasets[0].data2[i]), null, 100, null]);
+            });
+             
+           
+
+            var options = {
+                height: 1000,
+                gantt: {
+                    trackHeight: 30
+                }
+            };
+
+            var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    }
+
+    )
+
+
+}
+
+
+function gantt (){ 
+    
+   google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+}
+
+
+
+
+/*
+function gantt (){
+
+ $.ajax({
+        type: "POST",
+     //   url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_viabilidad.jsp",
+        url: ruta_consultas_ppr + "consulta_gen_grafico_pry_gantt.jsp",
         beforeSend: function (xhr) {
          },
         success: function (result)
         { 
+              
+             
+            const data = {
+      labels: result.charts[0].data.labels,
+      datasets: [{
+        label: 'CICLO DE VIDA',
+        data:result.charts[0].data.datasets[0].data     
+        
+                 ,
+        backgroundColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(0, 0, 0, 1)'
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(0, 0, 0, 1)'
+        ],
+        barPercentage:1
+       // borderWidth: 1
+      }]
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+          indexAxis:'y',
+        scales: {
+            x: {
+                min:'2021-01-01',
+            type: 'time',
+            time: {
+               unit:'day' 
+            }
+          }, 
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('grafico_gral_aves2'),
+      config
+    ); 
+        
+  } 
+}
+
+)
+}
+ */
+
+ 
+function refrescar_grafico_proyeccion_general_ppr() 
+{
+    $.ajax({
+        type: "POST",
+         url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_viabilidad.jsp",
+         beforeSend: function (xhr) {
+         },
+        success: function (result)
+        { 
             refrescar_grilla_pry_lotes_ppr();//SE REFRESCA LA GRILLA DE LOS LOTES
+            gantt();
+            
+            
+            
             const config = 
                 {
                     data    : result.charts[0].data,
@@ -3006,16 +3151,16 @@ function refrescar_grafico_proyeccion_general_ppr()
                                 scales:result.charts[0].options.scales                             
                             },
                     type    : result.charts[0].type,
-                    plugins : [ChartDataLabels]
+                  plugins : [ChartDataLabels]
                 } 
                  
             if (chart_generalAves) 
             {
                 chart_generalAves.destroy();
             } 
-            chart_generalAves= new Chart(document.getElementById("grafico_gral_aves"),  config /*result.charts[0]*/);
+            chart_generalAves= new Chart(document.getElementById("grafico_gral_aves"),  config  );
             
- 
+  
             $.ajax({
             type: "POST",
             url: ruta_consultas_ppr + "consulta_gen_grafico_pry_aves_semanas.jsp",
@@ -3146,8 +3291,7 @@ function refrescar_grafico_proyeccion_general_ppr()
         }
     });
 }
-
-
+ 
 function cargar_grafico_global_productividad(){
       $.ajax({
             type: "POST",
@@ -3351,7 +3495,7 @@ function refrescar_grilla_pry_lotes_ppr()
             $("#div_grilla_pry").html(result);
             $("#grilla_proyeccion_lotes").DataTable
             ({
-                paging: false,
+                paging: false,searching: false,
                 "language":
                 {
                     "sUrl": "js/Spanish.txt"
@@ -3437,7 +3581,7 @@ function restablecer_barra_viabilidad_lote_ppr (){
 }
 
 
-function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccion, predescarte) {
+function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccion, predescarte,aves_predescarte,edad_descarte_semanas,fecha_predescarte_format,flag) {
 
     $("#txt_id").val(id);
     $("#txt_lote").val(lote);
@@ -3447,7 +3591,23 @@ function edit_lote_proyeccion_ppr(id, lote, aviario, aves, nacimiento, produccio
     $("#txt_fecha_produccion").val(produccion);
     $("#txt_fecha_predescarte").val(predescarte);
     $("#modalLote").modal("show");
-    contar_dias_proyeccion_ppr();
+    
+     contar_dias_proyeccion_ppr();
+    $("#div_crear_pred").html("");
+     if(flag=="NO")
+     {
+         var boton= "  <button class='btn btn-xs btn-warning'  "
+                        + "onclick=\"clonar_lote_predescarte("+id+" ,'"+predescarte+"',"
+                        +  aves_predescarte+"," 
+                        + ""+edad_descarte_semanas+"," 
+                        + "'"+nacimiento+"','"
+                        +lote+"','"
+                        +fecha_predescarte_format+"')\"  title='Crear Lote Predescarte' >Crear Lote Predescarte <i class='fa fa-plus'></i></button>";
+            $("#div_crear_pred").append(boton);
+
+        
+          
+     }
 }
 
 
@@ -3942,6 +4102,10 @@ function registrar_lote_descarte()
 }
 
 function clonar_lote_predescarte(id,fecha_predescarte,cantidad,semana_inicio,fecha_nacimiento,lote,fecha_predescarte_format){
+    
+    $('#modalLote').modal('toggle');
+    
+    
       const decimal = numeral(cantidad).format('0,0');
       var html='<div class="modal-header bg-navy">'+
                ' <h5 class="modal-title " id="exampleModalLabel"><strong>Crear Lote para Pre-descarte '+lote+'</strong></h5>'+
