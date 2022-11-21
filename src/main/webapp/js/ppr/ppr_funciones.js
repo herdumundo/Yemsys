@@ -3013,11 +3013,17 @@ function drawChart() {
             
             $.each(result.charts[0].data.labels, function (i, item)
             {
-                data.addRow([
-                    result.charts[0].data.datasets[0].id[i], 
-                    result.charts[0].data.labels[i], 
-                   null,  new Date(result.charts[0].data.datasets[0].data[i]), new Date(result.charts[0].data.datasets[0].data2[i]),
-                   null, result.charts[0].data.datasets[0].color[i], result.charts[0].data.datasets[0].padre[i]]);
+                data.addRow(
+                        [
+                            result.charts[0].data.datasets[0].id[i], 
+                            result.charts[0].data.labels[i], 
+                            null,  
+                            new Date(result.charts[0].data.datasets[0].data[i]), 
+                            new Date(result.charts[0].data.datasets[0].data2[i]),
+                            null, 
+                            result.charts[0].data.datasets[0].color[i], 
+                            result.charts[0].data.datasets[0].padre[i]
+                        ]);
             });
              
            
@@ -4188,7 +4194,7 @@ function ventana_venta_predescarte(fecha){
     \n\             <th class='text-left'>Cantidad Venta:  </th>\n\
                     <th > <input required    class=\"form-control text-center\"  placeholder='Ingrese cantidad de aves'     type='number'  id='cantidad_venta'  ></th>\n\
                 </tr>\n\
-            </table><div id='div_grilla_lotes_ventas'> </div> <br>  \n\
+            </table><div id='div_grilla_saldo_ventas'> </div> <div id='div_grilla_lotes_ventas'> </div> <br>  \n\
             <input type='button' class='btn bg-navy' value='Registrar'  onclick='crud_registrar_venta_ppr()'>\n\
 </form> ";  
     
@@ -4196,7 +4202,7 @@ function ventana_venta_predescarte(fecha){
                              html: html,
                             showCancelButton: false,
                             showConfirmButton: false,
-                            customClass: 'swal-wide',
+                            customClass: 'swal-wide2',
 
                         });
                 gen_grilla_lotes_ventas_ppr($("#calendario_venta").val());        
@@ -4212,6 +4218,9 @@ function gen_grilla_lotes_ventas_ppr(fecha){
                     success: function (data) 
                     {     
                         $("#div_grilla_lotes_ventas").html(data.grilla);
+                        $("#div_grilla_saldo_ventas").html(data.grilla2);
+                        
+                        
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                         if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){

@@ -40,8 +40,10 @@
    
       
         
-         rs=st.executeQuery(" SELECT id,AVIARIO,LOTE,ubicacion,fecha_produccion,fecha_predescarte,id_padre "
-                 + "FROM v_ppr_pry_productividad_semanas GROUP BY ubicacion, AVIARIO,LOTE,fecha_produccion,fecha_predescarte,id_padre,id " );
+         rs=st.executeQuery(" SELECT id,AVIARIO,LOTE,ubicacion,fecha_produccion, fecha_predescarte,id_padre "
+                 + "FROM v_ppr_pry_productividad_semanas "
+                 + "   "
+                 + " GROUP BY ubicacion, AVIARIO,LOTE,fecha_produccion,fecha_predescarte,id_padre,id order by lote  " );
     
         JSONObject DataScale= new JSONObject();
          
@@ -51,7 +53,7 @@
                                Category        = new JSONObject();
       
         JSONArray   categories,     Dataset,        contenido_subcategorias,
-                    array_aves,array_fechas_fin,array_id,array_padre,array_color,array_ubicacion,     dataArray       = new JSONArray();       
+                    array_fecha_inicio,array_fechas_fin,array_id,array_padre,array_color,array_ubicacion,     dataArray       = new JSONArray();       
         
          
     //////////////////////////////////////////AVES //////////////////////////////////////////////////////////////////////////////////        
@@ -88,7 +90,7 @@
                     DataPoint.put("point",              ContenidoPoint);
                     contenido_subcategorias         = new JSONArray();
                     array_fechas_fin                   = new JSONArray();
-                    array_aves                      = new JSONArray();
+                    array_fecha_inicio                      = new JSONArray();
                     array_ubicacion                      = new JSONArray();
                     array_padre                      = new JSONArray();
                     array_id                      = new JSONArray();
@@ -98,10 +100,10 @@
                 { 
                     // este recorre la cantidad de registros que hay en ese mes y en ese aviario
                     contenido_subcategorias.put (rs.getString("aviario")            );
-                    array_aves.put              ( rs.getString("fecha_produccion")  );
-                    array_fechas_fin.put              ( rs.getString("fecha_predescarte")  );
-                    array_padre.put              ( rs.getString("id_padre")  );
-                    array_id.put              ( rs.getString("id")  );
+                    array_fecha_inicio.put              ( rs.getString("fecha_produccion")  );
+                    array_fechas_fin.put        ( rs.getString("fecha_predescarte")  );
+                    array_padre.put             ( rs.getString("id_padre")  );
+                    array_id.put                ( rs.getString("id")  );
                  
                     if(rs.getString("ubicacion").equals("PPR") ){
                     array_color.put              ( 100  );
@@ -119,7 +121,7 @@
                 categories=new JSONArray();
                 categories.put(Category);   
                 
-                DataAves.put    (   "data",array_aves);  
+                DataAves.put    (   "data",array_fecha_inicio);  
                 DataAves.put    (   "data2",array_fechas_fin);  
                 DataAves.put    (   "data3",array_ubicacion);  
                 DataAves.put    (   "padre",array_padre);  
