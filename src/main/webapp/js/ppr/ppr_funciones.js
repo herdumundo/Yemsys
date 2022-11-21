@@ -3025,16 +3025,16 @@ function drawChart() {
             var options = {
  
                 height: data.getNumberOfRows() * 35,
-                gantt: {
-                    trackHeight: 30,
+                gantt: {               barHeight: 10,          
+                    trackHeight: 15,
                      palette: 
-                         [
-  {
-    "color": "#ad1c1c",
-    "dark": "#1f7a0f",
-    "light": "#9ca6b5" 
-}
-]
+                        [
+                            {
+                              "color": "#ad1c1c",
+                              "dark": "#1f7a0f",
+                              "light": "#9ca6b5" 
+                          }
+                        ]
                  },
                 
             };
@@ -4151,8 +4151,6 @@ function clonar_lote_predescarte(id,fecha_predescarte,cantidad,semana_inicio,fec
 }
 
 
-
-
 function sumar_dias_fechas_crear_salida_ppr(fecha_nacimiento,fecha_descarte,id_input) {
 
 
@@ -4172,4 +4170,73 @@ function sumar_dias_fechas_crear_salida_ppr(fecha_nacimiento,fecha_descarte,id_i
         }
     });
 
+}
+
+
+function ventana_venta_predescarte(fecha){
+      
+        var html='<div class="modal-header bg-navy">'+
+               ' <h5 class="modal-title " id="exampleModalLabel"><strong>Calculo de Pre-Descarte / Venta</strong></h5>'+
+            ' </div> '+"<form  > <br>\n\
+                \n\
+            <table class='table' > \n\
+                <tr>\n\
+                    <th class='text-left'>Fecha Inicio Venta:</th>\n\
+                    <th  ><input required    class=\"form-control text-center\"   value='"+fecha+"'  onchange=\"gen_grilla_lotes_ventas_ppr($('#calendario_venta').val());\"  type='date'  id='calendario_venta'  ></th>\n\
+                </tr>\n\
+    \n\         <tr>\n\
+    \n\             <th class='text-left'>Cantidad Venta:  </th>\n\
+                    <th > <input required    class=\"form-control text-center\"  placeholder='Ingrese cantidad de aves'     type='number'  id='cantidad_venta'  ></th>\n\
+                </tr>\n\
+            </table><div id='div_grilla_lotes_ventas'> </div> <br>  \n\
+            <input type='button' class='btn bg-navy' value='Registrar'  onclick='crud_registrar_venta_ppr()'>\n\
+</form> ";  
+    
+    Swal.fire({
+                             html: html,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            customClass: 'swal-wide',
+
+                        });
+                gen_grilla_lotes_ventas_ppr($("#calendario_venta").val());        
+                  
+ }
+
+function gen_grilla_lotes_ventas_ppr(fecha){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_consultas_ppr + "consulta_gen_grilla_lotes_ventas.jsp",
+                    data:({fecha:fecha}),
+                   
+                    success: function (data) 
+                    {     
+                        $("#div_grilla_lotes_ventas").html(data.grilla);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
+}
+
+
+
+function crud_registrar_venta_ppr(){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_ppr + "control_modificar_proyeccion_ventas.jsp",
+                    data:({fecha:$("#calendario_venta").val(),venta:$("#cantidad_venta").val()}),
+                   
+                    success: function (data) 
+                    {     
+                         aviso_generico(data.tipo_respuesta, data.mensaje);  
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
 }

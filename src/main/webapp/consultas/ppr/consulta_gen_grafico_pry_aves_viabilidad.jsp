@@ -50,7 +50,7 @@
           rs=st.executeQuery("SELECT t1.* "
                   + "   FROM v_ppr_pry_productividad_semanas t1 inner join "
                   + "    ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
-                  + " where t1.fecha_predescarte>'"+fecha+"' " );
+                  + " where t1.fecha_predescarte>'"+fecha+"'  and  t1.fecha_produccion<= '"+fecha+"'" );
         JSONObject DataScale= new JSONObject();
          
         JSONObject  contenidoData,  dataOptions,    data,

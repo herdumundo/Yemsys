@@ -23,7 +23,7 @@
         try 
         {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection("jdbc:sqlserver://26.0.94.130;databasename=" + db, user, passwd);
+            connection = DriverManager.getConnection("jdbc:sqlserver://172.16.1.202;databasename=" + db, user, passwd);
         }
         catch (SQLException se) {
 

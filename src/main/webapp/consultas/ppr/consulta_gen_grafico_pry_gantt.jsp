@@ -40,7 +40,8 @@
    
       
         
-         rs=st.executeQuery(" SELECT id,AVIARIO,LOTE,ubicacion,fecha_produccion,fecha_predescarte,id_padre FROM v_ppr_pry_productividad_semanas GROUP BY ubicacion, AVIARIO,LOTE,fecha_produccion,fecha_predescarte,id_padre,id " );
+         rs=st.executeQuery(" SELECT id,AVIARIO,LOTE,ubicacion,fecha_produccion,fecha_predescarte,id_padre "
+                 + "FROM v_ppr_pry_productividad_semanas GROUP BY ubicacion, AVIARIO,LOTE,fecha_produccion,fecha_predescarte,id_padre,id " );
     
         JSONObject DataScale= new JSONObject();
          

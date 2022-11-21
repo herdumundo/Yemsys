@@ -16,7 +16,8 @@
             {
               fecha=rs2.getString("fecha");
             }
-    
+    try {
+            
    
     pst = connection.prepareStatement(" SELECT "
             + " t1.*,"
@@ -28,12 +29,14 @@
             + " convert(varchar,t1.fecha_predescarte,103)    as fecha_predescarte_format"
             + " FROM "
             + " v_ppr_pry_productividad_semanas t1 "
-            + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>'"+fecha+"' ");
+            + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
+            + "  where      t1.fecha_predescarte>'"+fecha+"'  and  t1.fecha_produccion<= '"+fecha+"' ");
     rs = pst.executeQuery();
     
     
     pst3 = connection.prepareStatement(" SELECT count(t1.id) as contador FROM v_ppr_pry_productividad_semanas t1 inner join "
-            + "  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra where t1.fecha_predescarte>='"+fecha+"' ");
+            + "  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
+            + " where     t1.fecha_predescarte>'"+fecha+"'  and  t1.fecha_produccion<= '"+fecha+"' ");
     rs3 = pst3.executeQuery();
      while (rs3.next()) 
             {
@@ -55,13 +58,17 @@
  
     <table>
         <th><button type="button" class="btn bg-black btn-block btn-sm" onclick="abrir_crear_lote_proyeccion_ppr()" ><i class="fa fa-plus"></i> Nuevo lote</button> </th>
-        <th> <label>Fecha</label>
+        <th>&nbsp; <label>Fecha</label>
     <input type="date"  value="<%=fecha%>" id="fecha_proyeccion_principal" onchange="modificar_fecha_carga_pry_global_ppr()"></th>
+        
+        <th> &nbsp;&nbsp;&nbsp;
+             <input type="button"    value="Cargar venta predescarte"  onclick="ventana_venta_predescarte($('#fecha_proyeccion_principal').val())" class=" btn bg-navy" ></th>
     </table>
 
 <table  id="grilla_proyeccion_lotes" class=' table-bordered compact hover' style='width:100%'>
         <thead>
         <th></th>
+        <th class="text-center">Id lote</th>
         <th class="text-center">Aviario.</th>
         <th class="text-center">Lote</th>
         <th class="text-right">Aves inicial</th>
@@ -132,7 +139,7 @@
                     }
                         %>
                 </td> 
-                
+                <td class="text-center"><%=rs.getString("id")%></td>
                  <%
                 if(rs.getInt("huevos_padron")>rs.getInt("huevos_carga"))
                 {
@@ -215,3 +222,13 @@
             </tr>  
            </tfoot> 
     </table>
+            
+            
+            <%
+            
+            
+        } catch (Exception e) 
+{
+out.println(e.getMessage());
+        }
+            %>
