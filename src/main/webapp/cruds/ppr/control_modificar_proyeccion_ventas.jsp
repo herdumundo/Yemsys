@@ -19,19 +19,19 @@
         ResultSet rs2 ;         
         connection.setAutoCommit(false);
         try 
-        {       pst2 = connection.prepareStatement("  select *,convert(varchar,fecha_entrada,103) as entrada_form,convert(varchar,fecha_salida,103) as salida_form "
-                + "from v_mae_ppr_lotes_ventas	where fecha='"+fecha_ultima+"' and cantidad_aves>0 ORDER BY fecha_entrada ASC ");
+        {     /*  pst2 = connection.prepareStatement("  select  id,fecha_entrada,aviario   "
+                        + " from v_mae_ppr_lotes_ventas  where MONTH(fecha)=MONTH('"+fecha_ultima+"' ) "
+                        + " and year(fecha)=year('"+fecha_ultima+"' ) and  fecha>='"+fecha_ultima+"' "
+                        + " and cantidad_aves>0 group by id,fecha_entrada,aviario ORDER BY fecha_entrada ASC  ");
+        */
+        pst2 = connection.prepareStatement(" select  id,fecha_entrada,aviario   from v_mae_ppr_lotes_ventas "
+                + "WHERE fecha>'"+fecha_ultima+"'		 	"
+                + "group by id,fecha_entrada,aviario ORDER BY fecha_entrada ASC ");
+         
+         int contador=1; 
                 rs2 = pst2.executeQuery(); 
               while (rs2.next()) 
               {
-                /* if(venta_sobrante>0)
-                {
-                   if(String.valueOf(venta_sobrante)!=String.valueOf(venta) )
-                    {
-                      venta=venta_sobrante;
-                    }  
-                }*/
-                  
                   CallableStatement callableStatement = null;
                   callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte_bak] (?,?,?,?,?,?,?)}");
                   callableStatement.setInt      (1,   rs2.getInt("id"));
@@ -52,6 +52,7 @@
 
                   ob.put("mensaje", mensaje);
                   ob.put("tipo_respuesta", tipo_respuesta);
+                  contador++; 
               }
               if (tipo_respuesta == 0) 
               {

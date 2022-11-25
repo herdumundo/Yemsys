@@ -4194,7 +4194,7 @@ function ventana_venta_predescarte(fecha){
     \n\             <th class='text-left'>Cantidad Venta:  </th>\n\
                     <th > <input required    class=\"form-control text-center\"  placeholder='Ingrese cantidad de aves'     type='number'  id='cantidad_venta'  ></th>\n\
                 </tr>\n\
-            </table><div id='div_grilla_saldo_ventas'> </div> <div id='div_grilla_lotes_ventas'> </div> <br>  \n\
+            </table><div id='div_grilla_ventas_mes'></div>  <div id='div_grilla_saldo_ventas'> </div> <div id='div_grilla_lotes_ventas'> </div> <br>  \n\
             <input type='button' class='btn bg-navy' value='Registrar'  onclick='crud_registrar_venta_ppr()'>\n\
 </form> ";  
     
@@ -4219,6 +4219,7 @@ function gen_grilla_lotes_ventas_ppr(fecha){
                     {     
                         $("#div_grilla_lotes_ventas").html(data.grilla);
                         $("#div_grilla_saldo_ventas").html(data.grilla2);
+                        $("#div_grilla_ventas_mes").html(data.grilla3);
                         
                         
                     },

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cfafee4-c6f3-4b74-b55e-796f84763d49">
 	<property name="ireport.zoom" value="1.2100000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="160"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -69,7 +69,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PRE-EMBARQUE]]></text>
+				<text><![CDATA[ORDEN DE PRE-EMBARQUE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="2" width="97" height="30" uuid="e716de9c-368f-47c6-933a-9ae9b7f20204"/>
@@ -99,7 +99,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[M-FOR-LOG-14]]></text>
+				<text><![CDATA[M-FOR-LOG-27]]></text>
 			</staticText>
 			<line>
 				<reportElement x="1" y="49" width="554" height="1" uuid="9e2958bd-9721-46b7-a6d5-8e8b3728929e"/>
