@@ -123,14 +123,17 @@
 
                                         if (cantidad < 4320) {
                                             if (tipo.equals("1")) {
-                                                if (cantidad < 2160) {
+                                                if (cantidad < 2160) 
+                                                {
                                                     cantidad = (cantidad / 180);
                                                     texto = "CAJONES: " + cantidad;
-                                                } else {
+                                                } else 
+                                                {
                                                     cantidad = cantidad / 2160;
                                                     texto = "CARROS: " + cantidad;
                                                 }
-                                            } else {
+                                            } else 
+                                            {
                                                 cantidad = cantidad / 360;
                                                 texto = "CAJONES: " + cantidad;
 

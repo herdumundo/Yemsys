@@ -168,6 +168,7 @@
 
     String contenedores_bal_solicitudad_cambio_formula = "0092-PAN-09062022-A";
     String desc_contenedores_bal_solicitudad_cambio_formula = " ";
+    String pdf_bal_solicitudad_cambio_formula = "Manual_gerenerar_pedido_bal.pdf";
 
 
     String contenedores_bal_pendiente_aprobacion = "0095-PAN-29062022-A";

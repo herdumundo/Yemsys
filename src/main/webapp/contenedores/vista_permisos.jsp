@@ -51,7 +51,8 @@
         <center>
             <label class="">Permisos</label>
         </center><!-- comment -->
-        <center><select class="foo selectpicker show-tick getCategory "  multiple data-live-search="true" name="permisos" id="permisos"  required="true"  >
+        <center>
+            <select class=" selectpicker "  multiple data-selected-text-format="count" data-live-search="true" name="permisos" id="permisos"  required="true"  >
 
 
             </select> 

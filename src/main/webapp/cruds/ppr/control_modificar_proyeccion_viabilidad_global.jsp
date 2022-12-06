@@ -16,47 +16,28 @@
     PreparedStatement pst,pst2  ;
     ResultSet rs,rs2 ;
     
-    pst = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PPR'");
+   /* pst = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PPR'");
     rs = pst.executeQuery(); 
-    
-    pst2 = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PRED'");
+    */
+    pst2 = connection.prepareStatement(" select * from ppr_pry_cab ");
     rs2 = pst2.executeQuery(); 
  try {
         connection.setAutoCommit(false);
-        while (rs.next()) 
-        {
-            
-            CallableStatement callableStatement = null;
-            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote] (?,?,?,?)}");
-            callableStatement.setInt    (1, rs.getInt("id") );
-            callableStatement.setString (2, fecha);
-
-            callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
-            callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
-            callableStatement.execute();
-            tipo_respuesta = callableStatement.getInt("estado_registro");
-            mensaje = callableStatement.getString("mensaje");
-
-          /*  ob.put("mensaje", mensaje);
-            ob.put("tipo_respuesta", tipo_respuesta);*/
-        }
-        
+    
          while (rs2.next()) 
         {
             
             CallableStatement callableStatement = null;
-            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte] (?,?,?,?)}");
+            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte] (?,?,?,?,?)}");
             callableStatement.setInt    (1, rs2.getInt("id") );
             callableStatement.setString (2, fecha);
-
+            callableStatement.setString (3, rs2.getString("ubicacion") );
             callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
             callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
             callableStatement.execute();
             tipo_respuesta = callableStatement.getInt("estado_registro");
             mensaje = callableStatement.getString("mensaje");
-
-          /*  ob.put("mensaje", mensaje);
-            ob.put("tipo_respuesta", tipo_respuesta);*/
+ 
         }
          
          

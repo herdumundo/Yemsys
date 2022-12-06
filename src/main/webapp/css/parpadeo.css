@@ -20,6 +20,24 @@ and open the template in the editor.
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
 }
+
+    .dropdown-menu 
+    {
+    max-height: 500px;
+    overflow-y: auto;
+    }
+.animacion2 {
+       /*position: absolute;*/
+   animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name:parpadeo;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
 .ocultar_div {
 display: none;
 }
@@ -68,15 +86,19 @@ display: none;
   }
   
   
-  .swal-wide{
-    width:1000px !important;
+  .swal-wide2{
+    width:100% !important;
 }
 
 
+  
+  .bg-greenmenu{
+	background-color: #013603;
+        color: white  ;
 
+}
 
-
-
+ 
 
 
 
@@ -144,3 +166,27 @@ display: none;
 .page-link {
     color: black !important;
 }
+
+
+ 
+ 
+.tabla-con-borde{
+    font-size:14px !important;
+    border-collapse:collapse;
+    border: solid 3px #000000;
+}
+.tabla-con-borde thead tr th,
+.tabla-con-borde thead tr td,
+.tabla-con-borde tbody tr th,
+.tabla-con-borde tbody tr td,
+.tabla-con-borde tfoot tr th,
+.table-con-borde tfoot tr td{
+    border-collapse:collapse;
+    border-right: solid 5px #ffffff;
+    border-bottom: solid 5px #ffffff;
+}   
+/* !tabla */ 
+
+
+
+ 

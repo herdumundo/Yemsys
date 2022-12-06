@@ -103,6 +103,9 @@
                 categoria = "LDO";
                 area_nuevo = "LAVADOS";
             }
+            else  {
+                notificacion = "";
+            }
 
             sesionOk.setAttribute("notificacion", notificacion);
             sesionOk.setAttribute("titulo_reproceso", titulo_modulo_reproceso);

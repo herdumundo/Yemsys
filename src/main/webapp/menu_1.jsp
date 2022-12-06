@@ -1,10 +1,13 @@
- <%
- 
- 
- String da="0,01741485 & 0,042763064 & 0,041968856 & 0,043408302 & 0,075950089 & 0,11205781 & 0,142031168 & 0,15168378 & 0,132846347 & 0,113193685 & 0,097345952 & 0,094494827 & 0,121985183 & 0,117438805 & 0,09198119 & 0,095706386 & 0,09840604 & 0,122778192 & 0,115874355 & 0,117484431 & 0,125378379 & 0,11099932 & 0,103985128 & 0,10284134 & 0,12698643 & 0,144713433 & 0,129891549 & 0,112852144 & 0,694543922 & 0,108028461 & 0,139330154 & 0,163643173 & 0,135089742 & 0,103059342 & 0,091534252 & 0,106148459 & 0,134685999 & 0,120689867 & 0,131708226 & 0,136051466 & 0,099142287 & 0,092733133 & 0,103769086 & 0,123092694 & 0,104770878 & 0,100531346 & 0,1220496 & 0,147339726 & 0,131768437 & 0,151459185 & 0,147394488 & 0,123363049 & 0,119547125 & 0,126323535 & 0,134105928 & 0,138212832 & 0,152167091 & 0,202132322 & 0,227938066 & 0,204816536 & 0,166122982 & 0,162861219 & 0,177315604 & 0,250723073 & 0,367504755 & 0,380489628 & 0,413619208 & 0,555260304 & 0,709957631 & 0,89783375 & 1,235965599 & 1,376781704 & 1,289003657 & 1,379236459 & 1,476582794 & 1,573375287 & 1,655278548 & 1,312379495 & 1,177958732 & 0,951486384 & 0,877215548 & 0,852626588 & 0,869022127 & 0,348679756 & 0,551303671";
- 
- String d= da.replaceAll(" ","");
- 
-out.print(d.trim().replaceAll(",", "."));
-      
- %>
+<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">  <i class="far fa-bell animacion2 " aria-hidden="true"></i>   
+ </a>
+
+<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;" >   
+    <span class="dropdown-item dropdown-header bg-navy">Notificaciones</span>   
+    <div class="dropdown-divider"></div>
+    <a href="javascript:traer_pendiente_liberacion_ptc();" class="dropdown-item bg-red">
+        <i class="fas fa-envelope mr-2" aria-hidden="true"></i> Pendientes liberación  
+        <span class="float-right text-muted text-sm bg-black ">29/11/2022</span></a> <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item">
+        <i class="fas fa-envelope mr-2" aria-hidden="true"></i> Puesta mas vieja  
+        <span class="float-right text-muted text-sm">04/11/2022</span></a>
+</div>

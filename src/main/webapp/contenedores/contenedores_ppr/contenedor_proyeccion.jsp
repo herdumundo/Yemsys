@@ -33,7 +33,7 @@
 
 <head>   
 <label  ><b></b></label> 
-<div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
+<div class="float-right d-none d-sm-inline-block " href="#" data-toggle="modal" data-target=".bd-example-modal-xx" 
      onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', 'DESCRIPCION:<%=desc_version%>')">
     <label ><%=version%> </label>  
 </div>
@@ -394,3 +394,21 @@
         connection.close();
     }
 %> 
+
+<style>
+    
+.box01{
+  width: 100%;
+    display: flex;
+  align-items: flex-start;
+}
+
+.box02{
+  width: 15%;
+ }
+
+.box03{
+  width: 100%;
+ }
+    
+</style>

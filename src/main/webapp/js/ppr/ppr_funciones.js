@@ -3013,11 +3013,17 @@ function drawChart() {
             
             $.each(result.charts[0].data.labels, function (i, item)
             {
-                data.addRow([
-                    result.charts[0].data.datasets[0].id[i], 
-                    result.charts[0].data.labels[i], 
-                   null,  new Date(result.charts[0].data.datasets[0].data[i]), new Date(result.charts[0].data.datasets[0].data2[i]),
-                   null, result.charts[0].data.datasets[0].color[i], result.charts[0].data.datasets[0].padre[i]]);
+                data.addRow(
+                        [
+                            result.charts[0].data.datasets[0].id[i], 
+                            result.charts[0].data.labels[i], 
+                            null,  
+                            new Date(result.charts[0].data.datasets[0].data[i]), 
+                            new Date(result.charts[0].data.datasets[0].data2[i]),
+                            null, 
+                            result.charts[0].data.datasets[0].color[i], 
+                            result.charts[0].data.datasets[0].padre[i]
+                        ]);
             });
              
            
@@ -3025,16 +3031,16 @@ function drawChart() {
             var options = {
  
                 height: data.getNumberOfRows() * 35,
-                gantt: {
-                    trackHeight: 30,
+                gantt: {               barHeight: 10,          
+                    trackHeight: 15,
                      palette: 
-                         [
-  {
-    "color": "#ad1c1c",
-    "dark": "#1f7a0f",
-    "light": "#9ca6b5" 
-}
-]
+                        [
+                            {
+                              "color": "#ad1c1c",
+                              "dark": "#1f7a0f",
+                              "light": "#9ca6b5" 
+                          }
+                        ]
                  },
                 
             };
@@ -4151,8 +4157,6 @@ function clonar_lote_predescarte(id,fecha_predescarte,cantidad,semana_inicio,fec
 }
 
 
-
-
 function sumar_dias_fechas_crear_salida_ppr(fecha_nacimiento,fecha_descarte,id_input) {
 
 
@@ -4172,4 +4176,217 @@ function sumar_dias_fechas_crear_salida_ppr(fecha_nacimiento,fecha_descarte,id_i
         }
     });
 
+}
+
+
+function ventana_venta_predescarte(fecha){
+      
+   
+    var html='<div class="modal-header bg-navy">'+
+               ' <h5 class="modal-title " id="exampleModalLabel"><strong>Calculo de Pre-Descarte / Venta</strong></h5> <div id="noti_capacidad">   </div> </div> '+"<form  > <br>\n\
+                \n\
+            <table class='tabla tabla-con-borde table-striped table-condensed compact hover dataTable ' > \n\
+                <tr>\n\
+                    <th class='text-left'>Fecha Inicio Venta:</th>\n\
+                    <th  ><input required    class=\"form-control text-center\"   value='"+fecha+"'  onchange=\"gen_grilla_lotes_ventas_ppr($('#calendario_venta').val());\"  type='date'  id='calendario_venta'  ></th>\n\
+                </tr>\n\
+    \n\         <tr>\n\
+    \n\             <th class='text-left'>Cantidad Venta:  </th>\n\
+                    <th > <input required    class=\"form-control text-center\"  placeholder='Ingrese cantidad de aves'     type='number'  id='cantidad_venta'  ></th>\n\
+                </tr>\n\
+            </table><div class='box01'><div class='box02' id='div_grilla_ventas_mes'></div> <div class='box03' id='div_grilla_ventas_mes_log'></div></div>  <div id='div_grilla_saldo_ventas'> </div> <div id='div_grilla_lotes_ventas'> </div> <br>  \n\
+            <input type='button' class='btn bg-navy' value='Registrar'  onclick='crud_registrar_venta_ppr()'>\n\
+</form> ";  
+    
+    Swal.fire({
+                             html: html,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            customClass: 'swal-wide2',
+
+                        });
+                gen_grilla_lotes_ventas_ppr($("#calendario_venta").val());        
+                  
+ }
+
+function gen_grilla_lotes_ventas_ppr(fecha){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_consultas_ppr + "consulta_gen_grilla_lotes_ventas.jsp",
+                    data:({fecha:fecha}),
+                   
+                    success: function (data) 
+                    {     
+                        $("#div_grilla_lotes_ventas").html(data.grilla);
+                        $("#div_grilla_saldo_ventas").html(data.grilla2);
+                        $("#div_grilla_ventas_mes").html(data.grilla3);
+                        $("#div_grilla_ventas_mes_log").html(data.grilla4);
+                        $("#tabla_log").DataTable(
+                                {
+                                    paging              :   false,
+                                    searching           :   false,
+                                    ordering            :   false,
+                                    scrollY             :   '100px',
+                                    scrollX             :   true,
+                                    "bPaginate"         :   false,
+                                    "bLengthChange"     :   false,
+                                    "bFilter"           :   true,
+                                    "bInfo"             :   false 
+                                } );
+                                
+                        $("#tabla_meses").DataTable(
+                                {
+                                    paging              :   false,
+                                    searching           :   false,
+                                    ordering            :   false,
+                                     "bPaginate"         :   false,
+                                    "bLengthChange"     :   false,
+                                    "bFilter"           :   true,
+                                    "bInfo"             :   false 
+                                } );
+                    
+                        gen_notificacion_capacidad_ppr();  
+                     
+                        
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
+}
+
+
+
+function gen_notificacion_capacidad_ppr(){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_consultas_ppr + "consulta_gen_notificaciones_capacidades_proyeccion.jsp",
+                    success: function (data) 
+                    {     
+                        $("#noti_capacidad").html(data.notificacion);
+                       
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
+}
+
+
+function gen_notificacion_capacidad_ppr(){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_consultas_ppr + "consulta_gen_notificaciones_capacidades_proyeccion.jsp",
+                    success: function (data) 
+                    {     
+                        $("#noti_capacidad").html(data.notificacion);
+                       
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
+}
+
+function set_fecha_venta_notificacion_ppr(fecha){
+        $("#calendario_venta").val(fecha);
+        gen_grilla_lotes_ventas_ppr(fecha);
+ 
+}
+
+
+
+function ventana_capacidad_pry_predescarte_ppr(){
+      
+   
+    var html='<div class="modal-header bg-navy">'+
+               ' <h5 class="modal-title " id="exampleModalLabel"><strong>Capacidades de Pre-Descarte </strong></h5>   </div> '
+               +"<form  > <br>\n\
+                \n\
+             <div id='div_grilla'></div>  </div> <br>   </form> ";  
+    
+            Swal.fire({
+                             html: html,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+ 
+                        });
+          get_grilla_capacidad_pry_predescarte_ppr();      
+                  
+ }
+ 
+ 
+ 
+function get_grilla_capacidad_pry_predescarte_ppr(){
+    $.ajax({
+                type: "POST",
+                url: ruta_consultas_ppr + "consulta_gen_grilla_capacidades_predescarte.jsp",
+                success: function (data) 
+                {     
+                    $("#div_grilla").html(data.grilla);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) 
+                {
+                    if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+                    {
+                        location.reload();
+                    }
+                }
+            }); 
+}
+
+
+function crud_grilla_capacidad_pry_predescarte_ppr(id,capacidad){
+    $.ajax({
+                type: "POST",
+                url: ruta_cruds_ppr + "control_crear_capacidad_pry_predescarte.jsp",
+                data:({id:id,capacidad:capacidad}),
+                success: function (data) 
+                {     
+                    
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) 
+                {
+                    if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+                    {
+                        location.reload();
+                    }
+                }
+            }); 
+}
+
+
+function crud_registrar_venta_ppr(){
+    $.ajax({
+                    type: "POST",
+                    url: ruta_cruds_ppr + "control_modificar_proyeccion_ventas.jsp",
+                    data:({fecha:$("#calendario_venta").val(),venta:$("#cantidad_venta").val()}),
+                     beforeSend: function () {
+                        Swal.fire({
+                            title: "PROCESANDO!",
+                            html: "<strong>ESPERE</strong>...",
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            allowOutsideClick: !1,
+                             willOpen: () => {
+                    Swal.showLoading()
+                }
+                        });
+                    },
+                    success: function (data) 
+                    {     
+                         aviso_generico(data.tipo_respuesta, data.mensaje);  
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                             location.reload();
+                        }
+                    }
+                }); 
 }

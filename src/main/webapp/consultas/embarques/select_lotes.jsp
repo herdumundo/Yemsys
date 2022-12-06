@@ -34,6 +34,9 @@
             ob.put("fecha_puesta", rs_lote.getString("fecha_puesta"));
             ob.put("estado", rs_lote.getString("estado"));
             ob.put("estado_liberacion", rs_lote.getString("estado_liberacion"));
+        
+            
+            
             ob.put("identificador_lote", rs_lote.getString("cod_interno"));
             ob.put("mensaje", "1");
             ob.put("tipo_mensaje", "1");
