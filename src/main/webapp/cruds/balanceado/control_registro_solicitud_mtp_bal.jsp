@@ -27,7 +27,9 @@
     String usuario              = (String) sesionOk.getAttribute("nombre_usuario");
     String area                 = (String) sesionOk.getAttribute("area_gm");
     String id_usuario           = (String) sesionOk.getAttribute("id_usuario");
-
+    String observacion          = request.getParameter("observacion");
+    String aviario              = request.getParameter("aviario");
+   
     int tipo_respuesta = 0;
     String mensaje = "";
     JSONObject ob = new JSONObject();
@@ -62,23 +64,28 @@
  try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         callableStatement.setString(2,  fecha_solicitud);
         callableStatement.setString(3,  recomendado);
         callableStatement.setString(4,  motivo);
-        callableStatement.setString(5,  usuario);
-        callableStatement.setString(6,  desc_formula);
-        callableStatement.setString(7,  toneladas );
-        callableStatement.setString(8,  cod_formula ); 
-        callableStatement.setString(9,  resultado_esperado ); 
-        callableStatement.setString(10, impacto); 
-        callableStatement.setString(11, plazo_evaluacion); 
-        callableStatement.setString(12, indicadores); 
+         callableStatement.setString(5,  usuario ); 
+        callableStatement.setString(6, desc_formula );
+         callableStatement.setString(7, toneladas );
+        callableStatement.setString(8,   cod_formula );
+        callableStatement.setString(9, resultado_esperado); 
+        callableStatement.setString(10,impacto);
+        callableStatement.setString(11, plazo_evaluacion);
+        callableStatement.setString(12,  indicadores ); 
         callableStatement.setString(13, urgente); 
         callableStatement.setString(14, area); 
-        callableStatement.setInt(   15, Integer.parseInt(id_usuario)); 
-
+        callableStatement.setInt   (15, Integer.parseInt(id_usuario)); 
+        callableStatement.setString(16,  observacion);
+        callableStatement.setString(17,  aviario);
+        
+         
+         
+       
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
         callableStatement.execute();

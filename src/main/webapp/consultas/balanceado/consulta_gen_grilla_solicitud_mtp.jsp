@@ -1,3 +1,4 @@
+
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="clases.controles"%>
 <%@page import="clases.variables"%>
@@ -27,7 +28,7 @@
         Statement st = connection.createStatement();
         int cantidad_nueva = 0;
         int cantidad_actual = 0;
-        rs_GM = st.executeQuery("  exec  [mae_bal_pry2] @id_array='" + ids + "', @id='" + id + "', @formula_array='" + cod_formulas + "' , @formula='" + cod_formula + "' ");
+        rs_GM = st.executeQuery("  exec  [mae_bal_pry3] @id_array='" + ids + "', @id='" + id + "', @formula_array='" + cod_formulas + "' , @formula='" + cod_formula + "' ");
 
         cabecera = " <table id='tb_formulacion_det'  class=' table-bordered compact display' style='width:100%' >"
                 + "<thead>"
@@ -55,41 +56,105 @@
         String class_color = "";
         String puntualOmensual = "";
         String class_color_abas = "text-right";
+        String entera;
         int tonelada = 0;
+        String mes;
+        String dias;
         while (rs_GM.next()) {
             class_color = rs_GM.getString("cantidad_nueva").replace(".", ",");
-            class_color_abas = rs_GM.getString("abastecimiento_nuevo").replace(".", ",");
-
+            
+            //rs_GM.getString("abastecimiento_nuevo")
+            
+            double numero =Double.parseDouble(rs_GM.getString("abastecimiento_nuevo")) ;
+		System.out.printf("El número originalmente es: %f\n", numero);
+		double parteDecimal = numero % 1; // Lo que sobra de dividir al número entre 1
+		double parteEntera = numero - parteDecimal; // Le quitamos la parte decimal usando una resta
+		//System.out.printf("Parte entera: %f. Parte decimal: %f\n", parteEntera, parteDecimal);
+	
+                double parteD = parteDecimal*30;
+         
+             
+         
+          //class_color_abas= parteEntera;
+            
+             mes = String.valueOf(Math.round(parteEntera)); 
+             dias = String.valueOf(Math.round(parteD));
+             String formato_mes="";
+             String formato_dia="";
+            if(mes.equals("0"))
+            {
+             formato_mes="";
+            }
+            else if(mes.equals("1"))
+            {
+             formato_mes=mes+" Mes";
+            }
+            else {
+             formato_mes=mes+" Meses";
+            }
+            
+            
+            if(dias.equals("0"))
+            {
+             formato_dia="0 Dias";
+            }
+            else if(dias.equals("1"))
+            {
+             formato_dia=dias+" Día";
+            }
+            else {
+             formato_dia=dias+" Días";
+            }
+            
+            String finals="";
+            
+              //
+             //String formato_mes="";
+             //String union=formato_mes+formato_dia  ;
+             // class_color_abas= union;
+             
+                   
+             
+             
+            class_color_abas = (formato_mes + ' ' + formato_dia );
+        
+            
+         
             if (rs_GM.getInt("costo_nuevo") < rs_GM.getInt("costo_actual")) {
                // class_color = "text-down_bal";
                 class_color = "<h5><span class='badge badge-primary right'>" + rs_GM.getString("cantidad_nueva").replace(".", ",") + "</span></h5> ";
-            } else if (rs_GM.getInt("costo_nuevo") > rs_GM.getInt("costo_actual")) {
-               // class_color = "text-rojo_bal";
-                class_color = "<h5><span class='badge badge-danger right'>" + rs_GM.getString("cantidad_nueva").replace(".", ",") + "</span></h5> ";
-                
-                
-            }
+                    } else if (rs_GM.getInt("costo_nuevo") > rs_GM.getInt("costo_actual")) {
+                    
+                    
+                        // class_color = "text-rojo_bal";
+                        class_color = "<h5><span class='badge badge-danger right'>" + rs_GM.getString("cantidad_nueva").replace(".", ",") + "</span></h5> ";
 
-            if (rs_GM.getInt("abastecimiento_nuevo") < 1) {
-                class_color_abas = "<h5><span class='badge badge-danger right'>" + rs_GM.getString("abastecimiento_nuevo").replace(".", ",") + "</span></h5> ";
-            }
+                    }
+                        
+                    if (rs_GM.getInt("abastecimiento_nuevo") < 1) {
+                    
+                            
+                            class_color_abas = "<h5><span class='badge badge-danger right'>" +formato_dia.replace(".", ",") + "</span></h5> ";
+                            
+                                }
+                                  
 
-            grilla_html = grilla_html
-                    + "<tr > "
-                    + "<td   style=\"font-weight:bold\" > " + rs_GM.getString("descripcion") + "</td>"
-                    + "<td  class='text-right'  style=\"font-weight:bold\">  " + formatea.format(rs_GM.getInt("costo")) + "</td>"
-                    + "<td class='text-right' style=\"font-weight:bold\">  " + rs_GM.getFloat("toneladas_proyectadas") + "</td>"
-                    + "<td class='text-right ' style=\"font-weight:bold\">  " + formatea.format(rs_GM.getFloat("stock")) + "</td>"
-                    + "<td class='text-right td_negro' style=\"font-weight:bold\"> <h5><span class='badge badge-dark right'>" + rs_GM.getString("cantidad_actual").replace(".", ",") + "</span></h5>   </td>"
-                    + "<td class='text-right td_gris'  style=\"font-weight:bold\">  " + class_color+ "</td>"
-                    + "<td class='text-right td_negro' style=\"font-weight:bold \"> <h5><span class='badge badge-dark right'>" + formatea.format(rs_GM.getFloat("consumo_mensual_actual_formula")) + "</span></h5>   </td>"
-                    + "<td class='  text-right td_negro' style=\"font-weight:bold \"> <h5><span class='badge badge-dark right'>" + rs_GM.getString("abastecimiento_actual").replace(".", ",") + "</span></h5>   </td>"
-                    + "<td class='text-amarilloOscuro_bal td_gris' style=\"font-weight:bold\">  " + formatea.format(rs_GM.getFloat("consumo_mensual_nuevo_formula")) + "</td>"
-                    + "<td class='text-right  ' style=\"font-weight:bold\">  " +class_color_abas+ "  </td>"
-                    + "<td class='text-right' style=\"font-weight:bold\">  " + rs_GM.getString("estado_monto") + "</td>"
-                    + "</tr>";
+                    grilla_html = grilla_html
+                            + "<tr > "
+                            + "<td   style=\"font-weight:bold\" > " + rs_GM.getString("descripcion") + "</td>"
+                            + "<td  class='text-right'  style=\"font-weight:bold\">  " + formatea.format(rs_GM.getInt("costo")) + "</td>"
+                            + "<td class='text-right' style=\"font-weight:bold\">  " + rs_GM.getFloat("toneladas_proyectadas") + "</td>"
+                            + "<td class='text-right ' style=\"font-weight:bold\">  " + formatea.format(rs_GM.getFloat("stock")) + "</td>"
+                            + "<td class='text-right td_negro' style=\"font-weight:bold\"> <h5><span class='badge badge-dark right'>" + rs_GM.getString("cantidad_actual").replace(".", ",") + "</span></h5>   </td>"
+                            + "<td class='text-right td_gris'  style=\"font-weight:bold\">  " + class_color + "</td>"
+                            + "<td class='text-right td_negro' style=\"font-weight:bold \"> <h5><span class='badge badge-dark right'>" + formatea.format(rs_GM.getFloat("consumo_mensual_actual_formula")) + "</span></h5>   </td>"
+                            + "<td class='  text-right td_negro' style=\"font-weight:bold \"> <h5><span class='badge badge-dark right'>" + rs_GM.getString("abastecimiento_actual").replace(".", ",") + "</span></h5>   </td>"
+                            + "<td class='text-amarilloOscuro_bal td_gris' style=\"font-weight:bold\">  " + formatea.format(rs_GM.getFloat("consumo_mensual_nuevo_formula")) + "</td>"
+                            + "<td class='text-right  ' style=\"font-weight:bold\">  " + class_color_abas +  "  </td>"
+                            + "<td class='text-right' style=\"font-weight:bold\">  " + rs_GM.getString("estado_monto") + "</td>"
+                            + "</tr>";
 
-            cantidad_nueva = cantidad_nueva + rs_GM.getInt("costo_nuevo");
+                    cantidad_nueva = cantidad_nueva + rs_GM.getInt("costo_nuevo");
             cantidad_actual = cantidad_actual + rs_GM.getInt("costo_actual");
             tonelada = rs_GM.getInt("toneladas_proyectadas");
             puntualOmensual = rs_GM.getString("desc_indef_puntual");
