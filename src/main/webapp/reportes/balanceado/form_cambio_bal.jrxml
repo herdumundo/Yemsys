@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fade76b2-9b4e-4222-8331-c16254cbc0f7">
-	<property name="ireport.zoom" value="1.7715610000000246"/>
+	<property name="ireport.zoom" value="2.14358881000003"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="310"/>
+	<property name="ireport.y" value="10"/>
 	<style name="colores">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{cantidad_nueva}>$F{cantidad_actual}]]></conditionExpression>
@@ -14,6 +14,9 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Colorear" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -48,6 +51,8 @@
 	<field name="urgente" class="java.lang.String"/>
 	<field name="resultado_esperado" class="java.lang.String"/>
 	<field name="fecha_registro" class="java.sql.Timestamp"/>
+	<field name="motivo" class="java.lang.String"/>
+	<field name="observacion" class="java.lang.String"/>
 	<field name="cant_nue" class="java.lang.String"/>
 	<field name="cant_act" class="java.lang.String"/>
 	<field name="total_costo_actual" class="java.lang.Integer"/>
@@ -114,7 +119,7 @@
 	<pageHeader>
 		<band height="222" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="1" width="94" height="19" uuid="f7668379-a675-4c6d-bfa7-dab92f4c1b60"/>
+				<reportElement x="114" y="0" width="94" height="19" uuid="f7668379-a675-4c6d-bfa7-dab92f4c1b60"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -128,7 +133,7 @@
 				<text><![CDATA[Resultado esperado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="321" y="40" width="134" height="39" uuid="ef03daf2-7ac8-4d3f-8fe1-52580998f15a"/>
+				<reportElement x="4" y="39" width="134" height="25" uuid="ef03daf2-7ac8-4d3f-8fe1-52580998f15a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -180,7 +185,7 @@
 				<text><![CDATA[Detalles del cambio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="41" width="155" height="38" uuid="bce64a2d-648e-4f99-9936-41c50b0e44e6"/>
+				<reportElement x="3" y="64" width="155" height="15" uuid="bce64a2d-648e-4f99-9936-41c50b0e44e6"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -190,8 +195,10 @@
 				<reportElement x="0" y="141" width="556" height="1" uuid="ccc4aa46-2a1f-4e9e-851a-30b2b19c8df7"/>
 			</line>
 			<textField>
-				<reportElement x="152" y="41" width="163" height="38" uuid="10fe4f51-cbb3-426c-8b0a-bce325318852"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="152" y="64" width="163" height="15" uuid="10fe4f51-cbb3-426c-8b0a-bce325318852"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{formula}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
@@ -232,7 +239,7 @@
 				<text><![CDATA[Cambio realizable a partir de la fecha:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="91" y="1" width="100" height="19" uuid="f485f629-ea22-4169-947b-8f07adc6a0b9"/>
+				<reportElement x="207" y="1" width="100" height="19" uuid="f485f629-ea22-4169-947b-8f07adc6a0b9"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
 			</textField>
@@ -247,7 +254,7 @@
 				<textFieldExpression><![CDATA[$F{usuario}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="454" y="40" width="99" height="39" uuid="591aeafe-141a-451a-8465-73bbe77437f5"/>
+				<reportElement x="141" y="39" width="174" height="25" uuid="591aeafe-141a-451a-8465-73bbe77437f5"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{recomendado}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -258,34 +265,6 @@
 				<reportElement x="186" y="81" width="1" height="20" uuid="d9d0c498-beab-423a-b0f6-3748f74c4870"/>
 			</line>
 			<staticText>
-				<reportElement x="1" y="201" width="124" height="19" uuid="493be6ee-ed71-4e17-a339-ffe7461958f6"/>
-				<textElement>
-					<font fontName="Arial" size="13" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Aumento de dosis:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="114" y="201" width="26" height="19" backcolor="#FF3333" uuid="dd85b1c9-8c78-4b24-b706-95d99369a6a8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="15" isBold="false"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="157" y="201" width="132" height="19" uuid="7f9d28fb-4183-4cde-8961-ad0a80fee5b9"/>
-				<textElement>
-					<font fontName="Arial" size="13" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Disminución de dosis:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="289" y="201" width="26" height="19" backcolor="#009999" uuid="c84435f5-b998-4ea9-a255-65ab7aa7e49b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="15" isBold="false"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="3" y="142" width="137" height="19" uuid="0d97511b-b9d6-4be6-a781-75721591115b"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="10" isBold="true"/>
@@ -293,7 +272,7 @@
 				<text><![CDATA[Indicadores de evaluación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="161" width="111" height="19" uuid="074860b4-83f7-47e3-87af-11ecb54b3af7"/>
+				<reportElement x="322" y="19" width="111" height="19" uuid="074860b4-83f7-47e3-87af-11ecb54b3af7"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -306,52 +285,83 @@
 				<reportElement x="0" y="181" width="556" height="1" uuid="4592ddb7-e9c9-4d6d-87bc-702fdddfef76"/>
 			</line>
 			<textField>
-				<reportElement x="140" y="142" width="415" height="19" uuid="6a478934-c133-4ca7-955e-4732e214b09d"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="140" y="142" width="269" height="19" uuid="6a478934-c133-4ca7-955e-4732e214b09d"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{indicadores}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="113" y="161" width="441" height="19" uuid="252eb352-44db-4e79-8263-3e1092ded14a"/>
+				<reportElement x="422" y="19" width="131" height="19" uuid="252eb352-44db-4e79-8263-3e1092ded14a"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{plazo_evaluacion}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="321" y="19" width="85" height="19" uuid="ef75c98a-622f-4e91-bf17-7f36185271e4"/>
+				<reportElement x="319" y="39" width="85" height="19" uuid="ef75c98a-622f-4e91-bf17-7f36185271e4"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carácter urgente:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="409" y="19" width="99" height="19" uuid="4529f79e-590c-4d3d-aab7-6bd2cd1ee07e"/>
+				<reportElement x="409" y="39" width="96" height="19" uuid="4529f79e-590c-4d3d-aab7-6bd2cd1ee07e"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{urgente}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="59" y="6" width="52" height="15" uuid="d3234c09-f86c-4219-a89e-00fa4a8ddb9e"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="61" height="19" uuid="fc0c46ce-a136-45ab-801d-ee9fd4f2cbf5"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. pedido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="363" y="64" width="100" height="15" uuid="9ae6028c-2e3e-423b-a3ec-3ddc6626b420"/>
+				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="203" width="124" height="19" uuid="493be6ee-ed71-4e17-a339-ffe7461958f6"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aumento de dosis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="111" y="201" width="26" height="19" backcolor="#FF3333" uuid="dd85b1c9-8c78-4b24-b706-95d99369a6a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="201" width="132" height="19" uuid="7f9d28fb-4183-4cde-8961-ad0a80fee5b9"/>
+				<textElement>
+					<font fontName="Arial" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Disminución de dosis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="273" y="201" width="26" height="19" backcolor="#009999" uuid="c84435f5-b998-4ea9-a255-65ab7aa7e49b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="58" width="44" height="19" uuid="33563fe8-49de-4097-b208-92e786c80a57"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Motivo]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
-			<staticText>
-				<reportElement x="2" y="0" width="210" height="20" uuid="689c3c00-9bb2-45a4-b03f-00c636520fca"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ingrediente a cambiar]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="218" y="0" width="100" height="20" uuid="d03ea1fb-2efd-4080-9742-3952cac701cd"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dosis actual/ Ton.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="326" y="0" width="107" height="20" uuid="f4263789-8393-480b-9f32-2542bc900446"/>
-				<textElement textAlignment="Right">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dosis nueva/ Ton.]]></text>
-			</staticText>
 			<line>
 				<reportElement x="0" y="0" width="554" height="1" uuid="85d72f03-c446-4ac2-8e39-c8be187a295d"/>
 			</line>
@@ -367,28 +377,34 @@
 			<line>
 				<reportElement x="554" y="0" width="1" height="19" uuid="fbc5d348-a9f3-4413-a972-fdaa9fe9943c"/>
 			</line>
+			<line>
+				<reportElement x="1" y="19" width="554" height="1" uuid="eecba12c-7435-4a47-9447-52ea262d2c6d"/>
+			</line>
+			<staticText>
+				<reportElement x="226" y="0" width="100" height="20" uuid="d03ea1fb-2efd-4080-9742-3952cac701cd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dosis actual/ Ton.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="0" width="107" height="20" uuid="f4263789-8393-480b-9f32-2542bc900446"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dosis nueva/ Ton.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="207" height="20" uuid="689c3c00-9bb2-45a4-b03f-00c636520fca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Ingrediente a cambiar]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
-			<textField>
-				<reportElement x="2" y="0" width="210" height="20" uuid="b3f4d6a7-8e70-4743-abf5-32ef9d6d1045"/>
-				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0.000">
-				<reportElement x="218" y="0" width="100" height="20" uuid="4f7e0b85-298b-43c7-a3ae-d9b96a93b387"/>
-				<textFieldExpression><![CDATA[$F{cant_act}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="colores" x="326" y="0" width="107" height="20" uuid="d76c31d5-23aa-40fa-a42c-bdb708f42d74"/>
-				<textElement textAlignment="Right">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cant_nue}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="1" y="-2" width="554" height="1" uuid="eecba12c-7435-4a47-9447-52ea262d2c6d"/>
-			</line>
 			<line>
 				<reportElement x="1" y="20" width="554" height="1" uuid="f75077a3-4e82-4238-8b73-353108f00d05"/>
 			</line>
@@ -404,30 +420,31 @@
 			<line>
 				<reportElement x="0" y="0" width="1" height="21" uuid="9b5aff3c-5964-487e-a7c1-01a8e5147256"/>
 			</line>
+			<textField pattern="###0.000">
+				<reportElement x="225" y="1" width="100" height="19" uuid="4f7e0b85-298b-43c7-a3ae-d9b96a93b387"/>
+				<textFieldExpression><![CDATA[$F{cant_act}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="2" width="210" height="20" uuid="b3f4d6a7-8e70-4743-abf5-32ef9d6d1045"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="colores" x="338" y="0" width="107" height="20" uuid="d76c31d5-23aa-40fa-a42c-bdb708f42d74"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cant_nue}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="180" splitType="Stretch">
-			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="19" forecolor="#000000" backcolor="#CCCCCC" uuid="424fa264-a7a3-4352-ac96-a35ff8e86ecd"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[Impacto en el costo]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="4" y="18" width="174" height="29" uuid="af9f3bd3-2af5-4993-ac01-993a75dea64e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Costo de fórmula anterior / Kg:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="289" y="18" width="156" height="29" uuid="4d1965ff-6e55-4f1c-8d6b-8af9c1695e0e"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Costo de fórmula nueva / Kg:]]></text>
 			</staticText>
 			<line>
 				<reportElement x="1" y="48" width="554" height="1" uuid="4f997c56-0720-43c1-a89d-9481fa3b97c1"/>
@@ -445,20 +462,6 @@
 				<reportElement x="0" y="20" width="1" height="60" uuid="f3e9fec1-a63f-4b1e-98de-f9ad8c8d98e9"/>
 			</line>
 			<textField pattern="#,##0">
-				<reportElement x="158" y="18" width="100" height="29" uuid="908eccd1-17b0-4f5b-9af8-a896442bb6b2"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{total_costo_actual}/1000]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="433" y="18" width="111" height="29" uuid="64793dd4-d27d-4aeb-b284-b543d24c3026"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{total_costo_nuevo}/1000]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
 				<reportElement x="289" y="47" width="266" height="29" uuid="66b6fa0e-ac82-4759-83b3-a02b8bb5850c"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -474,6 +477,45 @@
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="18" width="156" height="29" uuid="4d1965ff-6e55-4f1c-8d6b-8af9c1695e0e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo de fórmula nueva / Kg:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="433" y="18" width="111" height="29" uuid="64793dd4-d27d-4aeb-b284-b543d24c3026"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_costo_nuevo}/1000]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="158" y="18" width="100" height="29" uuid="908eccd1-17b0-4f5b-9af8-a896442bb6b2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_costo_actual}/1000]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="19" forecolor="#000000" backcolor="#CCCCCC" uuid="424fa264-a7a3-4352-ac96-a35ff8e86ecd"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Impacto en el costo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="80" width="555" height="19" forecolor="#000000" backcolor="#CCCCCC" uuid="9e9e915e-b486-48bc-ba39-54f996ccb1d1"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Observacion]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="99" width="550" height="40" uuid="1ebee02d-96d5-45e3-9aab-480db50ca9b0"/>
+				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

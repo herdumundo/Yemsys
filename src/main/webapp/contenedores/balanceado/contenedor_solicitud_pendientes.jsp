@@ -16,7 +16,7 @@
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
-        ps = connection.prepareStatement(" select a.id,a.fecha_registro,a.fecha_modificacion,a.formula,a.recomendado,a.motivo,a.usuario, "
+        ps = connection.prepareStatement(" select a.id,a.fecha_registro,a.fecha_modificacion,a.formula,a.recomendado,a.motivo,a.usuario,a.plazo_evaluacion, "
                 + "b.descripcion as desc_estado,  a.cod_formula , case when  toneladas_proyectada='' then 'INDEFINIDO' ELSE   toneladas_proyectada end as toneladas_desc,"
                 + "isnull(a.revision,'') as revision     from mae_bal_mtp_cab_solicitud a inner join mae_bal_estados b on a.estado=b.id and a.estado IN (1,5)");
         rs = ps.executeQuery();
@@ -52,6 +52,7 @@
             <th>Recomendado por</th>
             <th>Motivo</th>
             <th>Usuario</th>
+            <th>Plazo de Evaluacion</th>
             <th>Toneladas</th>
             <th>Estado</th>
             <th>Verificación</th>
@@ -75,6 +76,7 @@
                     <td><%=rs.getString("recomendado")%></td>
                     <td><%=rs.getString("motivo")%></td>
                     <td><%=rs.getString("usuario")%></td>
+                    <td><%=rs.getString("plazo_evaluacion")%></td>
                     <td><%=rs.getString("toneladas_desc")%></td>
                     <td><%=rs.getString("desc_estado")%></td>
                     <td><%=rs.getString("revision")%></td>
@@ -88,6 +90,8 @@
                   <%verifi++; } %>
             </tbody>
         </table>
+            
+            
             
             <%
              if(verifi==0)
@@ -112,6 +116,8 @@
                 
             </div>
 
+
+            
 <%
     } catch (Exception e) {
 
@@ -123,7 +129,7 @@
     <style>
  
 
-table#example. tbody tr:hover {
+table#example.tbody tr:hover {
   background-color: #ffa;
 }
  

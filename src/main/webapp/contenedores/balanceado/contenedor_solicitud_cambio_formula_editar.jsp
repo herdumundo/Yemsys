@@ -178,12 +178,12 @@ String grilla= cabecera + grilla_html + "</tbody></table>";
 
     <input type="hidden" id="id_pedido" name="id_pedido" value="<%=id%>">
     <input type="hidden" id="estado" name="estado" value="<%=estado%>">
-
+    
     
  <label>Cambio realizable a partir de la fecha</label>
  <input type="text" required="required" id="fecha_solicitud" class="form-control datepicker" value="<%=fecha%>" placeholder="Ingrese fecha"> 
 
-    
+   
     
     <table class="table">
         <tbody>
