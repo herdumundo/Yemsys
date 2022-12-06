@@ -13,10 +13,14 @@
         String mensaje          = "";
         JSONObject ob = new JSONObject();
         ob = new JSONObject();
-    PreparedStatement pst  ;
-    ResultSet rs ;
-    pst = connection.prepareStatement(" select * from ppr_pry_cab");
+    PreparedStatement pst,pst2  ;
+    ResultSet rs,rs2 ;
+    
+    pst = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PPR'");
     rs = pst.executeQuery(); 
+    
+    pst2 = connection.prepareStatement(" select * from ppr_pry_cab WHERE  ubicacion='PRED'");
+    rs2 = pst2.executeQuery(); 
  try {
         connection.setAutoCommit(false);
         while (rs.next()) 
@@ -37,7 +41,26 @@
             ob.put("tipo_respuesta", tipo_respuesta);*/
         }
         
-        
+         while (rs2.next()) 
+        {
+            
+            CallableStatement callableStatement = null;
+            callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte] (?,?,?,?)}");
+            callableStatement.setInt    (1, rs2.getInt("id") );
+            callableStatement.setString (2, fecha);
+
+            callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
+            callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
+            callableStatement.execute();
+            tipo_respuesta = callableStatement.getInt("estado_registro");
+            mensaje = callableStatement.getString("mensaje");
+
+          /*  ob.put("mensaje", mensaje);
+            ob.put("tipo_respuesta", tipo_respuesta);*/
+        }
+         
+         
+         
         
             CallableStatement callableStatement = null;
             callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_actualizar_fecha_viabilidad] (?,?,?)}");

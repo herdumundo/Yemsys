@@ -13,57 +13,38 @@
    
     String id =  request.getParameter ("id");;
     JSONObject charts = new JSONObject();
-    DecimalFormat formatea = new DecimalFormat("###,###.##");
   try {
-    String grilla_html="";
-    String grilla_html2="";
-    String cabecera2="";
-    
-    Statement st,st2,st3;
-    ResultSet rs,rs2,rs3 ;
-    String  ultima_carga_ppr="0";
-    int min=0;
-    int max=0;
+    Statement st,st2,st4,st5,st6;
+    ResultSet rs,rs2,rs4,rs5,rs6  ;
+    String  ultima_carga_ppr="0"; 
     st=connection.createStatement();
     st2=connection.createStatement();
-    st3=connection.createStatement();
+     st4=connection.createStatement();
+    st5=connection.createStatement();
+    st6=connection.createStatement();
     String semana_barra="";
     int id_lote=0;
-    rs=st.executeQuery("   select id, semanas,aves_carga,aves_padron,aviario,semana_barra,semana_lote_barra from v_ppr_pry_productividad_semanas where id="+id +" order by 2 asc" );
     
-    rs2=st2.executeQuery(" select min(cantidad_aves) as min,max(cantidad_aves) as max from ppr_pry_det 	where id_cab="+id +"" );
-    while(rs2.next()) 
-    {
-        min=rs2.getInt("min");
-        max=rs2.getInt("max");
-    } 
-   
-    rs3=st3.executeQuery(" select * from  v_ppr_pry_detalle_carga 	where id="+id+"" );
-    while (rs3.next()) 
-    {
-        grilla_html = grilla_html
-        + "<tr > "
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_carga")                    + "</td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_carga")                    + "</td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("semanas")                        + "</td>"
-        + "<td style=\"font-weight:bold\">" +   formatea.format(rs3.getInt("aves_carga") )   + "</td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("mortandad")                      + "</td>"
-        + "<td style=\"font-weight:bold\">                                                      </td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("tipo")                           + "</td>"
-        + "</tr>";
+      
+      
+     rs=st.executeQuery("   SELECT * FROM v_ppr_pry_productividad_semanas	   WHERE id ="+id+"	order by 8 " );
+    
+     
+    rs6=st6.executeQuery(" select semana_lote_barra as semana_ultima ,semana_barra from ppr_pry_cab 	where id="+id +"" );
+    
+    	while(rs6.next()){
+           semana_barra=rs6.getString("semana_barra");
+           ultima_carga_ppr=rs6.getString("semana_ultima");
+        }
         
-         grilla_html2 = grilla_html2
-        + "<tr > "
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_carga")                    + "</td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("fecha_carga")                    + "</td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("semanas")                        + "</td>"
-        + "<td style=\"font-weight:bold\">" +   formatea.format(rs3.getInt("aves_carga") )   + "</td>"
-        + "<td style=\"font-weight:bold\">" +   formatea.format(rs3.getInt("huevos_carga"))                      + "</td>"
-        + "<td style=\"font-weight:bold\">                                                      </td>"
-        + "<td style=\"font-weight:bold\">" +   rs3.getString("tipo")                           + "</td>"
-        + "</tr>";
-    }
-   
+        
+    rs5=st5.executeQuery("  select id_lote from ppr_pry_det_carga 	where id_cab="+id +"" );
+    
+    	while(rs5.next()){
+           id_lote=rs5.getInt("id_lote");
+        }
+    
+    
         
         JSONObject DataScale= new JSONObject();
          
@@ -79,7 +60,7 @@
                     dataArray               = new JSONArray();         
     //////////////////////////////////////////AVES PADRON//////////////////////////////////////////////////////////////////////////////////                      
                     DataAvesPadron= new JSONObject();
-                    DataAvesPadron.put("label",             "Aves padron");
+                    DataAvesPadron.put("label",             "Productividad padron");
                     DataAvesPadron.put("yAxisID",           "A");
                     DataAvesPadron.put("backgroundColor",   "rgb(196, 187, 187)");
                     DataAvesPadron.put("borderColor",       "rgb(132, 132, 132)");
@@ -92,22 +73,22 @@
                     
                     TitleScalePadron= new JSONObject();                
                     TitleScalePadron.put("display",                   true);
-                    TitleScalePadron.put("text",                      "Aves padron");
+                    TitleScalePadron.put("text",                      "Productividad padron");
                     
                     DataScalePadron.put("title",                      TitleScalePadron); // DENTRO DE TITLE SE INSERTAN DISPLAY Y TEXT. VER ARRIBA.
                     
                     ticksScalePadron= new JSONObject(); 
-                    ticksScalePadron.put("stepSize",                  25);
+                    ticksScalePadron.put("stepSize",                  10000);
                     
                     DataScalePadron.put("ticks",                    ticksScalePadron);//EN DataScalePadron SE AGREGAN STEPSIZE. VER ARRIBA.
                     DataScalePadron.put("type",                       "linear");
                     DataScalePadron.put("display",                    true);
                     DataScalePadron.put("position",                   "right");
-                    DataScalePadron.put("min",                        min-5000);
-                    DataScalePadron.put("max",                        max);
+                     DataScalePadron.put("min",                       400000);
+                    DataScalePadron.put("max",                        0); 
     //////////////////////////////////////////AVES //////////////////////////////////////////////////////////////////////////////////                      
                     DataAves = new JSONObject();
-                    DataAves.put("label",               "Aves");
+                    DataAves.put("label",               "Productividad Orion");
                     DataAves.put("yAxisID",             "B");
                     DataAves.put("backgroundColor",     "rgb(209, 75, 75)");
                     DataAves.put("borderColor",         "rgb(186, 6, 6)");
@@ -125,14 +106,14 @@
                     DataScaleAves.put("title",          TitleScaleAves);
                    
                     ticksScaleAves= new JSONObject(); 
-                    ticksScaleAves.put("stepSize",      25);// NIVEL VERTICAL DE AVES.
+                    ticksScaleAves.put("stepSize",      10000);// NIVEL VERTICAL DE AVES.
                     
                     DataScaleAves.put("ticks",          ticksScaleAves);
                     DataScaleAves.put("type",           "linear");
                     DataScaleAves.put("display",        true);
                     DataScaleAves.put("position",       "right");
-                    DataScaleAves.put("min",            min-5000);
-                    DataScaleAves.put("max",            max);
+                    DataScaleAves.put("min",            400000);
+                    DataScaleAves.put("max",            0); 
                   ////////////////////////////////////////////////////////////////////////////  
                           
                     label= new JSONObject(); 
@@ -140,7 +121,27 @@
                    // label.put("content",                "CARGA PPR HASTA SEMANA "+ultima_carga_ppr);
                     
                     
-                   
+                    line1= new JSONObject(); 
+                    line1.put("type",                   "line");
+                    line1.put("xMin",                   ultima_carga_ppr);
+                    line1.put("xMax",                   ultima_carga_ppr );
+                    line1.put("label",                  label);
+                    
+                    line1.put("borderColor",            "rgb( 11, 137, 9 )");
+                    line1.put("borderWidth",            3);
+                    
+                    lineGlobal= new JSONObject(); 
+                    lineGlobal.put("line1",             line1);
+            
+                    annotation= new JSONObject();  
+                    annotation.put("annotations",       lineGlobal);
+                    
+                    
+                    
+                    PluginTitle= new JSONObject();
+                    PluginTitle.put("title",            TitleScaleAves); 
+                    PluginTitle.put("annotation",       annotation); 
+                 
                     
                     ContenidoPoint= new JSONObject();
                     ContenidoPoint.put("radius",        0);
@@ -154,10 +155,9 @@
                 { 
                     // este recorre la cantidad de registros que hay en ese mes y en ese aviario
                     contenido_subcategorias.put (   rs.getString("semanas")             );
-                    array_aves.put              (   rs.getString("aves_carga")       );
-                    array_avesPadron.put        (   rs.getString("aves_padron")   );
-                    semana_barra        =           rs.getString("semana_barra");
-                    ultima_carga_ppr    =           rs.getString("semana_lote_barra"); 
+                    array_aves.put              (   rs.getString("huevos_carga")       );
+                    array_avesPadron.put        (   rs.getString("huevos_padron")   );
+                    
                 } ////FIN DEL RECORRIDO LARGO
                  
                 categories=new JSONArray();
@@ -182,30 +182,6 @@
                 data.put("data",contenidoData); 
                 data.put("type",  "linear");
                 
-                
-                 line1= new JSONObject(); 
-                    line1.put("type",                   "line");
-                    line1.put("xMin",                   ultima_carga_ppr);
-                    line1.put("xMax",                   ultima_carga_ppr );
-                    line1.put("label",                  label);
-                    
-                    line1.put("borderColor",            "rgb( 11, 137, 9 )");
-                    line1.put("borderWidth",            3);
-                    
-                    lineGlobal= new JSONObject(); 
-                    lineGlobal.put("line1",             line1);
-            
-                    annotation= new JSONObject();  
-                    annotation.put("annotations",       lineGlobal);
-                    
-                    
-                    
-                    PluginTitle= new JSONObject();
-                    PluginTitle.put("title",            TitleScaleAves); 
-                    PluginTitle.put("annotation",       annotation); 
-                 
-                
-                
                 dataOptions= new JSONObject();   
                 dataOptions.put("scales", DataScale);
                 dataOptions.put("plugins", PluginTitle );
@@ -216,49 +192,12 @@
 
                 dataArray.put(data);
                 
-                
-            String     cabecera = " <table id='tb_log' class='table-bordered compact hover dataTable ' style='width:100%; '  >"
-                + "<thead>"
-
-                 + "<tr>"
-                + " <th  style='color: #fff; background: #00254d;' >Fecha de ajuste</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Fecha de registro</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Semana</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Saldo nuevo</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Ajuste</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Usuario</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Comentario</th>"
-                    + "</tr>      "
-                
-                + " </thead> "
-                + " <tbody >";
-                
-            cabecera2 = " <table id='tb_log_prod' class='table-bordered compact hover dataTable ' style='width:100%; '  >"
-                + "<thead>"
-
-                 + "<tr>"
-                + " <th  style='color: #fff; background: #00254d;' >Fecha de ajuste</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Fecha de registro</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Semana</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Aves</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Productividad</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Usuario</th>      "
-                + " <th  style='color: #fff; background: #00254d;' >Comentario</th>"
-                    + "</tr>      "
-                
-                + " </thead> "
-                + " <tbody >";
-            
-           
+               
+ 
+          
                 charts.put("charts", dataArray); 
-                charts.put("grilla", cabecera + grilla_html + "</tbody></table>"); 
-                charts.put("grilla_productividad", cabecera2 + grilla_html2 + "</tbody></table>"); 
-                charts.put("subtitulo",  "CARGA PPR HASTA SEMANA "+ultima_carga_ppr); 
                 charts.put("semana_barra",  semana_barra); 
-                charts.put("id_lote",  id_lote ); 
-                
-                
-    
+     
       } catch (Exception e) {
         String error=e.getMessage();
       }

@@ -399,32 +399,37 @@
             <script type="text/javascript" src="plugins/buttons.html5.min.js"></script>
             <script type="text/javascript" src="plugins/buttons.print.min.js"></script>
             <script src="plugins/dataTables.checkboxes.min.js" type="text/javascript"></script>
+            <script src="plugins/dropzone/min/dropzone.min.js"></script>
+
             <!---------------------------------------------------------------------------------> 
             
             
             <script src="plugins/sum().js" type="text/javascript"></script>
             <script src="plugins/jquery.inputmask.bundle.js" type="text/javascript"></script>
             
-            <script src="js/principal.js?v=3.1" type="text/javascript"></script>
-            <script src="js/embarque.js?v=3.1" type="text/javascript"></script>
-            <script src="js/embarque_funciones.js?v=3.1" type="text/javascript"></script>
-            <script src="js/logistica.js?v=3.1" type="text/javascript"></script>
-            <script src="js/logistica_funciones.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ppr/control_claudio.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ptc/ptc_claudio.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ppr/ppr_funciones.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ppr/llamadas_claudio.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ptc/enviar_datos.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ptc/envio_retenido_liberado.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ptc/traer_clases.js?v=3.1" type="text/javascript"></script>
-            <script src="js/ptc/transferencia.js?v=3.1" type="text/javascript"></script>
-            <script src="js/mis/formulas_mis.js?v=3.1" type="text/javascript"></script>
-            <script src="js/mis/traer_clases_mis.js?v=3.1" type="text/javascript"></script>
-            <script src="js/mis/transferencia_mis.js?v=3.1" type="text/javascript"></script>
+            <script src="js/principal.js?v=3.2" type="text/javascript"></script>
+            <script src="js/embarque.js?v=3.2" type="text/javascript"></script>
+            <script src="js/embarque_funciones.js?v=3.2" type="text/javascript"></script>
+            <script src="js/logistica.js?v=3.2" type="text/javascript"></script>
+            <script src="js/logistica_funciones.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ppr/control_claudio.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ptc/ptc_claudio.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ppr/ppr_funciones.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ppr/llamadas_claudio.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ptc/enviar_datos.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ptc/envio_retenido_liberado.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ptc/traer_clases.js?v=3.2" type="text/javascript"></script>
+            <script src="js/ptc/transferencia.js?v=3.2" type="text/javascript"></script>
+            <script src="js/mis/formulas_mis.js?v=3.2" type="text/javascript"></script>
+            <script src="js/mis/traer_clases_mis.js?v=3.2" type="text/javascript"></script>
+            <script src="js/mis/transferencia_mis.js?v=3.2" type="text/javascript"></script>
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         
     </body>
