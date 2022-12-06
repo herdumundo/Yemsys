@@ -131,7 +131,7 @@
                             <span class="badge badge-danger navbar-badge" id="cantidad_mensaje">0</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                            <a href="#" class="dropdown-item" id="mensaje_div">
+                            <a href="#" class="dropdown-item " id="mensaje_div">
 
 
                             </a>
@@ -426,13 +426,15 @@
             <script src="js/hp/hp_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
+            <script src="js/itkv/itkv_funciones.js" type="text/javascript"></script>
+            
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         
     </body>
-</html>
+</html> 
 
  

@@ -1,19 +1,25 @@
 
 
-var ruta_consultas_prin = "./consultas/";
-var ruta_contenedores_prin = "./contenedores/";
-var ruta_cruds_prin = "./cruds/";
+var ruta_consultas_prin     = "./consultas/";
+var ruta_contenedores_prin  = "./contenedores/";
+var ruta_cruds_prin         = "./cruds/";
 
-var ruta_contenedores_hp = "./contenedores/hp/";
-var ruta_cruds_hp = "./cruds/hp/";
-var ruta_grillas_hp = "./grillas/hp/";
-var ruta_consultas_hp = "./consultas/hp/";
+var ruta_contenedores_hp    = "./contenedores/hp/";
+var ruta_cruds_hp           = "./cruds/hp/";
+var ruta_grillas_hp         = "./grillas/hp/";
+var ruta_consultas_hp       = "./consultas/hp/";
 
 
-var ruta_contenedores_bal = "./contenedores/balanceado/";
-var ruta_cruds_bal = "./cruds/balanceado/";
-var ruta_grillas_bal = "./grillas/balanceado/";
-var ruta_consultas_bal = "./consultas/balanceado/";
+var ruta_contenedores_bal   = "./contenedores/balanceado/";
+var ruta_cruds_bal          = "./cruds/balanceado/";
+var ruta_grillas_bal        = "./grillas/balanceado/";
+var ruta_consultas_bal      = "./consultas/balanceado/";
+
+var ruta_contenedores_itkv  = "./contenedores/itkv/";
+var ruta_cruds_itkv         = "./cruds/itkv/";
+var ruta_grillas_itkv       = "./grillas/itkv/";
+var ruta_consultas_itkv     = "./consultas/itkv/";
+
 
 
 $(document).ready(function () 
@@ -390,10 +396,7 @@ function obtener_permisos_habilitados_roles()
             $('#permisos').val(data.selected.split(','));
             $('#permisos').selectpicker('refresh');
             $('.dropdown-header').addClass('bg-navy');
-            /* $('#permisos').on('changed.bs.select', function(e) {
-             categoryvalue = $(".getCategory option:selected").text();
-             alert(categoryvalue);
-             });*/
+             
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){

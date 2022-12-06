@@ -33,16 +33,19 @@
               while (rs2.next()) 
               {
                   CallableStatement callableStatement = null;
-                  callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte_bak] (?,?,?,?,?,?,?)}");
+                  callableStatement = connection.prepareCall("{call [stp_mae_ppr_proyeccion_refrescar_barra_lote_descarte_bak] (?,?,?,?,?,?,?,?)}");
                   callableStatement.setInt      (1,   rs2.getInt("id"));
                   callableStatement.setInt      (2,   venta );
                   callableStatement.setString   (3,   fecha_ultima);
                   callableStatement.setInt      (4,   venta_sobrante);
+                  callableStatement.setInt      (5,   contador);
 
                   callableStatement.registerOutParameter("estado_registro",   java.sql.Types.INTEGER);
                   callableStatement.registerOutParameter("mensaje",           java.sql.Types.VARCHAR);
                   callableStatement.registerOutParameter("venta_sobrante",    java.sql.Types.VARCHAR);
                   callableStatement.registerOutParameter("fecha_ultima",      java.sql.Types.DATE);
+                  
+                  
                   callableStatement.execute();
 
                   tipo_respuesta  = callableStatement.getInt("estado_registro");

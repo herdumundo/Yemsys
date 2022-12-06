@@ -12,6 +12,8 @@
 
 <%    String version = contenedores_bal_solicitudad_cambio_formula;
     String version_desc = desc_contenedores_bal_solicitudad_cambio_formula;
+    
+    String pdf =pdf_bal_solicitudad_cambio_formula;
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
@@ -23,7 +25,7 @@
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>','','<%=pdf%>',true)">
     <label ><%=version%></label> 
 </div>
 </head><!-- comment -->

@@ -20,6 +20,24 @@ and open the template in the editor.
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
 }
+
+    .dropdown-menu 
+    {
+    max-height: 500px;
+    overflow-y: auto;
+    }
+.animacion2 {
+       /*position: absolute;*/
+   animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name:parpadeo;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
 .ocultar_div {
 display: none;
 }
@@ -73,6 +91,12 @@ display: none;
 }
 
 
+  
+  .bg-greenmenu{
+	background-color: #013603;
+        color: white  ;
+
+}
 
  
 
@@ -144,62 +168,6 @@ display: none;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
  
  
 .tabla-con-borde{
@@ -218,3 +186,7 @@ display: none;
     border-bottom: solid 5px #ffffff;
 }   
 /* !tabla */ 
+
+
+
+ 

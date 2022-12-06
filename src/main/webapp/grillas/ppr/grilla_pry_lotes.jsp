@@ -59,10 +59,14 @@
     <table>
         <th><button type="button" class="btn bg-black btn-block btn-sm" onclick="abrir_crear_lote_proyeccion_ppr()" ><i class="fa fa-plus"></i> Nuevo lote</button> </th>
         <th>&nbsp; <label>Fecha</label>
-    <input type="date"  value="<%=fecha%>" id="fecha_proyeccion_principal" onchange="modificar_fecha_carga_pry_global_ppr()"></th>
+        <input type="date"  value="<%=fecha%>" id="fecha_proyeccion_principal" onchange="modificar_fecha_carga_pry_global_ppr()"></th>
         
         <th> &nbsp;&nbsp;&nbsp;
-             <input type="button"    value="Cargar venta predescarte"  onclick="ventana_venta_predescarte($('#fecha_proyeccion_principal').val())" class=" btn bg-navy" ></th>
+             <input type="button"    value="Cargar venta predescarte"  onclick="ventana_venta_predescarte($('#fecha_proyeccion_principal').val())" class=" btn bg-navy" >
+        </th><!-- comment -->
+        <th> &nbsp;&nbsp;&nbsp;
+             <input type="button"    value="Capacidades predescarte"  onclick="ventana_capacidad_pry_predescarte_ppr()" class=" btn bg-warning" >
+        </th>    
     </table>
 
 <table  id="grilla_proyeccion_lotes" class=' table-bordered compact hover' style='width:100%'>
