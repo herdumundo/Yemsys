@@ -65,7 +65,7 @@
             <tbody>
                 <% while (rs.next()){ %>
                 <tr>
-                    <td class="colorear" id="p<%=rs.getString("id")%>">
+                    <td class="colorear" id="principal<%=rs.getString("id")%>">
                       <h5><span class='badge badge-dark right'><%=rs.getString("id")%></span></h5>   
                         </td>
                     <td><%=rs.getString("fecha_registro")%></td>

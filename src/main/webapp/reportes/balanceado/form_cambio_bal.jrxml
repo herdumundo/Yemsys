@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fade76b2-9b4e-4222-8331-c16254cbc0f7">
-	<property name="ireport.zoom" value="2.14358881000003"/>
+	<property name="ireport.zoom" value="1.2100000000000173"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="10"/>
+	<property name="ireport.y" value="0"/>
 	<style name="colores">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{cantidad_nueva}>$F{cantidad_actual}]]></conditionExpression>
@@ -169,10 +169,10 @@
 				<reportElement x="0" y="120" width="556" height="1" uuid="99aaa20b-f3b2-4599-9f7c-5110cb96c7fb"/>
 			</line>
 			<line>
-				<reportElement x="555" y="0" width="1" height="162" uuid="d5e0af91-ab57-406c-a4d4-9fcc0b5194c3"/>
+				<reportElement x="555" y="0" width="1" height="176" uuid="d5e0af91-ab57-406c-a4d4-9fcc0b5194c3"/>
 			</line>
 			<line>
-				<reportElement x="0" y="1" width="1" height="161" uuid="7369995d-0bf1-4c85-8f6e-7b50cf450ef6"/>
+				<reportElement x="0" y="1" width="1" height="175" uuid="7369995d-0bf1-4c85-8f6e-7b50cf450ef6"/>
 			</line>
 			<line>
 				<reportElement x="318" y="1" width="1" height="78" uuid="a140a2eb-b328-4344-8eca-417047765b53"/>
@@ -197,7 +197,7 @@
 			<textField>
 				<reportElement x="152" y="64" width="163" height="15" uuid="10fe4f51-cbb3-426c-8b0a-bce325318852"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{formula}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -255,7 +255,9 @@
 			</textField>
 			<textField>
 				<reportElement x="141" y="39" width="174" height="25" uuid="591aeafe-141a-451a-8465-73bbe77437f5"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{recomendado}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<line>
@@ -279,13 +281,13 @@
 				<text><![CDATA[Plazo de evaluación:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="161" width="556" height="1" uuid="78f4cd83-0a00-41db-8f4c-e73f172048f9"/>
+				<reportElement x="0" y="176" width="556" height="1" uuid="78f4cd83-0a00-41db-8f4c-e73f172048f9"/>
 			</line>
 			<line>
 				<reportElement x="0" y="181" width="556" height="1" uuid="4592ddb7-e9c9-4d6d-87bc-702fdddfef76"/>
 			</line>
-			<textField>
-				<reportElement x="140" y="142" width="269" height="19" uuid="6a478934-c133-4ca7-955e-4732e214b09d"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="140" y="142" width="413" height="19" uuid="6a478934-c133-4ca7-955e-4732e214b09d"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="9"/>
 				</textElement>
@@ -320,7 +322,7 @@
 				<text><![CDATA[Nro. pedido:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="363" y="64" width="100" height="15" uuid="9ae6028c-2e3e-423b-a3ec-3ddc6626b420"/>
+				<reportElement x="363" y="64" width="190" height="15" uuid="9ae6028c-2e3e-423b-a3ec-3ddc6626b420"/>
 				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -513,10 +515,19 @@
 				</textElement>
 				<text><![CDATA[Observacion]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="3" y="99" width="550" height="40" uuid="1ebee02d-96d5-45e3-9aab-480db50ca9b0"/>
 				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="139" width="554" height="1" uuid="38be702a-7de1-4f91-a53d-bd36711186c0"/>
+			</line>
+			<line>
+				<reportElement x="0" y="80" width="1" height="60" uuid="8160d7ee-fd1a-4502-8f64-c135ddf450e1"/>
+			</line>
+			<line>
+				<reportElement x="554" y="79" width="1" height="60" uuid="b445a45b-80a0-4643-8c91-34fdd5a2185a"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>
