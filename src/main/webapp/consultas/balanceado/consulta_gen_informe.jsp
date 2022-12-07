@@ -50,7 +50,7 @@
             grilla_html = grilla_html
                     + "<tr > "
                     + "<tr>"
-                    +"<td class='colorear' id='"+rs.getString("id")+"'>"+rs.getString("id")+"</td>" 
+                    +"<td class='colorear' id='principal"+rs.getString("id")+"'>"+rs.getString("id")+"</td>" 
                     +"<td>"+rs.getString("fecha_registro")+"</td>" 
                     +"<td>"+rs.getString("fecha_modificacion")+"</td>" 
                     +"<td>"+rs.getString("formula")+"</td>" 
