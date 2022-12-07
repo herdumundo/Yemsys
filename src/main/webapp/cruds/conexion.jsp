@@ -15,7 +15,8 @@
 <%@page import="org.json.JSONArray"%>
 
 <%
-    String user = "cch";
+    String user = "sa";
+   // String user = "cch";
     String passwd = "Paraguay2017";
     String db = "GrupoMaehara";
     Connection connection=null;

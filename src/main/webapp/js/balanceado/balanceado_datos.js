@@ -64,28 +64,50 @@ function clonar_cabecera_pedido_bal()
     
         success: function (data)
         {
+            $("#indicadores").val                 ("");
+            $("#motivo").val                      ("");     
+            $("#plazo_evaluacion").val            ("");
+            $("#recomendado").val                 (""); 
+            $("#resultado_esperado").val          ("");
+            $("#checkUrgente").val                ("");                   
+            $("#observacion").val                 (""); 
+            $("#fecha_solicitud").val       ("");
+            $('#aviario').selectpicker('val','');
+            $('#aviario').selectpicker('refresh');
+
             $("#indicadores").val                 (data.indicadores);
             $("#motivo").val                      (data.motivo);     
             $("#plazo_evaluacion").val            (data.plazo);
             $("#recomendado").val                 (data.recomendado); 
             $("#resultado_esperado").val          (data.resultado_esperado);
             
-            $("#toneladas").val                   (data.tonela);
             $("#checkUrgente").val                (data.caracter);                   
-            $("#impacto").val                     (data.impacto);
             $("#observacion").val                 (data.observacion);
+            $("#fecha_solicitud").val       (data.fecha_modificacion);
             
-            $('#aviario').selectpicker('val','');
-            $('#aviario').selectpicker('refresh');
-            $('#aviario').val(data.selected.split(','));
+      
+            
+            if(data.selected.trim()!=""){
+                   $('#aviario').val(data.selected.split(','));
             $('#aviario').selectpicker('refresh');  
-           
-           
-            data.tonela.trim()=="" ? $("#chkToggle2").bootstrapToggle('on') :  $("#chkToggle2").bootstrapToggle('off');
+             
+            }
+       
+          
+               if(data.tonela.trim()==""){
+                 $("#chkToggle2").bootstrapToggle('on')   
+                       
+            }else{
+                $("#chkToggle2").bootstrapToggle('off');
+                  $("#toneladas").val  (data.tonela)
+                
+            } 
+             
              
            
             if(data.impacto =="SI"){
                 $("#chkToggleImpacto").bootstrapToggle('on');
+                $("#impacto").val                     (data.impacto_desc);
             }else{
                 $("#chkToggleImpacto").bootstrapToggle('off');
                 
@@ -462,11 +484,15 @@ function validar_datos_mtp_sol(){
                                           title: 'PROCESANDO!',
                                           html: 'ESPERE<strong></strong>...',
                                           allowOutsideClick: false,
+                        showCancelButton: false,
+                        showConfirmButton: false,
                                           willOpen: () => {
                                               Swal.showLoading()
                                           }
 
                                       });
+                                      
+                             
                                   },
                                   success: function (data)
                                   {

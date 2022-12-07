@@ -21,11 +21,7 @@ and open the template in the editor.
   -webkit-animation-iteration-count: infinite;
 }
 
-    .dropdown-menu 
-    {
-    max-height: 500px;
-    overflow-y: auto;
-    }
+ 
 .animacion2 {
        /*position: absolute;*/
    animation-name: parpadeo;
@@ -186,7 +182,6 @@ display: none;
     border-bottom: solid 5px #ffffff;
 }   
 /* !tabla */ 
-
 
 
  

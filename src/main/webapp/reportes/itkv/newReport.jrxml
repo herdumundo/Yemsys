@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="450" pageHeight="842" columnWidth="410" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22f9a9b0-045b-42d3-a23e-cd8451d9d7a1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from itkv_salida1]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="responsable" class="java.lang.String"/>
+	<field name="id_usuario" class="java.lang.Integer"/>
+	<field name="id_activo" class="java.lang.String"/>
+	<field name="desc_activo" class="java.lang.String"/>
+	<field name="id_ubicacion" class="java.lang.String"/>
+	<field name="desc_ubicacion" class="java.lang.String"/>
+	<field name="id_rubro" class="java.lang.String"/>
+	<field name="desc_rubro" class="java.lang.String"/>
+	<field name="id_actividad" class="java.lang.String"/>
+	<field name="desc_actividad" class="java.lang.String"/>
+	<field name="km_ho" class="java.lang.Integer"/>
+	<field name="id_boca" class="java.lang.String"/>
+	<field name="desc_boca" class="java.lang.String"/>
+	<field name="lt_inicio" class="java.lang.Integer"/>
+	<field name="lt_fin" class="java.lang.Integer"/>
+	<field name="lt_total" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="315" splitType="Stretch">
+			<line>
+				<reportElement x="-2" y="37" width="410" height="1" uuid="3f20b9c9-5bee-4e2c-b42f-ce587b772cb2"/>
+			</line>
+			<line>
+				<reportElement x="407" y="-1" width="1" height="39" uuid="ff0e547a-4e59-4e9c-abf8-ca6479048065"/>
+			</line>
+			<line>
+				<reportElement x="-2" y="-2" width="1" height="39" uuid="0b3894bb-7fd1-4ce2-8e5b-6e8ed8039c4a"/>
+			</line>
+			<line>
+				<reportElement x="-2" y="-1" width="409" height="1" uuid="dfce0e30-fe7b-482e-abd6-f9a5ae0f34a8"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="52" width="142" height="33" uuid="cf3c426f-e9af-47bd-a751-815ed82d96f0"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Nro.:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="146" y="216" width="264" height="31" uuid="fdb14ea7-adf5-4b0d-92c9-1698974fc296"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{km_ho}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="125" width="145" height="33" uuid="731ee4ea-269d-4f32-972c-9e9a57ef394d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Señor/es:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="176" width="69" height="31" uuid="d4165a15-3268-4313-bd0e-5179d9bef4d2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Activo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="88" width="314" height="33" uuid="e2942f34-c7ea-4fe4-ad2c-e0deda7a050e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="176" width="339" height="31" uuid="63da1f64-96ce-4090-9708-741446f65836"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desc_activo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="125" width="314" height="33" uuid="398167a6-aacc-4c72-ae9a-091cce7bc034"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{responsable}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="216" width="145" height="31" uuid="3241aace-9a05-40d9-bb81-525a0fa76207"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Ultima lectura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="88" width="86" height="33" uuid="faf2b496-d1af-4486-9c43-4467facb6d32"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Fecha.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="96" y="52" width="127" height="33" uuid="f6b2a9ee-e1ab-4612-bee4-7911d390d2b3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-2" y="0" width="409" height="26" uuid="b4aae9f3-c3ad-4c43-9973-038af91f8048"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[BOLETA DE RETIRO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+</jasperReport>
