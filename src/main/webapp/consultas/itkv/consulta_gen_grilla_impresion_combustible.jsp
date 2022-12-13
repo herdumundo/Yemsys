@@ -15,9 +15,9 @@
         Statement   st      = connection.createStatement(); 
         ResultSet   rs; 
         String tr="";
-        rs = st.executeQuery(" select * from itkv_salida1 where convert(date,fecha)='"+fecha+"'  ");
+        rs = st.executeQuery(" select * from itkv_salida1 where convert(date,fecha)='"+fecha+"' order by 1 desc  ");
         
-         String   cabecera = " <table id='grilla' class=' table-bordered compact' style='width:100%'>"
+         String   cabecera = " <table id='grilla' class=' table-bordered compact hover' style='width:100%'>"
                 + "<thead>"
                 + "<tr>"
                  + "   <th>Nro.                     </th>"
@@ -27,6 +27,7 @@
                    + " <th>Recomendado por</th>"
                    + " <th>Motivo</th>"
                    + " <th>Usuario</th>"
+                   + " <th>Tipo documento</th>"
                    + " <th></th>"
                 
                 + "</tr>"
@@ -36,6 +37,17 @@
          
         while (rs.next()) 
         {
+            String archivo="";
+            String color="";
+            
+            if(rs.getString("tipo_registro").equals("TRANSFERENCIA") ){
+                archivo="traslado_combustible";
+                color="warning";
+            }
+            else {
+                archivo="salida_combustible";
+                color="danger";
+            }
             tr = tr
             + " <tr>"
             +"      <td>"+rs.getString("id")            +"</td>" 
@@ -45,8 +57,11 @@
             +"      <td>"+rs.getString("desc_boca")     +"</td>" 
             +"      <td>"+rs.getString("lt_inicio")     +"</td>" 
             +"      <td>"+rs.getString("lt_fin")        +"</td>" 
+            +"      <td>"+rs.getString("tipo_registro")        +"</td>" 
             +"  <td>"
-            + " <form action=\"cruds/balanceado/control_reporte_pedidos_bal.jsp\" target=\"blank\"><input type=\"submit\" value=\"Reporte\" class=\"bg-warning\"> <input type=\"hidden\" id=\"id\" name=\"id\" value=\""+rs.getString("id")+"\"></form>  </td>"               
+            + " <div>"
+            + " <form action=\"cruds/itkv/control_reporte_consumo_combustible.jsp\" target=\"blank\"><input type=\"submit\" value=\"Reporte\" class=\"form-control bg-"+color+"\"> <input type='hidden' value='"+archivo+"' name='archivo'> <input type=\"hidden\" id=\"id\" name=\"id\" value=\""+rs.getString("id")+"\"></form>  </td>"               
+            + "</td>"               
             + " </tr>";
         }
         

@@ -52,7 +52,7 @@
                 ITKV
             </div>
         </div>
-        <center><b>REGISTRO DE CONSUMO DE COMBUSTIBLE</b></center>
+        <center><b>TRANSFERENCIA DE INSUMOS VETERINARIOS</b></center>
     </div>
 </div> 
 
@@ -61,16 +61,15 @@
 
     <br>
     <strong ><a>Responsable</a></strong>
-    
-    <select class="form-control" id="retirado_por_select" onchange="insert_valor_responsable_combo_itkv()">
-    <option value="">Seleccione</option>    
+    <select class="form-control" id="retirado_por_select" >
         <%  while (rs.next()) {%>
         <option><%=rs.getString("U_retiradopor")%></option>    
         <% }%>
-        <option>OTROS</option>    
-    </select>
-     <input type="text" class="form-control " placeholder="INGRESE NOMBRE" value=""   id="retirado_por" style="display: none">
-        
+     </select>
+     
+
+     
+     
      <strong ><a>Tipo combustible</a></strong>
     <select class="form-control"    id="tipo_combus">
        
@@ -82,17 +81,13 @@
         
         
     <strong ><a>Activo</a></strong>
-    <select class="form-control selectpicker"data-live-search="true" id="activo_select" onchange="insert_valor_responsable_combo_itkv()">
+    <select class="form-control selectpicker"data-live-search="true" id="activo">
         <%  while (rs2.next()) {%>
         <option value="<%=rs2.getString("PrcCODE")%>" desc="<%=rs2.getString("PrcName")%>" >
             <%=rs2.getString("PrcName")%>
         </option>    
         <% }%>
-        <option value="OTROS">OTROS</option>    
     </select> 
-    <input type="text" class="form-control "  code="AC-0000" value="ACTIVO GENÉRICO"    placeholder="INGRESE NOMBRE" required id="activo" style="display: none">
-      
-      
     <div  style="display: none">    <strong><a>Ubicacion</a></strong>
     <select class="form-control selectpicker " data-live-search="true" id="ubicacion">
         <%  while (rs3.next()) 
@@ -103,7 +98,7 @@
         <% }%>
     </select> 
 
-</div>
+
     <strong ><a>Rubro</a></strong>
     <select class="form-control" id="rubro">
         <%  while (rs4.next()) {%>
@@ -117,7 +112,7 @@
         <option value="<%=rs5.getString("PrcCODE")%>" desc="<%=rs5.getString("PrcName")%>"><%=rs5.getString("PrcName")%></option>    
         <% }%>
     </select> 
-
+</div>
 
 
     <strong ><a>Km/Ho</a></strong>
@@ -139,7 +134,7 @@
     <strong ><a>Litros final</a></strong>
     <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros final"  value="0" required id="lt_fin" onchange="calcular_litros_itkv()">
     <strong ><a>Litros cargados</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros cargados" readonly="true" required id="lt_total">
+    <input type="number" class="form-control" placeholder="Ingrese litros cargados" readonly="true" required id="lt_total">
 
 
     <div class="modal-footer align-right " >

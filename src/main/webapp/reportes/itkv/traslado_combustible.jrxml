@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="450" pageHeight="842" columnWidth="410" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="85ae2ad7-caf9-42b8-956f-53d742c75cd5">
-	<property name="ireport.zoom" value="1.0000000000000104"/>
+	<property name="ireport.zoom" value="1.2100000000000128"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
@@ -32,8 +32,11 @@
 	<field name="estado" class="java.lang.String"/>
 	<field name="id_tipo_combustible" class="java.lang.String"/>
 	<field name="desc_tipo_combustible" class="java.lang.String"/>
+	<field name="tipo_registro" class="java.lang.String"/>
+	<field name="id_boca_destino" class="java.lang.String"/>
+	<field name="desc_boca_destino" class="java.lang.String"/>
 	<title>
-		<band height="249" splitType="Stretch">
+		<band height="212" splitType="Stretch">
 			<line>
 				<reportElement x="0" y="1" width="409" height="1" uuid="ab597f7d-e898-42a7-b027-01674d250f8f"/>
 			</line>
@@ -51,7 +54,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[BOLETA DE RETIRO]]></text>
+				<text><![CDATA[BOLETA DE TRASLADO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="77" width="86" height="33" uuid="b1201556-6ea7-40b1-a62f-5e8c9f3503dd"/>
@@ -66,20 +69,6 @@
 					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Responsable:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="147" width="69" height="31" uuid="0ef910c4-732e-4614-bd7b-6513c08d01d5"/>
-				<textElement>
-					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Activo:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="216" width="145" height="31" uuid="43078324-c350-49c2-8320-e8773ed9649e"/>
-				<textElement>
-					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Ultima lectura:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="41" width="142" height="33" uuid="1ef719af-3900-4b6b-82e0-6176242c83a7"/>
@@ -109,33 +98,33 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{responsable}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="71" y="147" width="339" height="31" uuid="33f079fc-fd89-4ca3-8400-c30bbd5954c4"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="20" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{desc_activo}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="145" y="216" width="264" height="31" uuid="fde07381-3d2d-4a90-bb7b-b13331406486"/>
-				<textElement>
-					<font fontName="Times New Roman" size="22" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{km_ho}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="2" y="185" width="172" height="31" uuid="ee1dbe48-7fd7-46f4-b3e8-e33482ca6ef1"/>
+				<reportElement x="2" y="150" width="178" height="31" uuid="ee1dbe48-7fd7-46f4-b3e8-e33482ca6ef1"/>
 				<textElement>
 					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Tipo combustible:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="175" y="185" width="237" height="31" uuid="0c7a7ec4-a346-422a-bebe-010088ecb9f2"/>
+				<reportElement x="175" y="150" width="237" height="31" uuid="0c7a7ec4-a346-422a-bebe-010088ecb9f2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{desc_tipo_combustible}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="181" width="137" height="31" uuid="24fc6638-41a8-41f8-8641-c43b4b31d1c4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Boca destino:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="143" y="181" width="262" height="31" uuid="114b7f06-563f-404e-8b85-54c2de017d75"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desc_boca_destino}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -146,7 +135,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="22" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Boca]]></text>
+				<text><![CDATA[Boca origen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="251" y="26" width="76" height="26" uuid="d96a724b-74f3-4631-a3bd-088a4eaecda3"/>

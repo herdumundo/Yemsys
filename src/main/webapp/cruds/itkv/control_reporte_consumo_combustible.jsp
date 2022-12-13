@@ -13,7 +13,8 @@
     {
         if(sesion==true) //VARIABLE DENTRO DE CHEQUEARSESION.JSP
         {
-            File reportfile = new File(application.getRealPath("reportes/itkv/salida_combustible.jasper"));
+            String archivo = request.getParameter("archivo");
+            File reportfile = new File(application.getRealPath("reportes/itkv/"+archivo+".jasper"));
 
             Map<String, Object> parameter = new HashMap<String, Object>();
             String id = request.getParameter("id");

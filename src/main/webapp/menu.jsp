@@ -35,9 +35,8 @@
         <link href="plugins/lib/themes/default.date.css" rel="stylesheet" id="theme_date" />
        
         <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
+         <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
  
-        <link href="css/hover_datatable.css" rel="stylesheet" type="text/css"/>
          <link rel="stylesheet" type="text/css" href="plugins/autoFill.bootstrap4.min.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/buttons.bootstrap4.css"/>
         <link rel="stylesheet" type="text/css" href="plugins/colReorder.bootstrap4.css"/>
@@ -71,7 +70,8 @@
         
         <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-
+         <link href="plugins/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                         
                          
                          
                          
@@ -427,12 +427,14 @@
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
             <script src="js/itkv/itkv_funciones.js" type="text/javascript"></script>
-            
+            <script src="plugins/autoNumeric.js" type="text/javascript"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+            
+ 
+ 
         
     </body>
 </html> 
