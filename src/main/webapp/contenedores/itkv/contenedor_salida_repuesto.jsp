@@ -33,7 +33,7 @@
         rs6 = ps6.executeQuery();
  
 
-        ps7 = connection.prepareStatement(" SELECT T0.[WhsCode], T0.[WhsName] FROM A0_ITKV.dbo.OWHS T0 WHERE T0.[WhsCode]  like 'TAN%%'OR  T0.[WhsCode]  = 'DEP_GEN'OR  T0.[WhsCode]  = 'DEP_TAL' ");// ACTIVIDAD
+        ps7 = connection.prepareStatement(" SELECT ItemCode , ItemName  , ItmsGrpCod , ItmsGrpNam	 , OnHand , InvntryUom  FROM  itkv_repuestos    ");// ACTIVIDAD
         rs7 = ps7.executeQuery();
   
     
@@ -52,11 +52,11 @@
                 ITKV
             </div>
         </div>
-        <center><b>REGISTRO DE CONSUMO DE COMBUSTIBLE</b></center>
+        <center><b>REGISTRO DE SALIDA DE REPUESTOS</b></center>
     </div>
 </div> 
 
-<form id="form_add_consumo" method="post" class="  bg-black"  >
+<form id="form_add_consumo" method="post" >
 
 
     <br>
@@ -71,15 +71,7 @@
     </select>
      <input type="text" class="form-control " placeholder="INGRESE NOMBRE" value=""   id="retirado_por" style="display: none">
         
-     <strong ><a>Tipo combustible</a></strong>
-    <select class="form-control"    id="tipo_combus">
-       
-        <option value="COMB-0014" desc="Gasoil comun" >
-            Gasoil comun
-        </option>    
-      
-    </select>    
-        
+   
         
     <strong ><a>Activo</a></strong>
     <select class="form-control selectpicker"data-live-search="true" id="activo_select" onchange="insert_valor_responsable_combo_itkv()">
@@ -93,17 +85,7 @@
     <input type="text" class="form-control "  code="AC-0000" value="ACTIVO GENÉRICO"    placeholder="INGRESE NOMBRE" required id="activo" style="display: none">
       
       
-    <div  style="display: none">    <strong><a>Ubicacion</a></strong>
-    <select class="form-control selectpicker " data-live-search="true" id="ubicacion">
-        <%  while (rs3.next()) 
-        {%>
-        <option value="<%=rs3.getString("PrcCODE")%>" desc="<%=rs3.getString("PrcName")%>" > 
-            <%=rs3.getString("PrcName")%>
-        </option>    
-        <% }%>
-    </select> 
-
-</div>
+ 
     <strong ><a>Rubro</a></strong>
     <select class="form-control" id="rubro">
         <%  while (rs4.next()) {%>
@@ -117,33 +99,47 @@
         <option value="<%=rs5.getString("PrcCODE")%>" desc="<%=rs5.getString("PrcName")%>"><%=rs5.getString("PrcName")%></option>    
         <% }%>
     </select> 
+    
+    
+    
+  
 
-
-
-    <strong ><a>Km/Ho</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese Km/Ho" required id="km_ho">
-    <br>
-    <br>
-    <br>
-    <strong ><a>Boca de expendio</a></strong>
-    <select class="form-control" id="boca">
-        <%  while (rs6.next()) 
-        {%>
-        <option value="<%=rs6.getString("WhsCode")%>" desc="<%=rs6.getString("WhsName")%>" > 
-            <%=rs6.getString("WhsName")%>
-        </option>    
+    
+    <table   class="table table-striped table-bordered"  >
+            <thead>
+                <tr>
+                    <th >  <strong ><a>Item</a></strong>
+    <select class="form-control selectpicker" data-live-search="true"  id="item">
+        <%  while (rs7.next()) {%>
+        <option value="<%=rs7.getString("itemcode")%>" desc="<%=rs7.getString("itemname")%>"><%=rs7.getString("itemname")%></option>    
         <% }%>
-    </select>                   
-    <strong ><a>Litros inicio</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros inicio" value="0" required id="lt_inicio" onchange="calcular_litros_itkv()">
-    <strong ><a>Litros final</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros final"  value="0" required id="lt_fin" onchange="calcular_litros_itkv()">
-    <strong ><a>Litros cargados</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros cargados" readonly="true" required id="lt_total">
+    </select></th>
+    <th><input type="number"  class=" form-control"  id="cantidad" placeholder="Ingrese cantidad"></th>
+    <th> <input type="button" value="Agregar item" class=" form-control  bg-navy" onclick="cargar_grilla_salida_repuesto();"></th>
+                  </tr>
+            </thead>
+            
+        </table>    
+    
+    
+    
+    
+<table id="tabla" class="table-striped table-bordered"  style='width:100%' >
+            <thead>
+                <tr>
+                    <th >CODIGO</th>
+                    <th>ARTICULO</th>
+                    <th>CANTIDAD</th>
+                    <th>ACCION</th>
+                 </tr>
+            </thead>
+            <tbody id="tbody_tabla">
 
+            </tbody>
+        </table>    
 
     <div class="modal-footer align-right " >
-        <input  class="btn bg-white"  type="submit"   value="REGISTRAR" >
+        <input  class="btn bg-danger"  type="submit"   value="REGISTRAR" >
          
  
 
