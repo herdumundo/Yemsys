@@ -1,4 +1,4 @@
-+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="clases.controles"%>
 <%@page import="clases.variables"%>
 <%@page import="org.json.JSONArray"%>

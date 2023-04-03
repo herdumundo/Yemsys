@@ -12,12 +12,13 @@
 
 <%    String version = contenedores_bal_solicitudad_cambio_formula;
         String version_desc = desc_contenedores_bal_solicitudad_cambio_formula;
+        String pdf = pdf_bal_solicitudad_cambio_formula;
 
     
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
-        ps = connection.prepareStatement(" SELECT  * FROM maehara.dbo.OITM  with (nolock) WHERE  ItmsGrpCod='106' /* AND OnHand>0*/ ");
+        ps = connection.prepareStatement(" SELECT  * FROM maehara.dbo.OITM  with (nolock) WHERE  ItmsGrpCod='106' AND OnHand>0");
         rs = ps.executeQuery();
         ps2 = connection.prepareStatement("select * from aviarios ");
         rs2 = ps2.executeQuery();
@@ -26,7 +27,7 @@
 <head>   
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>','<%=pdf%>',true)">
     <label ><%=version%></label> 
 </div>
 </head><!-- comment -->
@@ -99,9 +100,9 @@
                 <td><label>Observacion</label>
                     <textarea id="observacion"class="form-control" rows="3"></textarea></td>
 
-                <td><label>Indicadores de evaluaci&oacute;n</label><input type="text" id="indicadores" class="form-control is-invalid" required placeholder="Ingrese indicador de evaluaci&oacute;n"></td>
-                <td ><label>Plazo de evaluaci&oacute;n</label>
-                    <input type="text"  id="plazo_evaluacion" class="form-control datepicker"  placeholder="Ingrese plazo de evaluaci&oacute;n">
+                <td><label>Indicadores de evaluación</label><input type="text" id="indicadores" class="form-control is-invalid" required placeholder="Ingrese indicador de evaluación"></td>
+                <td ><label>Plazo de evaluación</label>
+                    <input type="text"  id="plazo_evaluacion" class="form-control datepicker"  placeholder="Ingrese plazo de evaluación">
                 </td>
                 <td ><label>Caracter urgente</label><br>
 
@@ -136,7 +137,7 @@
 
                     <div class="card card-dark " >
                         <div class="card-header">
-                            <strong><a>INSUMOS DE FORMULACI&Oacute;N </a></strong>
+                            <strong><a>INSUMOS DE FORMULACIÓN </a></strong>
                         </div>
 
                         <strong><a>Total</a></strong>
@@ -145,9 +146,10 @@
                         <label  id="total_insumos_faltantes" ></label>
 
                         <div id="div_grilla">
-
+                        
                         </div>
-
+                         <div id="div_nutrientes"></div>
+                    
                     </div>
 
 

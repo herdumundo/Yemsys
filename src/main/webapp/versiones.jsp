@@ -138,8 +138,9 @@
 
     String grillas_ptc_grilla_pendiente_liberacion = "0068-REP-15032022-A";
 
-    String contenedores_ptc_informe_kpi_dinamico = "0105-PAN-30092022-A";
-    String DESC_contenedores_ptc_informe_kpi_dinamico = "&0105-PAN-30092022-A: SE AGREGÓ OPCION, PARA OBTENER LOS INDICADORES DETALLADOS POR PTC, SUBPRODUCTOS Y REPROCESOS, CON DESCARGAS EN EXCEL DE LOS DETALLES DIARIOS.";
+    String contenedores_ptc_informe_kpi_dinamico = "0110-PAN-30032023-A";
+    String DESC_contenedores_ptc_informe_kpi_dinamico = "&0105-PAN-30092022-A: SE AGREGÓ OPCION, PARA OBTENER LOS INDICADORES DETALLADOS POR PTC, SUBPRODUCTOS Y REPROCESOS, CON DESCARGAS EN EXCEL DE LOS DETALLES DIARIOS."
+                                                        +"&0110-PAN-30032023-A: SE AGREGARON LAS COLUMNAS DE: ERROR DE CODIFICACION, CEPILLADO Y SEGUNDO LAVADO CANTIDADES DE HUEVOS.";
     String pdf_contenedores_ptc_informe_kpi_dinamico = "Manual_CYO_KPI.pdf";
 
     String contenedores_ptc_stock_cyo = "0084-PAN-09052022-A";
@@ -166,8 +167,8 @@
     String contenedores_registro_necropsia = "0086-PAN-03042022-A";
     String desc_contenedores_registro_necropsia = " ";
 
-    String contenedores_bal_solicitudad_cambio_formula = "0092-PAN-09062022-A";
-    String desc_contenedores_bal_solicitudad_cambio_formula = " ";
+    String contenedores_bal_solicitudad_cambio_formula = "0109-PAN-09062022-A";
+    String desc_contenedores_bal_solicitudad_cambio_formula = "&0109-PAN-30032023-A: SE AGREGARON LA CLONACION DE LA CABECERA DEL PEDIDO.  CAMBIO REALIZABLE A PARTIR DE LA FECHA  EN FORMATO CALENDARIO.  LA SELECCIÓN MULTIPLES DE AVIARIOS.  CAMPO DE OBSERVACION.   INSERCION DE NUTRIENTES PARA LA SOLICITUD.";
     String pdf_bal_solicitudad_cambio_formula = "Manual_gerenerar_pedido_bal.pdf";
 
 
@@ -209,6 +210,12 @@
     String contenedores_vimar_facturacionElectronica = "0107-PAN-30032023-A";
     String desc_contenedores_vimar_facturacionElectronica = " ";
     String pdf_contenedores_vimar_facturacionElectronica = "";
+    
+
+
+    String contenedores_balMaeharaMateriaPrimaSAP = "0108-PAN-30032023-A";
+    String desc_balMaeharaMateriaPrimaSAP = " ";
+    String pdf_balMaeharaMateriaPrimaSAP = "";
     
 
 %>

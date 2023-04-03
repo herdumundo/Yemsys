@@ -16,10 +16,14 @@
         Statement st = connection.createStatement();
         rs_GM = st.executeQuery( 
          "      select "
-        +"          ItemCode as Code,ItemName,AvgPrice,ItmsGrpCod from maehara.dbo.OITM	     "
+        +"         t1.ItemCode as Code,t1.ItemName,AvgPrice,ItmsGrpCod   "
+        + "     from v_mae_bal_mtp_estados t1 inner join mae_bal_mtp t2 on t1.itemcode collate database_default=t2.itemcode	and t2.estado='a' 	     "
+      
+        
+        
         +"      WHERE   " 
-	+"	ItemCode like '%MATP%' and "
-	+"	ItemCode not in "
+	+"	t1.ItemCode like '%MATP%' and "
+	+"	t1.ItemCode not in "
         +"      (   "
         +"		select  "
 	+"			A.Code   "
@@ -33,7 +37,7 @@
         +"                  descripcion collate database_default "
         +"              from "
         +"                  mae_bal_mtp_bloqueados  with (nolock) "  
-	+"	) order by itemname ");
+	+"	) order by t1.itemname ");
 
         while (rs_GM.next()) 
         {
