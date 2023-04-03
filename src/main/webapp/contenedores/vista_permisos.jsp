@@ -9,10 +9,16 @@
 <%@include  file="../versiones.jsp" %>
 <%@include  file="../chequearsesion.jsp" %>
 <%@include  file="../cruds/conexion.jsp" %> 
-<%
-    String version =  contenedores_vista_permisos;
+<%    String version = contenedores_vista_permisos;
+    String rol = (String) sesionOk.getAttribute("rol");
+    String sector = (String) sesionOk.getAttribute("sector");
+    String queryRol = "select * from mae_yemsys_roles";
+    if (rol.equals("U")) {
+        queryRol = "select * from mae_yemsys_roles WHERE area='" + sector + "'";
 
+    }
 %>
+
 <head>
 <label  ><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
@@ -20,18 +26,16 @@
     <label neme="label_contenido" id="label_contenido"><%=version%></label>  
 </div>
 </head>
-<%   
+<%
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
-    try 
-    {
-        ps = connection.prepareStatement("select * from mae_yemsys_roles ");
+    try {
+        ps = connection.prepareStatement(queryRol);
         rs = ps.executeQuery();
-        
+
 %>
 <div class="text-center">
     <form    id="form_add_permisos"  type="post" >
-
         <div > <button class="informe bg-navy" disabled="true" " >PERMISOS DE USUARIOS </button>  </div>
         <br>
         <center>
@@ -40,11 +44,10 @@
         <center>  <select  class="btn btn-sm  bg-navy "   name="data.select[c]" id="roles" required="true" onchange="obtener_permisos_habilitados_roles()" >
 
                 <option class="text-center" value="">Seleccione rol</option>
-                <%
-                    while (rs.next()) {
+                <%                    while (rs.next()) {
 
                 %><option class="text-center" value="<%=rs.getString("id")%>"><%=rs.getString("descripcion")%></option> <%
-                            }
+                    }
                 %>             
             </select>  </center><!-- comment -->
 
@@ -60,7 +63,8 @@
 
         </center>
 
-    </form></div>
+    </form>
+</div>
 
 
 <%

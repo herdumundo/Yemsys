@@ -64,7 +64,7 @@ function ir_agregar_motivo_retencion() {
                     cargar_toggles(),
                     cargar_estilo_calendario_insert("dd/mm/yyyy"),
                     inicializar_unidad_medida_PTC(),
-                    $("#grilla_lotes_liberacion").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}),
+                    $("#grilla_lotes_liberacion").DataTable({scrollX: true, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}),
                     cerrar_load();
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {

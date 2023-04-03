@@ -18,8 +18,10 @@
         String desc_rubro       = request.getParameter("desc_rubro");
         String id_actividad     = request.getParameter("id_actividad");
         String desc_actividad   = request.getParameter("desc_actividad");
-          
      
+        String id_ubicacion     = request.getParameter("id_ubicacion");
+        String desc_ubicacion   = request.getParameter("desc_ubicacion");
+          
 
         
         
@@ -44,7 +46,7 @@
              
 
                 CallableStatement callableStatement = null;
-                callableStatement = connection.prepareCall("{call [itkv_transferencias_insert] (?,?,?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{call [itkv_transferencias_insert] (?,?,?,?,?,?,?,?,?,?,?,?,?)}");
                 callableStatement.setString (1, responsable);
                 callableStatement.setInt    (2, Integer.parseInt(id_usuario));
                 callableStatement.setString (3, id_activo);
@@ -54,7 +56,8 @@
                 callableStatement.setString    (7, id_actividad);
                 callableStatement.setString (8, desc_actividad); 
                 callableStatement.setObject(9, DataTableGrilla); 
-                
+                callableStatement.setString (10, id_ubicacion); 
+                callableStatement.setString (11, desc_ubicacion); 
                 
                 callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
                 callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);

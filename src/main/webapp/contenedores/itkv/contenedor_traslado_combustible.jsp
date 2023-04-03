@@ -18,22 +18,30 @@
         rs = ps.executeQuery();
 
        
-        ps6 = connection.prepareStatement(" SELECT T0.[WhsCode], T0.[WhsName]                               FROM    OWHS T0 WHERE T0.[WhsCode]  like 'TAN%%'OR  T0.[WhsCode]  = 'DEP_GEN'OR  T0.[WhsCode]  = 'DEP_TAL' ");// ACTIVIDAD
+        ps6 = connection.prepareStatement(" SELECT T0.[WhsCode], T0.[WhsName]                               FROM    OWHS T0 WHERE T0.[WhsCode]  like 'TAN%%'OR  T0.[WhsCode]  = 'DEP_GEN'OR  T0.[WhsCode]  LIKE '%DEP_TAL%'  ");// ACTIVIDAD
         rs6 = ps6.executeQuery();
  
 
         ps7 = connection.prepareStatement(" SELECT T0.[WhsCode], T0.[WhsName]                               FROM    OWHS T0 WHERE T0.[WhsCode]  like 'TAN%%'OR  T0.[WhsCode]  = 'DEP_GEN'OR  T0.[WhsCode]  = 'DEP_TAL'  ");// ACTIVIDAD
         rs7 = ps7.executeQuery();
   
-    
+        ps2 = connection.prepareStatement("select max(lt_fin) as fin from itkv_salida1 WHERE ID_boca='DEP_TAL' ");// ACTIVIDAD
+        rs2 = ps2.executeQuery();
+  
+        String lt_fin="";
+        
+        while (rs2.next()){
+            lt_fin= rs2.getString("fin") ;
+        }
 %>
 <style>
     tr:hover {color:#ffffff ; background-color: #001940;}
 </style>
 <head>   
 <label  ><b></b></label> 
-
-</head><!-- comment -->
+<div class="float-right d-none d-sm-inline-block" >
+      <a href="manuales/Traslado_combustible.pdf" target="_blank">Manual de usuario</a>
+</div></head><!-- comment -->
 <div class="col-lg-20 ">
     <div class="position-relative p-3 bg-navy"  >
         <div class="ribbon-wrapper">
@@ -71,7 +79,7 @@
       </div>  
      
     <strong ><a>Boca de expendio origen</a></strong>
-    <select class="form-control" id="boca">
+    <select class="form-control" id="boca" onchange="get_ultimo_litro_boca_combustible_itkv()">
         <%  while (rs6.next()) 
         {%>
         <option value="<%=rs6.getString("WhsCode")%>" desc="<%=rs6.getString("WhsName")%>" > 
@@ -80,7 +88,7 @@
         <% }%>
     </select>                   
     <strong ><a>Litros inicio</a></strong>
-    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros inicio" value="0" required id="lt_inicio" onchange="calcular_litros_itkv()">
+    <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros inicio" value="<%=lt_fin%>" required id="lt_inicio" onchange="calcular_litros_itkv()">
     <strong ><a>Litros final</a></strong>
     <input type="text" class="form-control autoNumeric" placeholder="Ingrese litros final"  value="0" required id="lt_fin" onchange="calcular_litros_itkv()">
     <strong ><a>Litros cargados</a></strong>

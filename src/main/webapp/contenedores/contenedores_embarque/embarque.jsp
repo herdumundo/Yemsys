@@ -3,34 +3,32 @@
     Created on : 03/03/2020, 07:43:47 AM
     Author     : hvelazquez
 --%>
- 
- <%@include  file="../../versiones.jsp" %>
- <%@include  file="../../cruds/conexion.jsp" %>
+<%@include  file="../../versiones.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-
 <%
-     PreparedStatement ps, ps2,ps3;
-     ResultSet rs, rs_chofer, rs_camion;
+    PreparedStatement ps, ps2, ps3;
+    ResultSet rs, rs_chofer, rs_camion;
     String fecha_actual = "";
     String hora_inicio = "";
-    try {
-        ps = connection.prepareStatement ( " select convert(varchar,getdate(),103) as fecha , GETDATE()  as hora ");
+    try 
+    {
+        ps = connection.prepareStatement(" select convert(varchar,getdate(),103) as fecha , GETDATE()  as hora ");
         rs = ps.executeQuery();
 
-        ps2 = connection.prepareStatement ("  select code,name from " + clases.variables.BD2 + ".dbo.[@CHOFERES] with(nolock) order by 2 ");
-        rs_chofer= ps2.executeQuery();
-        
-         ps3 = connection.prepareStatement ("select code,name from " + clases.variables.BD2 + ".dbo.[@CAMIONES] ");
-         rs_camion= ps3.executeQuery();
-        
-        while (rs.next()) {
+        ps2 = connection.prepareStatement("  select code,name from " + clases.variables.BD2 + ".dbo.[@CHOFERES] with(nolock) order by 2 ");
+        rs_chofer = ps2.executeQuery();
+
+        ps3 = connection.prepareStatement("select code,name from " + clases.variables.BD2 + ".dbo.[@CAMIONES] ");
+        rs_camion = ps3.executeQuery();
+
+        while (rs.next()) 
+        {
             fecha_actual = rs.getString("fecha");
             hora_inicio = rs.getString("hora");
         }
         rs.close();
-
-        String version =  contenedores_embarque_contenedor_reporte_embarque;
+        String version = contenedores_embarque_contenedor_reporte_embarque;
 %>
 <head>   
 <label  ><b></b></label> 
@@ -44,21 +42,14 @@
 <form method="post"   id="formulario_embarque" name="formulario_embarque">
     <div class="form-group">
         <div class="input-group">
-
-
             <input type="text" id="hora_inicio" value="<%=hora_inicio%>" style="display:none" />
-
-
-
             FECHA EMBARQUE:      
 
             <input  style=" font-weight: bold"class="datepicker" value="<%=fecha_actual%>" type="text" id="calendario_embarque" name="calendario_embarque">              
             <select style=" font-weight: bold" class="form-control" name="cbox_chofer" id="cbox_chofer">
                 <option style=" font-weight: bold" value="-" selected="selected" >  CHOFER </option>
                 <%
-
                     while (rs_chofer.next()) {
-
                 %>
                 <OPTION VALUE="<%=rs_chofer.getString("code")%>"> <%=rs_chofer.getString("name")%> </OPTION><%
                     }
@@ -72,7 +63,7 @@
                     while (rs_camion.next()) {
 
                 %><OPTION VALUE="<%=rs_camion.getString("code")%>"><%=rs_camion.getString("code")%>- <%=rs_camion.getString("name")%> </OPTION><%
-                 }
+                    }
 
                     %>
 
@@ -111,18 +102,19 @@
         <input type="text" placeholder="total_a" name="total_a" id="total_a" class="form-control "  style="display:none"  />
         <input type="text" placeholder="total_b" name="total_b" id="total_b" class="form-control"   style="display:none"/>
         <input type="text" placeholder="total_c" name="total_c" id="total_c" class="form-control"   style="display:none" />
-        <input type="text" placeholder="total_d" name="to tal_d" id="total_d" class="form-control"  style="display:none" />
+        <input type="text" placeholder="total_d" name="total_d" id="total_d" class="form-control"  style="display:none" />
         <input type="text" placeholder="total_s" name="total_s" id="total_s" class="form-control"   style="display:none"/>
         <input type="text" placeholder="total_j" name="total_j" id="total_j" class="form-control"   style="display:none" />
         <input type="text" placeholder="total_g" name="total_g" id="total_g" class="form-control"   style="display:none"  />
         <!-- CAMPOS PARA OBTENER EL TOTAL PENDIENTES DE CADA TIPO DE HUEVO EN LA FACTURA INGRESADA !-->
-        <input type="hidden" placeholder="total_factura_carros" name="total_factura_carros" id="total_factura_carros" class="form-control"   />
+        <input type="hidden"    placeholder="total_factura_carros" name="total_factura_carros" id="total_factura_carros" class="form-control"   />
         <!-- SE RECUPERA EL TOTAL EN CARROS DE LA FACTURA !-->
-        <input type="text" placeholder="total_carros_grilla" name="total_carros_grilla" id="total_carros_grilla" class="form-control" style="display:none"   />
+        <input type="text"      placeholder="total_carros_grilla" name="total_carros_grilla" id="total_carros_grilla" class="form-control" style="display:none"   />
         <!-- SE RECUPERA EL TOTAL EN CARROS  DE LA GRILLA !-->
-        <input type="text" placeholder="tipo_grilla" name="tipo_grilla" id="tipo_grilla" class="form-control" style="display:none" />
+        <input type="text"      placeholder="tipo_grilla" name="tipo_grilla" id="tipo_grilla" class="form-control" style="display:none" />
         <!-- SE RECUPERA LOS TIPOS DE HUEVOS QUE HAY EN LA GRILLA, EJEMPLO: 1,2,3,4 !-->
-        <input type="text" placeholder="resultado" name="resultado" id="resultado" class="form-control"   style="display:none"   />
+        <input type="text"      placeholder="resultado" name="resultado" id="resultado" class="form-control"   style="display:none"   />
+        
         <a style=" font-weight: bold" >TOTAL CARROS</a>
         <input type="text" style=" display:none"   name="total_cajones" id="total_cajones" value="0"   class="form-control" readonly />
         <input type="text" style=" font-weight: bold"   name="total_carros" id="total_carros" value="0"   class="form-control" readonly />
@@ -216,7 +208,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-         </div>
+        </div>
         <div id="div_carros_duplicados"></div>     
         <table id="myTable" class="table table-striped table-bordered"  >
             <thead>

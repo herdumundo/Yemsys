@@ -12,13 +12,26 @@
     JSONObject ob = new JSONObject();
     try 
     {
+        String  rol = (String) sesionOk.getAttribute("rol");
+        String  sector = (String) sesionOk.getAttribute("sector");
         String html = "";
         ResultSet rs2, rs3;
         Statement stmt1 = connection.createStatement();
         Statement stmt2 = connection.createStatement();
+        String queryModulo="select * from mae_yemsys_modulos where id_estado=1 order by orden asc ";
+        String queryDetalleModulo=" select * from  mae_yemsys_det_modulos where  ";
+        
+         if (rol.equals("U")) {
+            queryModulo = "select * from mae_yemsys_modulos where id_estado=1 AND ID IN (select DISTINCT id_modulos from mae_yemsys_det_modulos  WHERE  SECTOR='"+sector+"') ";
+            queryDetalleModulo = queryDetalleModulo+ "  sector ='"+sector+"' and  ";
+         }
+        
+        rs2 = stmt1.executeQuery(queryModulo);// 1 ES IGUAL A ACTIVO.
 
-        rs2 = stmt1.executeQuery("select * from mae_yemsys_modulos where id_estado=1 order by orden asc ");// 1 ES IGUAL A ACTIVO.
-
+        
+        
+        
+        
         String group = "";
         String option = "";
         String select = "";
@@ -29,7 +42,7 @@
             option = "";
             group = group + "<optgroup  id='" + rs2.getString("id") + "' label='" + rs2.getString("descripcion") + "'>";// EL FINAL DEL UL Y EL LI VAN ABAJO, LUEGO DE CARGAR EL SUBMENU
 
-            rs3 = stmt2.executeQuery("  select * from  mae_yemsys_det_modulos where    id_modulos=" + rs2.getString("id") + "");
+            rs3 = stmt2.executeQuery(queryDetalleModulo+"    id_modulos=" + rs2.getString("id") + "");
 
             while (rs3.next()) {
                 option = option + "<option  class='text-center  ' value='" + rs3.getString("id") + "'>" + rs3.getString("descripcion") + "</option>";

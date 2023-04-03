@@ -4,14 +4,24 @@
     Author     : hvelazquez
 --%>
 
+<%@page import="org.apache.http.client.entity.UrlEncodedFormEntity"%>
+<%@page import="org.apache.http.client.methods.HttpPost"%>
+<%@page import="org.apache.http.message.BasicNameValuePair"%>
+<%@page import="org.apache.http.NameValuePair"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.apache.http.util.EntityUtils"%>
+<%@page import="org.apache.http.HttpResponse"%>
+<%@page import="org.apache.http.impl.client.HttpClientBuilder"%>
+<%@page import="org.apache.http.client.methods.HttpGet"%>
+<%@page import="org.apache.http.client.HttpClient"%>
 <%@page import="java.math.BigInteger"%>
 <%@page import="java.security.MessageDigest"%>
 <%@include file="../cruds/conexion.jsp" %>
 <%@page session="true" %>
-<%    
-    String usu = request.getParameter("usuario");
+<%    String usu = request.getParameter("usuario");
     String cla = request.getParameter("pass");
-    
+
     String area = "";
     String area_form = "";
     String user_name = "";
@@ -20,7 +30,9 @@
     String cod_usuario = "";
     int tipo_respuesta = 0;
     String id_rol = "";
-  
+    String rol = "";
+    String sector = "";
+
     MessageDigest m = MessageDigest.getInstance("MD5");
     m.reset();
     m.update(cla.getBytes());
@@ -28,35 +40,61 @@
     BigInteger bigInt = new BigInteger(1, digest);
     String clavehASH = bigInt.toString(16);
 
+    String responseString = "";
+    String Token="";
+   
+        
     try {
+        /*
+  ///////////VALIDACION CON TOKEN POR NODE.JS        
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost httpget = new HttpPost("http://localhost:8000/login");
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        
+        params.add(new BasicNameValuePair("username", usu));
+        params.add(new BasicNameValuePair("password", cla));
+        
+        httpget.setEntity(new UrlEncodedFormEntity(params));
+        
+        HttpResponse responses = httpClient.execute(httpget);
+        responseString = EntityUtils.toString(responses.getEntity());
+        JSONObject jsonObj = new JSONObject(responseString);
+        Token = jsonObj.getString("token");
+        
+        */
+        
+        
+        
+//////////////////////////////////////////////////////////////////////////////////////////////
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call stp_mae_yemsys_login(?,?,?,?,?,?,?,?)}");
         callableStatement.setString(1, usu);
         callableStatement.setString(2, clavehASH);
-        callableStatement.registerOutParameter("nombre", java.sql.Types.VARCHAR);
-        callableStatement.registerOutParameter("cod_usuario", java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("nombre",        java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("cod_usuario",   java.sql.Types.VARCHAR);
         callableStatement.registerOutParameter("clasificadora", java.sql.Types.VARCHAR);
-        callableStatement.registerOutParameter("tipo", java.sql.Types.INTEGER);
-        callableStatement.registerOutParameter("id_rol", java.sql.Types.VARCHAR);
-        callableStatement.registerOutParameter("username", java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("tipo",          java.sql.Types.INTEGER);
+        callableStatement.registerOutParameter("id_rol",        java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("username",      java.sql.Types.VARCHAR);
+      //  callableStatement.registerOutParameter("rol",           java.sql.Types.VARCHAR);
+    //    callableStatement.registerOutParameter("sector",           java.sql.Types.VARCHAR);
 
         callableStatement.execute();
-        tipo_respuesta  = callableStatement.getInt("tipo");
-        user_name       = callableStatement.getString("username");
-        nombre_usu      = callableStatement.getString("nombre");
-        clasificadora   = callableStatement.getString("clasificadora");
-        cod_usuario     = callableStatement.getString("cod_usuario");
-        id_rol          = callableStatement.getString("id_rol");
+        tipo_respuesta      = callableStatement.getInt("tipo");
+        user_name           = callableStatement.getString("username");
+        nombre_usu          = callableStatement.getString("nombre");
+        clasificadora       = callableStatement.getString("clasificadora");
+        cod_usuario         = callableStatement.getString("cod_usuario");
+        id_rol              = callableStatement.getString("id_rol");
+        rol                 = callableStatement.getString("rol");
+        sector                 = callableStatement.getString("sector");
 
     } catch (Exception e) {
 
     } finally {
-        if (tipo_respuesta == 0) 
-        {
+        if (tipo_respuesta == 0) {
             response.sendRedirect("../login_error.jsp");
-        } 
-        else 
-        {
+        } else {
             String notificacion = "  <a class='nav-link  ' data-toggle='dropdown' href='#' aria-expanded='false'>  <i class='far fa-bell '></i>     <span class='badge badge-danger navbar-badge animacion' id='contador_notificacion'>0</span>    </a><div class='dropdown-menu dropdown-menu-lg dropdown-menu-right ' style='left: inherit; right: 0px;' id='notificacion'>   <span class='dropdown-item dropdown-header bg-navy'>Notificaciones</span>   </div>";
             HttpSession sesionOk = request.getSession();
             sesionOk.setAttribute("user_name", user_name);
@@ -64,6 +102,7 @@
             sesionOk.setAttribute("clasificadora", clasificadora);
             sesionOk.setAttribute("area_log", clasificadora);
             sesionOk.setAttribute("id_usuario", cod_usuario);
+            sesionOk.setAttribute("Token", Token);
             area = clasificadora;
 
             String area_fallas = "CCH";
@@ -102,8 +141,7 @@
                 area_fallas = "OVO";
                 categoria = "LDO";
                 area_nuevo = "LAVADOS";
-            }
-            else  {
+            } else {
                 notificacion = "";
             }
 
@@ -117,46 +155,12 @@
             sesionOk.setAttribute("area", area_form);
             sesionOk.setAttribute("area_nuevo", area_nuevo);
             sesionOk.setAttribute("id_rol", id_rol);
+            sesionOk.setAttribute("sector", sector);
+            sesionOk.setAttribute("rol", rol);
             response.sendRedirect("../menu.jsp");
         }
         connection.close();
-    }  
+    }
 
 
-    /*
-    Statement stmt;
-    
-    
-        stmt =connection.createStatement(); 
-        ResultSet rs = stmt.executeQuery("select * from usuarios where  password  is not null ");
-
-        while (rs.next()){
-            
-             MessageDigest m = MessageDigest.getInstance("MD5");
-        m.reset();
-        m.update(rs.getString("password").getBytes());
-        byte[] digest = m.digest();
-        BigInteger bigInt = new BigInteger(1, digest);
-        String clavehASH = bigInt.toString(16);
-    
-    try {
-        CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call stp_mae_yemsys_update_masivo_pass(?,?)}");
-        callableStatement.setString(1, rs.getString("cod_usuario"));
-        callableStatement.setString(2, clavehASH);
-
-        callableStatement.execute();
-       
-    } catch (Exception e) 
-    {
-       
-    }  
-        }
-     */
-   
-    
-    
-    
-    
-    
 %>

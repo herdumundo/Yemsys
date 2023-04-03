@@ -7,7 +7,8 @@
 <% 
      try {
 
-    String id_rol = (String) sesionOk.getAttribute("id_rol");
+    String  rol = (String) sesionOk.getAttribute("rol");
+    String  sector = (String) sesionOk.getAttribute("sector");
     String area = (String) sesionOk.getAttribute("clasificadora");
     String version = grilla_ppr_grilla_usuarios;
     String version_desc = "" ;
@@ -27,19 +28,21 @@
 <%  
 
  
-        String query = "select * from v_mae_yemsys_usuarios  where area in"
-                + " (select area from mae_yemsys_permisos_areas_usuarios where parent in (select parent from mae_yemsys_permisos_areas_usuarios where area='" + area + "') )";
-
-        if (id_rol.equals("16")) {
-            query = "select * from v_mae_yemsys_usuarios";
+        String  queryUsuarios = "    select * from v_mae_yemsys_usuarios    ";
+        String  queryRol="select * from mae_yemsys_roles";
+        String  queryAreas="select * from mae_yemsys_areas  ";
+        if (rol.equals("U")) {
+            queryUsuarios = "select * from v_mae_yemsys_usuarios  where sector ='"+sector+"' and rol='U' ";
+            queryRol = "select * from mae_yemsys_roles  where AREA ='"+sector+"'  ";
+            queryAreas="select * from mae_yemsys_areas WHERE sector='"+sector+"'";
         }
         st1=connection.createStatement();
         st2=connection.createStatement();
         st3=connection.createStatement();
         st4=connection.createStatement();
-        rs = st1.executeQuery(query);
-        rs2 = st2.executeQuery("select * from mae_yemsys_roles");
-        rs3 = st3.executeQuery("select * from mae_yemsys_areas");
+        rs = st1.executeQuery(queryUsuarios);
+        rs2 = st2.executeQuery(queryRol);
+        rs3 = st3.executeQuery(queryAreas);
         rs4 = st4.executeQuery("select * from tab_mae_ppr_estados where id in (1,2)");
  %>
 <body>
@@ -110,9 +113,7 @@
     </table>
 
 
-
-    <% if (id_rol.equals("16")) {
-    %>  
+ 
     <div class="modal fade" id="modal_upd_user" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -167,66 +168,7 @@
         </div>
     </div>
 
-    <%  } else {
-    %> 
-
-    <div class="modal fade" id="modal_upd_user" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-black">
-                    <h5 class="modal-title" id="exampleModalLabel">EDITAR USUARIO</h5>
-                    <button class="close" type="button"  class="position-relative p-3 bg-navy"  data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body bg-navy"   >  
-                    <form id="form_upd_user" action="POST"  style=" height: 400px">
-                        <input hidden="true" class="form-control text-left " type="text" style="width: 100%" disabled="true" id="txt_id"    name="txt_id">
-                        <br>
-                        <strong><a>NOMBRE</a></strong> 
-                        <input class="form-control text-left " readonly style="width: 100%" type="text"   id="txt_nombre"    name="txt_nombre"      required >
-                        <strong><a>USUARIO</a></strong>
-                        <input class="form-control text-left " readonly type="text"  style="width: 100%" id="txt_usuario"    name="txt_usuario" required >
-                        <strong><a>AREA</a></strong>
-
-                        <select class="form-control text-left " id="txt_clasificadora" name="txt_clasificadora" required   >
-                            <%
-                                while (rs3.next()) {
-                            %>
-                            <option  value="<%=rs3.getString("area")%>"><%=rs3.getString("descripcion")%></option>
-                            <%}%>
-                        </select>
-                        <div style="display: none">
-                            <strong><a>ROL</a></strong>
-                            <select class="form-control text-left " id="select_rol2" name="select_rol2" required  style="display: none" >
-                                <%
-                                    while (rs2.next()) {
-                                %>
-                                <option  value="<%=rs2.getString("id")%>"><%=rs2.getString("descripcion")%></option>
-                                <%}%>
-                            </select>
-                            <strong><a>ESTADO</a></strong>
-                            <select class="form-control text-left " id="select_estado" name="select_estado" required style="display: none" >
-                                <%
-                                    while (rs4.next()) {
-                                %>
-                                <option  value="<%=rs4.getString("id")%>"><%=rs4.getString("descripcion")%></option>
-                                <%}%>
-                            </select>
-                        </div>  
-                        <div class="modal-footer align-right">
-                            <input  class="btn bg-white"  type="button"  onclick="modificar_usuario_ppr()"  id="btn_apd_usuario" value="ACEPTAR" >
-                            <input  class="btn bg-white"  type="button"   data-dismiss="modal"   value="CANCELAR" >            
-                        </div>
-                    </form>   
-                </div>
-            </div>
-        </div>
-    </div>     
-
-
-
-    <%  }      %>     
+    
 
 
 

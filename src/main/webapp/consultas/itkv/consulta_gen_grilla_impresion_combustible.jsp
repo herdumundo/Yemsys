@@ -15,19 +15,20 @@
         Statement   st      = connection.createStatement(); 
         ResultSet   rs; 
         String tr="";
-        rs = st.executeQuery(" select * from itkv_salida1 where convert(date,fecha)='"+fecha+"' order by 1 desc  ");
+        rs = st.executeQuery(" select * from itkv_salida1 where TIPO_registro IN ('CONSUMO','TRANSFERENCIA') AND convert(date,fecha)='"+fecha+"' order by 1 desc  ");
         
          String   cabecera = " <table id='grilla' class=' table-bordered compact hover' style='width:100%'>"
                 + "<thead>"
                 + "<tr>"
                  + "   <th>Nro.                     </th>"
-                   + " <th>Fecha de registro        </th>"
-                   + " <th>Solicitud modificacion   </th>"
-                   + " <th>Formula</th>"
-                   + " <th>Recomendado por</th>"
-                   + " <th>Motivo</th>"
-                   + " <th>Usuario</th>"
+                   + " <th>Responsable        </th>"
+                   + " <th>Activo   </th>"
+                   + " <th>Km/Ho</th>"
+                   + " <th>Boca de expendio</th>"
+                   + " <th>Litros inicio</th>"
+                   + " <th>Litros fin</th>"
                    + " <th>Tipo documento</th>"
+                   + " <th>Ubicacion</th>"
                    + " <th></th>"
                 
                 + "</tr>"
@@ -58,6 +59,7 @@
             +"      <td>"+rs.getString("lt_inicio")     +"</td>" 
             +"      <td>"+rs.getString("lt_fin")        +"</td>" 
             +"      <td>"+rs.getString("tipo_registro")        +"</td>" 
+            +"      <td>"+rs.getString("ubicacion")        +"</td>" 
             +"  <td>"
             + " <div>"
             + " <form action=\"cruds/itkv/control_reporte_consumo_combustible.jsp\" target=\"blank\"><input type=\"submit\" value=\"Reporte\" class=\"form-control bg-"+color+"\"> <input type='hidden' value='"+archivo+"' name='archivo'> <input type=\"hidden\" id=\"id\" name=\"id\" value=\""+rs.getString("id")+"\"></form>  </td>"               

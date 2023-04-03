@@ -19,6 +19,9 @@
    // String user = "cch";
     String passwd = "Paraguay2017";
     String db = "GrupoMaehara";
+   //    String db = "zz_prueba_GrupoMaehara2";
+    
+    
     Connection connection=null;
  
         try 

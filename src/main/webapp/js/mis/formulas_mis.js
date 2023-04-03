@@ -8,10 +8,6 @@
     unidades=$('#txt_unidad').val();
     gramos=$('#txt_gramos').val();
     kg=$('#txt_kg').val();
-
-  
-        
-        
         if(planchas==""){   plancha_form="0";  } 
         else { plancha_form=planchas;}
         if(unidades==""){ unidades_form="0";   }

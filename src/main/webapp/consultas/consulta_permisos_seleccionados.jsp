@@ -21,8 +21,8 @@
            
     
     rs3 = st.executeQuery (" select * from mae_yemsys_permisos where id_rol="+id_rol+" and id_estado=1  ");
-   int c=0;
-        while(rs3.next())
+    int c=0;
+    while(rs3.next())
     {
         if(c==0){
             seleccionados=rs3.getString("id_modulos");
