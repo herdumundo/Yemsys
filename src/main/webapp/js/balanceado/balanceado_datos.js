@@ -176,7 +176,9 @@ function ir_grilla_formulacion_bal()
 {
      $.ajax({
         type: "POST",
-        data:({father:$('#select_formula').val()}),
+        data:({
+            father:          $('#select_formula').val()}),
+       
         url: ruta_consultas_bal + "consulta_gen_grilla_formulacion.jsp",
          beforeSend: function (xhr) {
             cargar_load("Cargando...");
@@ -185,6 +187,7 @@ function ir_grilla_formulacion_bal()
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
+            $("#div_grilla").html(data.grilla3);
             $("#tb_formulacion").DataTable({ 
                 "scrollX": true,
                 paging: false,
@@ -196,6 +199,7 @@ function ir_grilla_formulacion_bal()
                         },
                 
             });
+            ir_grilla_nutrientes_bal();
             sumar_cantidad_mtp_bal();
             var editables = document.querySelectorAll("[contentEditable]");
             for (var i = 0, len = editables.length; i < len; i++)
@@ -234,7 +238,35 @@ function ir_grilla_formulacion_bal()
     });
 
 }
+function ir_grilla_nutrientes_bal()
+{
+     $.ajax({
+        type: "POST",
+        data:({
+                             
+            cod_formula:            $('#select_formula').val()}),
+        
+        url: ruta_consultas_bal + "consulta_gen_grilla_nutrientes.jsp",
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#div_nutrientes").html("");
+            $("#div_nutrientes").html(data.grilla);
+solo_numeros_td()
+         
+        
+       
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    });
 
+}
 
 
  function sumar_cantidad_mtp_bal()
@@ -410,12 +442,12 @@ function onblur_nueva_mtp_bal(id)
 
 
 function validar_datos_mtp_sol(){
-    var cantidad_validada=$("#total_insumos").html();
-    var resultado_esperado=$("#resultado_esperado").val();
-    var impacto=$("#impacto").val();
-    var plazo_evaluacion=$("#plazo_evaluacion").val();
-    var indicadores=$("#indicadores").val();
-    var urgente=$("#checkUrgente").attr("URGENTE");
+    var cantidad_validada=      $("#total_insumos").html();
+    var resultado_esperado=     $("#resultado_esperado").val();
+    var impacto=                $("#impacto").val();
+    var plazo_evaluacion=       $("#plazo_evaluacion").val();
+    var indicadores=            $("#indicadores").val();
+    var urgente=                $("#checkUrgente").attr("URGENTE");
    
     
      
@@ -424,6 +456,9 @@ function validar_datos_mtp_sol(){
     if(cantidad_validada=="1000.000")
     {
         var grilla          =   document.querySelectorAll("[grilla]");
+        
+        var grillaNutriente =  document.querySelectorAll("#grillaNutriente tr");
+
         var fecha_solicitud =   $("#fecha_solicitud").val();
         var toneladas       =   $("#toneladas").val();
         var recomendado     =   $("#recomendado").val();
@@ -451,7 +486,28 @@ function validar_datos_mtp_sol(){
                 jsonObj.push(item);
 
         }
+        
         var json_string = JSON.stringify(jsonObj);
+        
+        
+        
+        
+            jsonNutriente = [];
+        for (var i = 1, len = grillaNutriente.length; i < len; i++)
+        {
+                itemNutriente = {}
+                itemNutriente ["id"]            =  grillaNutriente[i].cells[0].innerHTML.toString().trim();
+                itemNutriente ["descripcion"]   =  grillaNutriente[i].cells[1].innerHTML;
+                itemNutriente ["actual"]        =  grillaNutriente[i].cells[2].innerHTML.toString().trim();
+                itemNutriente ["nuevo"]         =  grillaNutriente[i].cells[3].innerHTML; 
+                jsonNutriente.push(itemNutriente);
+
+        }
+        
+        var json_Nutriente = JSON.stringify(jsonNutriente);
+        
+        
+        
 
                 Swal.fire({
                           title: 'FORMULA ',
@@ -469,14 +525,21 @@ function validar_datos_mtp_sol(){
                                   type: "POST",
                                   url: ruta_cruds_bal + 'control_registro_solicitud_mtp_bal.jsp',
                                   data: ({
-                                      json_string: json_string,fecha_solicitud:fecha_solicitud,
-                                      recomendado:recomendado,motivo:motivo,
-                                      desc_formula:desc_formula,toneladas:toneladas,cod_formula:$("#select_formula").val(),
-                                      resultado_esperado:resultado_esperado,impacto:impacto,
-                                      plazo_evaluacion:plazo_evaluacion,indicadores:indicadores,
-                                      observacion:observacion,
-                                      aviario:valores.join(','),
-                                      urgente:urgente}),
+                                      json_string:          json_string,
+                                      json_Nutriente:       json_Nutriente,
+                                      fecha_solicitud:      fecha_solicitud,
+                                      recomendado:          recomendado,
+                                      motivo:               motivo,
+                                      desc_formula:         desc_formula,
+                                      toneladas:            toneladas,
+                                      cod_formula:          $("#select_formula").val(),
+                                      resultado_esperado:   resultado_esperado,
+                                      impacto:              impacto,
+                                      plazo_evaluacion:     plazo_evaluacion,
+                                      indicadores:          indicadores,
+                                      observacion:          observacion,
+                                      aviario:              valores.join(','),
+                                      urgente:              urgente}),
                                   
                                   beforeSend: function ()
                                   {
@@ -601,7 +664,11 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
     $.ajax({
         type: "POST",
         url: ruta_consultas_bal + "consulta_gen_grilla_solicitud_mtp.jsp",
-            data: ({ids:ids,cod_formulas:cod_formulas,id_pedido:id_pedido,cod_formula:cod_formula
+            data: ({
+                ids         :       ids,
+                cod_formulas:       cod_formulas,
+                id_pedido   :       id_pedido,
+                cod_formula :       cod_formula
                         }),
                  
          beforeSend: function (xhr) {
@@ -611,13 +678,17 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
+            $("#div_grilla3").html(data.grilla3);
+
             $("#tb_formulacion_det").DataTable({
             paging: false,
             "ordering": false,
             "language":
             {
                 "sUrl": "js/Spanish.txt"
+            
             },  
+            
             "rowCallback": function( row, data ) 
             {
                 $('td.td_gris', row).css( 'background', '#E8E8E8' );
@@ -922,6 +993,81 @@ function consulta_informes_pedidos_creados_por_usuario_bal (desde,hasta){
                   location.reload();
              }
          }
+    });
+
+}
+function ir_materia_prima_bal()
+{
+    window.location.hash = "SPENBAL";
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_bal + "contenedor_materia_prima_sap.jsp",
+    
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#contenedor_principal").html(data);
+            $("#tablaMTP").dataTable({language: {sUrl: "js/Spanish.txt"}});
+             cerrar_load();
+
+        }});
+}
+
+function activa_desactivar_mtp_bal(itemcode)
+        {
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_bal + 'control_registro_solicitud_mtp_bal_estado.jsp',
+        data: ({
+            itemcode:                   itemcode
+        }),
+
+        success: function (data)
+        {
+            if (data.estado == 'A')
+            {
+                $('#btn_mtp'+itemcode).val('Desactivar') 
+                
+                $('#btn_mtp'+itemcode).removeClass('bg-success') 
+                $('#btn_mtp'+itemcode).addClass('bg-danger') 
+                
+            }
+            else{
+                $('#btn_mtp'+itemcode).val('Activar')
+                
+                $('#btn_mtp'+itemcode).removeClass('bg-danger') 
+                $('#btn_mtp'+itemcode).addClass('bg-success')         
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
+function carga_grilla_nutrientes() {
+
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ppr + 'consulta_gen_grilla_nutrientes.jsp',
+        beforeSend: function (xhr) {
+            cargar_load("Consultando...");
+        },
+        data: {
+            idfechad: $('#idfechad').val(),
+
+
+        },
+
+        success: function (data) {
+
+            $('#tabla_nutrientes').html(data);
+
+        }
     });
 
 }

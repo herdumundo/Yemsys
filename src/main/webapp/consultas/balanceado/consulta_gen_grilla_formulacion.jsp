@@ -80,7 +80,7 @@
             cantidad=cantidad+ rs_GM.getFloat("Quantity") ;
         }
          
-         ob.put("grilla",cabecera + grilla_html + "</tbody></table>" );
+        ob.put("grilla",cabecera + grilla_html + "</tbody></table>" );
         ob.put("total",cantidad );
         
         rs_GM.close();
