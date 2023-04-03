@@ -20,6 +20,13 @@ var ruta_cruds_itkv         = "./cruds/itkv/";
 var ruta_grillas_itkv       = "./grillas/itkv/";
 var ruta_consultas_itkv     = "./consultas/itkv/";
 
+var rutaApiConsultaMaeharaPtc   = "./consultas/api/ptc/";
+var rutaApiCrudMaeharaPtc       = "./cruds/api/ptc/";
+
+var rutaVimarContenedores   = "./contenedores/vimar/";
+var rutaApiConsultaVimar       = "./consultas/api/vimar/";
+
+
 
 
 $(document).ready(function () 

@@ -220,7 +220,8 @@ function registrar_roles_ppr() {
                 type: "POST",
                 url: ruta_cruds_ppr + "crud_agregar_rol.jsp",
                 data: {
-                    descripcion: $('#descripcion').val()
+                    descripcion: $('#descripcion').val(),
+                    sector: $('#sector').val()
 
                 }, beforeSend: function () {
                     Swal.fire({

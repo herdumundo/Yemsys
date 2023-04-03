@@ -43,8 +43,9 @@
 </style>
 <head>   
 <label  ><b></b></label> 
-
-</head><!-- comment -->
+<div class="float-right d-none d-sm-inline-block" >
+      <a href="manuales/Salida_repuestos.pdf" target="_blank">Manual de usuario</a>
+</div></head><!-- comment -->
 <div class="col-lg-20 ">
     <div class="position-relative p-3 bg-navy"  >
         <div class="ribbon-wrapper">
@@ -62,7 +63,7 @@
     <br>
     <strong ><a>Responsable</a></strong>
     
-    <select class="form-control" id="retirado_por_select" onchange="insert_valor_responsable_combo_itkv()">
+    <select class="form-control selectpicker" id="retirado_por_select" onchange="insert_valor_responsable_combo_itkv()"  data-live-search="true">
     <option value="">Seleccione</option>    
         <%  while (rs.next()) {%>
         <option><%=rs.getString("U_retiradopor")%></option>    
@@ -72,7 +73,15 @@
      <input type="text" class="form-control " placeholder="INGRESE NOMBRE" value=""   id="retirado_por" style="display: none">
         
    
-        
+        <strong><a>Ubicacion</a></strong>
+    <select class="form-control selectpicker " data-live-search="true" id="ubicacion">
+        <%  while (rs3.next()) 
+        {%>
+        <option value="<%=rs3.getString("PrcCODE")%>" desc="<%=rs3.getString("PrcName")%>" > 
+            <%=rs3.getString("PrcName")%>
+        </option>    
+        <% }%>
+    </select>       
     <strong ><a>Activo</a></strong>
     <select class="form-control selectpicker"data-live-search="true" id="activo_select" onchange="insert_valor_responsable_combo_itkv()">
         <%  while (rs2.next()) {%>
@@ -124,7 +133,7 @@
     
     
     
-<table id="tabla" class="table-striped table-bordered"  style='width:100%' >
+<table id="tabla" class="table table-striped table-bordered"  style='width:100%' >
             <thead>
                 <tr>
                     <th >CODIGO</th>

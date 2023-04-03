@@ -17,7 +17,7 @@
     PreparedStatement ps, ps2;
     ResultSet rs, rs2;
     try {
-        ps = connection.prepareStatement(" SELECT  * FROM maehara.dbo.OITM  with (nolock) WHERE  ItmsGrpCod='106' AND OnHand>0");
+        ps = connection.prepareStatement(" SELECT  * FROM maehara.dbo.OITM  with (nolock) WHERE  ItmsGrpCod='106' /* AND OnHand>0*/ ");
         rs = ps.executeQuery();
         ps2 = connection.prepareStatement("select * from aviarios ");
         rs2 = ps2.executeQuery();
@@ -99,9 +99,9 @@
                 <td><label>Observacion</label>
                     <textarea id="observacion"class="form-control" rows="3"></textarea></td>
 
-                <td><label>Indicadores de evaluación</label><input type="text" id="indicadores" class="form-control is-invalid" required placeholder="Ingrese indicador de evaluación"></td>
-                <td ><label>Plazo de evaluación</label>
-                    <input type="text"  id="plazo_evaluacion" class="form-control datepicker"  placeholder="Ingrese plazo de evaluación">
+                <td><label>Indicadores de evaluaci&oacute;n</label><input type="text" id="indicadores" class="form-control is-invalid" required placeholder="Ingrese indicador de evaluaci&oacute;n"></td>
+                <td ><label>Plazo de evaluaci&oacute;n</label>
+                    <input type="text"  id="plazo_evaluacion" class="form-control datepicker"  placeholder="Ingrese plazo de evaluaci&oacute;n">
                 </td>
                 <td ><label>Caracter urgente</label><br>
 
@@ -136,7 +136,7 @@
 
                     <div class="card card-dark " >
                         <div class="card-header">
-                            <strong><a>INSUMOS DE FORMULACIÓN </a></strong>
+                            <strong><a>INSUMOS DE FORMULACI&Oacute;N </a></strong>
                         </div>
 
                         <strong><a>Total</a></strong>

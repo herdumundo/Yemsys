@@ -201,4 +201,14 @@
     String pdf_bal_informe_creado_por_usuario = "Manual_Logistica_Log_modificaciones.pdf";
     
 
+    String contenedores_ptc_reversion_transferencias = "0106-PAN-20032023-A";
+    String desc_contenedores_ptc_reversion_transferencias = " ";
+    String pdf_contenedores_ptc_reversion_transferencias = "";
+    
+
+    String contenedores_vimar_facturacionElectronica = "0107-PAN-30032023-A";
+    String desc_contenedores_vimar_facturacionElectronica = " ";
+    String pdf_contenedores_vimar_facturacionElectronica = "";
+    
+
 %>

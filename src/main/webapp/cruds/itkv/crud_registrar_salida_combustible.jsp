@@ -25,6 +25,7 @@
         String lt_inicio            = request.getParameter("lt_inicio");
         String lt_fin               = request.getParameter("lt_fin");
         String lt_total             = request.getParameter("lt_total");  
+        String band                 = request.getParameter("band");  
         
         
         
@@ -49,7 +50,7 @@
             else {
 
                 CallableStatement callableStatement = null;
-                callableStatement = connection.prepareCall("{call [stp_itkv_salida1] (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+                callableStatement = connection.prepareCall("{call [stp_itkv_salida1] (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
                 callableStatement.setString(1, responsable);
                 callableStatement.setInt(2, Integer.parseInt(id_usuario));
                 callableStatement.setString(3, id_activo);
@@ -68,6 +69,7 @@
                 callableStatement.setInt(16, Integer.parseInt(lt_total));
                 callableStatement.setString(17, id_tipo_combustible);
                 callableStatement.setString(18, tipo_combustible);
+                callableStatement.setString(19, band);
 
                 callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
                 callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);
@@ -94,4 +96,4 @@
             out.print(ob);
         }
     }
-%> 
+%>  

@@ -9,32 +9,28 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %> 
 <%    JSONObject ob = new JSONObject();
-     try {
+    try {
         String id = request.getParameter("id");
         ResultSet rs_GM;
         Statement st = connection.createStatement();
-        rs_GM = st.executeQuery( "select *,convert(varchar,fecha_modificacion,103) as fecha_modificacion2 from mae_bal_mtp_cab_solicitud where id="+id);
+        rs_GM = st.executeQuery("select *,convert(varchar,fecha_modificacion,103) as fecha_modificacion2 from mae_bal_mtp_cab_solicitud where id=" + id);
 
-        while (rs_GM.next()) 
-        {
-            ob.put("indicadores",                                 rs_GM.getString("indicadores"));
-            ob.put("motivo",                                      rs_GM.getString("motivo"));
-            ob.put("plazo",                                       rs_GM.getString("plazo_evaluacion"));
-            ob.put("recomendado",                                 rs_GM.getString("recomendado"));
-            ob.put("resultado_esperado",                          rs_GM.getString("resultado_esperado"));
-            ob.put("tonela",                                      rs_GM.getString("toneladas_proyectada"));
-            
-            ob.put("caracter",                                    rs_GM.getString("urgente"));
-            ob.put("impacto",                                     rs_GM.getString("impacto_comercial"));
-            ob.put("observacion",                                 rs_GM.getString("observacion"));
-            ob.put("selected",                                    rs_GM.getString("aviarios_involucrados"));
-            ob.put("impacto_desc",                                  rs_GM.getString("desc_impacto_comercial"));
-            ob.put("fecha_modificacion",                                  rs_GM.getString("fecha_modificacion2"));
-     
+        while (rs_GM.next()) {
+            ob.put("indicadores", rs_GM.getString("indicadores"));
+            ob.put("motivo", rs_GM.getString("motivo"));
+            ob.put("plazo", rs_GM.getString("plazo_evaluacion"));
+            ob.put("recomendado", rs_GM.getString("recomendado"));
+            ob.put("resultado_esperado", rs_GM.getString("resultado_esperado"));
+            ob.put("tonela", rs_GM.getString("toneladas_proyectada"));
 
-                }
-        
-     
+            ob.put("caracter", rs_GM.getString("urgente"));
+            ob.put("impacto", rs_GM.getString("impacto_comercial"));
+            ob.put("observacion", rs_GM.getString("observacion"));
+            ob.put("selected", rs_GM.getString("aviarios_involucrados"));
+            ob.put("impacto_desc", rs_GM.getString("desc_impacto_comercial"));
+            ob.put("fecha_modificacion", rs_GM.getString("fecha_modificacion2"));
+
+        }
 
         rs_GM.close();
     } catch (Exception e) {

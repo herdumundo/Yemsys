@@ -663,10 +663,10 @@ function cargar_unidad_medida_mis() {
     }
     $('#cod_carrito').val("");
 
-    if (tipo_huevo.val() === "9")
+   /* if (tipo_huevo.val() === "9")
     {
         $('#cod_carrito').val(id_fecha);
-    }
+    }*/
 }
 
 function limpiar_campos_mis()
