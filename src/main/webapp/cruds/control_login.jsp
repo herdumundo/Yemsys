@@ -67,7 +67,7 @@
         
 //////////////////////////////////////////////////////////////////////////////////////////////
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call stp_mae_yemsys_login(?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call stp_mae_yemsys_login30032023(?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setString(1, usu);
         callableStatement.setString(2, clavehASH);
         callableStatement.registerOutParameter("nombre",        java.sql.Types.VARCHAR);
@@ -76,8 +76,8 @@
         callableStatement.registerOutParameter("tipo",          java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("id_rol",        java.sql.Types.VARCHAR);
         callableStatement.registerOutParameter("username",      java.sql.Types.VARCHAR);
-      //  callableStatement.registerOutParameter("rol",           java.sql.Types.VARCHAR);
-    //    callableStatement.registerOutParameter("sector",           java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("rol",           java.sql.Types.VARCHAR);
+        callableStatement.registerOutParameter("sector",           java.sql.Types.VARCHAR);
 
         callableStatement.execute();
         tipo_respuesta      = callableStatement.getInt("tipo");

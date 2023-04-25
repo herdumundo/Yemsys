@@ -980,9 +980,6 @@ function visualizar_zona_liberado() {
         limpiar_codigo_rotos();
     }
 
-
-
-
     if (tipo_huevo.val() === "9") {
 
         // $('#div_zona_liberado').show();
@@ -1007,11 +1004,6 @@ function visualizar_zona_liberado() {
         setear_codigo_rotos();
 
     }
-
-
-
-
-
 
     if (tipo_huevo.val() === "RP") {
 
@@ -1148,12 +1140,12 @@ function setear_codigo_rotos()
     mesa = $('#id_date').val() + "_" + $('#id_clasificadora').val();
     $('#cod_carrito').val(mesa);
 }
-
+/*
 function limpiar_codigo_rotos() {
 
     $('#cod_carrito').val('');
 
-}
+}*/
 
 
 

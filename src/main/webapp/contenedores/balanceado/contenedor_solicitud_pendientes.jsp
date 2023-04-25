@@ -112,9 +112,10 @@
             <div id="div_grilla">
                 
             </div>
-             <div id="div_grilla3">
+             <div   id="divGrillaNutrientes">
                 
             </div>
+         
             <div id="div_grilla2" class="bg-navy">
                 
             </div>

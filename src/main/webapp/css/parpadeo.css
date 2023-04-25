@@ -7,6 +7,12 @@ and open the template in the editor.
     Created on : 26/02/2020, 09:25:37 AM
     Author     : hvelazquez
 */
+table {
+  border: 1px solid black;
+}
+
+
+
 
 .animacion {
        /*position: absolute;*/

@@ -3,25 +3,24 @@
     Created on : 16-sep-2021, 8:37:03
     Author     : hvelazquez
 --%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="clases.controles"%>
+<%@page import="org.json.JSONArray"%> 
 <%@page import="clases.fuentedato"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="org.json.JSONObject"%> 
 <%@ page session="true" %>
-<jsp:useBean id="fuente" class="clases.fuentedato" scope="page" />
 <%@page contentType="application/json; charset=utf-8" %>
-
+<%@include  file="../../chequearsesion.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %> 
+   
 <%     
-     clases.controles.connectarBD();
-    fuente.setConexion(clases.controles.connect);
- try {
+   try {
          
-    ResultSet rs,rs2,rs3,rs5;
+    ResultSet rs,rs2,rs3  ;
+    Statement st = connection.createStatement();
+    Statement st2 = connection.createStatement();
+    Statement st3 = connection.createStatement();
     String grilla_html="";
-     
-    
+    int cantidad_mensaje=0;
+
      String cabecera="   "
            
             
@@ -66,7 +65,7 @@
                 + " <th  style='color: #fff; ' class='bg-dark'>Pallet    </th>        <th  style='color: #fff; ' class='bg-dark'>Res</th>"
             + "</tr>"
             + "</thead> <tbody >";
-       rs = fuente.obtenerDato("exec [mae_log_select_reserva_directorio]  ");
+      rs = st.executeQuery("exec [mae_log_select_reserva_directorio]  ");
     
       while(rs.next())
         {
@@ -92,7 +91,7 @@
               
                       
         String grilla_html2 ="";  
-         rs2 = fuente.obtenerDato("   select * from v_mae_log_mixtos_directorio order by   fecha_puesta asc,cod_carrito");
+         rs2 = st2.executeQuery("   select * from v_mae_log_mixtos_directorio order by   fecha_puesta asc,cod_carrito");
         String cod_carrito="";
         String cajones_unidos="";
         String fp_unido="";
@@ -172,40 +171,40 @@
         
         
            f=0;
-        
-         ResultSet rs4 = fuente.obtenerDato("select * from v_mae_log_reserva_directorio_mensaje order by estado ");
-    String mensaje_div="";
-    String estado="";
-      while(rs4.next())
-        {
-            //mensaje_div=mensaje_div+rs4.getString("ESTADO_tr");
+
+        rs3 = st3.executeQuery("select * from v_mae_log_reserva_directorio_mensaje order by estado ");
+        String mensaje_div="";
+        String estado="";
+        while(rs3.next())
+        {   cantidad_mensaje++;
+
              if(f==0){
-                estado=rs4.getString("estado");
-                titulo_estado=rs4.getString("estado_desc");
-                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs4.getString("titulo_desc")+"</p>"; 
-                icono=rs4.getString("icono");
-                      color_estrella=rs4.getString("color_estrella");
+                estado=rs3.getString("estado");
+                titulo_estado=rs3.getString("estado_desc");
+                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs3.getString("titulo_desc")+"</p>"; 
+                icono=rs3.getString("icono");
+                      color_estrella=rs3.getString("color_estrella");
 
             }
               else if(estado.equals(""))
             {
-                estado=rs4.getString("estado");
-                titulo_estado=rs4.getString("estado_desc");
-                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs4.getString("titulo_desc")+"</p>"; 
-                icono=rs4.getString("icono");
-                      color_estrella=rs4.getString("color_estrella");
+                estado=rs3.getString("estado");
+                titulo_estado=rs3.getString("estado_desc");
+                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs3.getString("titulo_desc")+"</p>"; 
+                icono=rs3.getString("icono");
+                      color_estrella=rs3.getString("color_estrella");
             }
-            else if(estado.equals(rs4.getString("estado")))
+            else if(estado.equals(rs3.getString("estado")))
              { 
-                estado=rs4.getString("estado");
-                 titulo_estado=rs4.getString("estado_desc");
-                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs4.getString("titulo_desc")+"</p>"; 
-                      color_estrella=rs4.getString("color_estrella");
-                icono=rs4.getString("icono");
+                estado=rs3.getString("estado");
+                 titulo_estado=rs3.getString("estado_desc");
+                tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs3.getString("titulo_desc")+"</p>"; 
+                      color_estrella=rs3.getString("color_estrella");
+                icono=rs3.getString("icono");
                    }
              else 
             { 
-            Cab=Cab+"    <div class='media'>           <div class='media-body'>            "
+            Cab=Cab+"    <div class='media' onclick='consultar_detalle_directorio_pedidos()'>           <div class='media-body'>            "
             + "     <h3 class='dropdown-item-title'>"+titulo_estado+" <span class='float-right text-sm text-"+color_estrella+"'><i class='fas fa-star'></i></span>  </h3>          "
             + tipo_huevo_cantidad    
             + "     <p class='text-sm text-muted'><i class='"+icono+" mr-1'>        "
@@ -213,29 +212,27 @@
             titulo_estado="";
             tipo_huevo_cantidad="";
             icono="";
-            titulo_estado=rs4.getString("estado_desc");
-            tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs4.getString("titulo_desc")+"</p>"; 
-            color_estrella=rs4.getString("color_estrella");
-            icono=rs4.getString("icono");
-                estado=rs4.getString("estado");
+            titulo_estado=rs3.getString("estado_desc");
+            tipo_huevo_cantidad=tipo_huevo_cantidad+"<p class='text-sm'>"+rs3.getString("titulo_desc")+"</p>"; 
+            color_estrella=rs3.getString("color_estrella");
+            icono=rs3.getString("icono");
+                estado=rs3.getString("estado");
             }
             f++;
-         }
+        }
         
          if(f>0){ //LA ULTIMA FILA YA NO TRAE, ENTONCES CONSULTO SI EXISTIO ENTONCES TRAE.
-              Cab=Cab+"    <div class='media'>           <div class='media-body'>            "
+              Cab=Cab+"    <div class='media' onclick='consultar_detalle_directorio_pedidos()'>           <div class='media-body'>            "
             + "     <h3 class='dropdown-item-title'>"+titulo_estado+" <span class='float-right text-sm text-"+color_estrella+"'><i class='fas fa-star'></i></span>  </h3>          "
             + tipo_huevo_cantidad    
             + "     <p class='text-sm text-muted'><i class='"+icono+" mr-1'>        "
             + "     </i> </p>  </div>  </div> <div class='dropdown-divider'></div>";
         }
         
-        int cantidad_mensaje=0;
-                 ResultSet rs6 = fuente.obtenerDato("select count(*) as contador from v_mae_log_reserva_directorio_mensaje  ");
-            while(rs6.next())
+            /*     rs4 = st4.executeQuery("select count(*) as contador from v_mae_log_reserva_directorio_mensaje  ");
+            while(rs4.next())
                   {
-                  cantidad_mensaje=rs6.getInt("contador");
-              }
+              }*/
         ob.put("grilla",cabecera+grilla_html+"</tbody></table>");
         ob.put("grilla_mixto",cabecera_mixto+grilla_html2+"</tbody></table></div></div></div></div>");
         ob.put("mensaje_div",Cab);
@@ -247,6 +244,6 @@
      String men=e.toString();
      }
 finally{
-        clases.controles.DesconnectarBD();
+            connection.close();
  }
      %> 

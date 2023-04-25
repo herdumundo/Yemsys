@@ -74,7 +74,7 @@
                     + "             <div class='btn btn-xs bg-green'  onclick=\"reprocesar_transferencias_ptc(" + id + ",'" + origen + "','" + destino + "')\"      title='Reprocesar transferencia'><i class='fa fa-clipboard  '  ></i></div>";
             if (jsonArray.getJSONObject(i).getString("reprocesado").equals("SI")) {
                 filaAccion = " <div class='btn btn-xs bg-yellow'    title='Cancelar transferencia'><i class='fa fa-times '  ></i></div>"
-                        + "         <div class='btn btn-xs bg-green'     title='Reprocesar transferencia'><i class='fa fa-clipboard  '  ></i></div>";
+                        + "         <div class='btn btn-xs bg-green'   onclick=\"reprocesar_transferencias_ptc(" + id + ",'" + origen + "','" + destino + "')\"    title='Reprocesar transferencia'><i class='fa fa-clipboard  '  ></i></div>";
             }
 
             tr = tr
@@ -92,8 +92,9 @@
                     + "</tr>";
         }
 
-    } catch (Exception e) {
-
+    } catch (Exception e) 
+    {
+        String error= e.getMessage();
     } finally {
         ob.put("grilla", cabecera + tr + "</tbody></table>");
         out.print(ob);

@@ -92,7 +92,7 @@
 
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp_nuevo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp_nuevo05042023(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setObject(1,  sourceDataTable);
         
         callableStatement.setObject(2, sourceDataTableNutriente);

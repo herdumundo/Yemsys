@@ -12,9 +12,9 @@
 <%    String version = contenedores_vista_permisos;
     String rol = (String) sesionOk.getAttribute("rol");
     String sector = (String) sesionOk.getAttribute("sector");
-    String queryRol = "select * from mae_yemsys_roles";
+    String queryRol = "select * from mae_yemsys_roles where id_estado=1";
     if (rol.equals("U")) {
-        queryRol = "select * from mae_yemsys_roles WHERE area='" + sector + "'";
+        queryRol = "select * from mae_yemsys_roles WHERE  id_estado=1 and area='" + sector + "'";
 
     }
 %>
