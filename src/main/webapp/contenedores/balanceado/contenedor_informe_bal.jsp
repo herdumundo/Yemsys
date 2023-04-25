@@ -67,3 +67,8 @@
  <div id="div_grilla"  >
                 
             </div>
+ <div id="divGrillaNutrientes"  >
+                
+            </div>
+
+

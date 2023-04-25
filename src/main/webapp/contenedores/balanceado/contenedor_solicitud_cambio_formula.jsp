@@ -72,7 +72,7 @@
                  </td>
                   <br><br>
                  <td width="10%"><label>Seleccione Aviario</label>
-                     <select class="selectpicker" name="aviario" id="aviario"  multiple data-live-search="true"  data-actions-box="true" > 
+                     <select class="selectpicker" name="aviario" id="aviario"  multiple data-live-search="true"  data-actions-box="true"  required placeholder="Ingrese aviarios"> 
                         
                         <%
                             while (rs2.next()) {%>
@@ -148,7 +148,7 @@
                         <div id="div_grilla">
                         
                         </div>
-                         <div id="div_nutrientes"></div>
+                        <div id="div_nutrientes"></div> 
                     
                     </div>
 

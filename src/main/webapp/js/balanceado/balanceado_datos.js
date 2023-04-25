@@ -187,7 +187,7 @@ function ir_grilla_formulacion_bal()
         {
             $("#div_grilla").html("");
             $("#div_grilla").html(data.grilla);
-            $("#div_grilla").html(data.grilla3);
+            $("#div_nutrientes").html(data.grillaNutriente);
             $("#tb_formulacion").DataTable({ 
                 "scrollX": true,
                 paging: false,
@@ -199,9 +199,30 @@ function ir_grilla_formulacion_bal()
                         },
                 
             });
-            ir_grilla_nutrientes_bal();
+            
+             
+            
+            
+            
             sumar_cantidad_mtp_bal();
-            var editables = document.querySelectorAll("[contentEditable]");
+            activarOnblurGrillaMateriaPrima()
+            activarOnblurGrillaNutrientes()// OPCION PARA COLOREAR LAS CELDAS DE LA TABLA NUTRIENTES
+            solo_numeros_td();
+            get_mtp_bal_select();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    });
+
+}
+
+
+function activarOnblurGrillaMateriaPrima()
+{
+       var editables = document.querySelectorAll("[grillaBalanceado]");
             for (var i = 0, len = editables.length; i < len; i++)
             {
                 editables[i].onblur = function ()
@@ -222,57 +243,41 @@ function ir_grilla_formulacion_bal()
                     colorear_celdas_cantidad_sol_bal(this.getAttribute("id"));
                 }
             }
-            $('[contenteditable="true"]').keypress(function(e) 
+            $('[grillaBalanceado="true"]').keypress(function(e) 
             {
                 var x = event.charCode || event.keyCode;
                 if (isNaN(String.fromCharCode(e.which)) && x!=44 || x===32 || x===13 || (x===44 && event.currentTarget.innerText.includes(','))) e.preventDefault();
             });
-            solo_numeros_td();
-            get_mtp_bal_select();
-        },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
-    });
-
 }
-function ir_grilla_nutrientes_bal()
+
+
+function activarOnblurGrillaNutrientes()
 {
-     $.ajax({
-        type: "POST",
-        data:({
-                             
-            cod_formula:            $('#select_formula').val()}),
-        
-        url: ruta_consultas_bal + "consulta_gen_grilla_nutrientes.jsp",
-         beforeSend: function (xhr) {
-            cargar_load("Cargando...");
-        },
-        success: function (data)
-        {
-            $("#div_nutrientes").html("");
-            $("#div_nutrientes").html(data.grilla);
-solo_numeros_td()
-         
-        
-       
-        },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
-    });
-
+       var editables = document.querySelectorAll("[grillaNutriente]");
+            for (var i = 0, len = editables.length; i < len; i++)
+            {
+                editables[i].onblur = function ()
+                { 
+                    var cantidad_inicial=this.innerHTML.replaceAll(",",".") ;
+                    this.setAttribute("cantidad",cantidad_inicial.trim());
+                    var cantidad=this.innerHTML;
+                    var cantidadInicial=this.getAttribute("cantidad_historial");
+                     
+                    colorear_celdas_cantidad_sol_bal(this.getAttribute("id"));
+                }
+            }
+            $('[grillaNutriente="true"]').keypress(function(e) 
+            {
+                var x = event.charCode || event.keyCode;
+                if (isNaN(String.fromCharCode(e.which)) && x!=44 || x===32 || x===13 || (x===44 && event.currentTarget.innerText.includes(','))) e.preventDefault();
+            });
 }
-
+ 
 
  function sumar_cantidad_mtp_bal()
 {
             var cant=0;
-     var editables = document.querySelectorAll("[contentEditable=true]");
+     var editables = document.querySelectorAll("[grillaBalanceado=true]");
             for (var i = 0, len = editables.length; i < len; i++)
             {
                cant=cant+ parseFloat(editables[i].getAttribute("cantidad"));
@@ -289,7 +294,7 @@ function calculo_grilla_solicitud_bal(id)
     {
         $("."+id).html("Quitar de formula");
         $("."+id).val("Quitar de formula");
-        $("#"+id).attr("contentEditable",true);
+        $("#"+id).attr("grillaBalanceado",true);
         $("#"+id).attr("estado_anterior",$("#"+id).attr("estado"));
         $("#BTN" + id).removeClass('bg-danger ').addClass('bg-success');
         var cantidad=$("#"+id).attr("cantidad").replaceAll(",",".");
@@ -307,7 +312,7 @@ function calculo_grilla_solicitud_bal(id)
     {
         $("."+id).html("Reactivar");
         $("."+id).val("Reactivar");
-        $("#"+id).attr("contentEditable",false);
+        $("#"+id).attr("grillaBalanceado",false);
         $("#"+id).attr("estado_anterior",$("#"+id).attr("estado"));
         $("#"+id).attr("estado","ELIMINADO");
         $("#BTN" + id).removeClass('bg-success ').addClass('bg-danger');
@@ -390,6 +395,9 @@ function add_filas_sol_bal() {
         $(rowNode).find('td').eq(2).addClass('font-weight-bold single_line2 only');//AGREGAR CLASES AL LA CELDA POSICION 1
         $(rowNode).find('td').eq(2).attr("grilla",true);//AGREGAR CLASES AL LA CELDA POSICION 1
         $(rowNode).find('td').eq(2).attr("contenteditable",true);//AGREGAR CLASES AL LA CELDA POSICION 1
+        $(rowNode).find('td').eq(2).attr("grillaBalanceado",true);//AGREGAR CLASES AL LA CELDA POSICION 1
+        
+        
         $(rowNode).find('td').eq(2).attr("id",codigo);//AGREGAR CLASES AL LA CELDA POSICION 1
         $(rowNode).find('td').eq(2).attr("estado","NUEVO");//AGREGAR CLASES AL LA CELDA POSICION 1
 
@@ -409,7 +417,7 @@ function add_filas_sol_bal() {
         $(rowNode).find('td').eq(6).addClass('font-weight-bold');//AGREGAR CLASES AL LA CELDA POSICION 1
         $(rowNode).attr('id', 'row' + codigo);//AGREGA ID AL <tr> FILA.
         solo_numeros_td();
- $('[contenteditable="true"]').keypress(function(e) 
+ $('[grillaBalanceado="true"]').keypress(function(e) 
             {
                 var x = event.charCode || event.keyCode;
                 if (isNaN(String.fromCharCode(e.which)) && x!=44 || x===32 || x===13 || (x===44 && event.currentTarget.innerText.includes(','))) e.preventDefault();
@@ -677,8 +685,8 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
         success: function (data)
         {
             $("#div_grilla").html("");
-            $("#div_grilla").html(data.grilla);
-            $("#div_grilla3").html(data.grilla3);
+            $("#div_grilla").html(data.grillaBalanceado);
+            $("#divGrillaNutrientes").html(data.grillaNutrientes);
 
             $("#tb_formulacion_det").DataTable({
             paging: false,

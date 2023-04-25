@@ -56,6 +56,8 @@
 
     } catch (Exception e) 
     {
+            ob.put("select", e.getMessage());
+
     } finally {
         out.print(ob);
         connection.close();

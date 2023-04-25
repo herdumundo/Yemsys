@@ -14,12 +14,16 @@
     DecimalFormat formatea2 = new DecimalFormat("###.###");
     JSONObject ob = new JSONObject();
     String grilla_html = "";
+    String grilla_html2 = "";
+    String cabecera2 = "";
     String cabecera = "";
+    ResultSet rs_GM,rs_GM2;
+        Statement st = connection.createStatement();
+        Statement st2 = connection.createStatement();
      try 
      {
         String father =  request.getParameter("father");
-        ResultSet rs_GM;
-        Statement st = connection.createStatement();
+
         float cantidad =0; 
          rs_GM = st.executeQuery(""
                  + "    select   "
@@ -61,7 +65,7 @@
                     + "<td style=\"font-weight:bold\" >   " + rs_GM.getString("Code") + "</td>"
                     + "<td style=\"font-weight:bold\">   " + rs_GM.getString("ItemName") + "</td>"
                     + "<td  class='single_line2 only '   style=\"font-weight:bold\" id=\""+rs_GM.getString("Code")+"\" "
-                    + " contenteditable=\"true\" estado=\"NEUTRO\"  "
+                    + " contenteditable=\"true\" grillaBalanceado=\"true\" estado=\"NEUTRO\"  "
                      + "costo=\""+rs_GM.getString("AvgPrice").trim()+"\" "
                     + "grupo=\""+rs_GM.getString("ItmsGrpCod").trim()+"\"    "
                     + "ingrediente=\""+rs_GM.getString("ItemName").trim()+"\"    "
@@ -80,7 +84,47 @@
             cantidad=cantidad+ rs_GM.getFloat("Quantity") ;
         }
          
+        
+        
+          
+
+          rs_GM2 = st2.executeQuery(""
+                 + " exec mae_bal_nutrientes @cod_formula='"+father+"'  ");
+                 
+                 
+        cabecera2 = " <table id='grillaNutriente' class=' table-bordered compact display' style='width:100%'>"
+                + "<thead>"
+
+                + ""
+                + "<tr>"
+                + " <th  style='color: #fff; background: black;' >CODIGO</th>       "
+                + " <th  style='color: #fff; background: black;' >NUTRIENTE</th>     "
+                + " <th  style='color: #fff; background: black;' >ACTUAL</th>       "
+                + " <th  style='color: #fff; background: black;' >NUEVO</th>        "
+                 +"</tr>"      
+                + " </thead> "
+                + " <tbody >";
+        while (rs_GM2.next()) 
+        {
+            grilla_html2 = grilla_html2
+                    + "<tr > "
+                    
+                   + "<td style=\"font-weight:bold\" >   " + rs_GM2.getString("id_nutriente") + "</td>"
+                   + "<td style=\"font-weight:bold\">   " + rs_GM2.getString("desc_nutriente") + "</td>"
+                   + "<td style=\"font-weight:bold\" >" + rs_GM2.getString("nuevo") + "</td>"
+                   + "<td  class='single_line2 only '   style=\"font-weight:bold\"  contenteditable=\"true\" id=\"nutriente"  + rs_GM2.getString("id_nutriente") +"\"  grillaNutriente=\"true\""
+                   + "cantidad_historial=\""+ formatea.format(rs_GM2.getDouble("nuevo") ).replaceAll(",", ".") +"\"  "
+                   + "cantidad=\""+ formatea.format(rs_GM2.getDouble("nuevo") ).replaceAll(",", ".") +"\"  >  " + rs_GM2.getString("nuevo") + "</td>"
+                    
+                    
+                    + "</tr>";
+            
+           
+        }
+         
         ob.put("grilla",cabecera + grilla_html + "</tbody></table>" );
+        
+        ob.put("grillaNutriente",cabecera2 + grilla_html2 + "</tbody></table>" );
         ob.put("total",cantidad );
         
         rs_GM.close();

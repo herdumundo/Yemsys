@@ -287,7 +287,7 @@
  
  //LIBERADOS
  
-    function visualizar_zona_liberado() 
+    function visualizar_zona_liberado_mis() 
     {
         var tipo_huevo=$("#tipo_huevo");
         if (tipo_huevo.val()==="9")
@@ -356,7 +356,7 @@
     function setear_codigo_rotos()
     {
         var mesa;
-        mesa= $('#id_date').val()+"_"+$('#id_clasificadora').val();
+        mesa= $('#id_date').val() ;
         $('#cod_carrito').val(mesa);
     }
 

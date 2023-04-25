@@ -61,7 +61,7 @@
     <br><!-- comment -->
     <div class="input-group">
         <b>   Tipo de huevo</b>
-        <select class="form-control" name="tipo_huevo" id="tipo_huevo"   onchange="limpiar_campos_mis();cargar_unidad_medida_mis();visualizar_zona_liberado()" required >
+        <select class="form-control" name="tipo_huevo" id="tipo_huevo"   onchange="limpiar_campos_mis();cargar_unidad_medida_mis();visualizar_zona_liberado_mis()" required >
             <OPTION value="" selected  >SELECCIONAR TIPO</OPTION>
             <OPTION VALUE="8">SUBPRODUCTO</OPTION>
             <OPTION VALUE="9">R</OPTION>

@@ -25,9 +25,7 @@ var rutaApiCrudMaeharaPtc       = "./cruds/api/ptc/";
 
 var rutaVimarContenedores   = "./contenedores/vimar/";
 var rutaApiConsultaVimar       = "./consultas/api/vimar/";
-
-
-
+ 
 
 $(document).ready(function () 
 {

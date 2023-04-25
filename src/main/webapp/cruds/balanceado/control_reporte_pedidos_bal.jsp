@@ -31,7 +31,7 @@
     } 
     catch (Exception e) 
     {
-        String efd=e.toString();
+       out.print(e.getMessage());
     } 
     finally 
     {
