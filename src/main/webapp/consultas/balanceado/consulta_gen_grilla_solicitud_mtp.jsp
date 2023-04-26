@@ -148,9 +148,9 @@
         while (rsNutriente.next()) {
             String colorCeldaNutriente = "";
 
-              if (rsNutriente.getInt("actual") < rsNutriente.getInt("nuevo")) {
+              if (rsNutriente.getFloat("actual") < rsNutriente.getFloat("nuevo")) {
                 colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
-            } else if (rsNutriente.getInt("actual") > rsNutriente.getInt("nuevo")) {
+            } else if (rsNutriente.getFloat("actual") > rsNutriente.getFloat("nuevo")) {
 
                 colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
             }
