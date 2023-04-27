@@ -29,7 +29,7 @@
         rs = stmt.executeQuery ("select * "
                + "from lotes_transferencia "
                + "where convert(varchar,fecha,103)='"+fecha+"'"
-               + " and "+bd_area+"='"+area+"' and tipo_transferencia='"+tipo+"' order by 1 desc");
+               + " and "+bd_area+"='"+area+"' and tipo_transferencia='"+tipo+"' and reprocesado is null  order by 1 desc");
    
      
             while (rs.next())
