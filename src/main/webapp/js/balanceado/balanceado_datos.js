@@ -465,7 +465,7 @@ function validar_datos_mtp_sol(){
     {
         var grilla          =   document.querySelectorAll("[grilla]");
         
-        var grillaNutriente =  document.querySelectorAll("#grillaNutriente tr");
+        var grillaNutriente =  document.querySelectorAll("[grillanutriente] ");
 
         var fecha_solicitud =   $("#fecha_solicitud").val();
         var toneladas       =   $("#toneladas").val();
@@ -504,16 +504,16 @@ function validar_datos_mtp_sol(){
         for (var i = 1, len = grillaNutriente.length; i < len; i++)
         {
                 itemNutriente = {}
-                itemNutriente ["id"]            =  grillaNutriente[i].cells[0].innerHTML.toString().trim();
-                itemNutriente ["descripcion"]   =  grillaNutriente[i].cells[1].innerHTML;
-                itemNutriente ["actual"]        =  grillaNutriente[i].cells[2].innerHTML.toString().trim();
-                itemNutriente ["nuevo"]         =  grillaNutriente[i].cells[3].innerHTML; 
+                itemNutriente ["id"]            =   grillaNutriente[i].getAttribute("codigo");
+                itemNutriente ["descripcion"]   =   grillaNutriente[i].getAttribute("nutriente");
+                itemNutriente ["actual"]        =   grillaNutriente[i].getAttribute("cantidad_historial").toString().trim();
+                itemNutriente ["nuevo"]         =   grillaNutriente[i].getAttribute("cantidad").toString().trim();
                 jsonNutriente.push(itemNutriente);
 
         }
-        
         var json_Nutriente = JSON.stringify(jsonNutriente);
-        
+            console.log(jsonObj)
+            console.log(jsonNutriente)
         
         
 

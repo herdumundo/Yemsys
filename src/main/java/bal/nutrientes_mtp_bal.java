@@ -12,5 +12,5 @@ public class nutrientes_mtp_bal {
        public String id ;
        public String descripcion;
        public String actual;
-      public  String nuevo;
+       public String nuevo;
 } 
