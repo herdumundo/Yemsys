@@ -12,6 +12,7 @@
 <%    
     DecimalFormat formatea = new DecimalFormat("###,###.##");
     DecimalFormat formatea2 = new DecimalFormat("###.###");
+    DecimalFormat formatea3 = new DecimalFormat("###.###");
     JSONObject ob = new JSONObject();
     String grilla_html = "";
     String grilla_html2 = "";
@@ -66,7 +67,7 @@
                     + "<td style=\"font-weight:bold\">   " + rs_GM.getString("ItemName") + "</td>"
                     + "<td  class='single_line2 only '   style=\"font-weight:bold\" id=\""+rs_GM.getString("Code")+"\" "
                     + " contenteditable=\"true\" grillaBalanceado=\"true\" estado=\"NEUTRO\"  "
-                     + "costo=\""+rs_GM.getString("AvgPrice").trim()+"\" "
+                    + "costo=\""+rs_GM.getString("AvgPrice").trim()+"\" "
                     + "grupo=\""+rs_GM.getString("ItmsGrpCod").trim()+"\"    "
                     + "ingrediente=\""+rs_GM.getString("ItemName").trim()+"\"    "
                     + "cantidad_historial=\""+ formatea2.format(rs_GM.getDouble("Quantity") ).replaceAll(",", ".") +"\"  "
@@ -107,22 +108,31 @@
         while (rs_GM2.next()) 
         {
             grilla_html2 = grilla_html2
+            
+            
                     + "<tr > "
                     
-                   + "<td style=\"font-weight:bold\" >   " + rs_GM2.getString("id_nutriente") + "</td>"
-                   + "<td style=\"font-weight:bold\">   " + rs_GM2.getString("desc_nutriente") + "</td>"
-                   + "<td style=\"font-weight:bold\" >" + rs_GM2.getString("nuevo") + "</td>"
-                   + "<td  class='single_line2 only '   style=\"font-weight:bold\"  contenteditable=\"true\" id=\"nutriente"  + rs_GM2.getString("id_nutriente") +"\"  grillaNutriente=\"true\""
-                   + "cantidad_historial=\""+ formatea.format(rs_GM2.getDouble("nuevo") ).replaceAll(",", ".") +"\"  "
-                   + "cantidad=\""+ formatea.format(rs_GM2.getDouble("nuevo") ).replaceAll(",", ".") +"\"  >  " + rs_GM2.getString("nuevo") + "</td>"
+                   + "<td style=\"font-weight:bold\" > " + rs_GM2.getString("id_nutriente") + "</td>"
+                   + "<td style=\"font-weight:bold\">  " + rs_GM2.getString("desc_nutriente") + "</td>"
+                   + "<td style=\"font-weight:bold\" > " + rs_GM2.getString("nuevo") + "</td>"
+                   + "<td  "
+                   + "  class='single_line2 only '   "
+                   + "  style=\"font-weight:bold\"  "
+                   + "  contenteditable=\"true\" "
+                   + "  id=\"nutriente"  + rs_GM2.getString("id_nutriente") +"\"  "
+                   + "  grillaNutriente=\"true\""
+                   + "  cantidad_historial=\""+ rs_GM2.getString("nuevo") .replaceAll(",", ".") +"\"  "
+                   + "  cantidad=\""+ rs_GM2.getString("nuevo") .replaceAll(",", ".") +"\"   "
+                   + "  codigo= \""+  rs_GM2.getString("id_nutriente")   +"\"  "
+                   + "  nutriente= \""+  rs_GM2.getString("desc_nutriente")   +"\"> "+ rs_GM2.getString("nuevo")+" </td>"
                     
-                    
+                   
                     + "</tr>";
             
            
         }
-         
-        ob.put("grilla",cabecera + grilla_html + "</tbody></table>" );
+       
+            ob.put("grilla",cabecera + grilla_html + "</tbody></table>" );
         
         ob.put("grillaNutriente",cabecera2 + grilla_html2 + "</tbody></table>" );
         ob.put("total",cantidad );
