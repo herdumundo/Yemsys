@@ -141,15 +141,20 @@
                 + "<tr>"
                 + " <th  style='color: #fff; background: black;' >NRO.</th>      "
                 + " <th  style='color: #fff; background:  black;' >VITAMINA</th>      "
+                + " <th  style='color: #fff; background: black;' >Unidad de Medida</th>       "
+               + " <th  class='text-center' style='color: #fff; background: black;' >ACTUAL</th>      "
                 + " <th  class='text-center' style='color: #fff; background: black;' >ANTERIOR</th>      "
-                + " <th  class='text-center' style='color: #fff; background: black;' >ACTUAL</th>      "
+                + " <th  style='color: #fff; background: black;' >VARIACION</th>       "
                 + " </thead> "
                 + " <tbody >";
         while (rsNutriente.next()) {
             String colorCeldaNutriente = "";
+           
 
               if (rsNutriente.getFloat("actual") < rsNutriente.getFloat("nuevo")) {
                 colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+
+            
             } else if (rsNutriente.getFloat("actual") > rsNutriente.getFloat("nuevo")) {
 
                 colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
@@ -164,8 +169,11 @@
                     + "<tr > "
                     + "<td  style=\"font-weight:bold\" > " + rsNutriente.getString("id_nutriente") + "</td>"
                     + "<td  style=\"font-weight:bold\">  " + rsNutriente.getString("desc_nutriente") + "</td>"
-                    + "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"
+                    + "<td style=\"font-weight:bold\" > " + rsNutriente.getString("unidad_de_medida") + "</td>"
                     + "<td class='text-center' style=\"font-weight:bold\">  " +colorCeldaNutriente+ "</td>"
+                    + "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"
+                    
+                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+ rsNutriente.getString("id_nutriente") +"\" > " + (rsNutriente.getDouble("nuevo") +  rsNutriente.getDouble ("actual")) + "</td>"
                     + "</tr>";
 
         }

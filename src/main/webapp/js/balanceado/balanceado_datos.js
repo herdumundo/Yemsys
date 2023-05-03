@@ -205,8 +205,8 @@ function ir_grilla_formulacion_bal()
             
             
             sumar_cantidad_mtp_bal();
-            activarOnblurGrillaMateriaPrima()
-            activarOnblurGrillaNutrientes()// OPCION PARA COLOREAR LAS CELDAS DE LA TABLA NUTRIENTES
+            activarOnblurGrillaMateriaPrima();
+            activarOnblurGrillaNutrientes();// OPCION PARA COLOREAR LAS CELDAS DE LA TABLA NUTRIENTES
             solo_numeros_td();
             get_mtp_bal_select();
         },
@@ -262,8 +262,15 @@ function activarOnblurGrillaNutrientes()
                     this.setAttribute("cantidad",cantidad_inicial.trim());
                     var cantidad=this.innerHTML;
                     var cantidadInicial=this.getAttribute("cantidad_historial");
-                     
-                    colorear_celdas_cantidad_sol_bal(this.getAttribute("id"));
+                   
+                    var resnutriente= this.getAttribute("id");
+                    var resultadoresta=0;
+                    
+                    resultadoresta = cantidad_inicial-cantidadInicial; 
+                    //$("#res nutriente28").html(resultadoresta);
+                    $("#res"+ resnutriente).html(resultadoresta);
+               
+                    colorear_celdas_cantidad_sol_bal_nutriente(this.getAttribute("id"),"res"+ resnutriente);
                 }
             }
             $('[grillaNutriente="true"]').keypress(function(e) 
@@ -277,7 +284,7 @@ function activarOnblurGrillaNutrientes()
  function sumar_cantidad_mtp_bal()
 {
             var cant=0;
-     var editables = document.querySelectorAll("[grillaBalanceado=true]");
+            var editables = document.querySelectorAll("[grillaBalanceado=true]");
             for (var i = 0, len = editables.length; i < len; i++)
             {
                cant=cant+ parseFloat(editables[i].getAttribute("cantidad"));
@@ -327,6 +334,7 @@ function colorear_celdas_cantidad_sol_bal(id)
     
     var cantidad=$("#"+id).attr("cantidad").replaceAll(",",".");
     var cantidad_original= $("#"+id).attr("cantidad_historial");
+    
     if(cantidad_original==cantidad)
     {
         $("#"+id).removeClass("bg-red");       
@@ -346,6 +354,44 @@ function colorear_celdas_cantidad_sol_bal(id)
         $("#"+id).addClass("bg-green");         
     }
 }
+
+function colorear_celdas_cantidad_sol_bal_nutriente(id,res)
+{
+        var cantidad=$("#"+id).attr("cantidad").replaceAll(",",".");
+        var cantidad_original= $("#"+id).attr("cantidad_historial");
+      
+ 
+    if(cantidad_original==cantidad)
+    {
+        $("#"+id).removeClass("bg-red");       
+        $("#"+id).addClass("bg-white");       
+        $("#"+id).removeClass("bg-green");
+        $("#"+res).removeClass("bg-red");       
+        $("#"+res).addClass("bg-white");       
+        $("#"+res).removeClass("bg-green"); 
+    }
+    else if (cantidad_original>cantidad)
+    {
+        $("#"+id).addClass("bg-red");       
+        $("#"+id).removeClass("bg-white");       
+        $("#"+id).removeClass("bg-green");
+        $("#"+res).addClass("bg-red");       
+        $("#"+res).removeClass("bg-white");       
+        $("#"+res).removeClass("bg-green"); 
+    }
+    else
+    {
+        $("#"+id).removeClass("bg-red");       
+        $("#"+id).removeClass("bg-white");       
+        $("#"+id).addClass("bg-green"); 
+        $("#"+res).removeClass("bg-red");       
+        $("#"+res).removeClass("bg-white");       
+        $("#"+res).addClass("bg-green"); 
+    }
+}
+
+
+
 
 
 function get_mtp_bal_select()
@@ -501,13 +547,14 @@ function validar_datos_mtp_sol(){
         
         
             jsonNutriente = [];
-        for (var i = 1, len = grillaNutriente.length; i < len; i++)
+        for (var i = 0, len = grillaNutriente.length; i < len; i++)
         {
                 itemNutriente = {}
                 itemNutriente ["id"]            =   grillaNutriente[i].getAttribute("codigo");
                 itemNutriente ["descripcion"]   =   grillaNutriente[i].getAttribute("nutriente");
                 itemNutriente ["actual"]        =   grillaNutriente[i].getAttribute("cantidad_historial").toString().trim();
                 itemNutriente ["nuevo"]         =   grillaNutriente[i].getAttribute("cantidad").toString().trim();
+              
                 jsonNutriente.push(itemNutriente);
 
         }
@@ -669,6 +716,7 @@ function ir_pendientes_formulas_procesar_bal()
 function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod_formula)
 {
      window.location.hash = "SPENBAL";
+   
     $.ajax({
         type: "POST",
         url: ruta_consultas_bal + "consulta_gen_grilla_solicitud_mtp.jsp",
@@ -705,9 +753,10 @@ function ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod
                 
             });
 
-           
+ 
             
             cerrar_load();
+           
         },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
