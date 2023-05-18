@@ -361,20 +361,22 @@ function colorear_celdas_cantidad_sol_bal_nutriente(id,res)
         var cantidad_original= $("#"+id).attr("cantidad_historial");
       
  
-    if(cantidad_original==cantidad)
+    if(parseFloat(cantidad_original) === parseFloat(cantidad))
     {
         $("#"+id).removeClass("bg-red");       
         $("#"+id).addClass("bg-white");       
         $("#"+id).removeClass("bg-green");
+        
         $("#"+res).removeClass("bg-red");       
         $("#"+res).addClass("bg-white");       
         $("#"+res).removeClass("bg-green"); 
     }
-    else if (cantidad_original>cantidad)
+    else if (parseFloat(cantidad_original) > parseFloat(cantidad))
     {
         $("#"+id).addClass("bg-red");       
         $("#"+id).removeClass("bg-white");       
         $("#"+id).removeClass("bg-green");
+        
         $("#"+res).addClass("bg-red");       
         $("#"+res).removeClass("bg-white");       
         $("#"+res).removeClass("bg-green"); 
@@ -384,6 +386,7 @@ function colorear_celdas_cantidad_sol_bal_nutriente(id,res)
         $("#"+id).removeClass("bg-red");       
         $("#"+id).removeClass("bg-white");       
         $("#"+id).addClass("bg-green"); 
+        
         $("#"+res).removeClass("bg-red");       
         $("#"+res).removeClass("bg-white");       
         $("#"+res).addClass("bg-green"); 
@@ -552,14 +555,13 @@ function validar_datos_mtp_sol(){
                 itemNutriente = {}
                 itemNutriente ["id"]            =   grillaNutriente[i].getAttribute("codigo");
                 itemNutriente ["descripcion"]   =   grillaNutriente[i].getAttribute("nutriente");
-                itemNutriente ["actual"]        =   grillaNutriente[i].getAttribute("cantidad_historial").toString().trim();
                 itemNutriente ["nuevo"]         =   grillaNutriente[i].getAttribute("cantidad").toString().trim();
-              
+                itemNutriente ["actual"]        =   grillaNutriente[i].getAttribute("cantidad_historial").toString().trim();
                 jsonNutriente.push(itemNutriente);
 
         }
         var json_Nutriente = JSON.stringify(jsonNutriente);
-            console.log(jsonObj)
+           
             console.log(jsonNutriente)
         
         
@@ -1085,14 +1087,14 @@ function activa_desactivar_mtp_bal(itemcode)
         {
             if (data.estado == 'A')
             {
-                $('#btn_mtp'+itemcode).val('Desactivar') 
+                $('#btn_mtp'+itemcode).val('DESACTIVAR') 
                 
                 $('#btn_mtp'+itemcode).removeClass('bg-success') 
                 $('#btn_mtp'+itemcode).addClass('bg-danger') 
                 
             }
             else{
-                $('#btn_mtp'+itemcode).val('Activar')
+                $('#btn_mtp'+itemcode).val('ACTIVAR')
                 
                 $('#btn_mtp'+itemcode).removeClass('bg-danger') 
                 $('#btn_mtp'+itemcode).addClass('bg-success')         
@@ -1127,4 +1129,93 @@ function carga_grilla_nutrientes() {
         }
     });
 
+}
+function irEncolamientoMTP()
+{
+    window.location.hash = "SPENBAL";
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_bal + "contenedor_encolamiento_mtp.jsp",
+    
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#contenedor_principal").html(data);
+            $("#tablaMTP").dataTable({language: {sUrl: "js/Spanish.txt"}});
+             cerrar_load();
+
+        }});
+}
+function ir_grilla_encolamientoMTP()
+{
+     $.ajax({
+        type: "POST",
+        data:({
+            father:          $('#select_formula').val()}),
+       
+        url: ruta_consultas_bal + "consulta_bal_encolamientoMTP.jsp",
+         beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#div_grilla").html("");
+            $("#div_grilla").html(data.grillaEncolamiento);
+            $("#tb_formulacion").DataTable({ 
+                "scrollX": true,
+                paging: false,
+                ordering:false,
+                        responsive: true,
+                 "language":
+                        {
+                            "sUrl": "js/Spanish.txt"
+                        },
+                
+            });
+            
+             
+           cerrar_load();
+        },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
+                  location.reload();
+             }
+         }
+    });
+
+}
+function activa_desactivar_encolamientoMTP(itemcode)
+        {
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_bal + 'control_registro_solicitud_mtp_bal_estado_encolamientoMTP.jsp',
+        data: ({
+            itemcode:                   itemcode,
+            cod_formula:          $('#select_formula').val()}),
+
+        success: function (data)
+        {
+            if (data.estado == 'A')
+            {
+                $('#BTN'+itemcode).val('DESBLOQUEAR') 
+                
+                $('#BTN'+itemcode).removeClass('bg-success') 
+                $('#BTN'+itemcode).addClass('bg-danger') 
+                
+            }
+            else{
+                $('#BTN'+itemcode).val('BLOQUEAR')
+                
+                $('#BTN'+itemcode).removeClass('bg-danger') 
+                $('#BTN'+itemcode).addClass('bg-success')         
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
 }

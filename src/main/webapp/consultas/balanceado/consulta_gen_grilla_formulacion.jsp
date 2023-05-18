@@ -123,14 +123,14 @@
                    + "  contenteditable=\"true\" "
                    + "  id=\"nutriente"+rs_GM2.getString("id_nutriente")+"\"  "
                    + "  grillaNutriente=\"true\""
-                   + "  cantidad_historial=\""+ rs_GM2.getString("actual") .replaceAll(",", ".")+"\"  "
-                   + "  cantidad=\""+rs_GM2.getString("nuevo") .replaceAll(",", ".")+"\"   "
+                   + "  cantidad_historial=\""+ formatea2.format(rs_GM2.getDouble("actual")) .replaceAll(",", ".")+"\"  "
+                   + "  cantidad=\""+ formatea2.format(rs_GM2.getDouble("nuevo")) .replaceAll(",", ".")+"\"   "
                    + "  codigo= \""+rs_GM2.getString("id_nutriente")+"\"  "
-                   + "  nutriente= \""+rs_GM2.getString("desc_nutriente")+"\"> "+ rs_GM2.getString("actual")+" </td>"
+                   + "  nutriente= \""+rs_GM2.getString("desc_nutriente")+"\"> "+formatea2.format( rs_GM2.getDouble("nuevo")) +" </td>"
                    
+                 
                    
-                   
-                   + "<td style=\"font-weight:bold\" > "+rs_GM2.getString("actual")+"</td>"
+                   + "<td style=\"font-weight:bold\" > "+  formatea2.format(rs_GM2.getDouble("actual"))+"</td>"
                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+rs_GM2.getString("id_nutriente")+"\" > 0  </td>"
                     + "</tr>";
             
@@ -145,6 +145,7 @@
         rs_GM.close();
     } catch (Exception e) {
         ob.put("grilla", e.toString());  
+        ob.put("grillaNutriente",e.toString());
     } finally {
         connection.close();
         out.print(ob ); 
