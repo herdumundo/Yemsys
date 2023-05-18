@@ -118,6 +118,9 @@
             <div id="div_grilla2" class="bg-navy">
                 
             </div>
+             <div   id="divGrillaNutrientes">
+                
+            </div>
 
 <%
     } catch (Exception e) {
