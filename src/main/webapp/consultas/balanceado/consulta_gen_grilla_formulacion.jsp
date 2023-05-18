@@ -100,9 +100,11 @@
                 + "<tr>"
                 + " <th  style='color: #fff; background: black;' >CODIGO</th>       "
                 + " <th  style='color: #fff; background: black;' >NUTRIENTE</th>     "
-                + " <th  style='color: #fff; background: black;' >ACTUAL</th>       "
+                + " <th  style='color: #fff; background: black;' >Unidad de Medida</th>       "
                 + " <th  style='color: #fff; background: black;' >NUEVO</th>        "
-                 +"</tr>"      
+                + " <th  style='color: #fff; background: black;' >ACTUAL</th>       "
+                + " <th  style='color: #fff; background: black;' >VARIACION</th>       "
+                +"</tr>"      
                 + " </thead> "
                 + " <tbody >";
         while (rs_GM2.next()) 
@@ -112,21 +114,24 @@
             
                     + "<tr > "
                     
-                   + "<td style=\"font-weight:bold\" > " + rs_GM2.getString("id_nutriente") + "</td>"
-                   + "<td style=\"font-weight:bold\">  " + rs_GM2.getString("desc_nutriente") + "</td>"
-                   + "<td style=\"font-weight:bold\" > " + rs_GM2.getString("nuevo") + "</td>"
+                   + "<td style=\"font-weight:bold\" > " +rs_GM2.getString("id_nutriente")+ "</td>"
+                   + "<td style=\"font-weight:bold\">  " +rs_GM2.getString("desc_nutriente")+ "</td>"
+                   + "<td style=\"font-weight:bold\" > " +rs_GM2.getString("unidad_de_medida")+ "</td>"
                    + "<td  "
                    + "  class='single_line2 only '   "
                    + "  style=\"font-weight:bold\"  "
                    + "  contenteditable=\"true\" "
-                   + "  id=\"nutriente"  + rs_GM2.getString("id_nutriente") +"\"  "
+                   + "  id=\"nutriente"+rs_GM2.getString("id_nutriente")+"\"  "
                    + "  grillaNutriente=\"true\""
-                   + "  cantidad_historial=\""+ rs_GM2.getString("nuevo") .replaceAll(",", ".") +"\"  "
-                   + "  cantidad=\""+ rs_GM2.getString("nuevo") .replaceAll(",", ".") +"\"   "
-                   + "  codigo= \""+  rs_GM2.getString("id_nutriente")   +"\"  "
-                   + "  nutriente= \""+  rs_GM2.getString("desc_nutriente")   +"\"> "+ rs_GM2.getString("nuevo")+" </td>"
-                    
+                   + "  cantidad_historial=\""+ formatea2.format(rs_GM2.getDouble("actual")) .replaceAll(",", ".")+"\"  "
+                   + "  cantidad=\""+ formatea2.format(rs_GM2.getDouble("nuevo")) .replaceAll(",", ".")+"\"   "
+                   + "  codigo= \""+rs_GM2.getString("id_nutriente")+"\"  "
+                   + "  nutriente= \""+rs_GM2.getString("desc_nutriente")+"\"> "+formatea2.format( rs_GM2.getDouble("nuevo")) +" </td>"
                    
+                 
+                   
+                   + "<td style=\"font-weight:bold\" > "+  formatea2.format(rs_GM2.getDouble("actual"))+"</td>"
+                   + "<td style=\"font-weight:bold\"  id=\"resnutriente"+rs_GM2.getString("id_nutriente")+"\" > 0  </td>"
                     + "</tr>";
             
            
@@ -140,6 +145,7 @@
         rs_GM.close();
     } catch (Exception e) {
         ob.put("grilla", e.toString());  
+        ob.put("grillaNutriente",e.toString());
     } finally {
         connection.close();
         out.print(ob ); 

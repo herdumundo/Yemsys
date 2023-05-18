@@ -367,6 +367,7 @@ function visualizar_detalle_formulacion_bal(){
             }
         }
         ir_pendientes_solicitud_ingredientes_bal(ids,cod_formulas,id_pedido,cod_formula);
+        
  }
  
  

@@ -72,17 +72,18 @@
 
         sourceDataTableNutriente.addColumnMetadata("id",             java.sql.Types.VARCHAR);
         sourceDataTableNutriente.addColumnMetadata("descripcion",     java.sql.Types.VARCHAR);
+         sourceDataTableNutriente.addColumnMetadata("nuevo",        java.sql.Types.VARCHAR);
         sourceDataTableNutriente.addColumnMetadata("actual",         java.sql.Types.VARCHAR);
-        sourceDataTableNutriente.addColumnMetadata("nuevo",        java.sql.Types.VARCHAR);
+
         
 
         for (nutrientes_mtp_bal nutri : nutriente) {
             sourceDataTableNutriente.addRow(
                     nutri.id.trim() ,
                     nutri.descripcion,
-                    nutri.actual.trim() ,
-                    nutri.nuevo.trim() 
-                    
+                    nutri.nuevo.trim() ,
+                    nutri.actual.trim()
+                                       
             );
         }
         

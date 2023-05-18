@@ -30,7 +30,9 @@
         int cantidad_actual = 0;
 
         rsBalanceados = stBalanceados.executeQuery("  exec  [mae_bal_pry3_nuevo] @id_array='" + ids + "', @id='" + id + "', @formula_array='" + cod_formulas + "' , @formula='" + cod_formula + "' ");
-        rsNutriente = stNutrientes.executeQuery("select * from mae_bal_mtp_det_solicitud_nutrientes where id_cab=" + id);
+        rsNutriente = stNutrientes.executeQuery(" select a.id_nutriente,a.desc_nutriente,b.unidad_de_medida,a.nuevo,a.actual"
+        +" from   mae_bal_mtp_det_solicitud_nutrientes a inner join mae_bal_mtp_nutrientes b on a.id_nutriente=b.id "  
+        +"where id_cab='"+ id+"'");
 
         cabeceraBalanceados = " <table id='tb_formulacion_det'  class=' table-bordered compact display' style='width:100%' >"
                 + "<thead>"
@@ -140,32 +142,42 @@
                 + "</tr>"
                 + "<tr>"
                 + " <th  style='color: #fff; background: black;' >NRO.</th>      "
-                + " <th  style='color: #fff; background:  black;' >VITAMINA</th>      "
+                + " <th  style='color: #fff; background:  black;' >NUTRIENTE</th>      "
+                + " <th  style='color: #fff; background: black;' >Unidad de Medida</th>       "
+               + " <th  class='text-center' style='color: #fff; background: black;' >ACTUAL</th>      "
                 + " <th  class='text-center' style='color: #fff; background: black;' >ANTERIOR</th>      "
-                + " <th  class='text-center' style='color: #fff; background: black;' >ACTUAL</th>      "
+                + " <th  style='color: #fff; background: black;' >VARIACION</th>       "
                 + " </thead> "
                 + " <tbody >";
         while (rsNutriente.next()) {
             String colorCeldaNutriente = "";
+              
 
               if (rsNutriente.getFloat("actual") < rsNutriente.getFloat("nuevo")) {
-                colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+                colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+            
+            
             } else if (rsNutriente.getFloat("actual") > rsNutriente.getFloat("nuevo")) {
 
-                colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
-            }
-            else {
+                colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+            } 
+                else {
                          colorCeldaNutriente =  rsNutriente.getString("nuevo")  ;
-
+                         
              }
-
+             
             
             trNutrientes = trNutrientes
                     + "<tr > "
                     + "<td  style=\"font-weight:bold\" > " + rsNutriente.getString("id_nutriente") + "</td>"
                     + "<td  style=\"font-weight:bold\">  " + rsNutriente.getString("desc_nutriente") + "</td>"
+                    + "<td style=\"font-weight:bold\" > " + rsNutriente.getString("unidad_de_medida") + "</td>"
                     + "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"
                     + "<td class='text-center' style=\"font-weight:bold\">  " +colorCeldaNutriente+ "</td>"
+                    
+                    /*+ "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"*/
+                    
+                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+ rsNutriente.getString("id_nutriente") +"\" > " + (rsNutriente.getDouble ("actual") - rsNutriente.getDouble("nuevo")) + "</td>"
                     + "</tr>";
 
         }

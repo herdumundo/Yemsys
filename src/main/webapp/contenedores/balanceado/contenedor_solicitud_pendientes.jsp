@@ -77,6 +77,7 @@
                     <td><%=rs.getString("motivo")%></td>
                     <td><%=rs.getString("usuario")%></td>
                     <td><%=rs.getString("plazo_evaluacion")%></td>
+                    
                     <td><%=rs.getString("toneladas_desc")%></td>
                     <td><%=rs.getString("desc_estado")%></td>
                     <td><%=rs.getString("revision")%></td>
