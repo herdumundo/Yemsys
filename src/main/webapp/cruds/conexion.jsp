@@ -15,11 +15,11 @@
 <%@page import="org.json.JSONArray"%>
 
 <%
-    String user = "sa";
-   // String user = "cch";
+   //  String user = "sa";
+   String user = "cch";
     String passwd = "Paraguay2017";
-      //String db = "zz_prueba_GrupoMaehara";
-    String db = "zz_prueba_GrupoMaehara2";
+    // String db = "GrupoMaehara";
+     String db = "zz_prueba_GrupoMaehara2";
     // String db = "GrupoMaehara"; 
     
     
