@@ -117,20 +117,22 @@
                    + "<td style=\"font-weight:bold\" > " +rs_GM2.getString("id_nutriente")+ "</td>"
                    + "<td style=\"font-weight:bold\">  " +rs_GM2.getString("desc_nutriente")+ "</td>"
                    + "<td style=\"font-weight:bold\" > " +rs_GM2.getString("unidad_de_medida")+ "</td>"
+                  
                    + "<td  "
                    + "  class='single_line2 only '   "
                    + "  style=\"font-weight:bold\"  "
                    + "  contenteditable=\"true\" "
                    + "  id=\"nutriente"+rs_GM2.getString("id_nutriente")+"\"  "
                    + "  grillaNutriente=\"true\""
-                   + "  cantidad_historial=\""+ formatea2.format(rs_GM2.getDouble("actual")) .replaceAll(",", ".")+"\"  "
+                   + "  cantidad_historial=\""+ formatea2.format(rs_GM2.getDouble("nuevo")) .replaceAll(",", ".")+"\"  "
                    + "  cantidad=\""+ formatea2.format(rs_GM2.getDouble("nuevo")) .replaceAll(",", ".")+"\"   "
                    + "  codigo= \""+rs_GM2.getString("id_nutriente")+"\"  "
                    + "  nutriente= \""+rs_GM2.getString("desc_nutriente")+"\"> "+formatea2.format( rs_GM2.getDouble("nuevo")) +" </td>"
                    
                  
                    
-                   + "<td style=\"font-weight:bold\" > "+  formatea2.format(rs_GM2.getDouble("actual"))+"</td>"
+                   + "<td style=\"font-weight:bold\" > "+  formatea2.format(rs_GM2.getDouble("nuevo"))+"</td>"
+                  
                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+rs_GM2.getString("id_nutriente")+"\" > 0  </td>"
                     + "</tr>";
             

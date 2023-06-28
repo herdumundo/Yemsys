@@ -143,9 +143,9 @@
                 + "<tr>"
                 + " <th  style='color: #fff; background: black;' >NRO.</th>      "
                 + " <th  style='color: #fff; background:  black;' >NUTRIENTE</th>      "
-                + " <th  style='color: #fff; background: black;' >Unidad de Medida</th>       "
-               + " <th  class='text-center' style='color: #fff; background: black;' >ACTUAL</th>      "
-                + " <th  class='text-center' style='color: #fff; background: black;' >ANTERIOR</th>      "
+                + " <th  style='color: #fff; background: black;' >UNIDAD DE MEDIDA</th>       "
+               + " <th  class='text-center' style='color: #fff; background: black;' >ANTERIOR</th>      "
+                + " <th  class='text-center' style='color: #fff; background: black;' >NUEVO</th>      "
                 + " <th  style='color: #fff; background: black;' >VARIACION</th>       "
                 + " </thead> "
                 + " <tbody >";
@@ -154,12 +154,12 @@
               
 
               if (rsNutriente.getFloat("actual") < rsNutriente.getFloat("nuevo")) {
-                colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+                colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
             
             
             } else if (rsNutriente.getFloat("actual") > rsNutriente.getFloat("nuevo")) {
 
-                colorCeldaNutriente = "<h5><span class='badge badge-danger right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
+                colorCeldaNutriente = "<h5><span class='badge badge-primary right'>" + rsNutriente.getString("nuevo").replace(".", ",") + "</span></h5> ";
             } 
                 else {
                          colorCeldaNutriente =  rsNutriente.getString("nuevo")  ;
@@ -177,7 +177,7 @@
                     
                     /*+ "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"*/
                     
-                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+ rsNutriente.getString("id_nutriente") +"\" > " + (rsNutriente.getDouble ("actual") - rsNutriente.getDouble("nuevo")) + "</td>"
+                    + "<td style=\"font-weight:bold\"  id=\"resnutriente"+ rsNutriente.getString("id_nutriente") +"\" > " + (rsNutriente.getDouble ("nuevo") - rsNutriente.getDouble("actual")) + "</td>"
                     + "</tr>";
 
         }
