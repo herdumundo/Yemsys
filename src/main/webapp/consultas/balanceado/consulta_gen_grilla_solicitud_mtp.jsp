@@ -30,7 +30,7 @@
         int cantidad_actual = 0;
 
         rsBalanceados = stBalanceados.executeQuery("  exec  [mae_bal_pry3_nuevo] @id_array='" + ids + "', @id='" + id + "', @formula_array='" + cod_formulas + "' , @formula='" + cod_formula + "' ");
-        rsNutriente = stNutrientes.executeQuery(" select a.id_nutriente,a.desc_nutriente,b.unidad_de_medida,a.nuevo,a.actual"
+        rsNutriente = stNutrientes.executeQuery(" select a.id_nutriente,a.desc_nutriente,b.uMedida,a.nuevo,a.actual"
         +" from   mae_bal_mtp_det_solicitud_nutrientes a inner join mae_bal_mtp_nutrientes b on a.id_nutriente=b.id "  
         +"where id_cab='"+ id+"'");
 
@@ -171,7 +171,7 @@
                     + "<tr > "
                     + "<td  style=\"font-weight:bold\" > " + rsNutriente.getString("id_nutriente") + "</td>"
                     + "<td  style=\"font-weight:bold\">  " + rsNutriente.getString("desc_nutriente") + "</td>"
-                    + "<td style=\"font-weight:bold\" > " + rsNutriente.getString("unidad_de_medida") + "</td>"
+                    + "<td style=\"font-weight:bold\" > " + rsNutriente.getString("uMedida") + "</td>"
                     + "<td  class='text-center' style=\"font-weight:bold\">  " + rsNutriente.getString("actual") + "</td>"
                     + "<td class='text-center' style=\"font-weight:bold\">  " +colorCeldaNutriente+ "</td>"
                     

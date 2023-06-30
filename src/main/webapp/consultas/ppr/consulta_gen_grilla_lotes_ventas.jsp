@@ -33,7 +33,7 @@
         
         rs2 = st2.executeQuery("   select  t2.capacidad, T1.*	"
                 + " from v_mae_ppr_saldo_aves_global2 T1 INNER JOIN   ppr_pry_capacidad_predescarte T2 ON t1.mes=t2.id 	"
-        + "    where   fecha between dateadd(MONTH,-1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  ))  and  dateadd(MONTH,1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  )) ");
+        + "    where   fecha between dateadd(MONTH,-1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  ))  and  dateadd(MONTH,1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  )) order by anho,mes ");
        
         
         rs4 = st4.executeQuery("  select venta,mesname,anho from ( "
@@ -68,6 +68,8 @@
                 + " <th  style='color: #fff; background: black;font-weight:bold' >  Dia             </th>   "
                 + " <th  style='color: #fff; background: black;' >                  Entrada         </th>   "
                 + " <th  style='color: #fff; background: black;'>                   Salida          </th>   "
+                + " <th  style='color: #fff; background: black;'>                   Fecha salida calculo ventas </th>   "
+                + " <th  style='color: #fff; background: black;'>                   Diferencias dias </th>   "
                 + "</tr>"
                 + "</thead> <tbody >";
       
@@ -101,16 +103,18 @@
             +"      <td>"+rs_GM.getString("dias")                               +"</td>" 
             +"      <td>"+rs_GM.getString("entrada_form")                       +"</td>" 
             +"      <td>"+rs_GM.getString("salida_form")                        +"</td>" 
+            +"      <td>"+rs_GM.getString("fechaSalidaPryFormat")                        +"</td>" 
+            +"      <td>"+rs_GM.getString("diferenciaDias")                        +"</td>" 
             +"  </tr>";
         }
         String row="";
         int cont=1; 
         while (rs2.next()) 
         {
-            row="<td  style='color: white; ' > <h6><span class='badge badge-dark right '>"+rs2.getString("nameMes")+"</span></h6> </td>";
+            row="<td  style='color: white; ' > <h6><span class='badge badge-dark right '>"+rs2.getString("nameMes")+"/"+formatea.format(rs2.getInt("capacidad"))+"</span></h6> </td>";
             if(cont==2)
             {
-                row="<td  style='color: black; ' > <h6><span class='badge badge-success right '>"+rs2.getString("nameMes")+"</span></h6> </td>";
+                row="<td  style='color: black; ' > <h6><span class='badge badge-success right '>"+rs2.getString("nameMes")+"/"+formatea.format(rs2.getInt("capacidad"))+"</span></h6> </td>";
                  mes=rs2.getString("nameMes");
             }
             tr2 = tr2
@@ -121,11 +125,11 @@
                     
                     if(rs2.getInt(String.valueOf(i))>=rs2.getInt("capacidad"))
                     {
-                        tr2=tr2+"<td><span class='badge badge-danger right '>"+formatea.format(rs2.getInt(String.valueOf(i)))+"</span> </td>" ;  
+                        tr2=tr2+"<td><span class='badge badge-danger right '  title='Disponibilidad: "+formatea.format((rs2.getInt("capacidad")-rs2.getInt(String.valueOf(i))))+"'>"+formatea.format(rs2.getInt(String.valueOf(i)))+"</span> </td>" ;  
                     }
                     else if(rs2.getInt(String.valueOf(i))>=(rs2.getInt("capacidad")-5000))
                     {
-                        tr2=tr2+"<td><span class='badge badge-warning right '>"+formatea.format(rs2.getInt(String.valueOf(i)))+"</span> </td>" ;  
+                        tr2=tr2+"<td><span class='badge badge-warning right ' title='Disponibilidad: "+formatea.format((rs2.getInt("capacidad")-rs2.getInt(String.valueOf(i))))+"'>"+formatea.format(rs2.getInt(String.valueOf(i)))+"</span> </td>" ;  
                     }
                     else
                     {
@@ -138,7 +142,7 @@
            
             cont++;
         }
-              while (rs4.next()) 
+        while (rs4.next()) 
         {
             tr4 = tr4
             + " <tr>"
@@ -166,7 +170,7 @@
          String cabecera2 = "   "
                 + "<table id='tabla_meses'  class=' tabla tabla-con-borde table-striped table-condensed compact hover dataTable  '  >"
                 + "<thead>" 
-                + " <th  style='color: #fff; background: black;' >Mes</th>     "
+                + " <th  style='color: #fff; background: black;' >Mes/Capacidad</th>     "
                 + " <th class='text-center' >1</th>     "
                 + " <th class='text-center' >2</th>     "
                 + " <th class='text-center' >3</th>     "
