@@ -20,14 +20,13 @@
     String grilla_html = "";
   
     String cabecera = "";
-    ResultSet rs_GM,rs_GM2;
+    ResultSet rs_GM;
         Statement st = connection.createStatement();
-        Statement st2 = connection.createStatement();
      try 
      {
         String father =  request.getParameter("father");
 
-            rs_GM = st.executeQuery("SELECT  * from v_mae_bal_mtp_encolamiento where cod_formula='"+ father +"' ");
+            rs_GM = st.executeQuery("SELECT  * from v_mae_bal_mtp_encolamiento  where cod_formula='"+ father +"' OR COD_FORMULA IS NULL");
 
         cabecera = " <table id='tb_formulacion' class=' table-bordered compact display' style='width:100%'>"
                 + "<thead>"
@@ -44,7 +43,8 @@
              String estado = rs_GM.getString("estado");
              String colorBoton="bg-danger";
              String valorBoton ="DESBLOQUEAR";
-              if (estado.equals("BLOQUEAR")){
+              
+             if (estado.equals("BLOQUEAR")){
                 colorBoton="bg-success";
                 valorBoton = "BLOQUEAR";
                 }

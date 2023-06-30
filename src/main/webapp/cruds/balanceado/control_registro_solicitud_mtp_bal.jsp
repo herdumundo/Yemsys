@@ -72,18 +72,16 @@
 
         sourceDataTableNutriente.addColumnMetadata("id",             java.sql.Types.VARCHAR);
         sourceDataTableNutriente.addColumnMetadata("descripcion",     java.sql.Types.VARCHAR);
-         sourceDataTableNutriente.addColumnMetadata("nuevo",        java.sql.Types.VARCHAR);
         sourceDataTableNutriente.addColumnMetadata("actual",         java.sql.Types.VARCHAR);
-
+         sourceDataTableNutriente.addColumnMetadata("nuevo",        java.sql.Types.VARCHAR);
         
 
         for (nutrientes_mtp_bal nutri : nutriente) {
             sourceDataTableNutriente.addRow(
                     nutri.id.trim() ,
                     nutri.descripcion,
-                    nutri.nuevo.trim() ,
-                    nutri.actual.trim()
-                                       
+                    nutri.actual.trim(),
+                    nutri.nuevo.trim() 
             );
         }
         
@@ -95,25 +93,23 @@
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call mae_bal_crear_solicitud_mtp_nuevo05042023(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? )}");
         callableStatement.setObject(1,  sourceDataTable);
-        
-        
-        callableStatement.setString(2,  fecha_solicitud);
-        callableStatement.setString(3,  recomendado);
-        callableStatement.setString(4,  motivo);
-        callableStatement.setString(5,  usuario ); 
-        callableStatement.setString(6,  desc_formula );
-        callableStatement.setString(7,  toneladas );
-        callableStatement.setString(8,  cod_formula );
-        callableStatement.setString(9, resultado_esperado); 
-        callableStatement.setString(10, impacto);
-        callableStatement.setString(11, plazo_evaluacion);
-        callableStatement.setString(12, indicadores ); 
-        callableStatement.setString(13, urgente); 
-        callableStatement.setString(14, area); 
-        callableStatement.setInt   (15, Integer.parseInt(id_usuario)); 
-        callableStatement.setString(16, observacion);
-        callableStatement.setString(17, aviario);
-        callableStatement.setObject(18, sourceDataTableNutriente);
+        callableStatement.setObject(2, sourceDataTableNutriente);
+        callableStatement.setString(3,  fecha_solicitud);
+        callableStatement.setString(4,  recomendado);
+        callableStatement.setString(5,  motivo);
+        callableStatement.setString(6,  usuario ); 
+        callableStatement.setString(7,  desc_formula );
+        callableStatement.setString(8,  toneladas );
+        callableStatement.setString(9,  cod_formula );
+        callableStatement.setString(10, resultado_esperado); 
+        callableStatement.setString(11, impacto);
+        callableStatement.setString(12, plazo_evaluacion);
+        callableStatement.setString(13, indicadores ); 
+        callableStatement.setString(14, urgente); 
+        callableStatement.setString(15, area); 
+        callableStatement.setInt   (16, Integer.parseInt(id_usuario)); 
+        callableStatement.setString(17, observacion);
+        callableStatement.setString(18, aviario);
 
         
          

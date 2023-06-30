@@ -16,10 +16,10 @@
 
 <%
    //  String user = "sa";
-   String user = "cch";
+   String user = "sa";
     String passwd = "Paraguay2017";
     // String db = "GrupoMaehara";
-     String db = "zz_prueba_GrupoMaehara2";
+     String db = "zz_prueba_GrupoMaehara";
     // String db = "GrupoMaehara"; 
     
     
@@ -45,11 +45,12 @@
                     break;
                 default :
                        System.out.println(se.getErrorCode());
+                       out.print(se.toString());
              }
         }
         catch (ClassNotFoundException e)
         {
-            
+              out.print(e.toString());
         }
  
 

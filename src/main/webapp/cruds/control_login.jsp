@@ -8,9 +8,7 @@
 <%@page import="org.apache.http.client.methods.HttpPost"%>
 <%@page import="org.apache.http.message.BasicNameValuePair"%>
 <%@page import="org.apache.http.NameValuePair"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="org.apache.http.util.EntityUtils"%>
+ <%@page import="org.apache.http.util.EntityUtils"%>
 <%@page import="org.apache.http.HttpResponse"%>
 <%@page import="org.apache.http.impl.client.HttpClientBuilder"%>
 <%@page import="org.apache.http.client.methods.HttpGet"%>
@@ -45,26 +43,6 @@
    
         
     try {
-        /*
-  ///////////VALIDACION CON TOKEN POR NODE.JS        
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httpget = new HttpPost("http://localhost:8000/login");
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        
-        params.add(new BasicNameValuePair("username", usu));
-        params.add(new BasicNameValuePair("password", cla));
-        
-        httpget.setEntity(new UrlEncodedFormEntity(params));
-        
-        HttpResponse responses = httpClient.execute(httpget);
-        responseString = EntityUtils.toString(responses.getEntity());
-        JSONObject jsonObj = new JSONObject(responseString);
-        Token = jsonObj.getString("token");
-        
-        */
-        
-        
-        
 //////////////////////////////////////////////////////////////////////////////////////////////
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call stp_mae_yemsys_login30032023(?,?,?,?,?,?,?,?,?,?)}");
@@ -90,7 +68,7 @@
         sector                 = callableStatement.getString("sector");
 
     } catch (Exception e) {
-
+            out.print(e.toString());
     } finally {
         if (tipo_respuesta == 0) {
             response.sendRedirect("../login_error.jsp");
@@ -161,6 +139,4 @@
         }
         connection.close();
     }
-
-
 %>
