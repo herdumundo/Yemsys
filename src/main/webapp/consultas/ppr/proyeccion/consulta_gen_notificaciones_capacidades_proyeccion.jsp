@@ -6,8 +6,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page contentType="application/json; charset=utf-8" %>
-<%@include  file="../../chequearsesion.jsp" %>
-<%@include  file="../../cruds/conexion.jsp" %> 
+<%@include  file="../../../chequearsesion.jsp" %>
+<%@include  file="../../../cruds/conexion.jsp" %> 
 <%    JSONObject ob = new JSONObject();
      try 
      {

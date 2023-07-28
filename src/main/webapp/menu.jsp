@@ -427,12 +427,13 @@
             <script src="js/balanceado/balanceado_datos.js" type="text/javascript"></script>
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
             <script src="js/itkv/itkv_funciones.js" type="text/javascript"></script>
+            <script src="js/vimar/vimarDatos.js" type="text/javascript"></script>
+            
             <script src="plugins/autoNumeric.js" type="text/javascript"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script src="js/vimar/vimarDatos.js" type="text/javascript"></script>
  
  
         
