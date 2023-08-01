@@ -428,6 +428,7 @@
             <script src="js/balanceado/balanceado_datos_editar.js" type="text/javascript"></script>
             <script src="js/itkv/itkv_funciones.js" type="text/javascript"></script>
             <script src="js/vimar/vimarDatos.js" type="text/javascript"></script>
+            <script src="js/ppr/proyeccion/ppr_funcionesPry.js" type="text/javascript"></script>
             
             <script src="plugins/autoNumeric.js" type="text/javascript"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>

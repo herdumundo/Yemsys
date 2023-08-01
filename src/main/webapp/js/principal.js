@@ -26,6 +26,11 @@ var rutaApiCrudMaeharaPtc       = "./cruds/api/ptc/";
 var rutaVimarContenedores   = "./contenedores/vimar/";
 var rutaApiConsultaVimar       = "./consultas/api/vimar/";
  
+ 
+ var rutaContenedoresPprProyeccion = "./contenedores/contenedores_ppr/proyeccion/";
+ var rutaConsultasPprProyeccion = "./consultas/ppr/proyeccion/";
+ var crudPprProyeccion = "./cruds/ppr/proyeccion/";
+
 
 $(document).ready(function () 
 {
