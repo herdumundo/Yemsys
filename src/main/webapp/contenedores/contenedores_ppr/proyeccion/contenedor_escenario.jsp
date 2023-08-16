@@ -5,13 +5,12 @@
 <%@ page session="true" %>
 <%@include  file="../../../versiones.jsp" %>
 <%@include file="../../../cruds/conexion.jsp" %>
-
 <%@include  file="../../../chequearsesion.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%        String version = "Test";
+<%       
+    String version = "Test";
     String desc_version = "Test";
-    
 %>
 
 <head>   
@@ -28,11 +27,11 @@
                 ppr
             </div>
         </div>
-        <center><b>LISTADO DE PADRONES DE PRODUCCIÓN PRIMARIA</b></center>
+        <center><b>LISTADO DE ESCENARIOS DE PRODUCCIÓN PRIMARIA</b></center>
     </div>
 </div>      
 
-<input type="button" value="Crear nuevo padron" class="btn btn-danger" onclick="cuadroCreacionPadron()">
+<input type="button" value="Crear nuevo escenario" class="btn btn-danger" onclick="cuadroCreacionEscenario()">
 
 
 <div id="div_grilla_pry">

@@ -14,14 +14,11 @@ import ptc.*;
  */
 public class solicitud_mtp1 {
 
-    public String accion;
-    public String codigo_formula;
-    public String codigo_mtp;
-    public String descripcion;
-    public String cantidad_nueva;
-    public String cantidad_actual;
-    public String costo;
-    public String grupo;
+     public String padron_id;
+    public String edad;
+    public String viabilidad;
+    public String mortandad_diaria;
+    public String productividad;
 
 }
 /*

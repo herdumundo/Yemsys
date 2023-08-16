@@ -3,18 +3,15 @@
     Created on : 26/01/2022, 16:40:32
     Author     : aespinola
 --%>
-<%@page import="bal.solicitud_mtp1"%>
-<%@page import="org.json.JSONObject"%>
+<%@page import="ppr.grillaPadron"%>
 <%@page import="com.microsoft.sqlserver.jdbc.SQLServerDataTable"%>
+ <%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Statement"%>
 <%@page import="java.sql.CallableStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.io.IOException"%>
-<%@page import="com.google.gson.JsonArray"%>
-<%@page import="bal.solicitud_mtp"%>
-<%@page import="com.fasterxml.jackson.databind.ObjectMapper"%>
-<%@include  file="../../../chequearsesion.jsp" %>
-<%@include  file="../../../cruds/conexion.jsp" %>
-<%@page contentType="application/json; charset=utf-8" %>
+<%@page import="org.json.JSONObject"%>
+<%@page contentType="application/json; charset=utf-8"%>
+<%@include file="../../../cruds/conexion.jsp" %>
 <%    JSONObject ob = new JSONObject();
 
     try {
@@ -24,9 +21,9 @@
         String json = request.getParameter("json_string");
 
         int tipo_respuesta = 0;
-      /*    String mensaje = "";
+        String mensaje = "";
 
-
+ 
         ObjectMapper mapper = new ObjectMapper();
         grillaPadron[] pp1 = mapper.readValue(json, grillaPadron[].class);
         SQLServerDataTable sourceDataTable = new SQLServerDataTable();
@@ -46,7 +43,7 @@
                     mtp.productividad.trim()
             );
         }
-      connection.setAutoCommit(false);
+     connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call ppr_pry_update_padron(?,?,?,?)}");
         callableStatement.setInt(1, Integer.parseInt(id));
@@ -64,9 +61,9 @@
         } else {
             connection.commit();
             //  connection.rollback();
-        }*/
-          ob.put("mensaje", json);
-        ob.put("tipo_respuesta", 0);
+        } 
+       ob.put("mensaje", mensaje);
+        ob.put("tipo_respuesta", tipo_respuesta);
     } catch (Exception e) {
         ob.put("mensaje", e.getMessage());
         ob.put("tipo_respuesta", 0);
