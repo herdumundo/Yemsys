@@ -30,7 +30,7 @@
             + " FROM "
             + " v_ppr_pry_productividad_semanas t1 "
             + " inner join  ppr_pry_cab t2 on t1.id=t2.id and t1.semanas=t2.semana_lote_barra"
-            + "  where      t1.fecha_predescarte>'"+fecha+"'  and  t1.fecha_produccion<= '"+fecha+"' ");
+            + "  /*where      t1.fecha_predescarte>'"+fecha+"'  and  t1.fecha_produccion<= '"+fecha+"'*/ ");
     rs = pst.executeQuery();
     
     
@@ -96,23 +96,7 @@
                 else
                 {
                     clon="<h7><span class='badge badge-success right'>"+rs.getString("ubicacion")+"</span></h7>";
-                   /* if(rs.getString("clonado").equals("SI"))
-                    {
-                        clon="<h7><span class='badge badge-danger right'>"+rs.getString("ubicacion")+"</span></h7>";
-                    }
-                    else
-                    {   ubicacion="<h7><span class='badge badge-success right'>"+rs.getString("ubicacion")+"</span></h7>";
-                        clon=ubicacion+ "  <button class='btn btn-xs btn-warning' "
-                        + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
-                        +rs.getString("aves_predescarte")+","//falta
-                        + ""+rs.getString("edad_descarte_semanas")+","//falta
-                        + "'"+rs.getString("fecha_nacimiento")+"','"
-                        +rs.getString("lote")+"','"
-                        +rs.getString("fecha_predescarte_format")+"')\"  title='Crear Lote Predescarte' ><i class='fa fa-clone'></i></button>";//falta
-                    }
-                    */
-                    
-                }
+                  }
                 String boton="  <button class='btn btn-xs btn-warning' "
                         + "onclick=\"clonar_lote_predescarte("+rs.getString("id")+" ,'"+rs.getString("fecha_predescarte")+"',"
                         +rs.getString("aves_predescarte")+","//falta

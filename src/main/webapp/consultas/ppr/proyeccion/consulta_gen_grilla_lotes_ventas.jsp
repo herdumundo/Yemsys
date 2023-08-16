@@ -6,8 +6,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page contentType="application/json; charset=utf-8" %>
-<%@include  file="../../chequearsesion.jsp" %>
-<%@include  file="../../cruds/conexion.jsp" %> 
+<%@include  file="../../../chequearsesion.jsp" %>
+<%@include  file="../../../cruds/conexion.jsp" %> 
 <%    JSONObject ob = new JSONObject();
      try 
      {
@@ -35,15 +35,12 @@
                 + " from v_mae_ppr_saldo_aves_global2 T1 INNER JOIN   ppr_pry_capacidad_predescarte T2 ON t1.mes=t2.id 	"
         + "    where   fecha between dateadd(MONTH,-1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  ))  and  dateadd(MONTH,1, convert(date,concat('01/', format(convert(date,'"+fecha+"'),'MM/yyyy'))  )) order by anho,mes ");
        
-        
         rs4 = st4.executeQuery("  select venta,mesname,anho from ( "
                               +"  SELECT count(venta)as cant,venta, month(fecha)as mes, DATENAME(month,fecha)as mesname, year(fecha) as anho"
                                 + " FROM ppr_pry_det_carga    group by venta	,DATENAME(month,fecha),year(fecha)	,month(fecha) "
                               +"  ) t where 	cant>2	 and venta>0 order by anho,mes   ");
        
-        
-        
-          String cabecera4 = "   "
+        String cabecera4 = "   "
                 + "<table id='tabla_log'  class='tabla tabla-con-borde table-striped table-condensed compact hover dataTable '>"
                 + "<thead>" 
                 + " <tr><tr><th colspan='3'  style='color: #fff; background: #0B1D52;'>Historial de cambios de ventas</th> </tr>"
@@ -54,7 +51,6 @@
                  + "</tr>"
                 + "</thead> <tbody >";
       
-        
         String cabecera = "   "
                 + "<table  class='tabla tabla-con-borde table-striped table-condensed compact hover dataTable '>"
                 + "<thead>" 
@@ -68,8 +64,8 @@
                 + " <th  style='color: #fff; background: black;font-weight:bold' >  Dia             </th>   "
                 + " <th  style='color: #fff; background: black;' >                  Entrada         </th>   "
                 + " <th  style='color: #fff; background: black;'>                   Salida          </th>   "
-                + " <th  style='color: #fff; background: black;'>                   Fecha salida calculo ventas </th>   "
-                + " <th  style='color: #fff; background: black;'>                   Diferencias dias </th>   "
+                + " <th  style='color: #fff; background: black;'>                   Proyección fecha de salida </th>   "
+                + " <th  style='color: #fff; background: black;'>                   Dispersión de salidas(Días) </th>   "
                 + "</tr>"
                 + "</thead> <tbody >";
       
@@ -110,11 +106,13 @@
         String row="";
         int cont=1; 
         while (rs2.next()) 
-        {
-            row="<td  style='color: white; ' > <h6><span class='badge badge-dark right '>"+rs2.getString("nameMes")+"/"+formatea.format(rs2.getInt("capacidad"))+"</span></h6> </td>";
+        {   
+            String tdCapacidad ="<td  style='color: white; ' > <h6><span class='badge badge-dark right '>"+formatea.format(rs2.getInt("capacidad"))+"</span></h6> </td>";
+            
+            row="<td  style='color: white; ' > <h6><span class='badge badge-dark right '>"+rs2.getString("nameMes") +"</span></h6> </td>"+tdCapacidad;
             if(cont==2)
             {
-                row="<td  style='color: black; ' > <h6><span class='badge badge-success right '>"+rs2.getString("nameMes")+"/"+formatea.format(rs2.getInt("capacidad"))+"</span></h6> </td>";
+                row="<td  style='color: black; ' > <h6><span class='badge badge-success right '>"+rs2.getString("nameMes")+ "</span></h6> </td>"+tdCapacidad;
                  mes=rs2.getString("nameMes");
             }
             tr2 = tr2
@@ -152,9 +150,6 @@
             +"  </tr>";
         }
         
-        
-        
-        
         String cabecera3 = "   "
                 + "<table  class=' tabla tabla-con-borde table-striped table-condensed compact hover dataTable  '  >"
                 + "<thead>" 
@@ -166,11 +161,11 @@
                 + "</tr>"
                 + "</thead> <tbody >";
         
-        
          String cabecera2 = "   "
                 + "<table id='tabla_meses'  class=' tabla tabla-con-borde table-striped table-condensed compact hover dataTable  '  >"
                 + "<thead>" 
-                + " <th  style='color: #fff; background: black;' >Mes/Capacidad</th>     "
+                + " <th  style='color: #fff; background: black;' >Mes</th>     "
+                + " <th  style='color: #fff; background: red;' >Capacidad</th>     "
                 + " <th class='text-center' >1</th>     "
                 + " <th class='text-center' >2</th>     "
                 + " <th class='text-center' >3</th>     "
@@ -202,12 +197,8 @@
                 + " <th class='text-center' >29</th>     "
                 + " <th class='text-center' >30</th>     "
                 + " <th class='text-center' >31</th>     "
-               
                 + "</tr>"
                 + "</thead> <tbody >";
-        
-         
-    
     
         ob.put("grilla", cabecera + tr + "</tbody></table>");
         ob.put("grilla2", cabecera2 + tr2 + "</tbody></table>");
@@ -223,4 +214,3 @@
         out.print(ob);
     }
 %> 
-

@@ -39,7 +39,6 @@
     
         ObjectMapper mapper = new ObjectMapper();
         solicitud_mtp[] pp1 = mapper.readValue(grilla, solicitud_mtp[].class);
-
         SQLServerDataTable sourceDataTable = new SQLServerDataTable();
 
         sourceDataTable.addColumnMetadata("accion",             java.sql.Types.VARCHAR);

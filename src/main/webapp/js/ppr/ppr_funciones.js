@@ -1,5 +1,6 @@
 var ruta_cruds_ppr = "./cruds/ppr/";
 var ruta_consultas_ppr = "./consultas/ppr/";
+var ruta_consultasProyeccion_ppr = "./consultas/ppr/proyeccion/";
 var ruta_vistas_ppr = "./contenedores/contenedores_ppr/";
 var ruta_grilla_ppr = "./grillas/ppr/";
 var ruta_vistas_general = "./contenedores/";
@@ -2957,8 +2958,7 @@ function modificar_estado_lote_ppr(lote_id) {
 
 function ir_proyeccion_ppr()
 {
-  //  ir_pagina_generico(ruta_vistas_ppr, 'contenedor_proyeccion.jsp', "pry1", 'yyyy-mm-dd', false);
-    
+ 
     $.ajax({
         type: "POST",
         url: ruta_vistas_ppr + "contenedor_proyeccion.jsp",
@@ -2975,8 +2975,8 @@ function ir_proyeccion_ppr()
             registrar_lote_descarte();
             refrescar_grilla_pry_lotes_ppr();
             refrescar_grafico_proyeccion_general_ppr();
-           cerrar_load();  
-         },
+            cerrar_load();  
+        },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
              if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
               recargar_pagina();
@@ -3521,6 +3521,36 @@ function refrescar_grilla_pry_lotes_ppr()
                 }
                 
             }); 
+            ir_grilla_pry_lotesTotal()
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {
+            if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500)
+            {
+                recargar_pagina();
+            }
+        }
+    });
+}
+
+
+function ir_grilla_pry_lotesTotal() 
+{
+    $.ajax({
+        type: "POST",
+        url: ruta_consultasProyeccion_ppr + "consulta_grilla_lotes_pry.jsp",
+        success: function (result)
+        { 
+            $("#div_grilla_pr2").html("");
+            $("#div_grilla_pr2").html(result.grilla);
+             $("#grillaLotesTotalPry").DataTable
+            ({
+                paging: false,searching: false,
+                "language":
+                {
+                    "sUrl": "js/Spanish.txt"
+                }
+            });  
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) 
         {
@@ -3974,19 +4004,15 @@ function ppr_pro_lotes_delete (id){
                 url: ruta_cruds_ppr + "crud_eliminar_lote_proyeccion.jsp",
                 data: {id: id },
                 beforeSend: function () {
-                    Swal.fire({
-                        title: "PROCESANDO!",
-                        html: "<strong>ESPERE</strong>...",
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        allowOutsideClick: !1,
-                        onBeforeOpen: () => {
-                            Swal.showLoading(),
-                                    (timerInterval = setInterval(() => {
-                                        Swal.getContent().querySelector("strong").textContent = Swal.getTimerLeft();
-                                    }, 1e3));
-                        },
-                    });
+                       Swal.fire({
+                                          title: 'PROCESANDO!',
+                                          html: 'ESPERE<strong></strong>...',
+                                          allowOutsideClick: false,
+                                          willOpen: () => {
+                                              Swal.showLoading()
+                                          }
+
+                                      });
                 },
                 success: function (data)
                 {
@@ -4213,7 +4239,7 @@ function ventana_venta_predescarte(fecha){
 function gen_grilla_lotes_ventas_ppr(fecha){
     $.ajax({
                     type: "POST",
-                    url: ruta_consultas_ppr + "consulta_gen_grilla_lotes_ventas.jsp",
+                    url: ruta_consultasProyeccion_ppr + "consulta_gen_grilla_lotes_ventas.jsp",
                     data:({fecha:fecha}),
                    
                     success: function (data) 
@@ -4258,30 +4284,13 @@ function gen_grilla_lotes_ventas_ppr(fecha){
                 }); 
 }
 
+ 
 
 
 function gen_notificacion_capacidad_ppr(){
     $.ajax({
                     type: "POST",
-                    url: ruta_consultas_ppr + "consulta_gen_notificaciones_capacidades_proyeccion.jsp",
-                    success: function (data) 
-                    {     
-                        $("#noti_capacidad").html(data.notificacion);
-                       
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                             location.reload();
-                        }
-                    }
-                }); 
-}
-
-
-function gen_notificacion_capacidad_ppr(){
-    $.ajax({
-                    type: "POST",
-                    url: ruta_consultas_ppr + "consulta_gen_notificaciones_capacidades_proyeccion.jsp",
+                    url: ruta_consultasProyeccion_ppr + "consulta_gen_notificaciones_capacidades_proyeccion.jsp",
                     success: function (data) 
                     {     
                         $("#noti_capacidad").html(data.notificacion);
