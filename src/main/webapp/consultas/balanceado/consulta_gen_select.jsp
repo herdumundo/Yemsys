@@ -8,7 +8,8 @@
 <%@ page language="java" import="java.sql.*" errorPage="error.jsp" %>
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %> 
-<%    JSONObject ob = new JSONObject();
+<%    
+    JSONObject ob = new JSONObject();
     String option = "";
     try {
         String father = request.getParameter("father");

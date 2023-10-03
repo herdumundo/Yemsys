@@ -2,9 +2,9 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.text.DecimalFormat"%>
-<%@include file="../../../chequearsesion.jsp" %>
+<%@include file="../../../../chequearsesion.jsp" %>
 <%@page contentType="application/json; charset=utf-8" %>
-<%@include file="../../../cruds/conexion.jsp" %>
+<%@include file="../../../../cruds/conexion.jsp" %>
 <%    StringBuilder tabla = new StringBuilder();
     String id = request.getParameter("idPadron");
     String option="";
