@@ -34,7 +34,7 @@ function ir_escenarios_ppr() {
 function ir_grillaEscenariosById_ppr(id, nombre) {
     $.ajax({
         type: "POST",
-        url: rutaConsultasPprProyeccion + "consulta_grilla_escenarioById.jsp",
+        url: rutaConsultasEscenariosPprProyeccion + "consulta_grilla_escenarioById.jsp",
         data: {id: id, nombre: nombre},
         beforeSend: function (xhr) {
             cargar_load("Consultando...");
@@ -42,10 +42,20 @@ function ir_grillaEscenariosById_ppr(id, nombre) {
         success: function (data) {
             $("#div_grilla_pry_det").html("");
             $("#div_grilla_pry_det").html(data.grilla);
-            $("#grillaPadronById").DataTable({
-                "paging": false // Desactivar paginación
-                        // Puedes agregar más opciones de configuración aquí si es necesario
+            $("#div_grillaLotes").html("");
+            $("#div_grillaLotes").html(data.grillaLotes);
+            $("#grillaEscenarioById").DataTable({
+                "paging": false,
+                scrollX: true, 
+                //scrollY: "500px",
+                pageLength: 100, 
+                language: {sUrl: "js/Spanish.txt"} 
             })
+            $("#idEscenarioLote").val(id);
+
+            
+            
+            
             cerrar_load();
         }
     });
@@ -74,7 +84,7 @@ function ir_grillaPadronesById_ppr(id, nombrePadron) {
 function ir_grillaEscenariosCabecera_ppr() {
     $.ajax({
         type: "POST",
-        url: rutaConsultasPprProyeccion + "consulta_grilla_escenarioPrincipal.jsp.jsp",
+        url: rutaConsultasEscenariosPprProyeccion+ "consulta_grilla_escenarioPrincipal.jsp.jsp",
         beforeSend: function (xhr) {
             cargar_load("Consultando...");
         },
@@ -362,3 +372,64 @@ function registrarCambiosPadron(id) {
         }
     });
 } 
+
+
+function registrarCambiosEscenario(idEscenario,calculoMortandad,padronMortandad,mortandadParametroGeneral,mortandadRecria,mortandadPPR,mortandadPRED,calculoProduccion,padronProduccion,
+parametroGeneralProduccion,produccionRecria,ProduccionPPR,ProduccionPred)
+{
+        $.ajax({
+        type: "POST",
+        url: crudPprProyeccion + "crudActualizarEscenario.jsp",
+        data: 
+        {
+            idEscenario                 :idEscenario,
+            calculoMortandad            :calculoMortandad,
+            padronMortandad             :padronMortandad,
+            mortandadParametroGeneral   :mortandadParametroGeneral,
+            mortandadRecria             :mortandadRecria,
+            mortandadPPR                :mortandadPPR,
+            mortandadPRED               :mortandadPRED,
+            calculoProduccion           :calculoProduccion,
+            padronProduccion            :padronProduccion,
+            parametroGeneralProduccion  :parametroGeneralProduccion,
+            produccionRecria            :produccionRecria,
+            ProduccionPPR               :ProduccionPPR,
+            ProduccionPred              :ProduccionPred 
+        },
+        beforeSend: function (xhr) {
+            Swal.fire({
+                title: "PROCESANDO!",
+                html: "<strong>ESPERE</strong>...",
+                showCancelButton: false,
+                showConfirmButton: false,
+                allowOutsideClick: !1,
+                willOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+        },
+        success: function (data) {
+            aviso_generico(data.tipo_respuesta, data.mensaje)
+            if (data.tipo_respuesta==1){
+                   //         ir_escenarios_ppr()()
+
+            }
+            
+        }
+    });
+   /* console.log(idEscenario);
+    console.log(calculoMortandad);
+    console.log(padronMortandad);
+    console.log(mortandadParametroGeneral);
+    console.log(mortandadRecria);
+    console.log(mortandadPPR);
+    console.log(mortandadPRED);
+    console.log(calculoProduccion);
+    console.log(padronProduccion);
+    console.log(parametroGeneralProduccion);
+    console.log(produccionRecria);
+    console.log(ProduccionPPR);
+    console.log(ProduccionPred);*/
+    
+    
+}

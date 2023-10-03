@@ -60,8 +60,7 @@
 
         <div id="div_grilla_pr2">
         
-        sedsdfdsfdsfsdf
-    </div>
+     </div>
 
     
     

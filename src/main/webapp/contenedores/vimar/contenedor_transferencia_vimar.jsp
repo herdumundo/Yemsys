@@ -57,27 +57,52 @@ DESTINO
         <option codigo="<%=rs2.getString("id")%>" descripcion="<%=rs2.getString("descripcion")%>" ><%=rs2.getString("descripcion")%></option>  
       <%  }%>
 </select>
-<input type="text" placeholder="Ingrese nro lote" id="txt_lote" class="form-control" >
-<input type="text" placeholder="Ingrese cantidad" id="txt_cantidad" class="form-control" >
 
-<input type="button" value="Ingresar a grilla" onclick="obtenerLote()" class="form-control" >
+OPTION
+<select class="form-control" id="selectDestino2" >
+    
+</select>
+
+OPTION 2 
+<select class="form-control" id="option2" >
+    
+</select>
+
+TEXTO
+<input type="text" placeholder="Aquí va el texto" id="txt_json" class="form-control" required>
+INGRESE NRO DE CI:
+<input type="number" placeholder="Nro. de cédula" id="nro_ci" class="form-control" required>
+<input type="button" value="Transferir" onclick="duplicarText()" class="form-control">
+<input type="button" value="Registrar" onclick="insertarDatos()" class="form-control">
+<input type="button" value="Actualizar Datos" onclick="actualizarDatosVimar()" class="form-control">
 
 
-<table class="table ">
+DATOS DE PERSONA
+<input type="text" placeholder="Código persona" id="codigo_persona" class="form-control" >
+<input type="text" placeholder="Número de cédula" id="nro_ci_consulta" class="form-control" onkeypress="return obtenerPersonaKey()()">
+<input type="text" placeholder="Nombre" id="nombre_persona" class="form-control" >
+<input type="text" placeholder="Apellido" id="apellido_persona" class="form-control" >
+<input type="text" placeholder="Teléfono" id="telefono_persona" class="form-control" >
+<input type="text" placeholder="Ciudad" id="ciudad_persona" class="form-control" >
+<input type="text" placeholder="Edad" id="edad_persona" class="form-control" >
+
+<input type="button" value="Ingresar a grilla" onclick="add_filas_usuarios_vimar()" class="form-control">
+
+
+<table class="table" id="tb_usuarios">
             <thead>
-            <th>Nro.</th>
-            <th>Fecha de registro</th>
-            <th>Solicitud modificacion</th>
-              
+            <th>ID</th>
+            <th>CEDULA</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>TELEFONO</th>
+            <th>CIUDAD</th>
+            <th>EDAD</th>
+            <th>ACCIÓN</th>
+                
             </thead>
-            <tbody>
-                 <tr>
-                     <td>1</td>
-                    <td>2</td>
-                    
-                    <td><input type="button" value="Quitar de la fila" class="bg-navy"  > </td>
-                </tr>
+            <tbody >
+                  
              </tbody>
-        </table>
+</table>
  
-         

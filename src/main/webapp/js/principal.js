@@ -31,6 +31,7 @@ var rutaApiConsultaVimar       = "./consultas/api/vimar/";
  
  var rutaContenedoresPprProyeccion = "./contenedores/contenedores_ppr/proyeccion/";
  var rutaConsultasPprProyeccion = "./consultas/ppr/proyeccion/";
+ var rutaConsultasEscenariosPprProyeccion = "./consultas/ppr/proyeccion/escenarios/";
  var crudPprProyeccion = "./cruds/ppr/proyeccion/";
  
 
