@@ -135,6 +135,5 @@ INGRESE COD. BARRA:
 
 <input type="button" value="Registrar Transferencia" onclick="registrarTransferencia()" class="form-control">
 
-<input type="button" value="Informe Transferencias" onclick="informeTransferencia()" class="form-control">
-
+ 
 <!--<input type="button" value="Pruebas" onclick="pruebasTransferencia()" class="form-control">-->

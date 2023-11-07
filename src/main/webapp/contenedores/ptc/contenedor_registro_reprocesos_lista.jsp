@@ -14,7 +14,7 @@
          Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(" select id, fecha_registro,estado, nombre, mae_ptc_alimentacion.clasificadora   "
                 + " from mae_ptc_alimentacion inner join usuarios on mae_ptc_alimentacion.usuario=usuarios.usuario "
-                + " where mae_ptc_alimentacion.clasificadora='"+clasificadora+"' and estado<>'C' order by 1 desc ");
+                + " where mae_ptc_alimentacion.clasificadora='"+clasificadora+"' and   CONVERT(DATE,mae_ptc_alimentacion.FECHA_REGISTRO)=CONVERT(DATE,GETDATE()) AND estado<>'C' order by 1 desc ");
        
  
      String version= contenedores_ptc_contenedor_registro_reprocesos_lista;

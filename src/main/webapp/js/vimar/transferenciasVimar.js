@@ -1,5 +1,5 @@
 
-/* global rutaConsultasVimar, responseJSON, fechaSeleccionada, rutaVimarContenedores, Swal */
+/* global rutaConsultasVimar, responseJSON, fechaSeleccionada, rutaVimarContenedores, Swal, rutaCrudsVimar */
 
 function irTransferenciaProduc()
 {
@@ -29,8 +29,9 @@ function irTransferenciaProduc()
 
 }
 
+/*captura los eventos al oprimir enter*/
 function consultaCodigoBarraKey() {
-    if (event.keyCode == 13 || event.which == 13) {
+    if (event.keyCode === 13 || event.which === 13) {
         consultaCodigoBarra();
     }
 }
@@ -125,56 +126,55 @@ function actualizarDatosVimar()
 }
 
 function registrarTransferencia() {
-         if (verificarGrillaVacia()) {
-             aviso_generico(0, "Ingrese datos en la grilla");
-         }
-
-     else  {
-                Swal.fire({
-                          title: 'FORMULA ',
-                          text: "DESEA REGISTRAR TRANSFERENCIA?",
-                          type: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'SI!',
-                          cancelButtonText: 'NO!'
-                          }).then((result) => {
-                          if (result.value)
-                          {
-                            $.ajax({
-                                type: "POST", // Método de la solicitud (POST)
-                                url: rutaCrudsVimar + "crud_registrar_transferencia.jsp", // Ruta a tu JSP de inserción
-                                
-                    beforeSend: function ()
-                              {
-                                  Swal.fire({
-                                      title: 'PROCESANDO!',
-                                      html: 'ESPERE<strong></strong>...',
-                                      allowOutsideClick: false,
-                                      showCancelButton: false,
-                                      showConfirmButton: false,
-                                      willOpen: () => {
-                                          Swal.showLoading();
-                                      }
-
-                                  });
-
-
-                              },
-                    
-                    success: function (res) {
-                      aviso_generico2(res.tipo, res.msg);
-                                  
-                        if(res.tipo===0){
-                            irTransferenciaProduc();
-                        }
-                                }
-                            });
+    if (verificarGrillaVacia()) {
+        aviso_generico(0, "Ingrese datos en la grilla");
+    } else {
+        Swal.fire({
+            title: 'FORMULA ',
+            text: "DESEA REGISTRAR TRANSFERENCIA?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'SI!',
+            cancelButtonText: 'NO!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST", // Método de la solicitud (POST)
+                    url: rutaCrudsVimar + "crud_registrar_transferencia.jsp", // Ruta a tu JSP de inserción                
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: 'PROCESANDO!',
+                            html: 'ESPERE<strong></strong>...',
+                            allowOutsideClick: false,
+                            showCancelButton: false,
+                            showConfirmButton: false,
+                            willOpen: () => {
+                                Swal.showLoading();
                             }
-                            });
+                        });
+                    },
+
+                    success: function (res) {
+                        if (res.tipo === 0) {
+                            aviso_generico2(res.tipo, res.msg);
+                            irTransferenciaProduc();
+                        } else {
+                            // Si la API devuelve un error, muestra un aviso usando aviso_generico2()
+                            aviso_generico2(res.tipo, res.msg);
+                        }
+                    },
+                    error: function () {
+                        // Manejar errores de la solicitud AJAX aquí
+                        aviso_generico2(1, "Error en la solicitud a la API");
+                    }
+                });
+            }
+        });
     }
 }
+
     
 
 
@@ -297,19 +297,19 @@ function InsertarLoteTransferencia()
 {          //variables donde se cargan valores//valores seleccionados
     var     origen = $("#origen_OWHS").find(':selected').attr('codigo'),
             destino = $("#destino_OWHS").find(':selected').attr('codigo'),
-            cardCode = $("#cliente_ocrd").find(':selected').attr('codigo'),
-            cardName = $("#cliente_ocrd").find(':selected').attr('cardName'),
-            address = $("#cliente_ocrd").find(':selected').attr('descripcion'),
+            cardCode = "",//$("#cliente_ocrd").find(':selected').attr('codigo'),
+            cardName = "",//$("#cliente_ocrd").find(':selected').attr('cardName'),
+            address = "",//$("#cliente_ocrd").find(':selected').attr('descripcion'),
             itemCode = $("#item_code").val(),
             itemName = $("#item_name").val(),
             loteLargo = $("#lote_largo").val(),
             lote = $("#lote").val(),
             loteCorto = $("#lote_corto").val(),
             codBarra = $("#cod_barra_consulta").val(),
-            onhand = $("#onhand").val(),
             cantidad = $("#cantidad").val(),
             observacion = $("#observacion").val(),
-            detalleObservacion = $("#detalle_observacion").val();
+            detalleObservacion = $("#detalle_observacion").val(),
+            onhand = $("#onhand").val();
 
     var table = $('#tb_transferencia').DataTable();
     var loteExists = table.column(10).data().toArray().includes(codBarra);
@@ -322,7 +322,7 @@ function InsertarLoteTransferencia()
     else if (origen === destino) {
         aviso_generico(0,"El origen no puede ser igual al destino");
     }
-    else if (itemCode === "" || itemName === "" || itemName === "" || loteLargo === ""|| lote === ""|| loteCorto === ""|| codBarra === "" || onhand === "" ) {
+    else if (itemCode === "" || itemName === "" || loteLargo === ""|| lote === ""|| loteCorto === ""|| codBarra === ""  || onhand === "" ) {
         aviso_generico(0,"Los campos deben estar completos, \n\
                         sólo las observaciones son opcionales.");        
     }
@@ -369,7 +369,7 @@ function InsertarLoteTransferencia()
                     aviso_generico(0, data.msg);
                 } else {
                 // Si el tipo no es 0, procesa la respuesta como lo haces actualmente
-                    add_filas_transferencia_vimar(origen, destino, cardCode, cardName, address, itemCode, itemName, loteLargo, lote, loteCorto, codBarra, onhand, cantidad, observacion, detalleObservacion);
+                    add_filas_transferencia_vimar(origen, destino, cardCode, cardName, address, itemCode, itemName, loteLargo, lote, loteCorto, codBarra, cantidad, observacion, detalleObservacion);
                 }
                 // Habilitar el botón nuevamente después de la solicitud (independientemente de si fue exitosa o no)                    
                     $("#btnInsertarLoteTransferencia").prop("disabled", false);
@@ -388,7 +388,7 @@ function InsertarLoteTransferencia()
 }
 
 
-function add_filas_transferencia_vimar(origen, destino, cardCode, cardName, address, itemCode, itemName, loteLargo, lote, loteCorto, codBarra, onhand, cantidad, observacion, detalleObservacion)
+function add_filas_transferencia_vimar(origen, destino, cardCode, cardName, address, itemCode, itemName, loteLargo, lote, loteCorto, codBarra, cantidad, observacion, detalleObservacion)
 {
     var table = $('#tb_transferencia').DataTable();
 
@@ -404,11 +404,10 @@ function add_filas_transferencia_vimar(origen, destino, cardCode, cardName, addr
         lote,
         loteCorto,
         codBarra,
-        onhand,
         cantidad,
         observacion,
         detalleObservacion,
-        "<input id=\"BTN" + codBarra +"\"type=\"button\"class=\"form-control bg-warning "+codBarra +"\" onclick=\"eliminarLoteTransferencia('"+ codBarra + "')\" value=\"Deshacer\">"];
+        "<input id=\"BTN" + codBarra +"\"type=\"button\"class=\"btn btn-warning "+codBarra +"\" onclick=\"eliminarLoteTransferencia('"+ codBarra + "')\" value=\"Deshacer\">"];
 
     var rowNode = table.row.add(newData).order([8, 'desc']).draw(false).node();
     $(rowNode).attr('id', 'row' + codBarra);//AGREGA ID AL <tr> FILA.
@@ -424,31 +423,6 @@ function add_filas_transferencia_vimar(origen, destino, cardCode, cardName, addr
     $('#cantidad').val('');
     $('#observacion').val('');
     $('#detalle_observacion').val('');
-
-//----------------------------------------------------------------------------------------------    
-    /*    // Obtener la referencia a la tabla
-     var table = document.getElementById("tb_transferencia");
-     
-     // Crear un array para almacenar los datos
-     var dataArray = [];
-     
-     // Iterar sobre las filas de la tabla (excluyendo la fila de encabezado)
-     for (var i = 1; i < table.rows.length; i++) {
-     var row = table.rows[i];
-     var rowData = [];
-     
-     // Iterar sobre las celdas de la fila
-     for (var j = 0; j < row.cells.length; j++) {
-     var cell = row.cells[j];
-     rowData.push(cell.textContent); // O cell.innerText dependiendo de tus necesidades
-     }
-     
-     // Agregar los datos de la fila al array
-     dataArray.push(rowData);
-     }
-     
-     // Mostrar el array en la consola
-     console.log(dataArray)*/
 }
 //-----------------------------------------------------------------------------------------------
 function eliminar_fila_transf_vimar(id_tr)
@@ -507,6 +481,31 @@ function informeTransferencia()
             $("#contenedor_principal").html("");
             $("#contenedor_principal").html(data);
             cargar_estilo_calendario_insert("dd/mm/yyyy");
+          cerrar_load();
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+          //      location.reload();
+            }
+        }
+    });
+
+}
+
+function informeAveriados()
+{
+    $.ajax({
+        type: "POST",
+        url: rutaVimarContenedores + "contenedor_informes_averiados.jsp",
+        beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (data)
+        {
+            $("#contenedor_principal").html("");
+            $("#contenedor_principal").html(data);
+            cargar_estilo_calendario_insert("dd/mm/yyyy");
             
 
 
@@ -516,12 +515,14 @@ function informeTransferencia()
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
-                location.reload();
+             //   location.reload();
             }
         }
     });
 
 }
+
+
 
 // Definir la función generarInforme
 function generarInforme() {
@@ -546,7 +547,56 @@ function generarInforme() {
             console.log(response);
             // Pegar la información generada en el div "informe_transferencia"
             $("#informe_transferencia").html(response.grilla);
-            $('#tb_informe_transfer').DataTable(); //le damos formato DataTable 
+            $('#tb_informe_transfer').DataTable({ 
+                "scrollX": true,
+                paging: false,
+                ordering:false,
+                        responsive: true,
+                 "language":
+                        {
+                            "sUrl": "js/Spanish.txt"
+                        },
+                
+            }); //le damos formato DataTable 
+            cerrar_load();
+        },
+        error: function(error) {
+            // Manejar errores aquí
+            console.error(error);
+        }
+    });
+}
+
+function generarInformeAveriados() {
+    // Obtener la fecha ingresada por el usuario
+    var fecha = $("#fecha").val();
+
+    // Crear un objeto de datos que contenga la fecha
+    var data = {
+        fecha: fecha
+    };
+
+    // Realizar una solicitud AJAX tipo POST
+    $.ajax({
+        type: "POST",
+        url: rutaConsultasVimar + "consulta_gen_grilla_averiados.jsp",
+        data: data,
+        beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function(response) {
+            // Manejar la respuesta del servidor aquí
+            console.log(response);
+            // Pegar la información generada en el div "informe_transferencia"
+            $("#informe_transferencia_averiados").html(response.grilla);
+            $('#tb_informe_averiados').DataTable({ 
+                                                    scrollX: true,
+                                                    "language":
+                                                    {
+                                                      "sUrl": "js/Spanish.txt"
+                                                    }
+
+                                                  }); //le damos formato DataTable 
             cerrar_load();
         },
         error: function(error) {
