@@ -40,22 +40,22 @@
     JSONObject obje = new JSONObject();
     obje = new JSONObject();
 
-    String imagen = "";
+   // String imagen = "";
     String ave_nro_imagen;
     String avr_nro = request.getParameter("ave_nro");
     avr_nro = avr_nro;
     String nec_id;
     String file_name = null;
     String fecha_desde = request.getParameter("nec_id");
-    String fecha_hasta = request.getParameter("ave_nro_imagen");
+  /*  String fecha_hasta = request.getParameter("ave_nro_imagen");
     String fecha_hastas = request.getParameter("file");
-    String[] array_categoria = request.getParameterValues("file");
-    fecha_desde = fecha_desde;
+    String[] array_categoria = request.getParameterValues("file");*/
+   // fecha_desde = fecha_desde;
 
     String mensaje = "";
     String tipo_registro = "";
 
-    String contentType = request.getContentType();
+   // String contentType = request.getContentType();
 
     boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
     if (!isMultipartContent) {
@@ -142,4 +142,5 @@
 
 
 %>
+
 

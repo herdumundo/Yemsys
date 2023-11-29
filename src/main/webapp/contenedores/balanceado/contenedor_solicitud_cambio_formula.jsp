@@ -157,7 +157,7 @@
                         <input class="btn bg-navy" type="submit"   id="btn_solicitar" value="SOLICITAR">
                     </div>
 
-                    </form>
+</form>
 
                     <%
                         } catch (Exception e) {

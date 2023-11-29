@@ -1986,7 +1986,7 @@ function consulta_necropsias_imagen_ppr(nro_necrop, ave) {
                     //contenido_carga_imagen += '<button class="upload-btn" onclick="subir_imagen_necropsias_prr('+nro_necrop+',' +ave+ ')">subir imagen</button>';
                     //contenido_carga_imagen += '</div><br></form></div></div>';
 
-                    contenido_carga_imagen = '<div class="row" >';
+            contenido_carga_imagen = '<div class="row" >';
             contenido_carga_imagen += '<div class="col-lg-8 col-sm-12 col-11 main-section">';
             contenido_carga_imagen += '<h4>Archivos de ave nro.<span class="text-blue"> ' + ave + '</span></h4>';
             contenido_carga_imagen += '<form >';
