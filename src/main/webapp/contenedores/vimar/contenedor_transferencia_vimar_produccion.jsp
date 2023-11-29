@@ -82,26 +82,26 @@ CLIENTE
 </select> --%>
 
 <%-- TEXTO
-<input type="text" placeholder="Aquí va el texto" id="txt_json" class="form-control" required>
+<input type="text" placeholder="Aqu  va el texto" id="txt_json" class="form-control" required>
 INGRESE NRO DE CI:
-<input type="number" placeholder="Nro. de cédula" id="nro_ci" class="form-control" required>
+<input type="number" placeholder="Nro. de c dula" id="nro_ci" class="form-control" required>
 <input type="button" value="Transferir" onclick="duplicarText()" class="form-control">
 <input type="button" value="Registrar" onclick="insertarDatos()" class="form-control">
 <input type="button" value="Actualizar Datos" onclick="actualizarDatosVimar()" class="form-control"> --%>
 
 
 INGRESE COD. BARRA:
-<input type="text" placeholder="Ingrese código de barra" id="cod_barra_consulta" class="form-control" onkeypress="return consultaCodigoBarraKey()()">
+<input type="text" placeholder="Ingrese c digo de barra" id="cod_barra_consulta" class="form-control" onkeypress="return consultaCodigoBarraKey()()">
 <input type="hidden" placeholder="ItemName" id="item_name" class="form-control" >
 <input type="hidden" placeholder="ItemCode" id="item_code" class="form-control" >
 <input type="hidden" placeholder="LoteLargo" id="lote_largo" class="form-control" >
 <input type="hidden" placeholder="Lote" id="lote" class="form-control" >
 <input type="hidden" placeholder="LoteCorto" id="lote_corto" class="form-control" >
-<input type="hidden" placeholder="CódigoBarra" id="cod_barra" class="form-control" >
+<input type="hidden" placeholder="C digoBarra" id="cod_barra" class="form-control" >
 <input type="text" placeholder="Stock" id="onhand" class="form-control" readonly>
 <input type="number" placeholder="Ingrese cantidad" id="cantidad" class="form-control" min="1">
-<input type="text" placeholder="Observación" id="observacion" class="form-control" >
-<input type="text" placeholder="Detalle observación" id="detalle_observacion" class="form-control" >
+<input type="text" placeholder="Observaci n" id="observacion" class="form-control" >
+<input type="text" placeholder="Detalle observaci n" id="detalle_observacion" class="form-control" >
 
 <input type="button" id="btnInsertarLoteTransferencia" value="Agregar a grilla" onclick="InsertarLoteTransferencia()" class="form-control">
 
@@ -112,7 +112,7 @@ INGRESE COD. BARRA:
             <th>cod. destino</th>
             <th>cod. cliente</th>
             <th>Cliente</th>
-            <th>Dirección</th>
+            <th>Direcci n</th>
             <th>Item Code</th>
             <th>Item Name</th>
             <th>Lote Largo</th>
@@ -121,7 +121,7 @@ INGRESE COD. BARRA:
             <th>cod. barra</th>
             <th>Stock</th>
             <th>Cantidad</th>
-            <th>Observación</th>
+            <th>Observaci n</th>
             <th>Detalle Obs.</th>
             <th>Eliminar registro</th>
             
@@ -134,6 +134,14 @@ INGRESE COD. BARRA:
 </table>
 
 <input type="button" value="Registrar Transferencia" onclick="registrarTransferencia()" class="form-control">
+<form id="imageForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="fileInput" accept="image/*" capture="camera">
+    <button type="button" onclick="uploadImageCombus()">Subir Imagen</button>
+</form>
 
- 
+
+
+<!--<input type="button" value="Informe Transferencias" onclick="informeTransferencia()" class="form-control">-->
+
 <!--<input type="button" value="Pruebas" onclick="pruebasTransferencia()" class="form-control">-->
+ 

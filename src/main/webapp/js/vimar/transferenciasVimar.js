@@ -1,5 +1,5 @@
 
-/* global rutaConsultasVimar, responseJSON, fechaSeleccionada, rutaVimarContenedores, Swal, rutaCrudsVimar */
+/* global rutaConsultasVimar, responseJSON, fechaSeleccionada, rutaVimarContenedores, Swal, rutaCrudsVimar, ruta_cruds_ppr */
 
 function irTransferenciaProduc()
 {
@@ -566,7 +566,7 @@ function generarInforme() {
         }
     });
 }
-
+/******************************************************************************/
 function generarInformeAveriados() {
     // Obtener la fecha ingresada por el usuario
     var fecha = $("#fecha").val();
@@ -605,4 +605,68 @@ function generarInformeAveriados() {
         }
     });
 }
+
+/*******************************************************************************************************/
+//Funciones para enviar imagen desde un form 
+//function uploadImage() {
+//    var formData = new FormData($("#imageForm")[0]);
+//    console.log(formData);
+//
+//    $.ajax({
+//        type: "POST",
+//        url: ruta_cruds_ppr + "upload_img_combus.jsp", // Ruta a tu script JSP
+//        data: formData,
+//        processData: false,
+//        contentType: false,
+//        success: function (response) {
+//            console.log(response); // Maneja la respuesta del servidor
+//            alert("Imagen subida con éxito.");
+//        },
+//        error: function (error) {
+//            console.error(error);
+//            alert("Error al subir imagen.");
+//        }
+//    });
+//}
+
+function uploadImageCombus() {
+    // Obtener el archivo seleccionado
+    var fileInput = document.getElementById('fileInput');
+    var file = fileInput.files[0];
+
+    // Validar el archivo
+    if (!file.type.match('image.*')) {
+        alert("El archivo debe ser una imagen.");
+        return;
+    }
+    if (file.size > 1000000) {
+        alert("El archivo no debe ser mayor de 1 MB.");
+        return;
+    }
+
+    // Crear un objeto FormData y agregar el archivo
+    var formData = new FormData();
+    formData.append('file', file);
+
+    // Realizar la solicitud AJAX
+    $.ajax({
+        type: 'POST',
+        url: rutaCrudsVimar + 'upload_img_combus.jsp', // Reemplaza 'upload.jsp' con la URL de tu JSP
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            // Manejar la respuesta del servidor (si es necesario)
+            console.log(response);
+            alert("Imagen subida con éxito.");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error(jqXHR.responseText); // Esto imprimirá el mensaje de error del servidor en la consola
+            alert("Error al subir la imagen. Detalles: " + jqXHR.responseText);
+        }
+
+    });
+}
+
+
 

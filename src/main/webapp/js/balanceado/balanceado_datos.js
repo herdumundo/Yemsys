@@ -5,6 +5,8 @@
  */
 
 
+/* global ruta_cruds_bal, ruta_contenedores_bal */
+
 function ir_solCambioFormula_bal()
 {
     window.location.hash = "SCFBAL";
@@ -1214,6 +1216,40 @@ function activa_desactivar_encolamientoMTP(itemcode)
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
+function activa_desactivar_encolamientoMTPEstPre(itemcode)
+        {
+    $.ajax({
+        type: "POST",
+        url: ruta_cruds_bal + 'control_registro_solicitud_mtp_bal_estado_pred_encolamientoMTP.jsp',
+        data: ({    
+            itemcode:                   itemcode,
+            cod_formula:          $('#select_formula').val()}),
+
+        success: function (data)
+        {
+            if (data.estadopredeterminado === 'A')
+            {
+                $('#BTNEP'+itemcode).val('DESBLOQUEAR'); 
+                
+                $('#BTNEP'+itemcode).removeClass('bg-success'); 
+                $('#BTNEP'+itemcode).addClass('bg-danger'); 
+                
+            }
+            else{
+                $('#BTNEP'+itemcode).val('BLOQUEAR');
+                
+                $('#BTNEP'+itemcode).removeClass('bg-danger'); 
+                $('#BTNEP'+itemcode).addClass('bg-success');         
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 404 || XMLHttpRequest.status === 500) {
                 location.reload();
             }
         }

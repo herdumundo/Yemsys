@@ -56,9 +56,9 @@
                     mtp.codigo_formula,
                     mtp.codigo_mtp,
                     mtp.descripcion,
-                    mtp.cantidad_nueva.trim() ,
+                    mtp.cantidad_nueva.trim(),
                     mtp.cantidad_actual.trim(),
-                    mtp.costo.trim() ,
+                    mtp.costo.trim(),
                     mtp.grupo
             );
         }
