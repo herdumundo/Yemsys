@@ -16,8 +16,8 @@
             Map<String, Object> parameter = new HashMap<String, Object>();
             String id       = request.getParameter("id_rep");
              parameter.put("id", id);
-        //  parameter.put("SUBREPORT_DIR", new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_pedidos\\"));
-            parameter.put("SUBREPORT_DIR", new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\"));
+          parameter.put("SUBREPORT_DIR", new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_pedidos\\"));
+          //  parameter.put("SUBREPORT_DIR", new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\Yemsys\\target\\Yemsys\\reportes\\log_pedidos\\"));
             byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
             response.setContentType("application/pdf");
             response.setContentLength(bytes.length);

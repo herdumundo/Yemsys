@@ -1,41 +1,48 @@
 
 
-var ruta_consultas_prin     = "./consultas/";
-var ruta_contenedores_prin  = "./contenedores/";
-var ruta_cruds_prin         = "./cruds/";
+var ruta_consultas_prin = "./consultas/";
+var ruta_contenedores_prin = "./contenedores/";
+var ruta_cruds_prin = "./cruds/";
 
-var ruta_contenedores_hp    = "./contenedores/hp/";
-var ruta_cruds_hp           = "./cruds/hp/";
-var ruta_grillas_hp         = "./grillas/hp/";
-var ruta_consultas_hp       = "./consultas/hp/";
+var ruta_contenedores_hp = "./contenedores/hp/";
+var ruta_cruds_hp = "./cruds/hp/";
+var ruta_grillas_hp = "./grillas/hp/";
+var ruta_consultas_hp = "./consultas/hp/";
 
 
-var ruta_contenedores_bal   = "./contenedores/balanceado/";
-var ruta_cruds_bal          = "./cruds/balanceado/";
-var ruta_grillas_bal        = "./grillas/balanceado/";
-var ruta_consultas_bal      = "./consultas/balanceado/";
+var ruta_contenedores_bal = "./contenedores/balanceado/";
+var ruta_cruds_bal = "./cruds/balanceado/";
+var ruta_grillas_bal = "./grillas/balanceado/";
+var ruta_consultas_bal = "./consultas/balanceado/";
 
-var ruta_contenedores_itkv  = "./contenedores/itkv/";
-var ruta_cruds_itkv         = "./cruds/itkv/";
-var ruta_grillas_itkv       = "./grillas/itkv/";
-var ruta_consultas_itkv     = "./consultas/itkv/";
+var ruta_contenedores_itkv = "./contenedores/itkv/";
+var ruta_cruds_itkv = "./cruds/itkv/";
+var ruta_grillas_itkv = "./grillas/itkv/";
+var ruta_consultas_itkv = "./consultas/itkv/";
 
-var rutaApiConsultaMaeharaPtc   = "./consultas/api/ptc/";
-var rutaApiCrudMaeharaPtc       = "./cruds/api/ptc/";
+var rutaApiConsultaMaeharaPtc = "./consultas/api/ptc/";
+var rutaApiCrudMaeharaPtc = "./cruds/api/ptc/";
 
-var rutaVimarContenedores   = "./contenedores/vimar/";
-var rutaConsultasVimar   = "./consultas/vimar/";
-var rutaCrudsVimar   = "./cruds/vimar/";
-var rutaApiConsultaVimar       = "./consultas/api/vimar/";
- 
- 
- var rutaContenedoresPprProyeccion = "./contenedores/contenedores_ppr/proyeccion/";
- var rutaConsultasPprProyeccion = "./consultas/ppr/proyeccion/";
- var rutaConsultasEscenariosPprProyeccion = "./consultas/ppr/proyeccion/escenarios/";
- var crudPprProyeccion = "./cruds/ppr/proyeccion/";
- 
+var rutaVimarContenedores = "./contenedores/vimar/";
+var rutaConsultasVimar = "./consultas/vimar/";
+var rutaCrudsVimar = "./cruds/vimar/";
+var rutaApiConsultaVimar = "./consultas/api/vimar/";
 
-$(document).ready(function () 
+var rutaContenedoresPprProyeccion = "./contenedores/contenedores_ppr/proyeccion/";
+var rutaConsultasPprProyeccion = "./consultas/ppr/proyeccion/";
+var rutaConsultasEscenariosPprProyeccion = "./consultas/ppr/proyeccion/escenarios/";
+var crudPprProyeccion = "./cruds/ppr/proyeccion/";
+
+var rutaContenedoresVimarFacturasCast = "./contenedores/vimar/facturas_cast/";
+var rutaConsultasFacturasCastVimar = "./consultas/vimar/facturas_cast/";
+var rutaCrudsFacturasCastVimar = "./cruds/vimar/facturas_cast/";
+
+var rutaContenedoresLineaProduccionVimar = "./contenedores/vimar/linea_produccion/";
+var rutaConsultasLineaProduccionVimar = "./consultas/vimar/linea_produccion/";
+var rutaCrudsLineaProduccionVimar = "./cruds/vimar/linea_produccion/";
+
+
+$(document).ready(function ()
 {
     gen_menu();
     boton_atras();
@@ -45,7 +52,7 @@ $(document).ready(function ()
 
 });
 
-function procesando_swal() 
+function procesando_swal()
 {
     Swal.fire({
         title: "PROCESANDO!",
@@ -234,7 +241,7 @@ function boton_atras()
                 ir_transferencias_subproductos_mis();
                 li_active_menu("sub_transfe_sub_mis");
                 break;
-             case "#misPendientesAlimen":
+            case "#misPendientesAlimen":
                 ir_informe_pendientes_alimentacion_mis();
                 li_active_menu("sub_pendiente_alimentar_mis");
                 break;
@@ -345,17 +352,17 @@ function ir_permisos_roles()
             cerrar_load();
 
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 
 }
 
-function recargar_pagina(){
-                     location.reload();
+function recargar_pagina() {
+    location.reload();
 
 }
 function cargar_permisos_roles()
@@ -383,11 +390,11 @@ function cargar_permisos_roles()
 
 
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
 
     });
 
@@ -409,18 +416,18 @@ function obtener_permisos_habilitados_roles()
             $('#permisos').val(data.selected.split(','));
             $('#permisos').selectpicker('refresh');
             $('.dropdown-header').addClass('bg-navy');
-             
+
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 
 }
 
-function registrar_agregar_permisos() 
+function registrar_agregar_permisos()
 {
     Swal.fire({
         title: 'CONFIRMACION',
@@ -450,10 +457,7 @@ function registrar_agregar_permisos()
                             text: result.mensaje,
                             confirmButtonText: "CERRAR"
                         });
-
-
-
-
+ 
                     }
                     if (result.tipo_mensaje == "1") {
                         swal.fire({
@@ -467,18 +471,18 @@ function registrar_agregar_permisos()
 
                     }
                 },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                        location.reload();
+                    }
+                }
 
             });
         }
     });
 }
 
-function aviso_error(mensaje) 
+function aviso_error(mensaje)
 {
     swal.fire
             ({
@@ -582,13 +586,13 @@ function gen_menu()
 
         }});
 }
-function li_active_menu(id) 
+function li_active_menu(id)
 {
     $(".nav-link").removeClass("active");
     $("#" + id).addClass("active");
 }
 
-function cargar_load(texto) 
+function cargar_load(texto)
 {
 
     $('body').loadingModal('animation', 'wave');
@@ -599,40 +603,39 @@ function cargar_load(texto)
     $('body').loadingModal('show');
 }
 
-function cerrar_load() 
+function cerrar_load()
 {
     $('body').loadingModal("hide");
     $('#body').loadingModal("hide");
 }
 
-function cerrar_sidebar() 
+function cerrar_sidebar()
 {
     $('#body').removeClass();
     $('#body').addClass("text-sm layout-footer-fixed layout-navbar-fixed sidebar-mini layout-fixed sidebar-closed sidebar-collapse");
 }
 
-function aviso_generico(tipo, mensaje) 
+function aviso_generico(tipo, mensaje)
 {
     if (tipo == 1)
     {
         Swal.fire(mensaje, '', 'success');//
 
 
-    } 
-    else {
+    } else {
         Swal.fire(mensaje, '', 'error');//
 
     }
 }
 
-function formato_multiselect() 
+function formato_multiselect()
 {
     $('.selectpicker').selectpicker({selectAllText: "Seleccionar todo",
         deselectAllText: "Deseleccionar todo", noneSelectedText: "Nada seleccionado",
         noneResultsText: "No se encontraron resultados"});
 }
 
-function cargar_estilo_calendario_insert(format) 
+function cargar_estilo_calendario_insert(format)
 {
 
     $('.datepicker').pickadate({
@@ -657,7 +660,7 @@ function cargar_estilo_calendario_insert(format)
 
 
 
-function cargar_estilo_calendario_global(format,max) 
+function cargar_estilo_calendario_global(format, max)
 {
 
     $('.datepicker').pickadate({
@@ -681,7 +684,7 @@ function cargar_estilo_calendario_global(format,max)
 }
 
 
-function elminar_fila() 
+function elminar_fila()
 {
     $(document).on('click', '.borrar', function (event) {
         event.preventDefault();
@@ -700,7 +703,7 @@ function notificacion()
     });
 }
 
-function formato_hora_input() 
+function formato_hora_input()
 {
     $('.inputmask').inputmask(
             "hh:mm", {
@@ -712,77 +715,77 @@ function formato_hora_input()
     );
 }
 
-function cargar_datos_modal_version(ribbon, titulo, descripcion,pdf,manual_bolean)
+function cargar_datos_modal_version(ribbon, titulo, descripcion, pdf, manual_bolean)
 {
     $("#ribbon_version").html(ribbon);
     $("#ribbon_titulo").html(titulo);
-    $("#form_pdf_manual").attr("href","./manuales/"+pdf);
-    
-    
+    $("#form_pdf_manual").attr("href", "./manuales/" + pdf);
+
+
     $("#form_pdf_manual").hide();
     $("#ribbon_descripcion").html("");
     $("#ribbon_descripcion").html(descripcion.replaceAll("&", "<br>"));
-    
-    if(manual_bolean)
+
+    if (manual_bolean)
     {
         $("#form_pdf_manual").show();
     }
-    
-}   
 
-function activar_datatable(variable){
-     $(variable).DataTable
-     (  {
+}
+
+function activar_datatable(variable) {
+    $(variable).DataTable
+            ({
                 paging: false,
-               // "ordering": false,
+                // "ordering": false,
                 "language":
-                {
-                    "sUrl": "js/Spanish.txt"
-                } ,
-                scrollX:        true,
-        }); 
-} 
-function ir_pagina_generico(ruta,pagina,hash,calendario_formato,max_calendario,datatable){
-     window.location.hash =hash;
-    var cal=calendario_formato;
-    var dat=datatable;
+                        {
+                            "sUrl": "js/Spanish.txt"
+                        },
+                scrollX: true,
+            });
+}
+function ir_pagina_generico(ruta, pagina, hash, calendario_formato, max_calendario, datatable) {
+    window.location.hash = hash;
+    var cal = calendario_formato;
+    var dat = datatable;
     $.ajax({
         type: "POST",
-        url: ruta+pagina,
-        beforeSend: function() 
+        url: ruta + pagina,
+        beforeSend: function ()
         {
             cargar_load();
             $("#contenedor_principal").html("");
-        },           
-        success: function (res) 
+        },
+        success: function (res)
         {
             $("#contenedor_principal").html(res);
-            
-            if(cal!=="FALSE")
+
+            if (cal !== "FALSE")
             {
-                cargar_estilo_calendario_global(calendario_formato,max_calendario);
+                cargar_estilo_calendario_global(calendario_formato, max_calendario);
             }
-            
-            if(dat!=="FALSE")
+
+            if (dat !== "FALSE")
             {
-                 $(datatable).DataTable({
-                     paging: false,
-                     "ordering": false,
-                     "language":
-                    {
-                        "sUrl": "js/Spanish.txt"
-                    }
-                 }); 
+                $(datatable).DataTable({
+                    paging: false,
+                    "ordering": false,
+                    "language":
+                            {
+                                "sUrl": "js/Spanish.txt"
+                            }
+                });
             }
-            
+
             cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-              recargar_pagina();
-             }
-         }
-                });  
- }
- 
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                recargar_pagina();
+            }
+        }
+    });
+}
+
  

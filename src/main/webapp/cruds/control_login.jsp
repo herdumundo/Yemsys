@@ -30,7 +30,7 @@
     String id_rol = "";
     String rol = "";
     String sector = "";
-
+ 
     MessageDigest m = MessageDigest.getInstance("MD5");
     m.reset();
     m.update(cla.getBytes());
@@ -55,8 +55,8 @@
         callableStatement.registerOutParameter("id_rol",        java.sql.Types.VARCHAR);
         callableStatement.registerOutParameter("username",      java.sql.Types.VARCHAR);
         callableStatement.registerOutParameter("rol",           java.sql.Types.VARCHAR);
-        callableStatement.registerOutParameter("sector",           java.sql.Types.VARCHAR);
-
+        callableStatement.registerOutParameter("sector",        java.sql.Types.VARCHAR);
+ 
         callableStatement.execute();
         tipo_respuesta      = callableStatement.getInt("tipo");
         user_name           = callableStatement.getString("username");
@@ -65,8 +65,8 @@
         cod_usuario         = callableStatement.getString("cod_usuario");
         id_rol              = callableStatement.getString("id_rol");
         rol                 = callableStatement.getString("rol");
-        sector                 = callableStatement.getString("sector");
-
+        sector              = callableStatement.getString("sector");
+ 
     } catch (Exception e) {
             out.print(e.toString());
     } finally {
@@ -121,6 +121,8 @@
                 area_nuevo = "LAVADOS";
             } else {
                 notificacion = "";
+                nav_area = "<i class='fas fa-home'onclick='modalAsignacionLineaUsuario()' >"+area+"</i>";
+
             }
 
             sesionOk.setAttribute("notificacion", notificacion);

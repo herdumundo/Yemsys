@@ -11,9 +11,10 @@
 <%@include  file="../../chequearsesion.jsp" %>
 <%@include  file="../../cruds/conexion.jsp" %> 
 <%    
-    String version = contenedores_bal_informe;
-    String version_desc = desc_contenedores_bal_informe;
-    
+    String version = contenedores_bal_encolamiento;
+    String version_desc = desc_contenedores_bal_encolamiento;
+    String pdf = pdf_balEncolamiento;
+   
     PreparedStatement ps, ps2;
     ResultSet rs, rs2; 
 
@@ -26,7 +27,7 @@
 <head>   
 <label><b></b></label> 
 <div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
-     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>','<%=pdf%>',true)">
     <label ><%=version%></label> 
 </div>
 </head><!-- comment -->

@@ -15,43 +15,33 @@
 <%@page import="org.json.JSONArray"%>
 
 <%
-   //  String user = "sa";
-   String user = "sa";
+    //  String user = "sa";
+    String user = "sa";
     String passwd = "Paraguay2017";
-    // String db = "GrupoMaehara";
-   //   String db = "GrupoMaehara";
-   String db = "zz_prueba_GrupoMaehara"; 
-    
-    
-    Connection connection=null;
- 
-        try 
-        {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection("jdbc:sqlserver://172.16.1.202;databasename=" + db, user, passwd);
-        }
-        catch (SQLException se) {
+    String db = "GrupoMaehara";
+    // String db = "zz_prueba_GrupoMaehara"; 
+    Connection connection = null;
+    try {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        connection = DriverManager.getConnection("jdbc:sqlserver://172.16.1.202;databasename=" + db, user, passwd);
+    } catch (SQLException se) {
 
-            switch (se.getErrorCode()){
-                case 1017:
-                    System.out.println("USUARIO O CONTRASEÑA INCORRECTA, FAVOR VERIFIQUE.");
-                    break;
-                case  17002  :
-                case  20:
-                      System.out.println("ERROR DE CONEXION, VERIFIQUE LA RED.");
-                    break;
-                case  17452:
-                       System.out.println("USUARIO O CONTRASEÑA INCORRECTA, FAVOR VERIFIQUE.");
-                    break;
-                default :
-                       System.out.println(se.getErrorCode());
-                       out.print(se.toString());
-             }
+        switch (se.getErrorCode()) {
+            case 1017:
+                System.out.println("USUARIO O CONTRASEÑA INCORRECTA, FAVOR VERIFIQUE.");
+                break;
+            case 17002:
+            case 20:
+                System.out.println("ERROR DE CONEXION, VERIFIQUE LA RED.");
+                break;
+            case 17452:
+                System.out.println("USUARIO O CONTRASEÑA INCORRECTA, FAVOR VERIFIQUE.");
+                break;
+            default:
+                System.out.println(se.getErrorCode());
+                out.print(se.toString());
         }
-        catch (ClassNotFoundException e)
-        {
-              out.print(e.toString());
-        }
- 
-
+    } catch (ClassNotFoundException e) {
+        out.print(e.toString());
+    }
 %>

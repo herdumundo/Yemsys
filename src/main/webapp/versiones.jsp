@@ -218,4 +218,8 @@
     String pdf_balMaeharaMateriaPrimaSAP = "";
     
 
+    String contenedores_bal_encolamiento = "0111-PAN-19112023-A";
+    String desc_contenedores_bal_encolamiento = " ";
+    String pdf_balEncolamiento = "manual_encolamiento_mpt.pdf";
+    
 %>

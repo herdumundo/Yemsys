@@ -27,8 +27,8 @@
 </div>
 </head>
 <%
-    PreparedStatement ps, ps2;
-    ResultSet rs, rs2;
+    PreparedStatement ps;
+    ResultSet rs;
     try {
         ps = connection.prepareStatement(queryRol);
         rs = ps.executeQuery();
