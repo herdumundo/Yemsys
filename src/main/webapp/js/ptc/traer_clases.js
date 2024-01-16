@@ -16,11 +16,133 @@ function ir_transferencia_menu() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
+    });
+}
+
+
+function generarInformeLotes() {
+    // Obtener la fecha ingresada por el usuario
+    var fechaDesde = $("#fecha_desde").val();
+    var fechaHasta = $("#fecha_hasta").val();
+    // Crear un objeto de datos que contenga la fecha
+    var data = {
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaHasta
+    };
+
+    // Realizar una solicitud AJAX tipo POST
+    $.ajax({
+        type: "POST",
+        url: ruta_consultas_ptc + "consulta_gen_grilla_lotes.jsp",
+        data: data,
+        beforeSend: function (xhr) {
+            cargar_load("Cargando...");
+        },
+        success: function (response) {
+            // Manejar la respuesta del servidor aquí
+            console.log(response);
+            // Pegar la información generada en el div "informe_transferencia"
+            $("#informe_lotes").html(response.grilla);
+            $('#tb_informe_lotes').DataTable({
+                scrollY: "500px",
+                scrollX: !0,
+                dom: "Bfrtip",
+                pageLength: 100,
+                "language":
+                        {
+                            sSearch: "Buscar:",
+                            sLengthMenu: "Mostrar _MENU_ registros",
+                            sZeroRecords: "No se encontraron resultados",
+                            sEmptyTable: "Ningún dato disponible en esta tabla",
+                            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            sInfoThousands: ",",
+                            sLoadingRecords: "Cargando...",
+                            oPaginate: {sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior"},
+                            buttons: {copyTitle: "DATOS COPIADOS", copySuccess: {_: "%d FILAS COPIADAS"}}
+                        },
+                buttons: [
+                    {
+                        extend: 'colvis',
+                        text: 'MOSTRAR / OCULTAR',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }, // Botón para imprimir
+                    {
+                        extend: 'excelHtml5',
+                        text: 'EXCEL',
+                        title: 'INFORME LOTES' + " DESDE: " + $("#fecha_desde").val() + " HASTA: " + $("#fecha_hasta").val(), // Establecer el nombre del archivo aquí
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF',
+                        title: 'INFORME LOTES' + " DESDE: " + $("#fecha_desde").val() + " HASTA: " + $("#fecha_hasta").val(),
+                        orientation: "landscape",
+                        pageSize: "LEGAL",
+                        customize: function (e) {
+                            (e.styles.title = {color: "white", fontSize: "20", background: "black", alignment: "center"}),
+                                    (e.styles.tableHeader = {fontSize: "6"}),
+                                    (e.styles.tableBodyEven = {fontSize: "6"}),
+                                    (e.styles.tableBodyOdd = {fontSize: "6"}),
+                                    (e.styles.tableFooter = {fontSize: "6"}),
+                                    (e.styles["td:nth-child(2)"] = {width: "100px", "max-width": "100px"});
+                        },
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'IMPRIMIR',
+                        title: 'INFORME LOTES' + " DESDE: " + $("#fecha_desde").val() + " HASTA: " + $("#fecha_hasta").val(),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }, // Botón para IMPRIMIR
+                    {
+                        extend: 'copy',
+                        text: 'COPIAR GRILLA',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    } // Botón para copiar al portapapeles
+                ],
+                keys: {clipboard: !1}
+            }); //le damos formato DataTable 
+            cerrar_load();
+        },
+        error: function (error) {
+            // Manejar errores aquí
+            console.error(error);
+        }
+    });
+}
+function traer_informe_lotes() {
+    window.location.hash = "ptcInfomeLotes";
+    $.ajax({
+        type: "POST",
+        url: ruta_contenedores_ptc + "contenedor_informe_lotes.jsp",
+        beforeSend: function () {
+            cargar_load(), $("#contenedor_principal").html("");
+        },
+        success: function (e) {
+            $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_transferencia(e) {
@@ -40,11 +162,11 @@ function ir_transferencia(e) {
                     cerrar_load(),
                     cargar_estilo_calendario_insert("dd/mm/yyyy");
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_agregar_motivo_retencion() {
@@ -67,15 +189,15 @@ function ir_agregar_motivo_retencion() {
                     $("#grilla_lotes_liberacion").DataTable({scrollX: true, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_modificacion_lotes_ptc() {
-    
+
     window.location.hash = "panelModifLotes";
     $.ajax({
         type: "POST",
@@ -86,11 +208,11 @@ function ir_modificacion_lotes_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), ir_grilla_retenidos_panel(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_reporte_historico_lotes_ptc() {
@@ -104,11 +226,11 @@ function ir_reporte_historico_lotes_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_configuracion_empacadora() {
@@ -122,11 +244,11 @@ function ir_configuracion_empacadora() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), ir_grilla_empacadoras(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_cambio_fp_ptc() {
@@ -140,11 +262,11 @@ function ir_cambio_fp_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_cambio_nro_ptc() {
@@ -158,11 +280,11 @@ function ir_cambio_nro_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_transformacion_ptc() {
@@ -176,11 +298,11 @@ function ir_transformacion_ptc() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_transformacion_pallet_carro() {
@@ -194,11 +316,11 @@ function ir_transformacion_pallet_carro() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_grilla_retenidos_panel() {
@@ -211,11 +333,11 @@ function ir_grilla_retenidos_panel() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#div_grilla").html(e), $("#grilla_lotes_motivos").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_reportes_varios() {
@@ -228,11 +350,11 @@ function ir_reportes_varios() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenido").html(e), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_liberados_viejo() {
@@ -243,7 +365,7 @@ function ir_liberados_viejo() {
         beforeSend: function () {
             cargar_load(), $("#contenedor_principal").html("");
         },
-        success: function (e) 
+        success: function (e)
         {
             $("#div_cargar_menu").hide(),
                     $("#contenedor_principal").html(e),
@@ -255,21 +377,21 @@ function ir_liberados_viejo() {
                     inicializar_unidad_medida_PTC(),
                     (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
                     (document.getElementById("boxColor_red").style.backgroundColor = "green"),
-                    $("#formulario").on("submit", function (e) 
+                    $("#formulario").on("submit", function (e)
             {
-                e.preventDefault(), 
+                e.preventDefault(),
                         procesar_PTC("control_registro_costeado"),
-                e.stopPropagation();
+                        e.stopPropagation();
             }),
                     $("#txt_fecha_involucrada").multiDatesPicker({dateFormat: "yy/mm/dd"}),
                     comprobar_clasificadora(),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_registro_carros_alimentados() {
@@ -302,60 +424,59 @@ function ir_registro_carros_alimentados() {
                 e.preventDefault(), $(this).closest("tr").remove();
             });
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_registro_reprocesos_lista_ptc() {
     window.location.hash = "cyoRegistroReproc";
     $.ajax({
         type: "POST",
-       // url: ruta_contenedores_ptc + "contenedor_registro_reprocesos.jsp",
+        // url: ruta_contenedores_ptc + "contenedor_registro_reprocesos.jsp",
         url: ruta_contenedores_ptc + "contenedor_registro_reprocesos_lista.jsp",
         beforeSend: function () {
             cargar_load(),
-            $("#contenedor_principal").html("");
+                    $("#contenedor_principal").html("");
         },
         success: function (e) {
-              $("#contenedor_principal").html(e), 
-                $("#contenedor_principal").show(), 
-                cerrar_load();
-                //generar_boton_reproceso_ptc();
+            $("#contenedor_principal").html(e),
+                    $("#contenedor_principal").show(),
+                    cerrar_load();
+            //generar_boton_reproceso_ptc();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 
 function ir_registro_reprocesos_ptc(id) {
     $.ajax({
         type: "POST",
-        url: ruta_contenedores_ptc + "contenedor_registro_reprocesos.jsp?id="+id,
-        beforeSend: function () 
+        url: ruta_contenedores_ptc + "contenedor_registro_reprocesos.jsp?id=" + id,
+        beforeSend: function ()
         {
             cargar_load(),
-            $("#contenedor_principal").html("");
+                    $("#contenedor_principal").html("");
         },
-        success: function (e) 
+        success: function (e)
         {
-            $("#contenedor_principal").html(e), 
-            $("#contenedor_principal").show(), 
-            $("#id").val(id), 
-            
-            cerrar_load();
+            $("#contenedor_principal").html(e),
+                    $("#contenedor_principal").show(),
+                    $("#id").val(id),
+                    cerrar_load();
             generar_boton_reproceso_ptc(id);
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 
@@ -363,23 +484,23 @@ function ir_registro_reprocesos_ptc(id) {
 function generar_boton_reproceso_ptc(id) {
     $.ajax({
         type: "POST",
-        url: ruta_consultas_ptc + "generar_btn_reprocesar.jsp?id="+id,
+        url: ruta_consultas_ptc + "generar_btn_reprocesar.jsp?id=" + id,
         beforeSend: function () {},
         success: function (e) {
             $("#contenedor_boton").html(e.boton);
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function registrar_reproceso_ptc(e) {
     var t = "DESEA INICIAR LA ALIMENTACION?",
             o = "",
             r = 1;
-    if (2 == e) 
+    if (2 == e)
     {
         t = "DESEA FINALIZAR LA ALIMENTACION?";
         var a = document.querySelectorAll("#grilla_transfer tbody tr");
@@ -387,48 +508,48 @@ function registrar_reproceso_ptc(e) {
                 (r = 0),
                 a.forEach(function (e) {
                     var t = e.querySelectorAll("td");
-                    (item = {}), (item.cod_interno = t[0].textContent), (item.cod_carrito = t[1].textContent), 
-                    (item.cantidad = t[2].textContent), (item.tipo_huevo = t[6].textContent), jsonObj.push(item), 
-                    r++;
+                    (item = {}), (item.cod_interno = t[0].textContent), (item.cod_carrito = t[1].textContent),
+                            (item.cantidad = t[2].textContent), (item.tipo_huevo = t[6].textContent), jsonObj.push(item),
+                            r++;
                 }),
                 (o = JSON.stringify(jsonObj));
     }
     r >= 1
-            ? Swal.fire({title: t, type: "warning", showCancelButton: !0, confirmButtonColor: "#3085d6", cancelButtonColor: "#d33", 
+            ? Swal.fire({title: t, type: "warning", showCancelButton: !0, confirmButtonColor: "#3085d6", cancelButtonColor: "#d33",
                 confirmButtonText: "REGISTRAR", cancelButtonText: "CANCELAR"}).then((t) => {
         t.value &&
                 $.ajax({
                     type: "POST",
                     url: ruta_controles_ptc + "control_aper_cierre_reproceso.jsp",
-                    data: {registro: e, jsonObj: o,id_cab:$("#id").val()},
+                    data: {registro: e, jsonObj: o, id_cab: $("#id").val()},
                     beforeSend: function () {
                         Swal.fire({
                             title: "PROCESANDO!",
                             html: "<strong>ESPERE</strong>...",
                             showCancelButton: false,
                             showConfirmButton: false,
-                             
+
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
                         1 == e.tipo_respuesta
                                 ? (
-                                        swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}),generar_boton_reproceso_ptc(e.id_cab),$("#id").val(e.id_cab)
-                                   )
+                                        swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), generar_boton_reproceso_ptc(e.id_cab), $("#id").val(e.id_cab)
+                                        )
                                 : 2 == e.tipo_respuesta
                                 ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_registro_reprocesos_lista_ptc())
                                 : swal.fire({type: "error", title: e.mensaje, confirmButtonText: "CERRAR"});
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     })
             : swal.fire({type: "error", title: "ERROR, NO SE INGRESARON DATOS.", confirmButtonText: "CERRAR"});
@@ -466,9 +587,9 @@ function traer_registro_lib() {
                     $("#contenedor_principal").html(e),
                     $("#contenedor_principal").show(),
                     $(".checkbox").bootstrapToggle(),
-                     //$(".dtBox").DateTimePicker(),
+                    //$(".dtBox").DateTimePicker(),
                     formato_hora_input();
-                    cargar_toggles(),
+            cargar_toggles(),
                     cargar_estilo_calendario_insert("yyyy/mm/dd"),
                     inicializar_unidad_medida_PTC(),
                     (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
@@ -480,11 +601,11 @@ function traer_registro_lib() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_registro_retenido() {
@@ -501,7 +622,7 @@ function traer_registro_retenido() {
                     $("#contenedor_principal").show(),
                     $(".checkbox").bootstrapToggle(),
                     formato_hora_input();
-                    (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
+            (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
                     (document.getElementById("boxColor_red").style.backgroundColor = "green"),
                     cargar_toggles(),
                     cargar_estilo_calendario_insert("yyyy/mm/dd"),
@@ -512,11 +633,11 @@ function traer_registro_retenido() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_registro_SC() {
@@ -534,7 +655,7 @@ function traer_registro_SC() {
                             $("#contenedor_principal").show(),
                             $(".checkbox").bootstrapToggle(),
                             formato_hora_input();
-                            (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
+                    (document.getElementById("boxColor").style.backgroundColor = "lightblue"),
                             (document.getElementById("boxColor_red").style.backgroundColor = "green"),
                             cargar_toggles(),
                             cargar_estilo_calendario_insert("yyyy/mm/dd"),
@@ -548,11 +669,11 @@ function traer_registro_SC() {
                     }),
                             cerrar_load();
                 },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                        location.reload();
+                    }
+                }
             });
 }
 function traer_registro_retenido_costeado() {
@@ -578,52 +699,51 @@ function traer_registro_retenido_costeado() {
                     comprobar_clasificadora(),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
-    });
-}
- function validar_fechaInicial_fechaFinal ()
-    {
-         $('#cbox_aviarios').html('');  
-        var fecha_clasificacion_inicial=$('#calendario_registro').val();
-        var fecha_clasificacion_final=$('#fecha_clas_final').val();
-        var hora_inicial=$('#hora_desde').val();
-        var hora_final=$('#hora_hasta').val();
-     /*   var date_inicial=new Date(fecha_clasificacion_inicial+' '+hora_inicial+':00') ;
-        var date_final=new Date(fecha_clasificacion_final+' '+hora_final+':00') ; 
-       */
-        var date_inicial_consulta= fecha_clasificacion_inicial+' '+hora_inicial+':59.000';
-        var date_final_consulta= fecha_clasificacion_final+' '+hora_final+':00.000';
-        
-     var date_inicial=new Date(date_inicial_consulta) ;
-        var date_final=new Date(date_final_consulta) ; 
-       
-   
-        
-        if(fecha_clasificacion_inicial.length>0&&fecha_clasificacion_final.length>0&&hora_inicial.length>0&&hora_final.length>0)
-        {
-            if(date_inicial>date_final)
-            {
-               swal.fire({
-                        type: 'error',
-                        title: "FECHA DE CLASIFICACION INICIAL NO PUEDE SER MAYOR A LA FINAL.!!!",
-                        confirmButtonText: "CERRAR"
-                        });  
-                $('#fecha_clas_final').val('');
-               
-            }
-            else 
-            {
-                 $.get(ruta_consultas_ptc+'consulta_aviarios_hora.jsp',{fecha_inicio:date_inicial_consulta,fecha_final:date_final_consulta},function(res)
-                {
-                  $('#cbox_aviarios').html(res.aviarios);  
-                }); 
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
             }
         }
+    });
+}
+function validar_fechaInicial_fechaFinal()
+{
+    $('#cbox_aviarios').html('');
+    var fecha_clasificacion_inicial = $('#calendario_registro').val();
+    var fecha_clasificacion_final = $('#fecha_clas_final').val();
+    var hora_inicial = $('#hora_desde').val();
+    var hora_final = $('#hora_hasta').val();
+    /*   var date_inicial=new Date(fecha_clasificacion_inicial+' '+hora_inicial+':00') ;
+     var date_final=new Date(fecha_clasificacion_final+' '+hora_final+':00') ; 
+     */
+    var date_inicial_consulta = fecha_clasificacion_inicial + ' ' + hora_inicial + ':59.000';
+    var date_final_consulta = fecha_clasificacion_final + ' ' + hora_final + ':00.000';
+
+    var date_inicial = new Date(date_inicial_consulta);
+    var date_final = new Date(date_final_consulta);
+
+
+
+    if (fecha_clasificacion_inicial.length > 0 && fecha_clasificacion_final.length > 0 && hora_inicial.length > 0 && hora_final.length > 0)
+    {
+        if (date_inicial > date_final)
+        {
+            swal.fire({
+                type: 'error',
+                title: "FECHA DE CLASIFICACION INICIAL NO PUEDE SER MAYOR A LA FINAL.!!!",
+                confirmButtonText: "CERRAR"
+            });
+            $('#fecha_clas_final').val('');
+
+        } else
+        {
+            $.get(ruta_consultas_ptc + 'consulta_aviarios_hora.jsp', {fecha_inicio: date_inicial_consulta, fecha_final: date_final_consulta}, function (res)
+            {
+                $('#cbox_aviarios').html(res.aviarios);
+            });
+        }
     }
+}
 
 function ir_movimiento() {
     window.location.hash = "ptcMovimiento";
@@ -645,11 +765,11 @@ function ir_movimiento() {
                     $("#tabla_lotes").dataTable({scrollX: !0}),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_retenido_fecha_puesta() {
@@ -662,11 +782,11 @@ function traer_retenido_fecha_puesta() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), filtrar_grilla_retenido(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_fecha_involucrada() {
@@ -697,11 +817,11 @@ function traer_eliminar() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), elminar_fila(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_informe() {
@@ -715,11 +835,11 @@ function traer_informe() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_insert() {
@@ -746,11 +866,11 @@ function traer_contendor_cambiar_pass_jsp() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_contendor_pdf_jsp() {
@@ -763,11 +883,11 @@ function traer_contendor_pdf_jsp() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario").datepicker(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_carro_mesa() {
@@ -781,11 +901,11 @@ function traer_carro_mesa() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario_mesa").datepicker(), filtrar_grilla_carromesa(), elminar_fila(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_contendor_pdf_reproceso() {
@@ -798,11 +918,11 @@ function traer_contendor_pdf_reproceso() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), $("#calendario_reporte_reproceso").datepicker(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_grilla_retenido() {
@@ -816,11 +936,11 @@ function traer_grilla_retenido() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_reporte_lotes() {
@@ -847,11 +967,11 @@ function traer_reporte_lotes() {
             }),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_reporte_mixtos_historial() {
@@ -879,11 +999,11 @@ function traer_reporte_mixtos_historial() {
             }),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_reporte_ptc_excel() {
@@ -897,29 +1017,29 @@ function traer_reporte_ptc_excel() {
         success: function (e) {
             $("#div_cargar_menu").hide(), $("#contenedor_principal").html(e), $("#contenedor_principal").show(), cargar_estilo_calendario_insert("dd/mm/yyyy"), ir_reporte_excel_ptc(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_grilla_transferencia(e, t) {
     $.ajax({
         type: "POST",
         url: ruta_contenedores_ptc + "acordeon_transferencia.jsp",
-        data: {fecha: e, tipo: t,tipo_reporte: $('#tipo_reporte').val()},
+        data: {fecha: e, tipo: t, tipo_reporte: $('#tipo_reporte').val()},
         beforeSend: function () {
             cargar_load(), $("#div_cargar").show();
         },
         success: function (e) {
             $("#div_grilla_tipo_transferencia").html(e), $("#div_cargar").hide(), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function traer_pendiente_liberacion_ptc() {
@@ -937,11 +1057,11 @@ function traer_pendiente_liberacion_ptc() {
                     $("#grilla_lotes_liberacion").DataTable({scrollX: !0, paging: !1, ordering: !1, info: !0, language: {sUrl: "js/Spanish.txt"}}),
                     cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function buscar_aviarios_disponibles() {
@@ -1003,11 +1123,11 @@ function ir_grilla_transformacion_pallet_carro() {
         success: function (e) {
             $("#contenido_grilla_transformacion_pallet_carro").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_grilla_transformacion_carro() {
@@ -1021,11 +1141,11 @@ function ir_grilla_transformacion_carro() {
         success: function (e) {
             $("#contenido_grilla_transformacion_carro").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_grilla_cambio_fp_ptc() {
@@ -1039,11 +1159,11 @@ function ir_grilla_cambio_fp_ptc() {
         success: function (e) {
             $("#contenido_grilla_cambio_fp").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function ir_grilla_cambio_nro_ptc() {
@@ -1057,11 +1177,11 @@ function ir_grilla_cambio_nro_ptc() {
         success: function (e) {
             $("#contenido_grilla_cambio_fp").html(e), $("#example").DataTable({scrollX: !0, pageLength: 100, language: {sUrl: "js/Spanish.txt"}}), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function registro_transformacion_pallet_carro(e, t, o) {
@@ -1089,23 +1209,23 @@ function registro_transformacion_pallet_carro(e, t, o) {
                             Swal.fire({
                                 title: "PROCESANDO!",
                                 html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
                                 allowOutsideClick: !1,
-                                 willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                                willOpen: () => {
+                                    Swal.showLoading()
+                                }
+
                             });
                         },
                         success: function (e) {
                             aviso_transformacion(e.tipo, e.mensaje);
                         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                                location.reload();
+                            }
+                        }
                     });
         }
     });
@@ -1150,10 +1270,10 @@ function control_retenidos_pendientes(e, t, o, r, a) {
                             showCancelButton: false,
                             showConfirmButton: false,
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
@@ -1170,11 +1290,11 @@ function control_retenidos_pendientes(e, t, o, r, a) {
                                 : swal.fire({type: "error", title: e.mensaje, confirmButtonText: "CERRAR"}),
                                 notificacion();
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 }),
                 e.stoppropagation();
     });
@@ -1210,20 +1330,20 @@ function registro_transformacion_ptc(e, t, o, r, a, n, i) {
                             showCancelButton: false,
                             showConfirmButton: false,
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
                         aviso_transformacion(e.tipo, e.mensaje);
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     });
 }
@@ -1252,23 +1372,23 @@ function registro_cambio_fp_ptc(e, t) {
                             Swal.fire({
                                 title: "PROCESANDO!",
                                 html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
                                 allowOutsideClick: !1,
-                                 willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                                willOpen: () => {
+                                    Swal.showLoading()
+                                }
+
                             });
                         },
                         success: function (e) {
                             aviso_transformacion(e.tipo, e.mensaje);
                         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                                location.reload();
+                            }
+                        }
                     });
         }
     }),
@@ -1299,23 +1419,23 @@ function registro_cambio_nro_ptc(e, t) {
                             Swal.fire({
                                 title: "PROCESANDO!",
                                 html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
                                 allowOutsideClick: !1,
-                                 willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                                willOpen: () => {
+                                    Swal.showLoading()
+                                }
+
                             });
                         },
                         success: function (e) {
                             aviso_transformacion_PTC(e.tipo, e.mensaje);
                         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                                location.reload();
+                            }
+                        }
                     });
         }
     });
@@ -1347,20 +1467,20 @@ function cuadro_empacadoras() {
                             title: "PROCESANDO!",
                             html: "ESPERE<strong></strong>...",
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
                         Swal.close(), 0 == e.tipo_respuesta ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_grilla_empacadoras()) : swal.fire({type: "error", html: e.mensaje, confirmButtonText: "CERRAR"});
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     });
 }
@@ -1374,11 +1494,11 @@ function ir_grilla_empacadoras() {
         success: function (e) {
             $("#div_tabla").html(e), cerrar_load();
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function consulta_empacadora() {
@@ -1390,11 +1510,11 @@ function consulta_empacadora() {
         success: function (e) {
             $("#nro_empacadora").empty(), $("#nro_empacadora").append(e.mensaje);
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function consulta_empacadora_retenido() {
@@ -1406,11 +1526,11 @@ function consulta_empacadora_retenido() {
         success: function (e) {
             $("#nro_empacadora").empty(), $("#nro_empacadora").append(e.mensaje);
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function cerrar_empacadora(e) {
@@ -1426,11 +1546,11 @@ function cerrar_empacadora(e) {
                         Swal.close(),
                                 0 == e.tipo_respuesta ? (swal.fire({type: "success", title: e.mensaje, confirmButtonText: "CERRAR"}), ir_grilla_empacadoras()) : swal.fire({type: "error", html: e.mensaje, confirmButtonText: "CERRAR"});
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     }
     );
@@ -1601,23 +1721,23 @@ function get_checkbox_selected_movimientos() {
                             Swal.fire({
                                 title: "PROCESANDO!",
                                 html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
+                                showCancelButton: false,
+                                showConfirmButton: false,
                                 allowOutsideClick: !1,
-                                 willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                                willOpen: () => {
+                                    Swal.showLoading()
+                                }
+
                             });
                         },
                         success: function (e) {
                             "1" == e.tipo_mensaje ? (Swal.fire({type: "success", title: "ATENCION!", text: e.mensaje}), $("#contenedor_principal").html("")) : Swal.fire({type: "error", title: "ATENCION!", html: e.mensaje});
                         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                                location.reload();
+                            }
+                        }
                     });
         }),
                 e.stopPropagation();
@@ -1698,23 +1818,23 @@ function registrar_fecha_involucradas() {
             Swal.fire({
                 title: "PROCESANDO!",
                 html: "<strong>ESPERE</strong>...",
-                            showCancelButton: false,
-                            showConfirmButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
                 allowOutsideClick: !1,
-                 willOpen: () => {
+                willOpen: () => {
                     Swal.showLoading()
                 }
-               
+
             });
         },
         success: function (e) {
             1 == e.tipo_respuesta ? (Swal.fire({type: "success", title: "ATENCION!", text: e.mensaje}), $("#cuadro1").modal("toggle")) : Swal.fire({type: "error", title: "ATENCION!", text: e.mensaje});
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function remover_required_reporte_ptc() {
@@ -1888,11 +2008,11 @@ function consulta_huevos_recibidos(e) {
                             }),
                             huevos_recibidos_grafico(t, o, r, p, m, f, n, O, E, b, h, x, R, P, A, u, a, g, i, c, l, s, _, d, S, C, y, T, v, I);
                 },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                        location.reload();
+                    }
+                }
             });
 }
 function ir_reporte_generico(e) {
@@ -1917,11 +2037,11 @@ function ir_reporte_generico(e) {
                         });
                     });
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function huevos_recibidos_grafico(e, t, o, r, a, n, i, c, l, s, d, _, p, u, f, m, g, h, O, b, E, S, C, y, T, v, I, A, x, P) {
@@ -2123,11 +2243,11 @@ function ir_pendientes_recogidas() {
                 e.preventDefault(), registrar_pendientes_recogidas(), e.stopPropagation();
             });
         },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                location.reload();
+            }
+        }
     });
 }
 function registrar_pendientes_recogidas() {
@@ -2153,20 +2273,20 @@ function registrar_pendientes_recogidas() {
                             title: "PROCESANDO!",
                             html: "ESPERE<strong></strong>...",
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
                         aviso_registro_general(e.tipo_respuesta, e.mensaje, "registroRecogida");
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     });
 }
@@ -2182,20 +2302,20 @@ function liberar_recogida(e, t, o) {
                             title: "PROCESANDO!",
                             html: "ESPERE<strong></strong>...",
                             allowOutsideClick: !1,
-                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                            willOpen: () => {
+                                Swal.showLoading()
+                            }
+
                         });
                     },
                     success: function (e) {
                         aviso_registro_general(e.tipo_respuesta, e.mensaje, "registroRecogida");
                     },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                            location.reload();
+                        }
+                    }
                 });
     });
 }
@@ -2217,11 +2337,11 @@ function grilla_recogidas_liberadas() {
             success: function (e) {
                 $("#contenido_grilla_liberadas").html(e.grilla), cerrar_load();
             },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         }
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                    location.reload();
+                }
+            }
         });
     });
 }
@@ -2282,10 +2402,10 @@ function huevos_sc_liberar() {
                                             title: "PROCESANDO!",
                                             html: "ESPERE<strong></strong>...",
                                             allowOutsideClick: !1,
-                                             willOpen: () => {
-                    Swal.showLoading()
-                }
-               
+                                            willOpen: () => {
+                                                Swal.showLoading()
+                                            }
+
                                         });
                                     },
                                     success: function (e) {
@@ -2294,11 +2414,11 @@ function huevos_sc_liberar() {
                                 });
                     });
                 },
-         error: function(XMLHttpRequest, textStatus, errorThrown) {
-             if(XMLHttpRequest.status==404 || XMLHttpRequest.status==500){
-                  location.reload();
-             }
-         },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
+                        location.reload();
+                    }
+                },
             });
 }
 function aviso_registro_general(e, t, o) {

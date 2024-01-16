@@ -809,8 +809,5 @@ function visualizar_lotes_cancelacion_transferencias_ptc(id) {
                 recargar_pagina();
             }
         }});
-
-
-
-
 }
+

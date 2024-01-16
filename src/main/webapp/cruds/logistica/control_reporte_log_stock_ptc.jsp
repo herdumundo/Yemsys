@@ -8,15 +8,14 @@
 <%@page import="net.sf.jasperreports.view.JasperViewer"%>
 <jsp:useBean id="conexion" class="clases.ConnectionSqlServer" scope="page" />
 <%@include  file="../../chequearsesion_reporte.jsp" %>
+<%@include  file="../../cruds/conexion.jsp" %>
 
 <%
     if(sesion==true)
         {
     try 
     {
-        clases.controles.connectarBD();
-        Connection cn = clases.controles.connect;
-
+      
         File reportfile = new File(application.getRealPath("reportes/log_stock_huevos/principal.jasper"));
 
         Map<String, Object> parameter = new HashMap<String, Object>();
@@ -25,17 +24,17 @@
         parameter.put("SUBREPORT_DIR",  new String("C:\\Program Files\\Apache Software Foundation\\Tomcat 10.0\\webapps\\Yemsys\\reportes\\log_stock_huevos\\"));
     //  parameter.put("SUBREPORT_DIR",  new String("C:\\Users\\hvelazquez\\Documents\\NetBeansProjects\\grupomaehara\\web\\reportes\\log_stock_huevos\\"));
 
-        byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, cn);
+        byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, connection);
         response.setContentType("application/pdf");
         response.setContentLength(bytes.length);
         ServletOutputStream outputstream = response.getOutputStream();
         outputstream.write(bytes, 0, bytes.length);
         outputstream.flush();
         outputstream.close();
-
-        clases.controles.DesconnectarBD();
-    } catch (Exception e) {
-
+        connection.close();
+     } catch (Exception e) {
+        connection.close();
+        out.print(e.getMessage());
     }
     }
 %>

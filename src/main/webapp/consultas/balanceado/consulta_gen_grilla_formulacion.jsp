@@ -72,9 +72,6 @@
                     + "ingrediente=\""+rs_GM.getString("ItemName").trim()+"\"    "
                     + "cantidad_historial=\""+ formatea2.format(rs_GM.getDouble("Quantity") ).replaceAll(",", ".") +"\"  "
                     + "grilla='true' cantidad=\""+ formatea2.format(rs_GM.getDouble("Quantity") ).replaceAll(",", ".")+"\">" +  formatea2.format(rs_GM.getDouble("Quantity") ) + "</td>"
-                    
-                    
-                    
                     + "<td style=\"font-weight:bold\" >   " +  formatea2.format(rs_GM.getDouble("Quantity") ) + "</td>"
                     + "<td style=\"font-weight:bold\">   " + formatea.format(rs_GM.getFloat("AvgPrice")) + "</td>"
                     + "<td style=\"font-weight:bold\">   " + rs_GM.getString("ItmsGrpCod") + "</td>"

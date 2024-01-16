@@ -10,7 +10,7 @@
         ResultSet rs_GM;
         Statement st    = connection.createStatement();
         int verificador_SAP = 0;
-        rs_GM = st.executeQuery(" select * from   v_mae_ptc_reprocesos  where clasificadora_actual ='" + area + "'  AND cod_carrito='" + carro + "' AND TIPO_HUEVO='RP'");
+        rs_GM = st.executeQuery(" select * from   v_mae_ptc_reprocesos  where clasificadora_actual ='" + area + "'  AND cod_carrito='" + carro + "'/* AND TIPO_HUEVO='RP'*/");
         while (rs_GM.next()) 
         {
             ob = new JSONObject();

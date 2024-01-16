@@ -10,37 +10,31 @@
 <% 
     String fecha_desde_ptc= request.getParameter("fecha_desde_cla") ;
     String fecha_hasta_ptc= request.getParameter("fecha_hasta_cla") ;
-    String tipo_grafico_ptc= "bar";//request.getParameter("tipo_grafico_cla") ;
+   // String tipo_grafico_ptc= "bar";//request.getParameter("tipo_grafico_cla") ;
     String[] array_clasificadora_ptc= request.getParameterValues("clasif_cla");
     String grilla_html="";
-    String clasificadora="";
+   // String clasificadora="";
         JSONObject GlobalPTC = null;             
 
    try {
-      
-    for(int i=0; i<array_clasificadora_ptc.length; i++)   
-    {
-        if (array_clasificadora_ptc.length > 0)
-        {
-            if(i==0)
-            {
-                clasificadora=""+array_clasificadora_ptc[i]+"";  
-            }
-            else 
-            {
-                clasificadora=clasificadora  + "," +array_clasificadora_ptc[i]+""; 
-            }
-        }
-    } 
+      StringBuilder clasificadorasBuilder = new StringBuilder();
+ 
+for (String clasificadora : array_clasificadora_ptc) {
+    if (clasificadorasBuilder.length() > 0) {
+        clasificadorasBuilder.append(",");
+    }
+    clasificadorasBuilder.append(clasificadora);
+}
+
     GlobalPTC= new JSONObject();                
 
-    String query ="  exec [MAE_PTC_INDICADORES_SUB_TEST] "
-            + "@area            ='"+clasificadora +"',     "
+    String query ="  exec [MAE_PTC_INDICADORES_GRAFICO] "
+            + "@area            ='"+clasificadorasBuilder +"',     "
             + "@fecha_inicio    ='"+fecha_desde_ptc+"',  "
             + "@fecha_fin       ='"+fecha_hasta_ptc+"'   ";
    
-     String query_grilla="  exec [MAE_PTC_INDICADORES_CYO_DETALLADO] "
-            + "@area            ='"+clasificadora +"',     "
+     String query_grilla="  exec [MAE_PTC_INDICADORES_CYO_DETALLADO2] "
+            + "@area            ='"+clasificadorasBuilder +"',     "
             + "@fecha_inicio    ='"+fecha_desde_ptc+"',  "
             + "@fecha_fin       ='"+fecha_hasta_ptc+"'   ";
      
@@ -54,25 +48,25 @@
     
     while(rs.next()) 
     { 
-        GlobalPTC.put("PTC",            rs.getString("PTC"));
-        GlobalPTC.put("REPROCESOS",     rs.getString("RP"));
-        GlobalPTC.put("SUBPRODUCTOS",   rs.getString("PI"));
-        GlobalPTC.put("ROTOS",          rs.getString("R"));
-        GlobalPTC.put("F",              rs.getString("F"));
-        GlobalPTC.put("FFC",            rs.getString("FFC"));
-        GlobalPTC.put("OT",             rs.getString("OT"));
-        GlobalPTC.put("PS",             rs.getString("PS"));
-        GlobalPTC.put("PM",             rs.getString("PM"));
-        GlobalPTC.put("EC",             rs.getString("EC"));
-        GlobalPTC.put("SS",             rs.getString("S/S"));
-        GlobalPTC.put("S",              rs.getString("S"));
-        GlobalPTC.put("A",              rs.getString("A"));
-        GlobalPTC.put("B",              rs.getString("B"));
-        GlobalPTC.put("C",              rs.getString("C"));
-        GlobalPTC.put("D",              rs.getString("D"));
-        GlobalPTC.put("SUPER",          rs.getString("SUPER"));
-        GlobalPTC.put("J",              rs.getString("J"));
-        GlobalPTC.put("G",              rs.getString("G"));
+        GlobalPTC.put("PTC",            rs.getString("PTCX"));
+        GlobalPTC.put("REPROCESOS",     rs.getString("RPX"));
+        GlobalPTC.put("SUBPRODUCTOS",   rs.getString("PIX"));
+        GlobalPTC.put("ROTOS",          rs.getString("RX"));
+        GlobalPTC.put("F",              rs.getString("FX"));
+        GlobalPTC.put("FFC",            rs.getString("FFCX"));
+        GlobalPTC.put("OT",             rs.getString("OTX"));
+        GlobalPTC.put("PS",             rs.getString("PSX"));
+        GlobalPTC.put("PM",             rs.getString("PMX"));
+        GlobalPTC.put("EC",             rs.getString("ECX"));
+        GlobalPTC.put("SS",             rs.getString("S/SX"));
+        GlobalPTC.put("S",              rs.getString("SX"));
+        GlobalPTC.put("A",              rs.getString("AX"));
+        GlobalPTC.put("B",              rs.getString("BX"));
+        GlobalPTC.put("C",              rs.getString("CX"));
+        GlobalPTC.put("D",              rs.getString("DX"));
+        GlobalPTC.put("SUPER",          rs.getString("SUPERX"));
+        GlobalPTC.put("J",              rs.getString("JX"));
+        GlobalPTC.put("G",              rs.getString("GX"));
     }  
     
     
@@ -133,27 +127,6 @@
            "<tr   >"
                    + "<td>"+rs_grilla.getString("fecha_nombre")+"</td>"
                    + "<td>"+rs_grilla.getString("fecha")+"</td>"
-                   + "<td>"+rs_grilla.getString("AX")+"</td>"
-                   + "<td>"+rs_grilla.getString("BX")+"</td>"
-                   + "<td>"+rs_grilla.getString("CX")+"</td>"
-                   + "<td>"+rs_grilla.getString("DX")+"</td>"
-                   + "<td>"+rs_grilla.getString("SUPERX")+"</td>"
-                   + "<td>"+rs_grilla.getString("JX")+"</td>"
-                   + "<td>"+rs_grilla.getString("GX")+"</td>"
-                   + "<td>"+rs_grilla.getString("PTCX")+"</td>"
-                   + "<td>"+rs_grilla.getString("S/SX")+"</td>"
-                   + "<td>"+rs_grilla.getString("SX")+"</td>"
-                   + "<td>"+rs_grilla.getString("ECX")+"</td>"
-                   + "<td>"+rs_grilla.getString("CPX")+"</td>"
-                   + "<td>"+rs_grilla.getString("SLX")+"</td>"
-                   + "<td>"+rs_grilla.getString("RPX")+"</td>"
-                   + "<td>"+rs_grilla.getString("FX")+"</td>"
-                   + "<td>"+rs_grilla.getString("FFCX")+"</td>"
-                   + "<td>"+rs_grilla.getString("OTX")+"</td>"
-                   + "<td>"+rs_grilla.getString("RX")+"</td>"
-                    + "<td>"+rs_grilla.getString("PMX")+"</td>"
-                   + "<td>"+rs_grilla.getString("PSX")+"</td>" 
-                   + "<td>"+rs_grilla.getString("PIX")+"</td>"
                    + "<td>"+rs_grilla.getString("A")+"</td>"
                    + "<td>"+rs_grilla.getString("B")+"</td>"
                    + "<td>"+rs_grilla.getString("C")+"</td>"
@@ -165,14 +138,35 @@
                    + "<td>"+rs_grilla.getString("S/S")+"</td>"
                    + "<td>"+rs_grilla.getString("S")+"</td>"
                    + "<td>"+rs_grilla.getString("EC")+"</td>"
+                   + "<td>"+rs_grilla.getString("CP")+"</td>"
+                   + "<td>"+rs_grilla.getString("SL")+"</td>"
                    + "<td>"+rs_grilla.getString("RP")+"</td>"
                    + "<td>"+rs_grilla.getString("F")+"</td>"
                    + "<td>"+rs_grilla.getString("FFC")+"</td>"
                    + "<td>"+rs_grilla.getString("OT")+"</td>"
                    + "<td>"+rs_grilla.getString("R")+"</td>"
-                   + "<td>"+rs_grilla.getString("PM")+"</td>"
-                   + "<td>"+rs_grilla.getString("PS")+"</td>"
+                    + "<td>"+rs_grilla.getString("PM")+"</td>"
+                   + "<td>"+rs_grilla.getString("PS")+"</td>" 
                    + "<td>"+rs_grilla.getString("PI")+"</td>"
+                   + "<td>"+rs_grilla.getString("AX")+"</td>"
+                   + "<td>"+rs_grilla.getString("BX")+"</td>"
+                   + "<td>"+rs_grilla.getString("CX")+"</td>"
+                   + "<td>"+rs_grilla.getString("DX")+"</td>"
+                   + "<td>"+rs_grilla.getString("SUPERX")+"</td>"
+                   + "<td>"+rs_grilla.getString("JX")+"</td>"
+                   + "<td>"+rs_grilla.getString("GX")+"</td>"
+                   + "<td>"+rs_grilla.getString("PTCX")+"</td>"
+                   + "<td>"+rs_grilla.getString("S/SX")+"</td>"
+                   + "<td>"+rs_grilla.getString("SX")+"</td>"
+                   + "<td>"+rs_grilla.getString("ECX")+"</td>"
+                   + "<td>"+rs_grilla.getString("RPX")+"</td>"
+                   + "<td>"+rs_grilla.getString("FX")+"</td>"
+                   + "<td>"+rs_grilla.getString("FFCX")+"</td>"
+                   + "<td>"+rs_grilla.getString("OTX")+"</td>"
+                   + "<td>"+rs_grilla.getString("RX")+"</td>"
+                   + "<td>"+rs_grilla.getString("PMX")+"</td>"
+                   + "<td>"+rs_grilla.getString("PSX")+"</td>"
+                   + "<td>"+rs_grilla.getString("PIX")+"</td>"
              + " </tr>";
          }
     

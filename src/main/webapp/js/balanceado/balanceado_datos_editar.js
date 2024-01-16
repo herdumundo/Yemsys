@@ -79,6 +79,7 @@ function editar_solicitud_bal(id,estado)
 
 
 
+
 function validar_datos_mtp_edit_sol(){
     var cantidad_validada=$("#total_insumos").html();
     var id=$("#id_pedido").val();

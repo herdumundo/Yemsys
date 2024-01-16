@@ -104,7 +104,7 @@ String grilla_html="";
             String boton= "<td style=\"font-weight:bold\">    <input id=\"BTN"+rs3.getString("Code")+"\"  type=\"button\" class=\"form-control bg-success "+rs3.getString("Code")+" \" onclick=\"calculo_grilla_edit_solicitud_bal('"+rs3.getString("Code")+"',1) \" value=\"Quitar de formula\"></td>";
              
             String td_cantidad_editable= "<td  class='single_line2 only'   style=\"font-weight:bold\" id=\""+rs3.getString("Code")+"\" "
-                    + " contenteditable=\"true\" estado=\"NEUTRO\"  "
+                    + " contenteditable=\"true\" grillaBalanceado=\"true\"  estado=\"NEUTRO\"  "
                     + "costo=\""+rs3.getString("AvgPrice").trim()+"\" "
                     + "grupo=\""+rs3.getString("ItmsGrpCod").trim()+"\"    "
                     + "ingrediente=\""+rs3.getString("ItemName").trim()+"\"    "
@@ -122,7 +122,7 @@ String grilla_html="";
             else if(rs3.getString("accion").equals("MODIFICADO")  ){
                 
                  td_cantidad_editable= "<td  class='single_line2 only'   style=\"font-weight:bold\" id=\""+rs3.getString("Code")+"\" "
-                    + " contenteditable=\"true\" estado=\"MODIFICADO\"  "
+                    + " contenteditable=\"true\" grillaBalanceado=\"true\" estado=\"MODIFICADO\"  "
                     + "costo=\""+rs3.getString("AvgPrice").trim()+"\" "
                     + "grupo=\""+rs3.getString("ItmsGrpCod").trim()+"\"    "
                     + "ingrediente=\""+rs3.getString("ItemName").trim()+"\"    "
