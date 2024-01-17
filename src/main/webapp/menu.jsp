@@ -432,7 +432,7 @@
             <script src="js/vimar/transferenciasVimar.js" type="text/javascript"></script>
             <script src="js/vimar/facturas_cast/facturas_cast.js" type="text/javascript"></script>
             <script src="js/vimar/linea_produccion/lineaProduccionVimar.js" type="text/javascript"></script>
-            
+            <script src="js/vimar/desechos/desechos.js" type="text/javascript"></script>
             <script src="plugins/autoNumeric.js" type="text/javascript"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.3.1/chartjs-plugin-annotation.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
