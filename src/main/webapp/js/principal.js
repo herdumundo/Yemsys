@@ -41,6 +41,11 @@ var rutaContenedoresLineaProduccionVimar = "./contenedores/vimar/linea_produccio
 var rutaConsultasLineaProduccionVimar = "./consultas/vimar/linea_produccion/";
 var rutaCrudsLineaProduccionVimar = "./cruds/vimar/linea_produccion/";
 
+var rutaContenedoresDesechosVimar = "./contenedores/vimar/desechos/";
+var rutaConsultasDesechosVimar = "./consultas/vimar/desechos/";
+var rutaCrudsDesechosVimar = "./cruds/vimar/desechos/";
+
+
 
 $(document).ready(function ()
 {
