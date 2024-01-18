@@ -3,6 +3,28 @@
 <%@include file="../../../cruds/conexion.jsp" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%    String version = "";
+    String version_desc = "";
+%>
+
+<head>
+<label  ><b></b></label> 
+<div class="float-right d-none d-sm-inline-block" href="#" data-toggle="modal" data-target=".bd-example-modal-xx"
+     onclick="cargar_datos_modal_version('<%=version%>', 'VERSION: <%=version%>', '<%=version_desc%>')">
+    <label ><%=version%></label> 
+</div>
+</head>
+<div class="col-lg-20 ">
+    <div class="position-relative p-3 bg-navy"  >
+        <div class="ribbon-wrapper">
+            <div class="ribbon bg-warning">
+                VIM
+            </div>
+        </div>
+        <center><b>FACTURACION REPARTOS</b></center>
+    </div>
+</div>
 <%    try {
         Statement st = connection.createStatement();
         ResultSet rs_repartidor = st.executeQuery("select u_codigocast,slpname from vimar.dbo.oslp");
