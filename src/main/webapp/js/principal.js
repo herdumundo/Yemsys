@@ -46,6 +46,11 @@ var rutaConsultasDesechosVimar = "./consultas/vimar/desechos/";
 var rutaCrudsDesechosVimar = "./cruds/vimar/desechos/";
 
 
+var rutaContenedoresComedorVimar = "./contenedores/vimar/comedor/";
+var rutaConsultasComedorVimar = "./consultas/vimar/comedor/";
+var rutaCrudsComedorVimar = "./cruds/vimar/comedor/";
+
+
 
 $(document).ready(function ()
 {

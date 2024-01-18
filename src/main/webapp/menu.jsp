@@ -438,7 +438,7 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
- 
+            <script src="js/vimar/comedor/comedor.js" type="text/javascript"></script>
  
         
     </body>
