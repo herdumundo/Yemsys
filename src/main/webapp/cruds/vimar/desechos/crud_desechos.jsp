@@ -32,9 +32,6 @@
 
         if (gramos != null && gramos.trim().matches("\\d+") && Integer.parseInt(gramos.trim()) > 0) {
     
-
-
-
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
         callableStatement = connection.prepareCall("{call [vim_prod_desechos_averiados](?,?,?,?,?,?,? )}");
@@ -53,8 +50,8 @@
         if (tipo_respuesta == 0) {
             connection.rollback();
         } else {
-             connection.rollback();
-       //     connection.commit();
+          //     connection.rollback();
+          connection.commit();
         }
 } else {
     tipo_respuesta = 0; // Set to a specific value to indicate that the procedure was not called.

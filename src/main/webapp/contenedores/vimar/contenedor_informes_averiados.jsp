@@ -45,7 +45,7 @@
 <input type="text" class="datepicker" id="fecha" name="fecha">
 
 <button id="btnInforme" class="btn btn-danger" style="width: 100%; display: block;" onclick="generarInformeAveriados()">Informe Averiados</button>
-
+ 
 <div id="informe_transferencia_averiados">
 
 </div>

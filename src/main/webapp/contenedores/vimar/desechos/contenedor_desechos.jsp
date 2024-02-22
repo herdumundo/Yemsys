@@ -63,11 +63,11 @@ String query= " select o.DocNum , convert(int,w.Quantity)  as cantidad, convert(
                          <table class="table">
                              <thead>
                             <tr>
+                                <th>Accion</th> 
                                 <th>Nro.</th> 
                                 <th>Cantidad</th> 
                                 <th>Fecha Transferencia</th> 
                                 <th>Tipo</th> 
-                                <th>Accion</th> 
                             </tr>
                              </thead>
                              <tbody>
@@ -79,11 +79,11 @@ String query= " select o.DocNum , convert(int,w.Quantity)  as cantidad, convert(
   
                                  %>
                                  <tr>
+                                     <td><h5><span class="badge badge-danger right" onclick="cuadroDesechos(<%=rs.getString(1)%>,<%=rs.getString(2)%>,'<%=rs.getString(3)%>','<%=rs.getString(4)%>','Linea <%=i%>')" >Cargar</span></h5>  </td>
                                      <td><h5><span class='badge badge-dark right'><%=rs.getString(1)%> </span></h5>  </td>
                                      <td><h5><span class='badge badge-dark right'><%=rs.getString(2)%> </span></h5>  </td>
                                      <td><h5><span class='badge badge-dark right'><%=rs.getString(3)%> </span></h5>  </td>
                                      <td><h5><span class='badge badge-dark right'><%=rs.getString(4)%> </span></h5>  </td>
-                                     <td><h5><span class="badge badge-danger right" onclick="cuadroDesechos(<%=rs.getString(1)%>,<%=rs.getString(2)%>,'<%=rs.getString(3)%>','<%=rs.getString(4)%>','Linea <%=i%>')" >Cargar</span></h5>  </td>
                                      <% }   
                                  %>    
                                  </tr>  

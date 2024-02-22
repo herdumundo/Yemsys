@@ -668,5 +668,129 @@ function uploadImageCombus() {
     });
 }
 
+//**************************************INFORME RECUPERADOS AVERIADOS***************************************************//
+//CONTENEDOR RECUPERADOS AVERIADOS
+function irContenedorRecuperadosAveriados(){
+    $.ajax({
+        type: "post",
+        url: rutaVimarContenedores + "contenedor_informes_recuperados_averiados.jsp",
+        beforeSend: function(xhr){
+            cargar_load("Cargando...");
+            $("#contenedor_principal").html("");
+        },
+        success: function(res){
+            $("#contenedor_principal").html(res);
+            cargar_estilo_calendario_insert("dd/mm/yyyy");
+            cerrar_load();            
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 404 || XMLHttpRequest.status === 500) {
+                console.log(textStatus);
+                console.log(errorThrown);
+                location.reload();
+            }
+        }
+    });    
+}
+
+//GENERAR GRILLA INFORME RECUPERADOS
+function informeRecuperadosAveriados(){
+    var fechaDesde = $('#fecha_desde').val();
+    var fechaHasta = $('#fecha_hasta').val();
+    $.ajax({
+        type: "POST",
+        url: rutaConsultasVimar + "consulta_gen_grilla_recuperados.jsp",
+        data: {fechaDesde: fechaDesde, fechaHasta: fechaHasta},
+        beforeSend: function (xhr){
+            cargar_load("Cargando...");
+        },
+        success: function (data){
+            $("#informe_recuperados_averiados").html(data.grilla);
+            $("#tb_informe_recuperados").DataTable({
+                scrollY: "500px",
+                dom: "Bfrtip",
+                pageLength: 100,
+                "language":
+                        {
+                            sSearch: "Buscar:",
+                            sLengthMenu: "Mostrar _MENU_ registros",
+                            sZeroRecords: "No se encontraron resultados",
+                            sEmptyTable: "Ningún dato disponible en esta tabla",
+                            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            sInfoThousands: ",",
+                            sLoadingRecords: "Cargando...",
+                            oPaginate: {sFirst: "Primero", sLast: "Último", sNext: "Siguiente", sPrevious: "Anterior"},
+                            buttons: {copyTitle: "DATOS COPIADOS", copySuccess: {_: "%d FILAS COPIADAS"}}
+                        },
+                buttons: [
+                    {
+                        extend: 'colvis',
+                        text: 'MOSTRAR / OCULTAR',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'EXCEL',
+                        title: 'INFORME RECUPERADOS AVERIADOS DESDE: ' + fechaDesde + ' HASTA: ' + fechaHasta, // Establecer el nombre del archivo aquí
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'PDF',
+                        title: 'INFORME RECUPERADOS AVERIADOS DESDE: ' + fechaDesde + ' HASTA: ' + fechaHasta, // Establecer el nombre del archivo aquí
+                        orientation: "landscape",
+                        pageSize: "LEGAL",
+                        customize: function (e) {
+                            (e.styles.title = {color: "white", fontSize: "20", background: "black", alignment: "center"}),
+                                    (e.styles.tableHeader = {fontSize: "6"}),
+                                    (e.styles.tableBodyEven = {fontSize: "6"}),
+                                    (e.styles.tableBodyOdd = {fontSize: "6"}),
+                                    (e.styles.tableFooter = {fontSize: "6"}),
+                                    (e.styles["td:nth-child(2)"] = {width: "100px", "max-width": "100px"});
+                        },
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'IMPRIMIR',
+                        title: 'INFORME RECUPERADOS AVERIADOS DESDE: ' + fechaDesde + ' HASTA: ' + fechaHasta, // Establecer el nombre del archivo aquí
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }, // Botón para IMPRIMIR
+                    {
+                        extend: 'copy',
+                        text: 'COPIAR GRILLA',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    } // Botón para copiar al portapapeles
+                ],
+                keys: {clipboard: !1}
+
+
+            });
+            cerrar_load();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 404 || XMLHttpRequest.status === 500) {
+                console.log(textStatus);
+                console.log(errorThrown);
+                location.reload();
+            }
+        }
+    });
+}
+
+
+
 
 
