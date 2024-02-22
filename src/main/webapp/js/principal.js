@@ -9,7 +9,6 @@ var ruta_cruds_hp = "./cruds/hp/";
 var ruta_grillas_hp = "./grillas/hp/";
 var ruta_consultas_hp = "./consultas/hp/";
 
-
 var ruta_contenedores_bal = "./contenedores/balanceado/";
 var ruta_cruds_bal = "./cruds/balanceado/";
 var ruta_grillas_bal = "./grillas/balanceado/";
@@ -45,11 +44,13 @@ var rutaContenedoresDesechosVimar = "./contenedores/vimar/desechos/";
 var rutaConsultasDesechosVimar = "./consultas/vimar/desechos/";
 var rutaCrudsDesechosVimar = "./cruds/vimar/desechos/";
 
-
 var rutaContenedoresComedorVimar = "./contenedores/vimar/comedor/";
 var rutaConsultasComedorVimar = "./consultas/vimar/comedor/";
 var rutaCrudsComedorVimar = "./cruds/vimar/comedor/";
 
+var rutaContenedoresRecuentoInventarioVimar = "./contenedores/vimar/recuento_inventario/";
+var rutaConsultasRecuentoInventarioVimar = "./consultas/vimar/recuento_inventario/";
+var rutaCrudsRecuentoInventarioVimar = "./cruds/vimar/recuento_inventario/";
 
 
 $(document).ready(function ()
@@ -392,7 +393,7 @@ function cargar_permisos_roles()
             $('#form_add_permisos').on('submit', function (event)
             {
                 event.preventDefault();
-                registrar_agregar_permisos();
+                registrar_agregar_permisos_yemsys();
                 event.stopPropagation();
 
             });
@@ -437,59 +438,36 @@ function obtener_permisos_habilitados_roles()
 
 }
 
-function registrar_agregar_permisos()
+function registrar_agregar_permisos_yemsys()
 {
-    Swal.fire({
-        title: 'CONFIRMACION',
-        text: "DESEA CREAR  NUEVO PERMISO?",
-        type: 'warning',
+      Swal.fire({
+        title: 'ATENCION ',
+        text: "DESEA CREAR  NUEVO PERMISO?" ,
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#001F3F',
-        cancelButtonColor: '#001F3F',
-        confirmButtonText: 'SI, CREAR!',
-        cancelButtonText: 'NO, CANCELAR!'}).then((result) =>
-    {
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI!',
+        cancelButtonText: 'NO!'
+    }).then((result) => {
         if (result.value)
         {
-            $.ajax({
-                type: "POST",
+             $.ajax({
+                type: 'POST',
                 url: ruta_cruds_prin + "crud_agregar_permisos.jsp",
                 data: $("#form_add_permisos").serialize(),
                 beforeSend: function (xhr) {
-                    cargar_load("Consultando...");
+                  procesando_swal();
                 },
-                success: function (result)
-                {
-                    cerrar_load();
-                    if (result.tipo_mensaje == "2") {
-                        swal.fire({
-                            type: 'success',
-                            text: result.mensaje,
-                            confirmButtonText: "CERRAR"
-                        });
- 
-                    }
-                    if (result.tipo_mensaje == "1") {
-                        swal.fire({
-                            type: 'success',
-                            text: result.mensaje,
-                            confirmButtonText: "CERRAR"
-                        });
-
-
-
-
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    if (XMLHttpRequest.status == 404 || XMLHttpRequest.status == 500) {
-                        location.reload();
-                    }
+                success: function (data) {
+                    aviso_generico(data.tipo, data.mensaje);
+                   
                 }
-
             });
+             
         }
     });
+     
 }
 
 function aviso_error(mensaje)

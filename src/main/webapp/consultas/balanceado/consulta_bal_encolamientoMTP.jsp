@@ -25,10 +25,7 @@
     } catch (SQLException ex) {
         // Manejar la excepción, por ejemplo, mostrar un mensaje de error.
         out.print("Error al ejecutar el procedimiento almacenado: " + ex.getMessage());
-    }
-%>
-<%    
- 
+    } 
     JSONObject ob = new JSONObject();
     String grilla_html = "";
   

@@ -99,8 +99,8 @@
                                                 </th>
                                                 <th>
                                                     <strong><a>Aviario</a></strong>
-                                                    <select id="select_aviario_crear" name="select_aviario_crear"  class="form-control  is-invalid " onchange="capacidad_aviario_set_pry()">
-                                                        <option value="-">Seleccione aviario</option>    
+                                                    <select id="select_aviario_crear" name="select_aviario_crear" required class="form-control  is-invalid " onchange="capacidad_aviario_set_pry()">
+                                                        <option value="">Seleccione aviario</option>    
                                                         <% while (rs2.next()) {%>
                                                         <option data-capacidad="<%=rs2.getString("capacidad")%>" value="<%=rs2.getString("descripcion")%>"><%=rs2.getString("descripcion")%></option>
                                                         <%}%>

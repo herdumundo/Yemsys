@@ -30,6 +30,7 @@
         String produccionRecria             = request.getParameter("produccionRecria");
         String ProduccionPPR                = request.getParameter("ProduccionPPR");
         String ProduccionPred               = request.getParameter("ProduccionPred");
+        String cantidadVenta                = request.getParameter("cantidadVenta");
                     
                     
         int tipo_respuesta = 0;
@@ -38,7 +39,7 @@
          
      connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call ppr_pry_update_escenario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call ppr_pry_update_escenario(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setString(1,idEscenario );
         callableStatement.setString(2, calculoMortandad          );
         callableStatement.setString(3, padronMortandad           );
@@ -52,6 +53,7 @@
         callableStatement.setString(11,produccionRecria          );
         callableStatement.setString(12,ProduccionPPR             );
         callableStatement.setString(13,ProduccionPred            );
+        callableStatement.setInt(14,Integer.parseInt(cantidadVenta)            );
         
         
          callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);

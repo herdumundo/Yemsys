@@ -11,6 +11,10 @@ function irDesechosAveriados() {
         success: function (data)
         {
             $("#contenedor_principal").html(data);
+             $('.table').DataTable({ 
+             
+            scrollX: true, "bPaginate": false,
+            "bLengthChange": false, "bInfo": false});
             cerrar_load();
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

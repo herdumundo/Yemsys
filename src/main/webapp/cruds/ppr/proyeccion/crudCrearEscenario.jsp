@@ -20,6 +20,7 @@
     String calculoMortandad     = request.getParameter("calculoMortandad");
     String nombrePadron         = request.getParameter("nombrePadron");
     String calculoProduccion    = request.getParameter("calculoProduccion");
+    String cantidadVentas       = request.getParameter("cantidadVentas");
 
     int tipo_respuesta = 0;
     String mensaje = "";
@@ -29,7 +30,7 @@
    try {
         connection.setAutoCommit(false);
         CallableStatement callableStatement = null;
-        callableStatement = connection.prepareCall("{call ppr_pry_create_escenario(?,?,?,?,?,?,?,?,?)}");
+        callableStatement = connection.prepareCall("{call ppr_pry_create_escenario(?,?,?,?,?,?,?,?,?,?)}");
         callableStatement.setString(1,  nombreEscenario );
         callableStatement.setString(2,  inicioPeriodo);
         callableStatement.setString(3,  finPeriodo);
@@ -37,6 +38,7 @@
         callableStatement.setString(5,  calculoMortandad);
         callableStatement.setString(6,  nombrePadron);
         callableStatement.setString(7,  calculoProduccion);
+        callableStatement.setString(8,  cantidadVentas);
          
         callableStatement.registerOutParameter("estado_registro", java.sql.Types.INTEGER);
         callableStatement.registerOutParameter("mensaje", java.sql.Types.VARCHAR);

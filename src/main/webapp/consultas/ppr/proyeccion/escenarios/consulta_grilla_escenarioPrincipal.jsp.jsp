@@ -23,6 +23,7 @@
         tabla.append("<th>Periodo</th>");
         tabla.append("<th>Calculo de Mortandad</th>");
         tabla.append("<th>Calculo de Produccion</th>");
+        tabla.append("<th>Cantidad Venta</th>");
         tabla.append("<th>Accion</th>");
         tabla.append("</tr>");
         tabla.append("</thead>");
@@ -37,6 +38,7 @@
             tabla.append("<td>").append(rs.getString("periodo")).append("</td>");
             tabla.append("<td>").append(rs.getString("calculo_mortandad")).append("</td>");
             tabla.append("<td>").append(rs.getString("calculo_produccion")).append("</td>");
+            tabla.append("<td>").append(rs.getInt("cantidad_venta")).append("</td>");
             tabla.append("<td>").append("<button class='btn btn-outline-info btn-xs' onclick=\"ir_grillaEscenariosById_ppr(" + rs.getString("escenario_id") + ",'"+rs.getString("escenario_nombre")+"')\" ><i class='fa fa-eye'></i> ver</button>").append("<button class='btn btn-outline-primary btn-xs' onclick='clonarEscenarioPpr("+rs.getString("escenario_id")+")' ><i class='fa fa-files-o'></i> Duplicar</button>").append("</td>");
             tabla.append("</tr>");
         }

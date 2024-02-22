@@ -248,19 +248,10 @@
                                            
                                            
                                         <a  id="form_pdf_manual" style='color: black' target="_blank"><i class='fa fa-file-pdf-o' style='color: red'></i>  Manual de usuario  </a> 
-                                            
-                                        
-                                        
                                     </div>
                                 </div>
                             </div>
                         </div>       
-
-
-
-
-
-
                     </div>
 
                 </section>
@@ -278,7 +269,6 @@
                     <!-- Control sidebar content goes here -->
                     <div class="row">
                         <div class="pt-5 pl-2 pr-2 col-12">
-
                         </div>
                         <div class="pt-5 pl-2 pr-2 col-12">
                             <div class="form-group">
@@ -290,12 +280,9 @@
                                 <button class="mx-auto btn bg-dark" style="width:100%;" onclick="document.location = 'cruds/control_cerrar_sesion.jsp';"><i class="fa fa-fw fa-power-off"></i> Salir</button>
                             </div>
                         </div>
-
                         <div class="pl-2 pr-2 col-12">
                             <div class="form-group">
-                                 
                                 <a href="apk/YemSys.apk" class="mx-auto btn btn-warning form-control "><i class="fa fa-fw fa-download"></i> Descargar APP</a>
-                                
                             </div>
                         </div>
                     </div>
@@ -343,8 +330,6 @@
                 </div>
                 <!-- /.control-sidebar -->
             </div>
-            <!-- ./wrapper -->
-
             <!-- jQuery -->
             <script src="plugins/jquery/jquery.min.js"></script>
             <!-- jQuery UI 1.11.4 -->
@@ -364,11 +349,8 @@
             <!-- AdminLTE App -->
             <script src="dist/js/adminlte.js"></script>
             <script src="plugins/numeral.min.js" type="text/javascript"></script>
-            
             <script src="plugins/chart_1.js" type="text/javascript"></script>
-            
             <script src="plugins/chartjs-plugin-datalabels.js" type="text/javascript"></script>
-            
             <script src="plugins/selectPicker/bootstrap-select.min.js" type="text/javascript"></script>
             <script src="plugins/jquery.loadingModal.js" type="text/javascript"></script>
             <script src="plugins/sweetalert2/sweetalert2.all.min.js" type="text/javascript"></script>
@@ -438,9 +420,8 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script src="js/vimar/comedor/comedor.js" type="text/javascript"></script>
- 
-        
+            <script src="js/vimar/comedor/comedor.js?v=1.0" type="text/javascript"></script>
+            <script src="js/vimar/recuento_inventario/recuento_inventario.js?v=2.0" type="text/javascript"></script>
     </body>
 </html> 
 

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ffde6056-41ac-4163-abfa-6ec760e10371">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="56"/>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[vimar.dbo.select_resumen_desmontajes @fecha=$P{fecha}]]>
+	</queryString>
+	<field name="NroOrden" class="java.lang.Integer"/>
+	<field name="Codigo" class="java.lang.String"/>
+	<field name="Articulo" class="java.lang.String"/>
+	<field name="Cantidad" class="java.math.BigDecimal"/>
+	<field name="U_TIPOHUEVO" class="java.lang.String"/>
+	<field name="unidad" class="java.math.BigDecimal"/>
+	<field name="warehouse" class="java.lang.String"/>
+	<variable name="unidad_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Deposito" calculation="Sum">
+		<variableExpression><![CDATA[$F{unidad}]]></variableExpression>
+	</variable>
+	<group name="Deposito">
+		<groupExpression><![CDATA[$F{warehouse}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<frame>
+					<reportElement mode="Opaque" x="9" y="2" width="532" height="20" backcolor="#CCCCCC" uuid="9c078e17-7db1-4659-80e5-e7941cad4bde"/>
+				</frame>
+				<textField>
+					<reportElement x="63" y="2" width="100" height="20" uuid="eb34899d-0e31-4ad3-a387-2b0f93a8d2a4"/>
+					<textFieldExpression><![CDATA[$F{warehouse}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="20" y="2" width="43" height="20" uuid="3e11f918-73d7-4235-981c-d5a479650543"/>
+					<text><![CDATA[Deposito]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<frame>
+					<reportElement mode="Opaque" x="9" y="1" width="532" height="20" backcolor="#FFFFCC" uuid="7218e4dc-57a9-44d3-b918-fdf4c3ca6bea"/>
+					<staticText>
+						<reportElement x="413" y="1" width="26" height="18" uuid="2142b728-41bd-4121-8897-49fc86270d7b"/>
+						<text><![CDATA[Total]]></text>
+					</staticText>
+				</frame>
+				<textField>
+					<reportElement x="441" y="0" width="80" height="20" uuid="84601454-0672-46d7-9510-0ea5f8c2c4bc"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{unidad_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="50" uuid="a7e46471-8c25-41ef-83b9-b2f8e65da986"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[RESUMEN DE DESMONTAJES - DEVOLUCIONES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="31" width="66" height="20" uuid="2ef51567-828e-471e-a6de-0de2049cde30"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="31" width="130" height="20" uuid="5d6d8c2c-3762-4fa7-88ad-f05f43eb791f"/>
+				<text><![CDATA[Articulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="31" width="100" height="20" uuid="bfd74858-7160-427f-a873-8f9477a5eb4b"/>
+				<text><![CDATA[Nro. Orden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="31" width="64" height="20" uuid="51502936-24d4-4380-8230-f0725e80ce44"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="31" width="67" height="20" uuid="cef84bbf-d3af-4293-a5df-bd054aff8b5d"/>
+				<text><![CDATA[Tipo huevo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="31" width="100" height="20" uuid="e0a8cb7e-afee-4624-b528-3c19fc8ac1eb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Unidades]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="33" y="0" width="100" height="20" uuid="23ae23dc-ceaf-4b17-8708-132e05433efa"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="33" height="20" uuid="0d123d46-999e-4ea4-8be0-149c5d843557"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="9" y="50" width="532" height="1" uuid="fa3059eb-d3fa-45a6-8b98-7e7b8637e369"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="1" width="66" height="20" uuid="2220f99a-bb95-427a-96ee-393d43894297"/>
+				<textFieldExpression><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="130" height="20" uuid="5ddd0b35-d74e-4648-b9f0-57211490b79d"/>
+				<textFieldExpression><![CDATA[$F{Articulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="1" width="100" height="20" uuid="21579fe7-f86e-40e1-bd3d-11d760077f49"/>
+				<textFieldExpression><![CDATA[$F{NroOrden}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="309" y="1" width="64" height="20" uuid="537f9704-ea7e-459b-ab74-9f0eefa58128"/>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="1" width="67" height="20" uuid="5ed38e1a-017d-45e2-8f12-2b9e3359dc0b"/>
+				<textFieldExpression><![CDATA[$F{U_TIPOHUEVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="1" width="80" height="20" uuid="47935989-9c10-4f0e-9376-ed73ea3a0a52"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="42" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

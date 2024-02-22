@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="410" pageHeight="802" columnWidth="410" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="381bf880-60f6-4bdd-83f8-5bf0d9f17451">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[vimar.dbo.select_lotes_transferencias @codigo=$P{codigo}]]>
+	</queryString>
+	<field name="docentry" class="java.lang.Integer"/>
+	<field name="DocNum" class="java.lang.Integer"/>
+	<field name="DocDate" class="java.sql.Timestamp"/>
+	<field name="slpname" class="java.lang.String"/>
+	<field name="hora_transferencia" class="java.lang.String"/>
+	<field name="Origen" class="java.lang.String"/>
+	<field name="ItemCode" class="java.lang.String"/>
+	<field name="itemname" class="java.lang.String"/>
+	<field name="u_tipohuevo" class="java.lang.String"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
+	<field name="Destino" class="java.lang.String"/>
+	<field name="codebars" class="java.lang.String"/>
+	<field name="cardcode" class="java.lang.String"/>
+	<field name="cardname" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="Lote" class="java.lang.String"/>
+	<field name="Fecha Puesta" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="296" height="30" uuid="ab570fb3-00ab-4946-9eff-3a121ca374ac"/>
+				<textElement>
+					<font fontName="Times New Roman" size="22" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Lote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="30" width="114" height="30" uuid="1d6017ce-594a-4b3a-983d-b131b83f806d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="22" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="410" height="30" uuid="77935572-19c4-4d63-97ab-aaab321e4b87"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="22" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Informacion de lote]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="296" height="36" uuid="e71529da-5c29-410d-8376-3c889f3f6b06"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lote}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="296" y="0" width="114" height="36" uuid="11ad9fca-5429-481e-959c-16b4cbc7959f"/>
+				<textElement textAlignment="Right">
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

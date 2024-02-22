@@ -222,4 +222,12 @@
     String desc_contenedores_bal_encolamiento = " ";
     String pdf_balEncolamiento = "manual_encolamiento_mpt.pdf";
     
+    String contenedores_vim_recuento = "0112-PAN-26012024-A";
+    String desc_contenedores_vim_recuento = "";
+    String pdf_vim_recuento = "Manual_RecuentoInventarioVimar.pdf";
+    
+    String contenedores_vim_recuento_informe = "0113-PAN-26012024-A";
+    String desc_contenedores_vim_recuento_informe  = " ";
+    String pdf_vim_recuento_informe = "Manual_InformeRecuentoInventarioVimar.pdf";
+    
 %>
